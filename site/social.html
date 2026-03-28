@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>מאמרים וכתבות | טל גורן אדריכלית</title>
-<meta name="description" content="מאמרים מקצועיים, כתבות בתקשורת וטיפים לתכנון ועיצוב הבית מאת אדריכלית טל גורן."/>
-<link rel="canonical" href="https://talgoren.co.il/articles"/>
+<title>נוכחות דיגיטלית | טל גורן אדריכלית</title>
+<meta name="description" content="הנוכחות הדיגיטלית של אדריכלית טל גורן - אינסטגרם, פייסבוק ויוטיוב. עקבו אחרי לקבלת השראה, טיפים ותהליכי עבודה מהשטח."/>
+<link rel="canonical" href="https://talgoren.co.il/social.html"/>
+<meta property="og:title" content="נוכחות דיגיטלית | טל גורן אדריכלית"/>
+<meta property="og:description" content="הנוכחות הדיגיטלית של אדריכלית טל גורן - אינסטגרם, פייסבוק ויוטיוב."/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="he_IL"/>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800;900&family=Inter:wght@400;500;600&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -37,9 +41,9 @@ tailwind.config = {
 </script>
 <link rel="stylesheet" href="css/main.css"/>
 </head>
-<body class="bg-background text-on-surface font-body antialiased">
+<body class="bg-background text-on-surface font-body selection:bg-tertiary selection:text-white">
 
-  <!-- ======== NAVIGATION ======== -->
+  <!-- Nav -->
   <nav class="fixed top-0 w-full z-50 bg-[#fbf9f6]/70 backdrop-blur-md transition-shadow duration-300">
     <div class="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
       <a href="index.html" class="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</a>
@@ -69,7 +73,6 @@ tailwind.config = {
     </div>
   </nav>
 
-  <!-- ======== MOBILE MENU ======== -->
   <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[70] bg-background flex flex-col">
     <div class="flex justify-between items-center px-8 py-6">
       <span class="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</span>
@@ -99,123 +102,105 @@ tailwind.config = {
   </div>
 
   <main class="pt-24 min-h-screen">
-
-    <!-- Page Header -->
-    <section class="py-16 px-8 bg-surface reveal">
-      <div class="max-w-6xl mx-auto text-right">
-        <div class="flex items-center justify-start gap-1 mb-10 font-label text-xs text-secondary tracking-wide flex-row-reverse">
-          <a href="index.html" class="hover:text-primary transition-colors">ראשי</a>
-          <span class="breadcrumb-sep"></span>
-          <span class="text-primary font-medium">מאמרים וכתבות</span>
-        </div>
-        <h1 class="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
-          תוכן<br/>והשראה
+    <!-- Header -->
+    <section class="py-20 px-8 bg-surface reveal">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="font-headline font-black text-5xl md:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-primary">
+          עקבו אחריי.
         </h1>
-        <p class="text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mt-8">
-          טיפים מקצועיים, כתבות בתקשורת ותהליכי תכנון מאחורי הקלעים.
+        <p class="font-body text-lg md:text-xl text-secondary max-w-2xl leading-relaxed mt-8">
+          בואו לקבל הצצה אל מאחורי הקלעים, תהליכי עבודה מהשטח, והשראה יומיומית לעיצוב הבית שלכם.
         </p>
-        <div class="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto"></div>
       </div>
     </section>
 
-    <!-- Media Mentions Section -->
-    <section class="py-24 md:py-32 px-8 bg-surface">
+    <!-- Social Hub -->
+    <section class="pb-32 px-8">
       <div class="max-w-7xl mx-auto">
-        <div class="mb-16 reveal text-right">
-          <span class="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media & Press</span>
-          <h2 class="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">בתקשורת ובכתבות</h2>
-        </div>
-        <div id="media-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger">
-          <!-- Rendered via main.js from data.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Site Articles Section -->
-    <section class="py-24 md:py-32 px-8 bg-surface-container-low">
-      <div class="max-w-7xl mx-auto">
-        <div class="mb-16 reveal text-right">
-          <span class="font-label text-xs uppercase tracking-[0.3em] text-secondary">Blog & Tips</span>
-          <h2 class="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">מאמרים וטיפים מקצועיים</h2>
-        </div>
-        <div id="site-articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
-          <!-- Rendered via main.js from data.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Facebook CTA -->
-    <section class="py-20 px-8 bg-surface-container-highest reveal">
-      <div class="max-w-5xl mx-auto">
-        <a href="https://www.facebook.com/tahlgoren" target="_blank" class="block bg-surface group card-hover overflow-hidden">
-          <div class="grid grid-cols-1 md:grid-cols-12 items-center">
-            <div class="md:col-span-5 aspect-video md:aspect-auto md:h-full overflow-hidden">
-              <img
-                src="https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg"
-                alt="כתבות פייסבוק"
-                class="w-full h-full object-cover img-grayscale"
-              />
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- Instagram -->
+          <div class="reveal lg:col-span-2 space-y-8">
+            <div class="flex items-center justify-between border-b border-outline/20 pb-4">
+              <div class="flex items-center gap-4">
+                <svg class="w-8 h-8 fill-primary" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                <h2 class="font-headline font-black text-2xl text-primary">Instagram @tahlgoren</h2>
+              </div>
+              <a href="https://www.instagram.com/tahlgoren/" target="_blank" class="font-label text-[10px] uppercase tracking-widest font-bold text-secondary hover:text-primary transition-colors">מעבר לפרופיל</a>
             </div>
-            <div class="md:col-span-7 p-12 flex flex-col gap-6 text-right">
-              <span class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">Facebook Articles</span>
-              <h3 class="font-headline font-black text-3xl tracking-tight text-primary leading-tight">
-                עוד כתבות ותכנים בפייסבוק
-              </h3>
-              <p class="text-secondary text-lg leading-relaxed">
-                מוזמנים לעקוב אחרי דף הפייסבוק שלי לעדכונים יומיומיים, תמונות מפרויקטים בשטח ומאמרים קצרים.
-              </p>
-              <div class="inline-flex items-center justify-end gap-3 font-headline font-bold text-sm text-primary group-hover:text-secondary transition-colors">
-                לעמודי המאמרים המלאים
-                <span class="material-symbols-outlined text-xl group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+            
+            <!-- Reels Grid -->
+            <div id="reels-grid-social" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <!-- Rendered via main.js from data.js -->
+            </div>
+          </div>
+
+          <!-- sidebar links -->
+          <div class="reveal space-y-12">
+            <!-- Facebook -->
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 border-b border-outline/20 pb-4">
+                <svg class="w-8 h-8 fill-primary" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <h2 class="font-headline font-black text-2xl text-primary">Facebook</h2>
+              </div>
+              <div class="space-y-4">
+                <p class="font-body text-secondary text-sm leading-relaxed">
+                  הצטרפו לקהילה שלי בפייסבוק - דיונים על עיצוב, שיתופים מתוך תהליכי תכנון, ומאמרים מקצועיים.
+                </p>
+                <a href="https://www.facebook.com/tahlgoren" target="_blank" class="inline-block bg-primary text-white px-8 py-3 font-headline font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">עקבו בפייסבוק</a>
+              </div>
+            </div>
+
+            <!-- YouTube -->
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 border-b border-outline/20 pb-4">
+                <svg class="w-8 h-8 fill-primary" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <h2 class="font-headline font-black text-2xl text-primary">YouTube</h2>
+              </div>
+              <div class="space-y-4">
+                <p class="font-body text-secondary text-sm leading-relaxed">
+                  ערוץ היוטיוב שלי מציג סרטוני תדמית, ראיונות מקצועיים ומבטים פנורמיים על פרויקטים נבחרים.
+                </p>
+                <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" class="inline-block bg-primary text-white px-8 py-3 font-headline font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">צפו ביוטיוב</a>
               </div>
             </div>
           </div>
-        </a>
+
+        </div>
       </div>
     </section>
-
   </main>
 
   <footer class="w-full bg-surface-container-low border-t border-outline/10">
-    <div class="max-w-7xl mx-auto px-12 py-12">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-right mb-12">
-        <div>
-          <h4 class="font-headline font-bold text-primary mb-6 uppercase tracking-widest text-sm">ניווט</h4>
-          <div class="flex flex-col gap-4 font-label text-sm">
-            <a href="index.html" class="text-secondary hover:text-primary transition-colors">ראשי</a>
-            <a href="projects.html" class="text-secondary hover:text-primary transition-colors">פרויקטים</a>
-            <a href="process.html" class="text-secondary hover:text-primary transition-colors">תהליך העבודה</a>
-            <a href="services.html" class="text-secondary hover:text-primary transition-colors">שירותים</a>
-            <a href="about.html" class="text-secondary hover:text-primary transition-colors">אודות</a>
-            <a href="faq.html" class="text-secondary hover:text-primary transition-colors">שאלות ותשובות</a>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center px-8 lg:px-12 py-20 max-w-[1920px] mx-auto gap-12">
+      <div class="space-y-4">
+        <div class="text-lg font-semibold text-primary font-headline">TAL GOREN ARCHITECTS</div>
+        <p class="font-label text-sm tracking-wide text-secondary max-w-sm leading-relaxed">משרד אדריכלות המתמחה בתכנון בתים פרטיים, ליווי סטטוטורי ועיצוב פנים. למעלה מ-25 שנות מצוינות.</p>
+      </div>
+      <div class="flex flex-col md:flex-row gap-12 md:gap-24">
+        <div class="space-y-4">
+          <h4 class="text-primary font-headline font-bold text-xs uppercase tracking-[0.2em]">ניווט</h4>
+          <div class="flex flex-col gap-2 font-label text-sm text-secondary">
+            <a href="projects.html" class="hover:text-primary transition-colors">פרויקטים</a>
+            <a href="process.html" class="hover:text-primary transition-colors">תהליך העבודה</a>
+            <a href="services.html" class="hover:text-primary transition-colors">שירותים</a>
+            <a href="about.html" class="hover:text-primary transition-colors">אודות</a>
+            <a href="articles.html" class="hover:text-primary transition-colors">מאמרים</a>
+            <a href="faq.html" class="hover:text-primary transition-colors">שאלות ותשובות</a>
           </div>
         </div>
-        <div>
-          <h4 class="font-headline font-bold text-primary mb-6 uppercase tracking-widest text-sm">מדיה ושיתופים</h4>
-          <div class="flex flex-col gap-4 font-label text-sm">
-            <a href="articles.html" class="text-secondary hover:text-primary transition-colors">מאמרים</a>
-            <a href="videos.html" class="text-secondary hover:text-primary transition-colors">סרטונים</a>
-            <a href="social.html" class="text-secondary hover:text-primary transition-colors">רשתות חברתיות</a>
-            <a href="testimonials.html" class="text-secondary hover:text-primary transition-colors">לקוחות מספרים</a>
-          </div>
-        </div>
-        <div>
-          <h4 class="font-headline font-bold text-primary mb-6 uppercase tracking-widest text-sm">צור קשר</h4>
-          <div class="flex flex-col gap-4 font-label text-sm text-secondary">
-            <p>רחוב האשכול 13, גבעת עדה</p>
-            <p dir="ltr">052-8345799</p>
-            <p>tahl.goren.arch@gmail.com</p>
-            <div class="flex justify-end gap-6 mt-4">
-              <a href="https://www.facebook.com/tahlgoren" target="_blank" class="text-primary hover:opacity-70 transition-opacity"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-              <a href="https://www.instagram.com/tahlgoren/" target="_blank" class="text-primary hover:opacity-70 transition-opacity"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-              <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" class="text-primary hover:opacity-70 transition-opacity"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-            </div>
+        <div class="space-y-4">
+          <h4 class="text-primary font-headline font-bold text-xs uppercase tracking-[0.2em]">עקבו אחריי</h4>
+          <div class="flex gap-6 font-label text-sm">
+            <a href="https://www.instagram.com/tahlgoren/" target="_blank" class="text-secondary hover:text-primary transition-colors">Instagram</a>
+            <a href="https://www.facebook.com/tahlgoren" target="_blank" class="text-secondary hover:text-primary transition-colors">Facebook</a>
+            <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" class="text-secondary hover:text-primary transition-colors">YouTube</a>
           </div>
         </div>
       </div>
-      <div class="pt-8 border-t border-outline/10 text-center">
-        <span class="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">© 2024 TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
-      </div>
+    </div>
+    <div class="px-12 py-8 border-t border-outline/10 text-center">
+      <span class="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">© 2024 TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
     </div>
   </footer>
 

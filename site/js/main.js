@@ -176,28 +176,32 @@ document.addEventListener('DOMContentLoaded', () => {
       featuredProjectsContainer.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     }
 
-    // Render Instagram Reels
-    const reelsContainer = document.getElementById('instagram-reels-gallery');
-    if (reelsContainer && siteData.instagramReels) {
-      reelsContainer.innerHTML = siteData.instagramReels.map(reel => `
-        <a href="${reel.url}" target="_blank" class="reveal group block relative overflow-hidden">
-          <div class="aspect-[9/16] bg-surface-container overflow-hidden">
+    // Render Instagram Reels (Index & Social pages)
+    const reelsContainers = document.querySelectorAll('#instagram-reels-gallery, #reels-grid-social');
+    reelsContainers.forEach(container => {
+      if (container && siteData.instagramReels) {
+        container.innerHTML = siteData.instagramReels.map(reel => `
+          <a href="${reel.url}" target="_blank" class="reveal group block relative overflow-hidden aspect-[9/16] bg-surface-container-low">
             <img
               src="${reel.thumbnail}"
               alt="Instagram Reel"
-              class="w-full h-full object-cover img-grayscale"
+              class="w-full h-full object-cover img-grayscale transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
             />
-          </div>
-          <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/60 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-            <div class="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-              <span class="material-symbols-outlined text-4xl mb-2" style="font-variation-settings:'FILL' 1">play_circle</span>
-              <p class="font-headline font-bold text-sm">צפו באינסטגרם</p>
+            <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div class="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="material-symbols-outlined text-4xl mb-2" style="font-variation-settings:'FILL' 1">play_circle</span>
+                <p class="font-headline font-bold text-[10px] uppercase tracking-widest">צפו באינסטגרם</p>
+              </div>
             </div>
-          </div>
-        </a>
-      `).join('');
-      reelsContainer.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-    }
+            <div class="absolute bottom-4 right-4 left-4 z-10">
+              <p class="text-white/40 font-label text-[8px] uppercase tracking-[0.2em] font-bold">Instagram Reel</p>
+            </div>
+          </a>
+        `).join('');
+        container.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      }
+    });
 
     // Render Media Mentions
     const mediaContainer = document.getElementById('media-articles-grid');
