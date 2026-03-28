@@ -91,80 +91,130 @@ html {
   box-shadow: 0 4px 40px rgba(48, 51, 47, 0.06);
 }
 
-/* Mobile menu CAD-style animation */
+/* ---- MOBILE MENU ---- */
+
+/* Overlay backdrop */
 .mobile-menu {
-  transform: translateX(100%);
+  opacity: 0;
   visibility: hidden;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .mobile-menu.open {
-  transform: translateX(0);
+  opacity: 1;
   visibility: visible;
 }
 
-/* CAD Menu Lines - Intersecting Grid */
-.cad-line {
-  position: absolute;
-  background-color: rgba(98, 94, 88, 0.15);
-  z-index: -1;
-  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+/* Menu panel slides in from right (RTL-aware) */
+.mobile-menu-panel {
+  transform: translateX(-100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.cad-line-h {
-  height: 1px;
-  width: 100%;
-  transform: scaleX(0);
+[dir="rtl"] .mobile-menu-panel,
+.mobile-menu-panel {
+  transform: translateX(100%);
 }
-.cad-line-v {
-  width: 1px;
-  height: 100%;
-  transform: scaleY(0);
-}
-
-/* Intersecting Origins */
-.line-h-1 { top: 20%; transform-origin: left; transition-delay: 0.1s; }
-.line-h-2 { top: 80%; transform-origin: right; transition-delay: 0.2s; }
-.line-v-1 { left: 20%; transform-origin: top; transition-delay: 0.15s; }
-.line-v-2 { left: 80%; transform-origin: bottom; transition-delay: 0.25s; }
-.line-v-center { left: 50%; transform-origin: top; transition-delay: 0.3s; opacity: 0.05; }
-
-.mobile-menu.open .cad-line-h,
-.mobile-menu.open .cad-line-v {
-  transform: scaleX(1) scaleY(1);
-}
-
-/* Nav Hierarchy Labels */
-.nav-category {
-  font-family: var(--font-label, 'Inter', sans-serif);
-  font-size: 0.65rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: #625e58;
-  opacity: 0.4;
-  margin-bottom: 0.5rem;
-}
-
-/* Staggered Navigation items */
-.nav-item-stagger {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.mobile-menu.open .nav-item-stagger {
-  opacity: 1;
+.mobile-menu.open .mobile-menu-panel {
   transform: translateX(0);
 }
 
-/* Stagger Delays (Slower entrance) */
-.nav-item-stagger:nth-child(1) { transition-delay: 0.3s; }
-.nav-item-stagger:nth-child(2) { transition-delay: 0.4s; }
-.nav-item-stagger:nth-child(3) { transition-delay: 0.5s; }
-.nav-item-stagger:nth-child(4) { transition-delay: 0.6s; }
-.nav-item-stagger:nth-child(5) { transition-delay: 0.7s; }
-.nav-item-stagger:nth-child(6) { transition-delay: 0.8s; }
-.nav-item-stagger:nth-child(7) { transition-delay: 0.9s; }
-.nav-item-stagger:nth-child(8) { transition-delay: 1s; }
+/* Close button spin */
+.menu-close-btn {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.menu-close-btn:hover {
+  transform: rotate(90deg);
+}
+
+/* Navigation link styles */
+.mobile-nav-link {
+  position: relative;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s ease;
+}
+.mobile-menu.open .mobile-nav-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for nav links */
+.mobile-menu.open .mobile-nav-link:nth-child(1) { transition-delay: 0.15s; }
+.mobile-menu.open .mobile-nav-link:nth-child(2) { transition-delay: 0.22s; }
+.mobile-menu.open .mobile-nav-link:nth-child(3) { transition-delay: 0.29s; }
+.mobile-menu.open .mobile-nav-link:nth-child(4) { transition-delay: 0.36s; }
+.mobile-menu.open .mobile-nav-link:nth-child(5) { transition-delay: 0.43s; }
+.mobile-menu.open .mobile-nav-link:nth-child(6) { transition-delay: 0.50s; }
+
+/* Hover underline reveal */
+.mobile-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background: #625e58;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-nav-link:hover::after,
+.mobile-nav-link.active::after {
+  width: 100%;
+}
+
+/* Active page in menu */
+.mobile-nav-link.active {
+  color: #30332f;
+}
+
+/* Secondary links stagger */
+.mobile-secondary-link {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s ease;
+}
+.mobile-menu.open .mobile-secondary-link:nth-child(1) { transition-delay: 0.55s; }
+.mobile-menu.open .mobile-secondary-link:nth-child(2) { transition-delay: 0.60s; }
+.mobile-menu.open .mobile-secondary-link:nth-child(3) { transition-delay: 0.65s; }
+.mobile-menu.open .mobile-secondary-link:nth-child(4) { transition-delay: 0.70s; }
+.mobile-menu.open .mobile-secondary-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Menu footer fade */
+.mobile-menu-footer {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
+}
+.mobile-menu.open .mobile-menu-footer {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CTA in menu */
+.mobile-menu-cta {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease 0.72s, transform 0.4s ease 0.72s;
+}
+.mobile-menu.open .mobile-menu-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Divider line animation */
+.mobile-menu-divider {
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+.mobile-menu.open .mobile-menu-divider {
+  transform: scaleX(1);
+}
 
 /* Page transition */
 .page-enter {
