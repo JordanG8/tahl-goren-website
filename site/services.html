@@ -47,25 +47,48 @@ tailwind.config={theme:{extend:{colors:{"primary":"#30332f","secondary":"#625e58
     </div>
   </div>
 </nav>
-<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[70] bg-background flex flex-col">
-  <div class="flex justify-between items-center px-8 py-6">
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[70] bg-background/95 backdrop-blur-xl flex flex-col blueprint-grid">
+  <!-- CAD Lines Overlay -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="cad-line cad-line-h" style="top: 15%"></div>
+    <div class="cad-line cad-line-h" style="top: 85%"></div>
+    <div class="cad-line cad-line-v" style="left: 15%"></div>
+    <div class="cad-line cad-line-v" style="left: 85%"></div>
+  </div>
+
+  <div class="flex justify-between items-center px-8 py-6 relative z-10">
     <span class="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</span>
     <button id="menu-close"><span class="material-symbols-outlined text-3xl">close</span></button>
   </div>
-  <div class="flex flex-col items-center justify-center flex-grow gap-8 font-headline font-bold text-3xl">
-    <a href="index.html">ראשי</a>
-    <a href="projects.html">פרויקטים</a>
-    <a href="process.html">תהליך העבודה</a>
-    <a href="services.html">שירותים</a>
-    <a href="about.html">אודות</a>
-    <a href="testimonials.html">לקוחות מספרים</a>
-    <a href="articles.html">מאמרים</a>
-    <a href="faq.html">שאלות ותשובות</a>
-    <a href="videos.html">סרטונים</a>
-    <a href="social.html">רשתות חברתיות</a>
-    <a href="contact.html">צור קשר</a>
+
+  <div class="flex flex-col items-center justify-center flex-grow gap-4 font-headline font-bold text-3xl relative z-10">
+    <a href="index.html" class="nav-item-stagger hover:text-secondary transition-colors">ראשי</a>
+    <div class="w-8 h-px bg-outline/20 nav-item-stagger"></div>
+    
+    <a href="projects.html" class="nav-item-stagger hover:text-secondary transition-colors">פרויקטים</a>
+    <a href="process.html" class="nav-item-stagger hover:text-secondary transition-colors text-2xl opacity-80">תהליך העבודה</a>
+    <a href="services.html" class="nav-item-stagger hover:text-secondary transition-colors text-2xl opacity-80">שירותים</a>
+    
+    <div class="w-8 h-px bg-outline/20 nav-item-stagger"></div>
+    
+    <a href="about.html" class="nav-item-stagger hover:text-secondary transition-colors text-2xl">אודות</a>
+    <a href="testimonials.html" class="nav-item-stagger hover:text-secondary transition-colors text-xl opacity-70">לקוחות מספרים</a>
+    <a href="social.html" class="nav-item-stagger hover:text-secondary transition-colors text-xl opacity-70">רשתות חברתיות</a>
+    
+    <div class="w-8 h-px bg-outline/20 nav-item-stagger"></div>
+    
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 px-12 nav-item-stagger">
+      <a href="articles.html" class="text-sm uppercase tracking-widest opacity-60 hover:opacity-100">מאמרים</a>
+      <a href="faq.html" class="text-sm uppercase tracking-widest opacity-60 hover:opacity-100">שאלות ותשובות</a>
+      <a href="videos.html" class="text-sm uppercase tracking-widest opacity-60 hover:opacity-100">סרטונים</a>
+    </div>
+
+    <div class="mt-8 nav-item-stagger">
+      <a href="contact.html" class="bg-primary text-white text-xs uppercase tracking-[0.3em] px-10 py-4 hover:bg-secondary transition-colors">צור קשר</a>
+    </div>
   </div>
-  <div class="p-8 text-center text-secondary font-label text-sm">
+
+  <div class="p-8 text-center text-secondary font-label text-sm relative z-10 nav-item-stagger">
     <div class="flex justify-center gap-6 mb-4">
       <a href="https://www.facebook.com/tahlgoren" target="_blank" class="hover:text-primary transition-colors"><svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
       <a href="https://www.instagram.com/tahlgoren/" target="_blank" class="hover:text-primary transition-colors"><svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>

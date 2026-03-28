@@ -164,11 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
               class="w-full h-full object-cover img-grayscale"
             />
           </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-            <div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 text-right">
-              <h3 class="font-headline font-bold text-xl text-white">${project.title}</h3>
-              <span class="font-label text-xs text-white/70 tracking-wide">${project.location}</span>
+          <div class="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
+            <div class="flex flex-col text-right">
+              <h3 class="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">${project.title}</h3>
+              <span class="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">${project.location}</span>
             </div>
+            <span class="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
           </div>
         </a>
       `).join('');
@@ -246,8 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const allProjectsContainer = document.getElementById('all-projects-grid');
     if (allProjectsContainer && siteData.projects) {
       allProjectsContainer.innerHTML = siteData.projects.map(project => `
-        <a href="projects.html#${project.id}" class="reveal group relative overflow-hidden card-hover block">
-          <div class="aspect-[4/3] overflow-hidden bg-surface-container">
+        <a href="projects.html#${project.id}" class="reveal group block relative overflow-hidden card-hover">
+          <div class="aspect-[4/3] overflow-hidden">
             <img
               src="${project.image}"
               alt="${project.title}"
@@ -255,15 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
               loading="lazy"
             />
           </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div class="absolute bottom-0 right-0 left-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-            <span class="inline-block bg-white/90 text-primary font-label text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-3">${project.location}</span>
-            <h2 class="font-headline font-bold text-xl md:text-2xl text-white mb-2">${project.title}</h2>
-            <p class="font-body text-white/80 text-sm mb-4 max-w-sm line-clamp-2">${project.description}</p>
-            <span class="inline-flex items-center gap-2 text-white font-label text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-              <span>צפו בפרויקט</span>
-              <span class="material-symbols-outlined text-base">arrow_back</span>
-            </span>
+          <div class="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
+            <div class="flex flex-col text-right">
+              <h3 class="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">${project.title}</h3>
+              <span class="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">${project.location}</span>
+            </div>
+            <span class="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
           </div>
         </a>
       `).join('');
