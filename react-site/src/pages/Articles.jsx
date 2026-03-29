@@ -4,10 +4,10 @@ import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function Articles() {
-  const ref = useScrollReveal();
+  useScrollReveal();
 
   return (
-    <main ref={ref} className="pt-24 min-h-screen">
+    <>
 
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface reveal">
@@ -123,6 +123,6 @@ export default function Articles() {
         </div>
       </section>
 
-    </main>
+    </>
   );
 }

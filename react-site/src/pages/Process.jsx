@@ -3,10 +3,10 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import Breadcrumb from '../components/Breadcrumb';
 
 export default function Process() {
-  const revealRef = useScrollReveal();
+  useScrollReveal();
 
   return (
-    <div ref={revealRef}>
+    <>
       {/* Hero Section */}
       <section className="relative py-24 md:py-36 px-8 blueprint-grid overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col items-start gap-6 relative z-10 reveal">
@@ -251,6 +251,6 @@ export default function Process() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
 
 export default function Home() {
-  const revealRef = useScrollReveal();
+  useScrollReveal();
   const counterRef = useRef(null);
 
   const animateCounters = useCallback(() => {
@@ -46,7 +46,7 @@ export default function Home() {
   const featuredReels = siteData.instagramReels.slice(0, 4);
 
   return (
-    <div ref={revealRef}>
+    <>
       {/* ======== SECTION 1: HERO ======== */}
       <section className="relative min-h-screen flex items-center pt-28 pb-16 lg:pt-0 lg:pb-0 overflow-hidden">
         {/* Blueprint grid background decoration */}
@@ -495,6 +495,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

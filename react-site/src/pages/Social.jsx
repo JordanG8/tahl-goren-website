@@ -4,10 +4,10 @@ import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function Social() {
-  const ref = useScrollReveal();
+  useScrollReveal();
 
   return (
-    <main ref={ref} className="pt-24 min-h-screen">
+    <>
       {/* Header */}
       <section className="py-20 px-8 bg-surface reveal">
         <div className="max-w-6xl mx-auto">
@@ -92,6 +92,6 @@ export default function Social() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

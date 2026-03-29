@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function Videos() {
-  const ref = useScrollReveal();
+  useScrollReveal();
 
   const bgClasses = [
     'bg-surface-container',
@@ -21,7 +21,7 @@ export default function Videos() {
   ];
 
   return (
-    <main ref={ref} className="pt-24 min-h-screen">
+    <>
 
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface reveal">
@@ -218,6 +218,6 @@ export default function Videos() {
         </div>
       </section>
 
-    </main>
+    </>
   );
 }

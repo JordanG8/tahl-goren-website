@@ -3,11 +3,10 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import Breadcrumb from '../components/Breadcrumb';
 
 export default function Contact() {
-  const revealRef = useScrollReveal();
+  useScrollReveal();
 
   return (
-    <div ref={revealRef}>
-      <main className="pt-24 min-h-screen">
+    <>
         {/* Header */}
         <section className="py-20 px-8 bg-surface reveal">
           <div className="max-w-6xl mx-auto">
@@ -108,7 +107,6 @@ export default function Contact() {
             </div>
           </div>
         </section>
-      </main>
-    </div>
+    </>
   );
 }
