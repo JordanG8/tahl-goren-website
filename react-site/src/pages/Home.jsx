@@ -1,7 +1,9 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
+
+const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
 export default function Home() {
   useScrollReveal();
@@ -45,68 +47,92 @@ export default function Home() {
   const featuredProjects = siteData.projects.slice(0, 3);
   const featuredReels = siteData.instagramReels.slice(0, 4);
 
+  const [activeVideo, setActiveVideo] = useState(0);
+  const videoRefs = useRef([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveVideo((prev) => (prev + 1) % heroVideos.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (video) {
+        video.play().catch(() => {});
+      }
+    });
+  }, []);
+
   return (
     <>
-      {/* ======== SECTION 1: HERO ======== */}
-      <section className="relative min-h-screen flex items-center pt-28 pb-16 lg:pt-0 lg:pb-0 overflow-hidden">
-        {/* Blueprint grid background decoration */}
-        <div className="absolute inset-0 blueprint-grid opacity-40 pointer-events-none"></div>
+      {/* ======== SECTION 1: HERO - FULLSCREEN VIDEO ======== */}
+      <section className="relative h-screen w-full overflow-hidden">
+        {/* Video layers */}
+        {heroVideos.map((src, i) => (
+          <video
+            key={src}
+            ref={(el) => (videoRefs.current[i] = el)}
+            src={src}
+            muted
+            loop
+            playsInline
+            autoPlay
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+            style={{ opacity: activeVideo === i ? 1 : 0 }}
+          />
+        ))}
 
-        <div className="relative z-10 w-full max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        {/* Dark overlay + vignette */}
+        <div className="absolute inset-0 bg-black/40" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
+          }}
+        />
 
-            {/* Hero Text */}
-            <div className="flex-1 space-y-8 text-center lg:text-right">
-              {/* Badge */}
-              <div className="reveal">
-                <span className="inline-block bg-surface-container-low px-5 py-2 font-label text-xs tracking-widest text-secondary uppercase">
-                  <span className="material-symbols-outlined text-sm align-middle ml-1" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                  מעל 25 שנות ניסיון באדריכלות
-                </span>
-              </div>
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+          <h1 className="font-headline font-black text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight drop-shadow-lg">
+            טל גורן
+          </h1>
+          <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-2xl lg:text-3xl tracking-widest uppercase drop-shadow-md">
+            אדריכלות
+          </p>
 
-              {/* Headline */}
-              <h1 className="reveal font-headline font-black text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-primary leading-[1.1] tracking-tight">
-                אדריכלות<br />שמחזיקה לך<br />את היד.
-              </h1>
-
-              {/* Subtitle */}
-              <p className="reveal font-body text-lg sm:text-xl text-secondary max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                מהרעיון הראשון ועד למפתח בדלת. תכנון אדריכלי, ליווי סטטוטורי ופיקוח עליון &mdash; הכל תחת קורת גג אחת, עם יחס אישי וללא פשרות.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="reveal flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/projects" className="bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity text-center">
-                  לפרויקטים
-                </Link>
-                <Link to="/contact" className="border-2 border-primary text-primary px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-300 text-center">
-                  שיחת ייעוץ
-                </Link>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="flex-1 relative reveal">
-              <div className="relative">
-                {/* Decorative grid element behind image */}
-                <div className="absolute -top-6 -left-6 w-32 h-32 blueprint-grid opacity-60 hidden lg:block"></div>
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 border-2 border-outline/20 hidden lg:block"></div>
-                <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL_iP4RlYy7YnuljA-GBtvmBY9t82wQG-PFlu2dX54J7sAyvVnPqbKzZrrENtMZnk6mUXgW-05ZVQ7nmXpSQWOEvjiycnWU6KbpR68BgXZSR_OrOv_52MofGoWAoQBLUJ0rVss-ohMQ9KfJSLgL0T4GqJpFzR9nuX0z2Bt1qhvqzieEzSK3Qf67F0b0W4wilLwwoHODvz07tX8g18zE4lz9fW3S0PI-jh_V_udKzSQUbTUcSNm047nz6pcrFkZfwJ9Logsjv87cgXP"
-                  alt="בית פרטי בתכנון טל גורן אדריכלית - אדריכלות מודרנית עם חומרים טבעיים"
-                  className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover img-grayscale"
-                />
-              </div>
-            </div>
-
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <Link
+              to="/projects"
+              className="bg-white text-black px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/80 transition-colors"
+            >
+              לפרויקטים
+            </Link>
+            <Link
+              to="/contact"
+              className="border-2 border-white text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+            >
+              שיחת ייעוץ
+            </Link>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-secondary/50">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
           <span className="font-label text-[10px] tracking-[0.3em] uppercase">גלילה</span>
-          <div className="w-px h-8 bg-secondary/30"></div>
+          <div className="w-px h-8 bg-white/30 animate-pulse"></div>
+        </div>
+
+        {/* Video indicators */}
+        <div className="absolute bottom-8 right-8 flex gap-2">
+          {heroVideos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveVideo(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideo === i ? 'bg-white w-6' : 'bg-white/40'}`}
+            />
+          ))}
         </div>
       </section>
 
