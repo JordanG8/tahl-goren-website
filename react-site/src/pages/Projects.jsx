@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
 import Breadcrumb from '../components/Breadcrumb';
+import ProjectCard from '../components/ProjectCard';
 
 export default function Projects() {
   useScrollReveal();
@@ -21,29 +22,7 @@ export default function Projects() {
       <section className="reveal px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
           {siteData.projects.map((project) => (
-            <a
-              key={project.id}
-              href={project.originalLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reveal group block relative overflow-hidden card-hover"
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover img-grayscale"
-                  loading="lazy"
-                />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
-                <div className="flex flex-col text-right">
-                  <h3 className="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">{project.title}</h3>
-                  <span className="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">{project.location}</span>
-                </div>
-                <span className="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
-              </div>
-            </a>
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>

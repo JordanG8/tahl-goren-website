@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
+import ProjectCard from '../components/ProjectCard';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -44,7 +45,7 @@ export default function Home() {
     return animateCounters();
   }, [animateCounters]);
 
-  const featuredProjects = siteData.projects.slice(0, 3);
+  const featuredProjects = siteData.projects.slice(0, 6);
   const featuredReels = siteData.instagramReels.slice(0, 4);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -148,7 +149,31 @@ export default function Home() {
       </section>
 
 
-      {/* ======== SECTION 2: PROCESS OVERVIEW ======== */}
+      {/* ======== SECTION 2: FEATURED PROJECTS ======== */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-16">
+            <div className="space-y-4">
+              <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
+              <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
+                מהעשייה שלנו
+              </h2>
+            </div>
+            <Link to="/projects" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+              <span>כל הפרויקטים</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======== SECTION 3: PROCESS OVERVIEW ======== */}
       <section className="py-24 lg:py-32 bg-surface-container-low">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
 
@@ -228,48 +253,6 @@ export default function Home() {
       </section>
 
 
-      {/* ======== SECTION 3: FEATURED PROJECTS ======== */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-
-          {/* Section Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-16">
-            <div className="space-y-4">
-              <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
-              <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
-                מהעשייה שלנו
-              </h2>
-            </div>
-            <Link to="/projects" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>כל הפרויקטים</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
-            {featuredProjects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className="reveal group relative block overflow-hidden card-hover"
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-[400px] object-cover img-grayscale transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent"></div>
-                <div className="absolute bottom-0 right-0 left-0 p-8">
-                  <h3 className="font-headline font-bold text-xl text-white mb-1">{project.title}</h3>
-                  <span className="font-label text-xs text-white/70 tracking-wide">{project.location}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-        </div>
-      </section>
 
 
       {/* ======== SECTION 4: WHY CHOOSE ME ======== */}
