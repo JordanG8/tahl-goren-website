@@ -58,17 +58,27 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    videoRefs.current.forEach((video, i) => {
+    videoRefs.current.forEach((video) => {
       if (video) {
         video.play().catch(() => {});
       }
     });
   }, []);
 
+  // Preload the next video before it becomes active
+  useEffect(() => {
+    const nextIndex = (activeVideo + 1) % heroVideos.length;
+    const nextVideo = videoRefs.current[nextIndex];
+    if (nextVideo && nextVideo.preload === 'none') {
+      nextVideo.preload = 'auto';
+      nextVideo.load();
+    }
+  }, [activeVideo]);
+
   return (
     <>
       {/* ======== SECTION 1: HERO - FULLSCREEN VIDEO ======== */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-dvh w-full overflow-hidden -mt-24">
         {/* Video layers */}
         {heroVideos.map((src, i) => (
           <video
@@ -79,6 +89,7 @@ export default function Home() {
             loop
             playsInline
             autoPlay
+            preload={i === 0 ? 'auto' : 'none'}
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
             style={{ opacity: activeVideo === i ? 1 : 0 }}
           />
