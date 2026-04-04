@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MobileMenu from './MobileMenu';
 import { useNavScroll } from '../hooks/useNavScroll';
@@ -14,15 +14,22 @@ const desktopLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   useNavScroll();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-md transition-shadow duration-300">
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-sm' : 'bg-background'}`}>
         <div className="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
           {/* Logo */}
-          <div className="flex-shrink-0 lg:order-1">
+          <div className="flex-shrink-0 order-2 lg:order-1">
             <Link to="/" className="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</Link>
           </div>
 
@@ -42,7 +49,7 @@ export default function Navbar() {
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center gap-4 lg:order-3">
+          <div className="flex items-center gap-4 order-1 lg:order-3">
             <div className="hidden lg:flex items-center gap-4 border-r border-outline/20 pr-4 mr-4">
               <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noreferrer" className="text-primary hover:text-secondary transition-colors" title="Facebook">
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>

@@ -245,7 +245,7 @@ export default function Services() {
               <div className="flex flex-col gap-6 text-center lg:text-right">
                 <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">מתנה מהמשרד</span>
                 <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">
-                  קבלו מדריך במתנה!
+                  כלים לתכנון חכם – להורדה בחינם
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed max-w-xl">
                   מדריך מקיף שיעזור לכם להתכונן לתהליך בניית הבית - טיפים מקצועיים, רשימות בדיקה וכל מה שצריך לדעת לפני שמתחילים.
