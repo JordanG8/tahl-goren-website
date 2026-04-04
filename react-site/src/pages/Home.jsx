@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
 import ProjectCard from '../components/ProjectCard';
+import ArchFrame from '../components/ArchFrame';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -151,6 +152,58 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* ======== SHORT ABOUT ======== */}
+      <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+            {/* Portrait */}
+            <div className="reveal flex justify-center lg:justify-start">
+              <ArchFrame className="w-full max-w-xs sm:max-w-sm">
+                <div className="aspect-[3/4]">
+                  <img
+                    src="/images/tahl-portrait.jpg"
+                    alt="טל גורן אדריכלית"
+                    className="w-full h-full object-cover object-top img-grayscale"
+                  />
+                </div>
+              </ArchFrame>
+            </div>
+
+            {/* Content */}
+            <div className="reveal space-y-8">
+              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">אודות</span>
+              <h2 className="font-headline font-black text-5xl lg:text-6xl xl:text-7xl text-primary tracking-tight leading-[0.88]">
+                נעים<br />מאוד,<br />אני טל.
+              </h2>
+              <p className="font-body text-lg text-secondary leading-relaxed max-w-md">
+                אדריכלית שמאמינה שבית טוב הוא כזה שגדל עם המשפחה. מתמחה בתכנון בתים פרטיים באזור השרון הצפוני, ומלווה משפחות מהשלב הראשון ועד הכניסה לבית.
+              </p>
+              <div className="flex gap-10 py-8 border-y border-outline/10">
+                <div>
+                  <span className="font-headline font-black text-4xl text-primary block">25+</span>
+                  <span className="font-label text-[10px] text-secondary uppercase tracking-widest">שנות ניסיון</span>
+                </div>
+                <div>
+                  <span className="font-headline font-black text-4xl text-primary block">100+</span>
+                  <span className="font-label text-[10px] text-secondary uppercase tracking-widest">בתים שתוכננו</span>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {['מורשית היתר', 'בוגרת הטכניון', 'אדריכלות ועיצוב פנים'].map((b) => (
+                  <span key={b} className="font-label text-[10px] uppercase tracking-[0.15em] text-secondary border border-outline/30 px-3 py-1.5">{b}</span>
+                ))}
+              </div>
+              <Link to="/about" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+                <span>קראו עוד עליי</span>
+                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* ======== SECTION 2: FEATURED PROJECTS ======== */}
       <section className="py-24 lg:py-32">
