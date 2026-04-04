@@ -110,8 +110,11 @@ export default function Home() {
           <h1 className="font-headline font-black text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight drop-shadow-lg">
             טל גורן
           </h1>
-          <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-2xl lg:text-3xl tracking-widest uppercase drop-shadow-md">
-            אדריכלות
+          <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-xl lg:text-2xl tracking-wide drop-shadow-md max-w-2xl">
+            ליווי מקצועי ואישי לחווית בניה רגועה
+          </p>
+          <p className="mt-2 font-body text-white/70 text-base sm:text-lg lg:text-xl drop-shadow-md max-w-xl">
+            תכנון אדריכלי חכם לבית שגדל עם המשפחה
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
@@ -159,7 +162,7 @@ export default function Home() {
                 מהעשייה שלנו
               </h2>
             </div>
-            <Link to="/projects" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+            <Link to="/projects/completed" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>כל הפרויקטים</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>

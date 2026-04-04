@@ -1,8 +1,31 @@
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { siteData } from '../data/siteData';
 import Breadcrumb from '../components/Breadcrumb';
-import ProjectCard from '../components/ProjectCard';
+import { siteData } from '../data/siteData';
+
+const subPages = [
+  {
+    to: '/projects/completed',
+    title: 'בתים מאוכלסים',
+    description: 'בתים גמורים שתוכננו ונבנו — צילומי הפרויקטים המאוכלסים שלנו.',
+    icon: 'home',
+    image: siteData.projects[0]?.image,
+  },
+  {
+    to: '/projects/in-design',
+    title: 'בתים בתכנון',
+    description: 'הצצה לפרויקטים בשלבי תכנון — הדמיות אדריכליות של הבתים שייבנו בקרוב.',
+    icon: 'architecture',
+    image: siteData.projects[2]?.image,
+  },
+  {
+    to: '/projects/map',
+    title: 'מפת הפרויקטים',
+    description: 'כל הפרויקטים שתכננו לאורך השנים על גבי המפה — מנתניה ועד חיפה.',
+    icon: 'map',
+    image: siteData.projects[4]?.image,
+  },
+];
 
 export default function Projects() {
   useScrollReveal();
@@ -13,16 +36,52 @@ export default function Projects() {
       <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
         <div className="reveal">
           <Breadcrumb current="פרויקטים" />
-          <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים נבחרים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">מבט על פרויקטים שתכננו ועיצבנו - בתים פרטיים, שיפוצים והרחבות באזור גבעת עדה, בנימינה, זכרון יעקב והסביבה.</p>
+          <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
+          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. בחרו קטגוריה כדי לצפות בעבודות שלנו.</p>
         </div>
       </section>
 
-      {/* Projects Grid */}
+      {/* Sub-page Cards */}
       <section className="reveal px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
-          {siteData.projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger">
+          {subPages.map((page) => (
+            <Link
+              key={page.to}
+              to={page.to}
+              className="reveal group block relative overflow-hidden card-hover"
+            >
+              {/* Image */}
+              <div className="aspect-[4/3] overflow-hidden">
+                {page.image ? (
+                  <img
+                    src={page.image}
+                    alt={page.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 img-grayscale"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-surface-container flex items-center justify-center">
+                    <span className="material-symbols-outlined text-6xl text-secondary/30">{page.icon}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/60 transition-colors duration-500 flex items-center justify-center">
+                <span className="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">arrow_back</span>
+              </div>
+
+              {/* Title bar */}
+              <div className="bg-primary px-6 py-5">
+                <div className="flex items-center gap-4">
+                  <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>{page.icon}</span>
+                  <div>
+                    <h3 className="font-headline font-bold text-base text-white">{page.title}</h3>
+                    <p className="font-label text-white/60 text-xs mt-1 leading-relaxed">{page.description}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </section>

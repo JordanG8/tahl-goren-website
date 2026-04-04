@@ -3,6 +3,9 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
+import ProjectsCompleted from './pages/ProjectsCompleted'
+import ProjectsInDesign from './pages/ProjectsInDesign'
+import ProjectsMap from './pages/ProjectsMap'
 import Process from './pages/Process'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
@@ -19,6 +22,9 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/completed" element={<ProjectsCompleted />} />
+        <Route path="/projects/in-design" element={<ProjectsInDesign />} />
+        <Route path="/projects/map" element={<ProjectsMap />} />
         <Route path="/process" element={<Process />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />

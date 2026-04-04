@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="space-y-4">
           <div className="text-lg font-semibold text-primary font-headline">TAL GOREN ARCHITECTS</div>
           <p className="font-label text-sm tracking-wide text-secondary max-w-sm leading-relaxed">
-            משרד אדריכלות המתמחה בתכנון בתים פרטיים, ליווי סטטוטורי ועיצוב פנים. למעלה מ-25 שנות מצוינות.
+            ליווי מקצועי ואישי לחווית בניה רגועה. תכנון אדריכלי חכם לבית שגדל עם המשפחה. למעלה מ-25 שנות ניסיון.
           </p>
         </div>
         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
@@ -27,7 +27,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 font-label text-sm text-secondary">
               <a href="tel:0528345799" className="hover:text-primary transition-colors">052-8345799</a>
               <a href="mailto:tahl.goren.arch@gmail.com" className="hover:text-primary transition-colors">tahl.goren.arch@gmail.com</a>
-              <span>רחוב האשכול 13, גבעת עדה</span>
+              <span>רחוב האלה 22, גבעת עדה</span>
             </div>
           </div>
           <div className="space-y-4">
@@ -41,7 +41,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="px-12 py-8 border-t border-outline/10 text-center">
-        <span className="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">&copy; 2024 TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
+        <span className="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">&copy; 2025 TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
       </div>
     </footer>
   );

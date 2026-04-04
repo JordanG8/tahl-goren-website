@@ -15,7 +15,7 @@ export default function Services() {
             שירותים
           </h1>
           <p className="font-body text-lg md:text-xl text-secondary max-w-2xl leading-relaxed mt-8">
-            מעטפת אדריכלית מקצה לקצה: מהרעיון הראשון, דרך היתר הבנייה, ועד לרגע שבו אתם נכנסים הביתה. כל שירות מותאם אישית לצרכים שלכם.
+            כדי להעניק לכם מעטפת מלאה וחוויה נוחה, אני מציעה ליווי אדריכלי מקיף מהצעד הראשון ועד לקבלת המפתח. כל שירות מותאם אישית לצרכים שלכם.
           </p>
           <div className="w-16 h-[2px] bg-secondary mt-10"></div>
         </div>
@@ -34,10 +34,10 @@ export default function Services() {
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">תכנון בית פרטי</h2>
               <div className="space-y-5 text-secondary text-lg leading-relaxed">
                 <p>
-                  תכנון בית פרטי הוא הליבה של המשרד. אני מלווה אתכם מהקונספט הראשוני ועד לתוכניות הביצוע המפורטות, תוך הקשבה עמוקה לאורח החיים, ההרגלים והחלומות של כל בני המשפחה.
+                  בשעה טובה! בניית בית היא כנראה הפרויקט הגדול והיקר ביותר שתעשו כמשפחה, ולכן חשוב לבחור באדריכלית הנכונה שתלווה אתכם.
                 </p>
                 <p>
-                  התהליך כולל ניתוח המגרש, תכנון חללים פונקציונליים, בחינת כיווני אור ואוורור, ועיצוב חזיתות שמשלבות אסתטיקה עם עמידות. כל פרט נשקל כדי שהבית ישרת אתכם לשנים ארוכות.
+                  אני מציעה ליווי אדריכלי מקיף מהצעד הראשון, ועד לקבלת המפתח: החל מייעוץ וגיבוש פרוגרמה, דרך תכנון מלא, טיפול ברישוי להשגת היתר, תכניות עבודה מפורטות, עיצוב פנים ועד פיקוח עליון בשטח. יחד, נבטיח שהבית החדש שלכם יהיה יעיל, גמיש ומותאם בדיוק עבורכם.
                 </p>
               </div>
               <ul className="flex flex-col gap-3 mt-2">
@@ -63,8 +63,8 @@ export default function Services() {
             <div className="lg:col-span-7 relative">
               <div className="aspect-[4/3] bg-surface-container overflow-hidden img-reveal">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3rEafBpTtjlNMpIFbltpLG4qSBp7sLnx7k4UO5SfZAxEzKp5fKHnzd9pE2wyM-tGR5RqRjMMXhI0yoWswWyVCDohkMR-v4pKwHHYb5UPaglJvFjA-GScrFF4CxGk8MKn42B36IAp_Q2ICSO0g73mbXBqhTBUS-7jN0Vw41TkTvp5IUbD_Zz6aK2CdMb7EooRNKv2rzP6OfReRfa3uZqN6kpqAgZmTp-Lxu3KwgB3cajZt-VvaRLA6nE31mzg0bGm6I9RqSmWtVVy2"
-                  alt="תכנון בית פרטי - טל גורן אדריכלית"
+                  src="/images/projects/shacham-living.jpg"
+                  alt="תכנון בית פרטי - חלל ציבורי מרווח ומואר"
                   className="w-full h-full object-cover img-grayscale"
                 />
               </div>
@@ -84,8 +84,8 @@ export default function Services() {
             <div className="lg:col-span-7 order-2 lg:order-1 relative">
               <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden img-reveal">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuANS1iBmWPRJBbxP6zkqL1nx96FbPfu3S4tkrSPJ1LihhST2vun-e-awTo2wvlfBZHNyhl4BCjURRCLSizdtgL7AtdyKGVp9ir3WLADH1AQjprPurEBChUzpoMFE8GL8ZL3Aoj7dYkxV2Ji1DLORc-jroKzgnLpgHY0LuuD1FSii7gQlGFVnEjXFMP-dFhjDkaQCJTxC79hcnDqyqCmo1iFxPhgo1f5iRvq7CFzfuPoFi0R1VdtXG6pPegg3WJw6AaG7njMOWqrCcGz"
-                  alt="ליווי סטטוטורי ורישוי - טל גורן אדריכלית"
+                  src="/images/projects/shacham-entrance.jpg"
+                  alt="ליווי סטטוטורי ורישוי - כניסה לבית חדש"
                   className="w-full h-full object-cover img-grayscale"
                 />
               </div>
@@ -96,13 +96,13 @@ export default function Services() {
                 <span className="material-symbols-outlined text-white text-3xl" style={{fontVariationSettings:"'FILL' 1"}}>gavel</span>
               </div>
               <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">ניווט בבירוקרטיה</span>
-              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">ליווי סטטוטורי ורישוי</h2>
+              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">תוספות בניה ושיפוצים</h2>
               <div className="space-y-5 text-secondary text-lg leading-relaxed">
                 <p>
-                  הבירוקרטיה הישראלית בתחום הבנייה יכולה להיות מאתגרת ומורכבת. אני לוקחת על עצמי את כל הנטל הזה ומנהלת עבורכם את תהליך הרישוי מול הוועדות המקומיות, הרשויות ובעלי המקצוע הנדרשים.
+                  המשפחה גדלה והצרכים השתנו? עיצוב הבית כבר לא מתאים לכם? אני מתמחה בחיבור הרמוני בין הישן והחדש, ליצירת בית פרטי שלם, ללא תחושת "טלאים".
                 </p>
                 <p>
-                  מהכנת התוכניות להגשה, דרך תיאום יועצים ועד לקבלת היתר הבנייה בפועל - אני מלווה כל שלב ומוודאת שהתהליך זורם בצורה חלקה וללא עיכובים מיותרים.
+                  הליווי האדריכלי המקיף שלי כולל הכל: תכנון אדריכלי, רישוי, תכניות עבודה, עיצוב פנים ופיקוח עליון. יחד נהפוך את ביתכם למרחב פונקציונלי, נוח ומעוצב בדיוק לטעמכם.
                 </p>
               </div>
               <div className="bg-primary/5 p-8 border-r-4 border-primary">
@@ -113,15 +113,15 @@ export default function Services() {
               <ul className="flex flex-col gap-3 mt-2">
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  הגשת בקשות להיתר בנייה
+                  תכנון אדריכלי ורישוי
                 </li>
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  תיאום יועצים מקצועיים
+                  תכניות עבודה ועיצוב פנים
                 </li>
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  ייצוג מול ועדות תכנון ובנייה
+                  פיקוח עליון בשטח
                 </li>
               </ul>
             </div>
@@ -165,8 +165,8 @@ export default function Services() {
             <div className="lg:col-span-7 relative">
               <div className="aspect-[4/3] bg-surface-container overflow-hidden img-reveal">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf0cs6HzWDKnrtVb_nUaEll4ZKq5yybZuJyfgg-mOn4RFZNNtxqtYlQx2YqIhXMBPNhGwPTQN22vvf3XGb181SwJKQignh_plDaMI2oPryV7Fpqp_V2_e4_Ovhfps6uC10heQ-2MihV5dEnCeF-XxouD1_Um1PshBypzb-g70dAMy4IEHa7sWIxfwv9G1d0GNfmmVtjrd3eKzLdKjmSnINGuX8CFSvssBkx6G44j9cypOCAhs2qiAympwEru1tV1K3c8QMAksuGGzP"
-                  alt="פיקוח עליון על בנייה - טל גורן אדריכלית"
+                  src="/images/projects/katznelson-aerial.jpg"
+                  alt="פיקוח עליון על בנייה - מבט אווירי על פרויקט"
                   className="w-full h-full object-cover img-grayscale"
                 />
               </div>
@@ -184,8 +184,8 @@ export default function Services() {
             <div className="lg:col-span-7 order-2 lg:order-1 relative">
               <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden img-reveal">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsUu98MRptNXCNkdOcWONRFgUZ4L4aUSwT6jjFfe5unsbZ7pLtRQFdcXOYdc75iiqu96RaxFaxjHlswQAYWhdPLiqndyC4gWfJgLJ3dT6vk9fVOP_WqEXz5RTVrhdpPrz6-xWDw4kVQ9hnRHZWSxC3EwOcbu6DxNOqUK3DiRIKo_EcD7IYLNJRxoTkFUd8ty8ACPOk_LV5LLafDMJpIRUG5AuF4I_uLmIihDu-n6psjJiikyb5qNI8FLF6vSe6ku_nxxsITPcgVWC3"
-                  alt="עיצוב פנים - טל גורן אדריכלית"
+                  src="/images/projects/vanish-bedroom.jpg"
+                  alt="עיצוב פנים - חדר שינה מעוצב"
                   className="w-full h-full object-cover img-grayscale"
                 />
               </div>
@@ -199,31 +199,31 @@ export default function Services() {
                 <span className="material-symbols-outlined text-white text-3xl" style={{fontVariationSettings:"'FILL' 1"}}>palette</span>
               </div>
               <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">אסתטיקה ופונקציה</span>
-              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">עיצוב פנים</h2>
+              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">שירותים נוספים</h2>
               <div className="space-y-5 text-secondary text-lg leading-relaxed">
                 <p>
-                  עיצוב הפנים הוא השלב שבו הבית מקבל אופי ונשמה. אני מתכננת את החללים הפנימיים תוך שילוב של חומרים, צבעים, תאורה וריהוט שיוצרים הרמוניה מושלמת בין אסתטיקה לפרקטיות.
+                  כדי להעניק לכם מעטפת מלאה וחוויה נוחה של ONE STOP SHOP, אני מציעה שירותים משלימים לתכנון האדריכלי.
                 </p>
                 <p>
-                  מבחירת ריצוף ואריחים, דרך תכנון מטבח ושירותים, ועד לפרטי גימור ואביזרים - כל אלמנט נבחר בקפידה כדי שהבית יספר את הסיפור שלכם, ויהיה מותאם במדויק לסגנון החיים שלכם.
+                  שירותי המשרד כוללים ייעוץ ובדיקת נכסים לפני רכישה, והפקת דו"חות למיקסום הפוטנציאל של המגרש. במקרים שבהם רוצים להוסיף זכויות בנייה, אני עורכת תכנית בניין עיר (תב"ע) להשבחת הנכס. עיצוב פנים מלא או חלקי נותן את המגע הסופי והאישי לביתכם.
                 </p>
               </div>
               <ul className="flex flex-col gap-3 mt-2">
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  תכנון מטבחים וחדרי רחצה
+                  ייעוץ ובדיקת נכסים לפני רכישה
                 </li>
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  בחירת חומרי גמר וצבעים
+                  תכנית בניין עיר (תב"ע) להשבחת נכס
                 </li>
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  תכנון תאורה ואווירה
+                  עיצוב פנים מלא או חלקי
                 </li>
                 <li className="flex items-center gap-3 text-base text-primary">
                   <span className="material-symbols-outlined text-lg" style={{fontVariationSettings:"'FILL' 1"}}>check_circle</span>
-                  ליווי בבחירת ריהוט ואביזרים
+                  דו"חות למיקסום פוטנציאל המגרש
                 </li>
               </ul>
             </div>

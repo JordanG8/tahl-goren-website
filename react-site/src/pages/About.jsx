@@ -39,17 +39,14 @@ export default function About() {
             <div className="lg:col-span-7 flex flex-col gap-8 reveal">
               <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">מי אני</span>
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">
-                שלום, שמי טל גורן ואני עוסקת באדריכלות כבר משנת 1998.
+                טל גורן – אדריכלית מורשית היתר ומעצבת פנים
               </h2>
               <div className="space-y-6 text-secondary text-lg leading-relaxed">
                 <p>
-                  כיום אני אדריכלית רשויה וחברה בארגון האדריכלים ובוני ערים בישראל, וכן גם בארגון המהנדסים והאדריכלים העצמאיים בישראל.
+                  אני אדריכלית שמתמחה בתכנון בתים פרטיים למשפחות באזור השרון הצפוני. עם ניסיון של מעל 25 שנה ותכנון של למעלה ממאה בתים, אני מאמינה שבית הוא אחד המסעות המשמעותיים ביותר שמשפחה יכולה לעבור, והזכות ללוות אתכם בו היא מה שהופך את האדריכלות לתשוקה שלי.
                 </p>
                 <p>
-                  חשוב לי מאד שהבתים שאני מתכננת יהיו לא רק יפים ומעוצבים, אלא גם גמישים, יעילים ופרקטיים.
-                </p>
-                <p>
-                  בשנים האחרונות תכננתי עשרות בתים, וצברתי ניסיון רב. אשמח להעמיד לשירותכם את הניסיון הזה, ולתכנן גם עבורכם את בית החלומות שלכם.
+                  כאמא לשלושה בנים בוגרים, חוויתי בעצמי שלבים רבים בחיי המשפחה. אני יודעת שהחיים הם דינמיים ושהצרכים שלנו משתנים כל הזמן - הבנה שעיצבה את כל הפילוסופיה התכנונית שלי.
                 </p>
               </div>
               <div className="flex items-center gap-4 mt-4">
@@ -95,9 +92,9 @@ export default function About() {
           <div className="max-w-6xl mx-auto">
             <div className="mb-20 reveal">
               <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">הגישה שלי</span>
-              <h2 className="font-headline font-black text-5xl md:text-6xl tracking-tight leading-tight text-primary mt-4">הפילוסופיה שלי</h2>
+              <h2 className="font-headline font-black text-5xl md:text-6xl tracking-tight leading-tight text-primary mt-4">בית שגדל עם המשפחה</h2>
               <p className="text-secondary text-lg leading-relaxed max-w-2xl mt-6">
-                כל פרויקט מתחיל בהקשבה ומסתיים בבית שמרגיש כמו הארכה טבעית של החיים שלכם.
+                הגישה שלי מושתתת על עיקרון אחד מרכזי: לתכנן בית יעיל, פרקטי וגמיש שיודע להתאים את עצמו לשינויים בחיים. התכנון שלי שם דגש על ניצול מקסימלי של השטח והתקציב, מניעת "שטחים מתים" ובחירת חומרים נכונה.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0 stagger">
@@ -106,9 +103,9 @@ export default function About() {
                 <div className="w-16 h-16 bg-primary flex items-center justify-center mb-8">
                   <span className="material-symbols-outlined text-white text-3xl">person</span>
                 </div>
-                <h3 className="font-headline font-black text-2xl text-primary mb-4">תשומת לב אישית</h3>
+                <h3 className="font-headline font-black text-2xl text-primary mb-4">ליווי אישי וסבלני</h3>
                 <p className="text-secondary leading-relaxed">
-                  כל לקוח מקבל את מלוא תשומת הלב שלי. אני מקפידה לא לקחת פרויקטים רבים מדי בו-זמנית, כדי שכל משפחה תרגיש שהיא במרכז. הקשר האישי הוא הבסיס לתכנון מוצלח.
+                  אני יודעת שתהליך בנייה יכול להיות מורכב ומלחיץ. התפקיד שלי הוא להפוך אותו עבורכם לחוויה חיובית, רגועה, ברורה ומעצימה. כל משפחה מקבלת את מלוא תשומת הלב שלי.
                 </p>
                 <div className="w-full h-[2px] bg-outline/10 absolute bottom-0 left-0 group-hover:bg-primary transition-colors duration-500"></div>
               </div>
@@ -117,9 +114,9 @@ export default function About() {
                 <div className="w-16 h-16 bg-primary flex items-center justify-center mb-8">
                   <span className="material-symbols-outlined text-white text-3xl">straighten</span>
                 </div>
-                <h3 className="font-headline font-black text-2xl text-primary mb-4">תכנון פרקטי</h3>
+                <h3 className="font-headline font-black text-2xl text-primary mb-4">הקשבה עמוקה</h3>
                 <p className="text-secondary leading-relaxed">
-                  בית יפה הוא חשוב, אבל בית שעובד נכון הוא קריטי. אני מתכננת כל חדר ופינה כך שישרתו את החיים היומיומיים שלכם, עם פתרונות אחסון חכמים ומעברים נוחים.
+                  אני לא באה עם אג'נדה עיצובית משלי. אני באה להקשיב לכם, ללמוד אתכם, ולתרגם את החלומות והצרכים הייחודיים שלכם לבית ש"תפור בדיוק למידותיכם".
                 </p>
                 <div className="w-full h-[2px] bg-outline/10 absolute bottom-0 left-0 group-hover:bg-primary transition-colors duration-500"></div>
               </div>
@@ -128,9 +125,9 @@ export default function About() {
                 <div className="w-16 h-16 bg-primary flex items-center justify-center mb-8">
                   <span className="material-symbols-outlined text-white text-3xl">forum</span>
                 </div>
-                <h3 className="font-headline font-black text-2xl text-primary mb-4">תקשורת כנה</h3>
+                <h3 className="font-headline font-black text-2xl text-primary mb-4">גמישות מלאה</h3>
                 <p className="text-secondary leading-relaxed">
-                  אני מאמינה בשקיפות מלאה. תמיד תדעו איפה הפרויקט עומד, מה התקציב המעודכן, ומה האתגרים שעלו. ללא הפתעות, ללא עלויות נסתרות.
+                  הגמישות מלווה את כל העבודה שלי. אני גמישה באופן העבודה, מתאימה את עצמי לכל סגנון עיצובי שתבחרו, ויודעת לתכנן בכל שיטות הבניה הקיימות.
                 </p>
                 <div className="w-full h-[2px] bg-outline/10 absolute bottom-0 left-0 group-hover:bg-primary transition-colors duration-500"></div>
               </div>
@@ -174,8 +171,8 @@ export default function About() {
                       <span className="material-symbols-outlined text-primary text-2xl">school</span>
                     </div>
                     <div>
-                      <h4 className="font-headline font-bold text-base text-primary mb-2">אדריכלית רשויה</h4>
-                      <p className="font-label text-sm text-secondary leading-relaxed">בעלת רישיון אדריכלות מאז 1998.</p>
+                      <h4 className="font-headline font-bold text-base text-primary mb-2">אדריכלית רשויה ומורשית היתר</h4>
+                      <p className="font-label text-sm text-secondary leading-relaxed">הדרגה המקצועית הגבוהה ביותר לאדריכלים בישראל.</p>
                     </div>
                   </div>
                   <div className="p-10 bg-surface flex items-start gap-6 group card-hover">
@@ -183,8 +180,8 @@ export default function About() {
                       <span className="material-symbols-outlined text-primary text-2xl">workspace_premium</span>
                     </div>
                     <div>
-                      <h4 className="font-headline font-bold text-base text-primary mb-2">התמחות בבתים פרטיים</h4>
-                      <p className="font-label text-sm text-secondary leading-relaxed">עשרות בתים פרטיים שתוכננו ונבנו ברחבי הארץ.</p>
+                      <h4 className="font-headline font-bold text-base text-primary mb-2">בוגרת הטכניון בהצטיינות</h4>
+                      <p className="font-label text-sm text-secondary leading-relaxed">בוגרת הפקולטה לאדריכלות בטכניון בהצטיינות, והנדסאית אדריכלות בהצטיינות יתרה.</p>
                     </div>
                   </div>
                 </div>

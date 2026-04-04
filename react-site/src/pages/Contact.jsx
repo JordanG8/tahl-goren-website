@@ -14,7 +14,7 @@ export default function Contact() {
               בואו נדבר.
             </h1>
             <p className="font-body text-lg md:text-xl text-secondary max-w-2xl leading-relaxed mt-8">
-              הבית הבא שלכם מתחיל בשיחה. אני כאן כדי להקשיב לחלומות שלכם, להבין את הצרכים ולצאת יחד למסע של תכנון ויצירה.
+              מתכננים בניית בית פרטי חדש, תוספת בניה או שיפוץ מקיף? הגעתם למקום הנכון! אני מתמחה באדריכלות בתי מגורים באזור השרון הצפוני (בין נתניה לחיפה, ומזרחה עד עפולה). אשמח לעמוד לשרותכם - השאירו פרטים, ואחזור אליכם בהקדם.
             </p>
           </div>
         </section>
@@ -53,7 +53,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-headline font-bold text-xs uppercase tracking-[0.2em] text-secondary mb-2">המשרד</h3>
-                      <p className="font-headline font-black text-2xl text-primary">רחוב האשכול 13, גבעת עדה</p>
+                      <p className="font-headline font-black text-2xl text-primary">רחוב האלה 22, גבעת עדה</p>
                     </div>
                   </div>
                 </div>
@@ -61,8 +61,8 @@ export default function Contact() {
                 {/* Map */}
                 <div className="aspect-video bg-surface-container-low overflow-hidden relative">
                   <iframe
-                    title="מיקום המשרד - רחוב האשכול 13, גבעת עדה"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3370.0!2d34.95!3d32.49!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z16jXl9eV15Eg15TXkNep15vXldecIDEzLCDXktteqdeqINei15PXlA!5e0!3m2!1siw!2sil!4v1700000000000"
+                    title="מיקום המשרד - רחוב האלה 22, גבעת עדה"
+                    src="https://maps.google.com/maps?q=%D7%94%D7%90%D7%9C%D7%94+22+%D7%92%D7%91%D7%A2%D7%AA+%D7%A2%D7%93%D7%94&t=&z=15&ie=UTF8&iwloc=&output=embed"
                     className="w-full h-full border-0"
                     allowFullScreen=""
                     loading="lazy"
