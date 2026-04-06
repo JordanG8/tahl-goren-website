@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import ArchFrame from './ArchFrame';
 
 const steps = [
   {
@@ -83,8 +82,8 @@ export default function ProcessSteps() {
         />
         
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="relative z-10 max-w-3xl space-y-8"
@@ -110,8 +109,8 @@ export default function ProcessSteps() {
       <section className="bg-surface-container-low relative">
         <div className="min-h-[60dvh] flex flex-col items-center justify-center text-center px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-4"
@@ -134,82 +133,80 @@ export default function ProcessSteps() {
               className="w-full min-h-[100dvh] flex items-center justify-center px-6 sm:px-12 lg:px-24 py-16"
             >
               <motion.div 
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6 }}
                 className="w-full max-w-2xl"
               >
-                <ArchFrame className="w-full">
-                  <div className="bg-surface p-8 sm:p-12 lg:p-16 text-center space-y-8">
-                    {/* Step number + Title together */}
-                    <div className="space-y-2">
-                      <span className="font-headline font-black text-7xl sm:text-8xl lg:text-9xl text-primary/20 leading-none block select-none">
-                        {String(step.id).padStart(2, '0')}
-                      </span>
-                      <h3 className="font-headline font-black text-3xl sm:text-4xl lg:text-5xl text-primary tracking-tight leading-[1.1]">
-                        {step.title}
-                      </h3>
-                    </div>
-
-                    {/* Time info — dark box, side by side */}
-                    <div className="inline-flex items-center bg-primary overflow-hidden mx-auto">
-                      <div className="px-5 py-3 text-center">
-                        <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">שלב זה</span>
-                        <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.stepDuration}</span>
-                      </div>
-                      <div className="w-px h-10 bg-white/20" />
-                      <div className="px-5 py-3 text-center">
-                        <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">סה״כ מתחילת התהליך</span>
-                        <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.cumulativeTotal}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Description */}
-                    <p className="font-body text-lg sm:text-xl text-secondary leading-relaxed max-w-lg mx-auto">
-                      {step.description}
-                    </p>
-
-                    {/* Bullets if any */}
-                    {step.bullets.length > 0 && (
-                      <ul className="space-y-3">
-                        {step.bullets.map((b, i) => (
-                          <motion.li 
-                            key={i}
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false }}
-                            transition={{ duration: 0.4, delay: i * 0.15 }}
-                            className="font-headline font-bold text-lg sm:text-xl text-primary"
-                          >
-                            {b}
-                          </motion.li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {/* Meetings */}
-                    {step.meetings.length > 0 && (
-                      <div className="pt-6 border-t border-outline/10 space-y-4">
-                        <span className="font-label text-[10px] tracking-[0.2em] text-secondary/60 uppercase block">פגישות בשלב הזה</span>
-                        <div className="flex flex-wrap gap-2 justify-center">
-                          {step.meetings.map((m, i) => (
-                            <motion.span
-                              key={i}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              whileInView={{ opacity: 1, scale: 1 }}
-                              viewport={{ once: false }}
-                              transition={{ duration: 0.3, delay: i * 0.07 }}
-                              className="font-label text-xs text-secondary bg-surface-container-low border border-outline/10 px-4 py-2 rounded-full"
-                            >
-                              {m}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                <div className="bg-surface p-8 sm:p-12 lg:p-16 text-center space-y-8 border border-outline/10">
+                  {/* Step number + Title together */}
+                  <div className="space-y-2">
+                    <span className="font-headline font-black text-7xl sm:text-8xl lg:text-9xl text-primary/20 leading-none block select-none">
+                      {String(step.id).padStart(2, '0')}
+                    </span>
+                    <h3 className="font-headline font-black text-3xl sm:text-4xl lg:text-5xl text-primary tracking-tight leading-[1.1]">
+                      {step.title}
+                    </h3>
                   </div>
-                </ArchFrame>
+
+                  {/* Time info — dark box, side by side */}
+                  <div className="inline-flex items-center bg-primary overflow-hidden mx-auto">
+                    <div className="px-5 py-3 text-center">
+                      <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">שלב זה</span>
+                      <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.stepDuration}</span>
+                    </div>
+                    <div className="w-px h-10 bg-white/20" />
+                    <div className="px-5 py-3 text-center">
+                      <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">סה״כ מתחילת התהליך</span>
+                      <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.cumulativeTotal}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="font-body text-lg sm:text-xl text-secondary leading-relaxed max-w-lg mx-auto">
+                    {step.description}
+                  </p>
+
+                  {/* Bullets if any */}
+                  {step.bullets.length > 0 && (
+                    <ul className="space-y-3">
+                      {step.bullets.map((b, i) => (
+                        <motion.li 
+                          key={i}
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, delay: i * 0.15 }}
+                          className="font-headline font-bold text-lg sm:text-xl text-primary"
+                        >
+                          {b}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Meetings */}
+                  {step.meetings.length > 0 && (
+                    <div className="pt-6 border-t border-outline/10 space-y-4">
+                      <span className="font-label text-[10px] tracking-[0.2em] text-secondary/60 uppercase block">פגישות בשלב הזה</span>
+                      <div className="flex flex-wrap gap-2 justify-center">
+                        {step.meetings.map((m, i) => (
+                          <motion.span
+                            key={i}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.3, delay: i * 0.07 }}
+                            className="font-label text-xs text-secondary bg-surface-container-low border border-outline/10 px-4 py-2 rounded-full"
+                          >
+                            {m}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </motion.div>
             </div>
           ))}
