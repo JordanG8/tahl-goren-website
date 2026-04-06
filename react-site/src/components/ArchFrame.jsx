@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // PAD  — image inset from container edge
 // GAP  — space between image edge and the frame lines
@@ -48,11 +48,11 @@ const CORNER_RANGES = [
   [0.6, 0.95],
 ];
 
-const SPRING = { stiffness: 120, damping: 22, restDelta: 0.001 };
-
 function CornerLines({ lines, scrollYProgress, range }) {
-  const raw = useTransform(scrollYProgress, range, [0, 1]);
-  const scale = useSpring(raw, SPRING);
+  // Use a clamped eased transform instead of useSpring to prevent snap-back oscillation
+  const scale = useTransform(scrollYProgress, range, [0, 1], {
+    clamp: true,
+  });
 
   return (
     <>
@@ -63,6 +63,7 @@ function CornerLines({ lines, scrollYProgress, range }) {
             position: 'absolute',
             background: COLOR,
             transformOrigin,
+            willChange: 'transform',
             [scaleAxis === 'X' ? 'scaleX' : 'scaleY']: scale,
             ...pos,
           }}
@@ -81,7 +82,11 @@ export default function ArchFrame({ children, className = '' }) {
   });
 
   return (
-    <div ref={ref} className={`relative ${className}`} style={{ padding: PAD }}>
+    <div
+      ref={ref}
+      className={`relative overflow-hidden ${className}`}
+      style={{ padding: PAD }}
+    >
 
       {CORNERS.map((lines, i) => (
         <CornerLines
@@ -96,3 +101,4 @@ export default function ArchFrame({ children, className = '' }) {
     </div>
   );
 }
+
