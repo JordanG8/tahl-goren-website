@@ -4,6 +4,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
 import ProjectCard from '../components/ProjectCard';
 import ArchFrame from '../components/ArchFrame';
+import ProcessSteps from '../components/ProcessSteps';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -230,83 +231,7 @@ export default function Home() {
       </section>
 
       {/* ======== SECTION 3: PROCESS OVERVIEW ======== */}
-      <section className="py-24 lg:py-32 bg-surface-container-low">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-
-          {/* Section Header */}
-          <div className="text-center mb-20 space-y-4">
-            <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">איך זה עובד</span>
-            <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
-              תהליך עבודה מובנה
-            </h2>
-            <p className="reveal font-body text-lg text-secondary max-w-2xl mx-auto">
-              כל פרויקט מלווה בתהליך מסודר ושקוף, מהרגע הראשון ועד לכניסה לבית החדש.
-            </p>
-          </div>
-
-          {/* Process Steps */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 stagger">
-
-            {/* Step 1 */}
-            <div className="reveal bg-surface p-8 lg:p-10 space-y-5 card-hover relative">
-              <span className="font-headline font-black text-6xl text-surface-container-highest leading-none">01</span>
-              <div className="w-12 h-12 bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-2xl">architecture</span>
-              </div>
-              <h3 className="font-headline font-bold text-xl text-primary">תכנון ופרוגרמה</h3>
-              <p className="font-body text-sm text-secondary leading-relaxed">
-                הגדרת הצרכים, בניית תוכנית אדריכלית ועיצוב הקונספט. שלב שבו כל חלום מקבל צורה.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="reveal bg-surface p-8 lg:p-10 space-y-5 card-hover relative">
-              <span className="font-headline font-black text-6xl text-surface-container-highest leading-none">02</span>
-              <div className="w-12 h-12 bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-2xl">description</span>
-              </div>
-              <h3 className="font-headline font-bold text-xl text-primary">רישוי וביורוקרטיה</h3>
-              <p className="font-body text-sm text-secondary leading-relaxed">
-                הגשת בקשות להיתר בנייה, מול הוועדות המקומיות והרשויות. אנחנו מטפלים בהכל עבורכם.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="reveal bg-surface p-8 lg:p-10 space-y-5 card-hover relative">
-              <span className="font-headline font-black text-6xl text-surface-container-highest leading-none">03</span>
-              <div className="w-12 h-12 bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-2xl">engineering</span>
-              </div>
-              <h3 className="font-headline font-bold text-xl text-primary">ליווי בביצוע</h3>
-              <p className="font-body text-sm text-secondary leading-relaxed">
-                פיקוח עליון על הבנייה, ביקורות באתר והתאמות בזמן אמת. כדי שהתוצאה תהיה בדיוק כמו שתכננו.
-              </p>
-            </div>
-
-            {/* Step 4 */}
-            <div className="reveal bg-surface p-8 lg:p-10 space-y-5 card-hover relative">
-              <span className="font-headline font-black text-6xl text-surface-container-highest leading-none">04</span>
-              <div className="w-12 h-12 bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>home</span>
-              </div>
-              <h3 className="font-headline font-bold text-xl text-primary">כניסה הביתה</h3>
-              <p className="font-body text-sm text-secondary leading-relaxed">
-                הרגע שכולם מחכים לו. קבלת המפתח לבית שתוכנן בדיוק עבורכם, ללא פשרות.
-              </p>
-            </div>
-
-          </div>
-
-          {/* Link to full process page */}
-          <div className="reveal text-center mt-16">
-            <Link to="/process" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>לתהליך העבודה המלא</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-
-        </div>
-      </section>
+      <ProcessSteps />
 
 
 
