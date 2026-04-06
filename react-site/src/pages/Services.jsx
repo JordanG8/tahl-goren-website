@@ -1,14 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import Breadcrumb from '../components/Breadcrumb';
 
 export default function Services() {
-  useScrollReveal();
-
   return (
     <>
       {/* Page Header with Breadcrumb */}
-      <section className="py-16 px-8 bg-surface reveal">
+      <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto">
           <Breadcrumb current="שירותים" />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
@@ -24,7 +21,7 @@ export default function Services() {
       {/* Service 1: תכנון בית פרטי */}
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center reveal">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
             {/* Text (appears first in RTL = right side) */}
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div className="w-16 h-16 bg-primary flex items-center justify-center">
@@ -61,7 +58,7 @@ export default function Services() {
             </div>
             {/* Image (left in RTL) */}
             <div className="lg:col-span-7 relative">
-              <div className="aspect-[4/3] bg-surface-container overflow-hidden img-reveal">
+              <div className="aspect-[4/3] bg-surface-container overflow-hidden">
                 <img
                   src="/images/projects/shacham-living.jpg"
                   alt="תכנון בית פרטי - חלל ציבורי מרווח ומואר"
@@ -79,10 +76,10 @@ export default function Services() {
       {/* Service 2: ליווי סטטוטורי ורישוי */}
       <section className="py-24 md:py-32 px-8 bg-surface-container-low">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center reveal">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
             {/* Image (right in RTL = appears first) */}
             <div className="lg:col-span-7 order-2 lg:order-1 relative">
-              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden img-reveal">
+              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden">
                 <img
                   src="/images/projects/shacham-entrance.jpg"
                   alt="ליווי סטטוטורי ורישוי - כניסה לבית חדש"
@@ -132,7 +129,7 @@ export default function Services() {
       {/* Service 3: פיקוח עליון */}
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center reveal">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
             {/* Text (right in RTL) */}
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div className="w-16 h-16 bg-primary flex items-center justify-center">
@@ -163,7 +160,7 @@ export default function Services() {
             </div>
             {/* Image (left in RTL) */}
             <div className="lg:col-span-7 relative">
-              <div className="aspect-[4/3] bg-surface-container overflow-hidden img-reveal">
+              <div className="aspect-[4/3] bg-surface-container overflow-hidden">
                 <img
                   src="/images/projects/katznelson-aerial.jpg"
                   alt="פיקוח עליון על בנייה - מבט אווירי על פרויקט"
@@ -179,10 +176,10 @@ export default function Services() {
       {/* Service 4: עיצוב פנים */}
       <section className="py-24 md:py-32 px-8 bg-surface-container-low">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center reveal">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
             {/* Image (right in RTL = appears first) */}
             <div className="lg:col-span-7 order-2 lg:order-1 relative">
-              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden img-reveal">
+              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden">
                 <img
                   src="/images/projects/vanish-bedroom.jpg"
                   alt="עיצוב פנים - חדר שינה מעוצב"
@@ -232,7 +229,7 @@ export default function Services() {
       </section>
 
       {/* Free Guide CTA */}
-      <section className="py-24 md:py-32 px-8 bg-surface-container reveal">
+      <section className="py-24 md:py-32 px-8 bg-surface-container">
         <div className="max-w-5xl mx-auto">
           <div className="bg-surface p-12 md:p-20 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full blueprint-grid opacity-30 pointer-events-none"></div>
@@ -263,7 +260,7 @@ export default function Services() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden reveal">
+      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">הצעד הבא</span>

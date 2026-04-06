@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import ArchFrame from '../components/ArchFrame';
 
 export default function About() {
-  useScrollReveal();
-
   return (
     <>
 
@@ -17,7 +14,7 @@ export default function About() {
           <span className="absolute inset-0 flex items-center justify-center font-headline font-black text-[22vw] lg:text-[14vw] leading-none text-white/[0.04] select-none pointer-events-none tracking-tighter">
             TAL
           </span>
-          <div className="relative z-10 space-y-8 reveal">
+          <div className="relative z-10 space-y-8">
             <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/40">אודות</span>
             <h1 className="font-headline font-black text-6xl md:text-7xl lg:text-8xl text-white leading-[0.88] tracking-tight">
               טל<br />גורן
@@ -56,7 +53,7 @@ export default function About() {
 
       {/* ======== PULL QUOTE ======== */}
       <section className="py-24 lg:py-32 px-8 bg-surface">
-        <div className="max-w-5xl mx-auto reveal">
+        <div className="max-w-5xl mx-auto">
           <span className="font-headline text-8xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
           <blockquote className="font-headline font-black text-3xl md:text-4xl lg:text-5xl text-primary leading-tight tracking-tight -mt-6">
             אני מאמינה שבית טוב הוא כזה שגדל עם המשפחה — לא נגדה.
@@ -75,7 +72,7 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
 
             {/* Story */}
-            <div className="lg:col-span-7 reveal space-y-8">
+            <div className="lg:col-span-7 space-y-8">
               <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">הסיפור שלי</span>
               <div className="space-y-6 font-body text-secondary text-lg leading-relaxed">
                 <p>
@@ -88,7 +85,7 @@ export default function About() {
             </div>
 
             {/* Credentials card */}
-            <div className="lg:col-span-5 reveal">
+            <div className="lg:col-span-5">
               <div className="bg-surface-container-low p-10 space-y-2">
                 <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary block mb-6">השכלה ורישיונות</span>
                 {[
@@ -117,7 +114,7 @@ export default function About() {
       <section className="py-24 md:py-32 px-8 bg-surface-container-low overflow-hidden">
         <div className="max-w-7xl mx-auto">
 
-          <div className="reveal mb-20">
+          <div className="mb-20">
             <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">הגישה שלי</span>
             <h2 className="font-headline font-black text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[0.88] text-primary mt-4 max-w-2xl">
               בית שגדל<br />עם המשפחה
@@ -127,7 +124,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 stagger">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
             {[
               {
                 n: '01',
@@ -148,7 +145,7 @@ export default function About() {
                 text: 'הגמישות מלווה את כל העבודה שלי. אני מתאימה את עצמי לכל סגנון עיצובי שתבחרו, ויודעת לתכנן בכל שיטות הבניה הקיימות.',
               },
             ].map((v) => (
-              <div key={v.n} className="reveal group relative bg-surface p-12 lg:p-16 card-hover overflow-hidden">
+              <div key={v.n} className="group relative bg-surface p-12 lg:p-16 card-hover overflow-hidden">
                 <span className="absolute top-4 left-6 font-headline font-black text-8xl text-outline/[0.07] leading-none select-none pointer-events-none">{v.n}</span>
                 <div className="relative z-10 space-y-6 mt-6">
                   <div className="w-14 h-14 bg-primary flex items-center justify-center">
@@ -167,7 +164,7 @@ export default function About() {
 
 
       {/* ======== CTA ======== */}
-      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden reveal">
+      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95" />
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">בואו נדבר</span>

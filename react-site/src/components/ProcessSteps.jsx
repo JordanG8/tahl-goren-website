@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import React from 'react';
 
 const steps = [
   {
@@ -81,13 +81,7 @@ export default function ProcessSteps() {
           style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }}
         />
         
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 max-w-3xl space-y-8"
-        >
+        <div className="relative z-10 max-w-3xl space-y-8">
           <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-7xl text-white tracking-tight leading-[1.1]">
             זה יכול להתחיל<br />ממש עכשיו
           </h2>
@@ -102,19 +96,13 @@ export default function ProcessSteps() {
             התקשרו עכשיו
           </a>
           <p className="font-label text-sm text-white/40 tracking-wide">052-8345799 · טל גורן</p>
-        </motion.div>
+        </div>
       </section>
 
       {/* ======== TRANSITION: What happens after the call? ======== */}
       <section className="bg-surface-container-low relative">
         <div className="min-h-[60dvh] flex flex-col items-center justify-center text-center px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <span className="font-label text-xs tracking-[0.3em] text-secondary uppercase block">6 שלבים פשוטים</span>
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight max-w-3xl">
               מה קורה אחרי השיחה?
@@ -122,7 +110,7 @@ export default function ProcessSteps() {
             <p className="font-body text-lg sm:text-xl text-secondary max-w-xl mx-auto">
               הנה בדיוק מה שקורה, שלב אחרי שלב. בלי הפתעות.
             </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* ======== THE 6 STEPS ======== */}
@@ -132,13 +120,7 @@ export default function ProcessSteps() {
               key={step.id} 
               className="w-full min-h-[100dvh] flex items-center justify-center px-6 sm:px-12 lg:px-24 py-16"
             >
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full max-w-2xl"
-              >
+              <div className="w-full max-w-2xl">
                 <div className="bg-surface p-8 sm:p-12 lg:p-16 text-center space-y-8 border border-outline/10">
                   {/* Step number + Title together */}
                   <div className="space-y-2">
@@ -172,16 +154,12 @@ export default function ProcessSteps() {
                   {step.bullets.length > 0 && (
                     <ul className="space-y-3">
                       {step.bullets.map((b, i) => (
-                        <motion.li 
+                        <li 
                           key={i}
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.4, delay: i * 0.15 }}
                           className="font-headline font-bold text-lg sm:text-xl text-primary"
                         >
                           {b}
-                        </motion.li>
+                        </li>
                       ))}
                     </ul>
                   )}
@@ -192,22 +170,18 @@ export default function ProcessSteps() {
                       <span className="font-label text-[10px] tracking-[0.2em] text-secondary/60 uppercase block">פגישות בשלב הזה</span>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {step.meetings.map((m, i) => (
-                          <motion.span
+                          <span
                             key={i}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: i * 0.07 }}
                             className="font-label text-xs text-secondary bg-surface-container-low border border-outline/10 px-4 py-2 rounded-full"
                           >
                             {m}
-                          </motion.span>
+                          </span>
                         ))}
                       </div>
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </div>
             </div>
           ))}
         </div>

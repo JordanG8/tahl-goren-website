@@ -39,23 +39,14 @@ html {
   background-size: 40px 40px;
 }
 
-/* Animations */
-.reveal { opacity: 0; transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.visible { opacity: 1; }
-.stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-.stagger > .reveal:nth-child(2) { transition-delay: 0.05s; }
-.stagger > .reveal:nth-child(3) { transition-delay: 0.1s; }
-.stagger > .reveal:nth-child(4) { transition-delay: 0.15s; }
-.stagger > .reveal:nth-child(5) { transition-delay: 0.2s; }
-.stagger > .reveal:nth-child(6) { transition-delay: 0.25s; }
+/* Static States (Animations Removed) */
+.reveal { opacity: 1; }
+.img-reveal { clip-path: inset(0 0 0 0); }
 
-.img-reveal { clip-path: inset(0 100% 0 0); transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-.img-reveal.visible { clip-path: inset(0 0 0 0); }
-
-.card-hover { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.card-hover { transition: none; }
 .card-hover:hover { box-shadow: 0 20px 60px rgba(48, 51, 47, 0.08); }
 
-.img-grayscale { filter: grayscale(0%); transition: transform 1s ease; }
+.img-grayscale { filter: grayscale(0%); transition: none; }
 .img-grayscale:hover, .group:hover .img-grayscale { transform: scale(1.03); }
 
 .nav-scrolled { box-shadow: 0 4px 40px rgba(48, 51, 47, 0.06); }
@@ -64,24 +55,18 @@ html {
 
 .breadcrumb-sep::after { content: '/'; margin: 0 0.75rem; color: #b1b3ad; }
 
-/* FAQ */
-.faq-item { transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-bottom: 1px solid rgba(177, 179, 173, 0.1); }
+/* FAQ - Static */
+.faq-item { border-bottom: 1px solid rgba(177, 179, 173, 0.1); }
 .faq-item:hover { background-color: #f5f3f0; }
 .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 1.75rem 2rem; user-select: none; outline: none; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::marker { display: none; content: ''; }
-.faq-item .faq-chevron { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; color: #625e58; opacity: 0.5; }
+.faq-item .faq-chevron { flex-shrink: 0; color: #625e58; opacity: 0.5; }
 .faq-item[open] .faq-chevron { transform: rotate(180deg); opacity: 1; }
 
 .faq-item .faq-answer { 
   overflow: hidden; 
   padding: 0 2rem 1.75rem 2rem; 
-  animation: faqOpen 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-}
-
-@keyframes faqOpen { 
-  from { opacity: 0; } 
-  to { opacity: 1; } 
 }
 
 .faq-item[open] { background-color: #f5f3f0; }

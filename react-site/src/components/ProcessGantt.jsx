@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import React from 'react';
 
 const phases = [
   {
@@ -76,22 +76,14 @@ export default function ProcessGantt() {
                 <div key={phase.id} className="relative flex items-center h-12">
                    {/* Background track for the bar context */}
                    <div className="absolute inset-x-0 h-full bg-surface-container-highest/30 rounded-lg overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0, opacity: 0 }}
-                        whileInView={{ width: `${phase.gantt.width}%`, opacity: 1 }}
-                        transition={{ 
-                          duration: 1, 
-                          delay: idx * 0.4, // Stagger waterfall effect
-                          ease: "easeOut" 
-                        }}
-                        viewport={{ once: true, margin: "-50px" }}
+                      <div 
                         className="absolute h-full rounded-lg bg-primary flex items-center px-4"
-                        style={{ right: `${phase.gantt.start}%` }}
+                        style={{ right: `${phase.gantt.start}%`, width: `${phase.gantt.width}%` }}
                       >
                          <span className="font-headline font-bold text-xs sm:text-sm text-white truncate drop-shadow-md">
                            {phase.time} <span className="opacity-70 text-[10px] sm:text-xs">({phase.duration})</span>
                          </span>
-                      </motion.div>
+                      </div>
                    </div>
                 </div>
               ))}
@@ -101,14 +93,10 @@ export default function ProcessGantt() {
 
         {/* Story Section - Simple Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {phases.map((phase, idx) => (
-            <motion.div 
+          {phases.map((phase) => (
+            <div 
               key={phase.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-              className="bg-surface p-8 relative card-hover border border-outline/5"
+              className="bg-surface p-8 relative border border-outline/5"
             >
               <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center mb-6 rounded-full">
                 <span className="material-symbols-outlined text-primary text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>{phase.icon}</span>
@@ -117,7 +105,7 @@ export default function ProcessGantt() {
               <p className="font-body text-sm sm:text-base text-secondary leading-relaxed">
                 {phase.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
 

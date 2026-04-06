@@ -1,6 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import { siteData } from '../data/siteData';
 import ProjectCard from '../components/ProjectCard';
 import ArchFrame from '../components/ArchFrame';
@@ -9,7 +8,6 @@ import ProcessSteps from '../components/ProcessSteps';
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
 export default function Home() {
-  useScrollReveal();
   const counterRef = useRef(null);
 
   const animateCounters = useCallback(() => {
@@ -173,7 +171,7 @@ export default function Home() {
             </div>
 
             {/* Content */}
-            <div className="reveal space-y-8">
+            <div className="space-y-8">
               <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">אודות</span>
               <h2 className="font-headline font-black text-5xl lg:text-6xl xl:text-7xl text-primary tracking-tight leading-[0.88]">
                 נעים<br />מאוד,<br />אני טל.
@@ -211,18 +209,18 @@ export default function Home() {
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-16">
             <div className="space-y-4">
-              <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
-              <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
+              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
+              <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
                 מהעשייה שלנו
               </h2>
             </div>
-            <Link to="/projects/completed" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+            <Link to="/projects/completed" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>כל הפרויקטים</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -234,8 +232,6 @@ export default function Home() {
       <ProcessSteps />
 
 
-
-
       {/* ======== SECTION 4: WHY CHOOSE ME ======== */}
       <section className="py-24 lg:py-32 bg-surface-container" ref={counterRef}>
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -243,7 +239,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
             {/* Image with counter overlay */}
-            <div className="flex-1 relative reveal">
+            <div className="flex-1 relative">
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuACbE9Cnfjo1iORbficNIsPOn91AeTraXJqWJf0MFabjk-dFJEYfX6xONs5bxxv8KXm3EteJHeyOnm-hsfMq4h3sfF83LfTCt4XY09VoCkKEE-U2_E10hKB9wuzb2WP7xtruIXkyW6WAy5VdO0m9j5YJpAGArZS-mqdzVgty0sk4OrFy2oe6OX-C9EmklPUU-Fs2zPuwJ9UzIXH10pD0TQpqbpYf79La6XBQZ2EUII7-r-81jitIdTo7gmw6Da24Y9gzm5l_EX0w8gx"
                 alt="טל גורן אדריכלית בעבודה - למעלה מ-25 שנות ניסיון באדריכלות"
@@ -258,14 +254,14 @@ export default function Home() {
 
             {/* Value Props */}
             <div className="flex-1 space-y-6">
-              <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">למה לבחור בנו</span>
-              <h2 className="reveal font-headline font-black text-4xl sm:text-5xl text-primary tracking-tight leading-tight">
+              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">למה לבחור בנו</span>
+              <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary tracking-tight leading-tight">
                 ניסיון, מקצועיות<br />ויחס אישי
               </h2>
 
-              <div className="space-y-10 mt-10 stagger">
+              <div className="space-y-10 mt-10">
                 {/* Value 1 */}
-                <div className="reveal flex gap-6 items-start">
+                <div className="flex gap-6 items-start">
                   <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
                   </div>
@@ -278,7 +274,7 @@ export default function Home() {
                 </div>
 
                 {/* Value 2 */}
-                <div className="reveal flex gap-6 items-start">
+                <div className="flex gap-6 items-start">
                   <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-primary text-2xl">bolt</span>
                   </div>
@@ -291,7 +287,7 @@ export default function Home() {
                 </div>
 
                 {/* Value 3 */}
-                <div className="reveal flex gap-6 items-start">
+                <div className="flex gap-6 items-start">
                   <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-primary text-2xl">family_restroom</span>
                   </div>
@@ -316,7 +312,7 @@ export default function Home() {
       <section className="py-24 lg:py-32">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
 
-          <div className="reveal max-w-4xl mx-auto text-center space-y-8">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
             {/* Large quote marks */}
             <span className="font-headline text-8xl sm:text-9xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
 
@@ -347,12 +343,12 @@ export default function Home() {
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div className="text-right">
-              <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">Social Presence</span>
-              <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight mt-4 italic">
+              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">Social Presence</span>
+              <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight mt-4 italic">
                 TAL GOREN <span className="text-secondary opacity-50 block sm:inline">LIVE</span>
               </h2>
             </div>
-            <Link to="/social" className="reveal inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+            <Link to="/social" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>לכל התכנים מהרשתות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
@@ -361,14 +357,14 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Reels Preview Column */}
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {featuredReels.map((reel) => (
                   <a
                     key={reel.id}
                     href={reel.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="reveal group relative block overflow-hidden card-hover"
+                    className="group relative block overflow-hidden card-hover"
                   >
                     <img
                       src={reel.thumbnail}
@@ -384,7 +380,7 @@ export default function Home() {
             </div>
 
             {/* Social Links Column */}
-            <div className="lg:col-span-4 space-y-8 reveal">
+            <div className="lg:col-span-4 space-y-8">
               <div className="p-8 bg-surface-container-low border border-outline/10">
                 <h3 className="font-headline font-bold text-xl mb-6">עקבו באינסטגרם</h3>
                 <p className="text-secondary text-sm leading-relaxed mb-8">הצצה יומיומית אל מאחורי הקלעים, פרויקטים בתהליך וטיפים לעיצוב הבית.</p>
@@ -423,20 +419,20 @@ export default function Home() {
 
           {/* Section Header */}
           <div className="text-center mb-20 space-y-4">
-            <span className="reveal font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
-            <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">
               שאלות ותשובות
             </h2>
-            <p className="reveal font-body text-lg text-secondary max-w-2xl mx-auto">
+            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">
               ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.
             </p>
           </div>
 
           {/* FAQ Accordion */}
-          <div className="max-w-4xl mx-auto space-y-0 stagger">
+          <div className="max-w-4xl mx-auto space-y-0">
             {siteData.faq.map((item, index) => (
               <div key={index}>
-                <details className="faq-item reveal bg-surface">
+                <details className="faq-item bg-surface">
                   <summary>
                     <span className="font-headline font-bold text-base sm:text-lg text-primary leading-relaxed pl-4">{item.question}</span>
                     <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
@@ -453,7 +449,7 @@ export default function Home() {
           </div>
 
           {/* Link to full FAQ page */}
-          <div className="reveal text-center mt-16">
+          <div className="text-center mt-16">
             <Link to="/faq" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>לכל השאלות והתשובות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
@@ -471,19 +467,19 @@ export default function Home() {
 
         <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
-            <span className="reveal font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
-            <h2 className="reveal font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
+            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
               הבית הבא שלכם<br />מתחיל כאן
             </h2>
-            <p className="reveal font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
+            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
               מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.
             </p>
-            <div className="reveal">
+            <div>
               <Link to="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">
                 לפגישת ייעוץ
               </Link>
             </div>
-            <div className="reveal flex justify-center gap-8 pt-4">
+            <div className="flex justify-center gap-8 pt-4">
               <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
                 <span className="material-symbols-outlined text-lg">call</span>
                 052-8345799
