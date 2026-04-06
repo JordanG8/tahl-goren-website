@@ -76,15 +76,9 @@ function CornerLines({ lines, scrollYProgress, range }) {
 export default function ArchFrame({ children, className = '' }) {
   const ref = useRef(null);
 
-  const { scrollYProgress: rawScroll } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'center center'],
-  });
-
-  const scrollYProgress = useSpring(rawScroll, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
   });
 
   return (

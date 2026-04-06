@@ -136,7 +136,7 @@ export default function ProcessSteps() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full max-w-2xl"
               >
                 <div className="bg-surface p-8 sm:p-12 lg:p-16 text-center space-y-8 border border-outline/10">

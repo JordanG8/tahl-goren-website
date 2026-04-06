@@ -104,9 +104,9 @@ export default function ProcessGantt() {
           {phases.map((phase, idx) => (
             <motion.div 
               key={phase.id}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
               className="bg-surface p-8 relative card-hover border border-outline/5"
             >

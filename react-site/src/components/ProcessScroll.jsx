@@ -54,44 +54,31 @@ const phases = [
 export default function ProcessScroll() {
   const containerRef = useRef(null);
 
-  const { scrollYProgress: rawScroll } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  const scrollYProgress = useSpring(rawScroll, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  // Calculate opacity and translation for each phase based on scroll segments
-  // We have 4 phases, so scroll milestones at roughly 0, 0.33, 0.66, 1
-  
   // Phase 1 (0 to 0.25)
   const o1 = useTransform(scrollYProgress, [0, 0.20, 0.24], [1, 1, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.24], [0, -50]);
   
   // Phase 2 (0.25 to 0.50)
   const o2 = useTransform(scrollYProgress, [0.26, 0.30, 0.45, 0.49], [0, 1, 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.26, 0.49], [50, -50]);
 
   // Phase 3 (0.50 to 0.75)
   const o3 = useTransform(scrollYProgress, [0.51, 0.55, 0.70, 0.74], [0, 1, 1, 0]);
-  const y3 = useTransform(scrollYProgress, [0.51, 0.74], [50, -50]);
 
   // Phase 4 (0.75 to 1)
   const o4 = useTransform(scrollYProgress, [0.76, 0.80], [0, 1]);
-  const y4 = useTransform(scrollYProgress, [0.76, 1], [50, 0]);
 
 
   const getAnimatedProps = (index) => {
     switch(index) {
-      case 0: return { opacity: o1, y: y1 };
-      case 1: return { opacity: o2, y: y2 };
-      case 2: return { opacity: o3, y: y3 };
-      case 3: return { opacity: o4, y: y4 };
-      default: return { opacity: 0, y: 0 };
+      case 0: return { opacity: o1 };
+      case 1: return { opacity: o2 };
+      case 2: return { opacity: o3 };
+      case 3: return { opacity: o4 };
+      default: return { opacity: 0 };
     }
   };
 
@@ -146,9 +133,9 @@ export default function ProcessScroll() {
                   <div className="absolute inset-0 grid grid-cols-2 gap-4 auto-rows-max items-center align-middle content-center">
                     {phase.fields.map((field, idx) => (
                       <motion.div 
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: idx * 0.1 }}
+                        transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                         viewport={{ once: true, margin: "-100px" }}
                         key={idx} 
                         className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex flex-col gap-2"
@@ -172,7 +159,7 @@ export default function ProcessScroll() {
                       <motion.div 
                         initial={{ scale: 0.8, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.8, type: "spring" }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                         className="w-48 h-48 rounded-full border-4 border-primary/30 flex items-center justify-center relative bg-white/5 backdrop-blur-md shadow-[0_0_50px_rgba(var(--color-primary),0.3)]"
                       >
                         <span className="material-symbols-outlined text-white text-6xl" style={{ fontVariationSettings: "'FILL' 1" }}>key</span>
