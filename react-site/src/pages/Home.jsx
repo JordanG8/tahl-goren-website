@@ -159,7 +159,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
             {/* Portrait */}
-            <div className="reveal flex justify-center lg:justify-start">
+            <div className="flex justify-center lg:justify-start">
               <ArchFrame className="w-full max-w-xs sm:max-w-sm">
                 <div className="aspect-[3/4]">
                   <img
