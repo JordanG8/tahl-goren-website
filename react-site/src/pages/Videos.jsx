@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function Videos() {
-  useScrollReveal();
 
   const bgClasses = [
     'bg-surface-container',
@@ -24,7 +22,7 @@ export default function Videos() {
     <>
 
       {/* Page Header */}
-      <section className="py-16 px-8 bg-surface reveal">
+      <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto">
           <Breadcrumb current="סרטונים" />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
@@ -40,7 +38,7 @@ export default function Videos() {
       {/* YouTube Section */}
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 reveal">
+          <div className="mb-16">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">YouTube</span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">מערוץ היוטיוב</h2>
@@ -51,14 +49,14 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 stagger">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
             {siteData.videos.map((video, index) => (
               <a
                 key={video.id}
                 href={video.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="reveal group card-hover block"
+                className="group card-hover block"
               >
                 <div className="relative aspect-video overflow-hidden bg-surface-container">
                   <img
@@ -86,7 +84,7 @@ export default function Videos() {
       {/* Media Mentions Section */}
       <section className="py-24 md:py-32 px-8 bg-surface-container-low">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 reveal">
+          <div className="mb-16">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media</span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">אזכורים בתקשורת</h2>
@@ -96,14 +94,14 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {siteData.mediaArticles.map((article, index) => (
               <a
                 key={index}
                 href={article.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="reveal group card-hover block bg-surface p-8 text-right"
+                className="group card-hover block bg-surface p-8 text-right"
               >
                 <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{article.source}</span>
                 <h3 className="font-headline font-bold text-lg text-primary mt-3 leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
@@ -121,7 +119,7 @@ export default function Videos() {
       {/* Instagram Feed Section */}
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 reveal">
+          <div className="mb-16">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Instagram Reels</span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
               <div>
@@ -137,14 +135,14 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 stagger">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {siteData.instagramReels.map((reel) => (
               <a
                 key={reel.id}
                 href={reel.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="reveal group relative aspect-[9/16] overflow-hidden bg-surface-container"
+                className="group relative aspect-[9/16] overflow-hidden bg-surface-container"
               >
                 <img
                   src={reel.thumbnail}
@@ -161,7 +159,7 @@ export default function Videos() {
       </section>
 
       {/* Facebook Banner */}
-      <section className="py-20 px-8 bg-surface-container-low reveal">
+      <section className="py-20 px-8 bg-surface-container-low">
         <div className="max-w-5xl mx-auto">
           <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="block bg-surface group card-hover overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
@@ -191,7 +189,7 @@ export default function Videos() {
       </section>
 
       {/* CTA - Follow on Social */}
-      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden reveal">
+      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">ברשתות החברתיות</span>

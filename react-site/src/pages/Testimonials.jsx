@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 
 export default function Testimonials() {
-  useScrollReveal();
 
   return (
     <>
 
         {/* Header */}
-        <section className="py-20 md:py-28 px-8 bg-surface reveal">
+        <section className="py-20 md:py-28 px-8 bg-surface">
           <div className="max-w-6xl mx-auto">
             <Breadcrumb items={[
               { label: 'ראשי', to: '/' },
@@ -30,9 +29,9 @@ export default function Testimonials() {
           <div className="max-w-7xl mx-auto space-y-0">
 
             {/* Card 1: Featured large card with image */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 reveal">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               {/* Image side */}
-              <div className="aspect-[4/3] lg:aspect-auto bg-surface-container overflow-hidden img-reveal">
+              <div className="aspect-[4/3] lg:aspect-auto bg-surface-container overflow-hidden">
                 <img
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvWg3UZ6dNKaXX9yYdrTyr-FgVOWgsI-B34lqaiTQMh8Dx0WPxjvO_2mnQcV73GQjBCjnG_1n-PA957A0llGDTBPCBtQdTp2AdoCsrO22x6XAR_RVBgbgWydhWczt2YA1f_s6i_xNDampRmtmWo1fJlJdXRVAxT599oDQJTsAnVw88EAxqNIV-Um06Zz2bOZwF2NuKe4Gk_gUlZM7LRKK7iytDeRkkow-Np4DnWpbMCF3AJc7bqDzxw7JghhTQ9BtBQf9avj7g9xDL"
                   alt="בית משפחת כהן - תכנון אדריכלי"
@@ -63,9 +62,9 @@ export default function Testimonials() {
             </div>
 
             {/* Cards 2 & 3: Two column row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 stagger">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
               {/* Card 2: משפחת לוי */}
-              <div className="bg-surface-container-low p-12 md:p-16 flex flex-col justify-between gap-8 reveal card-hover">
+              <div className="bg-surface-container-low p-12 md:p-16 flex flex-col justify-between gap-8 card-hover">
                 <div>
                   <span className="material-symbols-outlined text-4xl text-primary/15 mb-6 block">format_quote</span>
                   <blockquote className="font-headline text-xl md:text-2xl font-black leading-tight tracking-tight text-primary">
@@ -91,7 +90,7 @@ export default function Testimonials() {
               </div>
 
               {/* Card 3: משפחת מזרחי (with image) */}
-              <div className="bg-surface-container relative overflow-hidden reveal card-hover">
+              <div className="bg-surface-container relative overflow-hidden card-hover">
                 <div className="aspect-[16/9] overflow-hidden">
                   <img
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNE2N2wdYhtDy6oImkEwwIPyL0xqxhk8l-phGy8pM2APN0jmorWalEvqvokpHGWL0uHmKA9m4fw6XXTzLSnU3RE-EQAp7BpL_bQwXjI4YM679LTTt8r2RYM0y6jAD0d3aDAOzBREl-jS6gb1Ir85vaMpn7Q9wFho5wz6YV-wtrb5I_XX_-vI7dwo8AylXrncauw6RMeqIUaw2pS3mSkZRA-q4yPzoF2YOT5HlyPkczQeC_fVpoBD4XgV7FhPsWar2wgNZejBGZ6gwE"
@@ -123,7 +122,7 @@ export default function Testimonials() {
             </div>
 
             {/* Card 4: Horizontal full-width card */}
-            <div className="reveal">
+            <div>
               <div className="bg-surface-container-low p-12 md:p-16 lg:p-20 card-hover">
                 <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                   <div className="lg:col-span-8">
@@ -153,7 +152,7 @@ export default function Testimonials() {
             </div>
 
             {/* Card 5: Full-width dark card */}
-            <div className="reveal">
+            <div>
               <div className="bg-primary relative overflow-hidden">
                 <div className="absolute inset-0 blueprint-grid opacity-5"></div>
                 <div className="relative z-10 p-12 md:p-16 lg:p-24">
@@ -185,7 +184,7 @@ export default function Testimonials() {
         </section>
 
         {/* CTA */}
-        <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden reveal">
+        <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
           <div className="absolute inset-0 bg-primary/95"></div>
           <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">הסיפור הבא</span>

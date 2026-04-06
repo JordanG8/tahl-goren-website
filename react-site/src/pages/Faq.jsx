@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function Faq() {
-  useScrollReveal();
 
   return (
     <>
 
         {/* Page Header */}
-        <section className="py-16 px-8 bg-surface reveal">
+        <section className="py-16 px-8 bg-surface">
           <div className="max-w-6xl mx-auto">
             <Breadcrumb items={[
               { label: 'ראשי', to: '/' },
@@ -28,9 +27,9 @@ export default function Faq() {
 
         {/* FAQ Content */}
         <section className="py-24 px-8 bg-surface-container-low">
-          <div className="max-w-4xl mx-auto stagger" id="full-faq-container">
+          <div className="max-w-4xl mx-auto" id="full-faq-container">
             {siteData.faq.map((item, index) => (
-              <details key={index} className="faq-item reveal bg-surface mb-4">
+              <details key={index} className="faq-item bg-surface mb-4">
                 <summary>
                   <span className="font-headline font-bold text-xl text-primary leading-relaxed pl-4">{item.question}</span>
                   <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
@@ -43,7 +42,7 @@ export default function Faq() {
               </details>
             ))}
 
-            <div className="mt-12 p-10 bg-primary text-white reveal text-center">
+            <div className="mt-12 p-10 bg-primary text-white text-center">
               <h3 className="font-headline font-black text-3xl mb-4">יש לכם שאלה נוספת?</h3>
               <p className="text-white/70 mb-8">אני זמינה לכל שאלה והתייעצות. בואו נדבר.</p>
               <Link to="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors">

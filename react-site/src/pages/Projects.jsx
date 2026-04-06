@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
@@ -28,13 +28,12 @@ const subPages = [
 ];
 
 export default function Projects() {
-  useScrollReveal();
 
   return (
     <>
       {/* Page Header */}
       <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
-        <div className="reveal">
+        <div>
           <Breadcrumb current="פרויקטים" />
           <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
           <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. בחרו קטגוריה כדי לצפות בעבודות שלנו.</p>
@@ -42,13 +41,13 @@ export default function Projects() {
       </section>
 
       {/* Sub-page Cards */}
-      <section className="reveal px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger">
+      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {subPages.map((page) => (
             <Link
               key={page.to}
               to={page.to}
-              className="reveal group block relative overflow-hidden card-hover"
+              className="group block relative overflow-hidden card-hover"
             >
               {/* Image */}
               <div className="aspect-[4/3] overflow-hidden">
@@ -88,7 +87,7 @@ export default function Projects() {
 
       {/* CTA Section */}
       <section className="blueprint-grid bg-surface-container-low">
-        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center reveal">
+        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
           <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">יש לכם פרויקט?</h2>
           <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הבית שאתם חולמים עליו. נשמח להכיר, להקשיב ולהתחיל לתכנן יחד.</p>
           <Link to="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">

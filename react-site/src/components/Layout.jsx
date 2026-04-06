@@ -12,7 +12,7 @@ export default function Layout() {
   }, [location.pathname]);
 
   return (
-    <div className="page-enter">
+    <div>
       <Navbar />
       <main className="pt-24 min-h-screen">
         <Outlet />

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MobileMenu from './MobileMenu';
-import { useNavScroll } from '../hooks/useNavScroll';
 
 const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
@@ -14,19 +13,11 @@ const desktopLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  useNavScroll();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-sm' : 'bg-background'}`}>
+      <nav className="fixed top-0 w-full z-50 bg-background shadow-sm">
         <div className="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
           {/* Logo */}
           <div className="flex-shrink-0 order-2 lg:order-1">

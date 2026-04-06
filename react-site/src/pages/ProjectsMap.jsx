@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 import { siteData } from '../data/siteData';
 
 export default function ProjectsMap() {
-  useScrollReveal();
 
   // Collect unique locations for the legend
   const locations = [...new Set(siteData.projects.map(p => p.location))];
@@ -13,7 +12,7 @@ export default function ProjectsMap() {
     <>
       {/* Page Header */}
       <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
-        <div className="reveal">
+        <div>
           <Breadcrumb items={[
             { label: 'ראשי', to: '/' },
             { label: 'פרויקטים', to: '/projects' },
@@ -25,7 +24,7 @@ export default function ProjectsMap() {
       </section>
 
       {/* Map Section */}
-      <section className="reveal px-8 lg:px-12 pb-12 max-w-[1920px] mx-auto">
+      <section className="px-8 lg:px-12 pb-12 max-w-[1920px] mx-auto">
         <div className="aspect-[16/9] md:aspect-[21/9] bg-surface-container-low overflow-hidden">
           <iframe
             title="מפת הפרויקטים של טל גורן אדריכלות"
@@ -39,7 +38,7 @@ export default function ProjectsMap() {
       </section>
 
       {/* Locations Legend */}
-      <section className="reveal px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
+      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
         <div className="bg-surface-container-low p-8 md:p-12">
           <h3 className="font-headline font-bold text-xl text-primary mb-6">אזורי פעילות</h3>
           <div className="flex flex-wrap gap-4">
@@ -59,7 +58,7 @@ export default function ProjectsMap() {
 
       {/* CTA Section */}
       <section className="blueprint-grid bg-surface-container-low">
-        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center reveal">
+        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
           <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">הבית הבא על המפה יכול להיות שלכם</h2>
           <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הפרויקט שלכם ונוסיף אותו למפה.</p>
           <Link to="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">

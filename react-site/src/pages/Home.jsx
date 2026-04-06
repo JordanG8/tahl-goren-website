@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { siteData } from '../data/siteData';
 import ProjectCard from '../components/ProjectCard';
@@ -8,43 +8,6 @@ import ProcessSteps from '../components/ProcessSteps';
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
 export default function Home() {
-  const counterRef = useRef(null);
-
-  const animateCounters = useCallback(() => {
-    const el = counterRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const target = entry.target;
-            const countTo = parseInt(target.getAttribute('data-count'), 10);
-            const suffix = target.getAttribute('data-suffix') || '';
-            let current = 0;
-            const duration = 2000;
-            const stepTime = Math.max(Math.floor(duration / countTo), 30);
-            const timer = setInterval(() => {
-              current += 1;
-              target.textContent = current + suffix;
-              if (current >= countTo) clearInterval(timer);
-            }, stepTime);
-            observer.unobserve(target);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    el.querySelectorAll('[data-count]').forEach((counter) => observer.observe(counter));
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    return animateCounters();
-  }, [animateCounters]);
-
   const featuredProjects = siteData.projects.slice(0, 6);
   const featuredReels = siteData.instagramReels.slice(0, 4);
 
@@ -66,7 +29,6 @@ export default function Home() {
     });
   }, []);
 
-  // Preload the next video before it becomes active
   useEffect(() => {
     const nextIndex = (activeVideo + 1) % heroVideos.length;
     const nextVideo = videoRefs.current[nextIndex];
@@ -136,7 +98,7 @@ export default function Home() {
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
           <span className="font-label text-[10px] tracking-[0.3em] uppercase">גלילה</span>
-          <div className="w-px h-8 bg-white/30 animate-pulse"></div>
+          <div className="w-px h-8 bg-white/30"></div>
         </div>
 
         {/* Video indicators */}
@@ -233,7 +195,7 @@ export default function Home() {
 
 
       {/* ======== SECTION 4: WHY CHOOSE ME ======== */}
-      <section className="py-24 lg:py-32 bg-surface-container" ref={counterRef}>
+      <section className="py-24 lg:py-32 bg-surface-container">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
 
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
@@ -247,7 +209,7 @@ export default function Home() {
               />
               {/* Counter overlay */}
               <div className="absolute bottom-8 left-8 bg-primary text-white p-6 sm:p-8">
-                <span className="font-headline font-black text-5xl sm:text-6xl block leading-none" data-count="25" data-suffix="+">0</span>
+                <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
                 <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>
               </div>
             </div>

@@ -1,14 +1,9 @@
-import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
-import Breadcrumb from '../components/Breadcrumb';
-
 export default function Contact() {
-  useScrollReveal();
 
   return (
     <>
         {/* Header */}
-        <section className="py-20 px-8 bg-surface reveal">
+        <section className="py-20 px-8 bg-surface">
           <div className="max-w-6xl mx-auto">
             <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-primary">
               בואו נדבר.
@@ -25,7 +20,7 @@ export default function Contact() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
 
               {/* Contact Info */}
-              <div className="reveal space-y-16">
+              <div className="space-y-16">
                 <div className="space-y-12">
                   <div className="flex gap-8 group">
                     <div className="w-16 h-16 bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
@@ -72,7 +67,7 @@ export default function Contact() {
               </div>
 
               {/* Contact Form */}
-              <div className="reveal bg-surface-container p-12 md:p-20">
+              <div className="bg-surface-container p-12 md:p-20">
                 <h2 className="font-headline font-black text-4xl text-primary mb-12">שלחו הודעה</h2>
                 <form className="space-y-8" action="#" method="POST">
                   <div className="space-y-2">

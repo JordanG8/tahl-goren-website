@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+
 import Breadcrumb from '../components/Breadcrumb';
 
 export default function Process() {
-  useScrollReveal();
 
   return (
     <>
       {/* Hero Section */}
       <section className="relative py-24 md:py-36 px-8 blueprint-grid overflow-hidden">
-        <div className="max-w-6xl mx-auto flex flex-col items-start gap-6 relative z-10 reveal">
+        <div className="max-w-6xl mx-auto flex flex-col items-start gap-6 relative z-10">
           <Breadcrumb current="תהליך העבודה" />
           <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">מהסקיצה הראשונה ועד לכניסה הביתה</span>
           <h1 className="font-headline font-black text-6xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.9] max-w-4xl text-primary">
@@ -36,7 +35,7 @@ export default function Process() {
       {/* Stage 01 */}
       <section className="py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center reveal">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
             {/* Text - Right side (appears first in RTL) */}
             <div className="md:col-span-5 flex flex-col gap-8">
               <div className="flex items-center gap-6">
@@ -69,7 +68,7 @@ export default function Process() {
             </div>
             {/* Image - Left side */}
             <div className="md:col-span-7 relative">
-              <div className="aspect-video bg-surface-container overflow-hidden img-reveal">
+              <div className="aspect-video bg-surface-container overflow-hidden">
                 <img
                   alt="תכנון וסקיצות אדריכליות"
                   className="w-full h-full object-cover img-grayscale"
@@ -87,10 +86,10 @@ export default function Process() {
       {/* Stage 02 */}
       <section className="py-32 px-8 bg-surface-container-low">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center reveal">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
             {/* Image - Right side (appears first in RTL) */}
             <div className="md:col-span-7 order-2 md:order-1 relative">
-              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden img-reveal">
+              <div className="aspect-[4/3] bg-surface-container-highest overflow-hidden">
                 <img
                   alt="ניהול היתרים ורישוי"
                   className="w-full h-full object-cover img-grayscale"
@@ -133,7 +132,7 @@ export default function Process() {
       {/* Stage 03 */}
       <section className="py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center reveal">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
             {/* Text - Right side */}
             <div className="md:col-span-6 flex flex-col gap-8">
               <div className="flex items-center gap-6">
@@ -183,7 +182,7 @@ export default function Process() {
       </section>
 
       {/* Stage 04 */}
-      <section className="relative bg-primary text-white py-32 md:py-40 px-8 overflow-hidden reveal">
+      <section className="relative bg-primary text-white py-32 md:py-40 px-8 overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-5"></div>
         <div className="relative z-10 max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -216,7 +215,7 @@ export default function Process() {
       </section>
 
       {/* Testimonial */}
-      <section className="py-32 md:py-40 px-8 bg-surface-container-low reveal">
+      <section className="py-32 md:py-40 px-8 bg-surface-container-low">
         <div className="max-w-4xl mx-auto text-center">
           <span className="material-symbols-outlined text-7xl text-primary/15 mb-10 block">format_quote</span>
           <blockquote className="font-headline text-3xl md:text-5xl font-black leading-tight mb-12 tracking-tight text-primary">
@@ -230,7 +229,7 @@ export default function Process() {
       </section>
 
       {/* CTA */}
-      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden reveal">
+      <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">הצעד הבא</span>

@@ -4,7 +4,7 @@ export default function ProjectCard({ project }) {
       href={project.originalLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="reveal group block relative overflow-hidden card-hover"
+      className="group block relative overflow-hidden card-hover"
     >
       <div className="aspect-[4/3] overflow-hidden">
         <img
