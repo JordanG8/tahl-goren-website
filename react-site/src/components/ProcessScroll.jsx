@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const phases = [
   {
@@ -54,9 +54,15 @@ const phases = [
 export default function ProcessScroll() {
   const containerRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: rawScroll } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
+  });
+
+  const scrollYProgress = useSpring(rawScroll, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
   });
 
   // Calculate opacity and translation for each phase based on scroll segments
@@ -143,7 +149,7 @@ export default function ProcessScroll() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, delay: idx * 0.1 }}
-                        viewport={{ once: false, margin: "-100px" }}
+                        viewport={{ once: true, margin: "-100px" }}
                         key={idx} 
                         className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex flex-col gap-2"
                       >

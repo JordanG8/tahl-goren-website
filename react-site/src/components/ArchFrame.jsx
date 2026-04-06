@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 // PAD  — image inset from container edge
 // GAP  — space between image edge and the frame lines
@@ -76,9 +76,15 @@ function CornerLines({ lines, scrollYProgress, range }) {
 export default function ArchFrame({ children, className = '' }) {
   const ref = useRef(null);
 
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: rawScroll } = useScroll({
     target: ref,
     offset: ['start end', 'center center'],
+  });
+
+  const scrollYProgress = useSpring(rawScroll, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
   });
 
   return (
