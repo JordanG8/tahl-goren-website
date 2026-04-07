@@ -1,9 +1,4 @@
 {
-  "rootDirectory": "react-site",
-  "framework": "vite",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "rootDirectory": "next-site",
+  "framework": "nextjs"
 }
