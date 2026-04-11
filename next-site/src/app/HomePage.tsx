@@ -17,10 +17,13 @@ type Props = {
 
 export default function HomePage({ projects, faqItems, reels }: Props) {
   const featuredProjects = projects.slice(0, 6);
-  const featuredReels = reels.slice(0, 4);
+  const featuredReels = reels.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const socialCarouselRef = useRef<HTMLDivElement | null>(null);
+  const reelVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [activeReel, setActiveReel] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,6 +46,56 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
       nextVideo.load();
     }
   }, [activeVideo]);
+
+  useEffect(() => {
+    reelVideoRefs.current.forEach((video, idx) => {
+      if (!video) return;
+      if (idx === activeReel) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, [activeReel]);
+
+  const getReelVideoSrc = (reel: any) =>
+    reel.videoUrl ||
+    reel.video?.asset?.url ||
+    reel.video ||
+    reel.mp4Url ||
+    null;
+
+  const scrollToReel = (index: number) => {
+    const container = socialCarouselRef.current;
+    if (!container) return;
+    const card = container.querySelector<HTMLElement>(`[data-reel-index="${index}"]`);
+    if (!card) return;
+    const left = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+    container.scrollTo({ left, behavior: 'smooth' });
+  };
+
+  const handleReelScroll = () => {
+    const container = socialCarouselRef.current;
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll<HTMLElement>('[data-reel-index]'));
+    if (!cards.length) return;
+
+    const center = container.scrollLeft + container.clientWidth / 2;
+    let nearest = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(cardCenter - center);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearest = index;
+      }
+    });
+
+    if (nearest !== activeReel) setActiveReel(nearest);
+  };
 
   return (
     <>
@@ -138,6 +191,27 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* IMAGE STRIP */}
+      <section className="py-0 -mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
+          {[
+            { src: '/images/projects/persman-exterior.jpg', alt: 'בית פרסמן - חזית' },
+            { src: '/images/projects/shakolnik-warm.jpg', alt: 'בית שקולניק - סלון' },
+            { src: '/images/projects/vild-living.jpg', alt: 'בית וילד - מרחב יומיומי' },
+            { src: '/images/projects/persman-interior.jpg', alt: 'בית פרסמן - פנים' },
+          ].map((img) => (
+            <div key={img.src} className="relative aspect-square overflow-hidden group">
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* PROCESS */}
       <ProcessSteps />
 
@@ -146,7 +220,7 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 relative">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuACbE9Cnfjo1iORbficNIsPOn91AeTraXJqWJf0MFabjk-dFJEYfX6xONs5bxxv8KXm3EteJHeyOnm-hsfMq4h3sfF83LfTCt4XY09VoCkKEE-U2_E10hKB9wuzb2WP7xtruIXkyW6WAy5VdO0m9j5YJpAGArZS-mqdzVgty0sk4OrFy2oe6OX-C9EmklPUU-Fs2zPuwJ9UzIXH10pD0TQpqbpYf79La6XBQZ2EUII7-r-81jitIdTo7gmw6Da24Y9gzm5l_EX0w8gx" alt="טל גורן אדריכלית בעבודה" className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover img-grayscale" />
+              <img src="/images/projects/nucham-living.jpg" alt="טל גורן אדריכלית בעבודה" className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover img-grayscale" />
               <div className="absolute bottom-8 left-8 bg-primary text-white p-6 sm:p-8">
                 <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
                 <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>
@@ -178,8 +252,20 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
       </section>
 
       {/* TESTIMONIAL */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+      <section className="py-24 lg:py-32 relative overflow-hidden">
+        <img
+          src="/images/projects/shakolnik-detail.jpg"
+          alt=""
+          aria-hidden
+          className="hidden lg:block absolute top-1/2 right-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
+        />
+        <img
+          src="/images/projects/nucham-detail.jpg"
+          alt=""
+          aria-hidden
+          className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
+        />
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12 relative">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <span className="font-headline text-8xl sm:text-9xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
             <blockquote className="font-headline font-bold text-2xl sm:text-3xl lg:text-4xl text-primary leading-relaxed -mt-12">
@@ -214,15 +300,78 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {featuredReels.map((reel: any) => (
-                  <a key={reel.id} href={reel.url} target="_blank" rel="noreferrer" className="group relative block overflow-hidden card-hover">
-                    <img src={reel.thumbnail} alt="Instagram Reel" className="w-full h-[300px] object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-white text-4xl opacity-80 group-hover:opacity-100 transition-opacity" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
-                    </div>
-                  </a>
-                ))}
+              <div className="relative">
+                <div
+                  ref={socialCarouselRef}
+                  onScroll={handleReelScroll}
+                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 no-scrollbar"
+                >
+                  {featuredReels.map((reel: any, index: number) => {
+                    const videoSrc = getReelVideoSrc(reel);
+                    const isActive = index === activeReel;
+                    return (
+                      <a
+                        key={reel.id}
+                        data-reel-index={index}
+                        href={reel.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`group relative block flex-shrink-0 snap-center overflow-hidden transition-all duration-300 ${isActive ? 'basis-[80%] md:basis-[52%]' : 'basis-[70%] md:basis-[42%] opacity-85'}`}
+                      >
+                        <div className="relative h-[360px] md:h-[420px]">
+                          {isActive && videoSrc ? (
+                            <video
+                              ref={(el) => { reelVideoRefs.current[index] = el; }}
+                              src={videoSrc}
+                              poster={reel.thumbnail}
+                              muted
+                              loop
+                              playsInline
+                              autoPlay
+                              preload="metadata"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <img
+                              src={reel.thumbnail}
+                              alt="Instagram Reel thumbnail"
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                          )}
+                          <div className={`absolute inset-0 transition-colors duration-300 flex items-center justify-center ${isActive ? 'bg-black/10' : 'bg-black/25 group-hover:bg-black/40'}`}>
+                            <span className="material-symbols-outlined text-white text-4xl opacity-90 transition-opacity" style={{ fontVariationSettings: "'FILL' 1" }}>
+                              {isActive && videoSrc ? 'volume_off' : 'play_circle'}
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+                <button
+                  onClick={() => scrollToReel(Math.max(activeReel - 1, 0))}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/45 text-white flex items-center justify-center hover:bg-black/65 transition-colors"
+                  aria-label="הקודם"
+                >
+                  <span className="material-symbols-outlined">chevron_right</span>
+                </button>
+                <button
+                  onClick={() => scrollToReel(Math.min(activeReel + 1, featuredReels.length - 1))}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/45 text-white flex items-center justify-center hover:bg-black/65 transition-colors"
+                  aria-label="הבא"
+                >
+                  <span className="material-symbols-outlined">chevron_left</span>
+                </button>
+                <div className="flex items-center justify-center gap-2 mt-5">
+                  {featuredReels.map((reel: any, index: number) => (
+                    <button
+                      key={reel.id}
+                      onClick={() => scrollToReel(index)}
+                      className={`h-1.5 transition-all ${index === activeReel ? 'w-8 bg-primary' : 'w-3 bg-outline/40'}`}
+                      aria-label={`מעבר לסרטון ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
             <div className="lg:col-span-4 space-y-8">
@@ -287,6 +436,13 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
 
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-primary relative overflow-hidden">
+        <img
+          src="/images/projects/vild-detail.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-primary/70" />
         <div className="absolute inset-0 blueprint-grid opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)' }} />
         <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
           <div className="max-w-3xl mx-auto space-y-8">

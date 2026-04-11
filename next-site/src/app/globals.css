@@ -32,6 +32,19 @@ html {
   vertical-align: middle;
 }
 
+@keyframes loadingBar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+.animate-loadingBar {
+  animation: loadingBar 1.9s ease-out forwards;
+}
+
+@media (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, [role="button"], summary, input, textarea, select, label { cursor: none; }
+}
+
 .blueprint-grid {
   background-image:
     linear-gradient(to right, rgba(98, 94, 88, 0.06) 1px, transparent 1px),
