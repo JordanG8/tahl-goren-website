@@ -35,6 +35,7 @@ export default async function Page() {
         id: r._id,
         url: r.url,
         thumbnail: r.thumbnail?.asset?.url || r.thumbnail,
+        videoUrl: r.videoUrl || r.video?.asset?.url || r.video,
       }));
     }
   } catch {}
