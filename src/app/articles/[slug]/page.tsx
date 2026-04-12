@@ -117,7 +117,7 @@ export default async function ArticlePage(
 
       {/* Hero */}
       <section className="relative">
-        <div className="aspect-[21/9] max-h-[480px] w-full overflow-hidden">
+        <div className="aspect-[3/2] sm:aspect-[21/9] max-h-[480px] w-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={article.heroImage}
@@ -126,7 +126,7 @@ export default async function ArticlePage(
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
         </div>
-        <div className="absolute inset-0 flex items-end">
+        <div className="absolute inset-0 flex items-end overflow-hidden">
           <div className="max-w-4xl mx-auto w-full px-8 pb-12 text-right">
             <div className="flex items-center gap-1 mb-6 font-label text-xs text-white/70 tracking-wide flex-row-reverse">
               <Link href="/" className="hover:text-white transition-colors">
