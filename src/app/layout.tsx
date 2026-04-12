@@ -34,7 +34,7 @@ export default async function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-background text-on-surface font-body">
+      <body className="bg-background text-on-surface font-body pb-[10vh] sm:pb-0">
         <LoadingScreen />
         <CursorEffect />
         <Navbar />
