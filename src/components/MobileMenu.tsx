@@ -4,20 +4,48 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const primaryLinks = [
-  { to: '/projects', label: 'פרויקטים' },
-  { to: '/process', label: 'תהליך העבודה' },
-  { to: '/services', label: 'שירותים' },
-  { to: '/about', label: 'אודות' },
-  { to: '/testimonials', label: 'לקוחות מספרים' },
-  { to: '/social', label: 'רשתות חברתיות' },
+const navCategories = [
+  {
+    label: 'ראשי',
+    links: [
+      { to: '/projects', label: 'פרויקטים' },
+      { to: '/process', label: 'תהליך העבודה' },
+      { to: '/services', label: 'שירותים' },
+      { to: '/about', label: 'אודות' },
+    ],
+  },
+  {
+    label: 'תוכן',
+    links: [
+      { to: '/articles', label: 'מאמרים' },
+      { to: '/faq', label: 'שאלות ותשובות' },
+      { to: '/videos', label: 'סרטונים' },
+    ],
+  },
+  {
+    label: 'קהילה',
+    links: [
+      { to: '/testimonials', label: 'לקוחות מספרים' },
+      { to: '/social', label: 'רשתות חברתיות' },
+    ],
+  },
 ];
 
-const secondaryLinks = [
-  { to: '/articles', label: 'מאמרים' },
-  { to: '/faq', label: 'שאלות ותשובות' },
-  { to: '/videos', label: 'סרטונים' },
+const legalLinks = [
+  { to: '/privacy', label: 'מדיניות פרטיות' },
+  { to: '/terms', label: 'תנאי שימוש' },
 ];
+
+// Precompute stagger indices for link animations
+const navCategoriesWithIndices = navCategories.map((cat, catIdx) => {
+  const baseIdx = navCategories
+    .slice(0, catIdx)
+    .reduce((sum, c) => sum + c.links.length, 0);
+  return {
+    ...cat,
+    links: cat.links.map((link, linkIdx) => ({ ...link, staggerIdx: baseIdx + linkIdx })),
+  };
+});
 
 export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const pathname = usePathname();
@@ -50,6 +78,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
+        {/* Header */}
         <div className="flex justify-between items-center px-8 py-6 border-b border-outline/20">
           <button
             onClick={onClose}
@@ -60,54 +89,90 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           <span className="text-xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</span>
         </div>
 
-        <div className="flex-grow overflow-y-auto px-8 py-10">
-          <nav className="flex flex-col gap-5 text-right">
-            {primaryLinks.map((link, i) => {
-              const isActive = pathname === link.to;
-              return (
-                <Link
-                  key={link.to}
-                  href={link.to}
-                  onClick={onClose}
-                  className={`relative font-headline font-bold text-[1.65rem] leading-tight inline-block transition-all duration-500 group ${
-                    isActive ? 'text-primary' : 'text-secondary hover:text-primary'
-                  }`}
+        <div className="flex-grow overflow-y-auto px-8 py-8">
+          {/* Home button */}
+          <div
+            style={{
+              opacity: isOpen ? 1 : 0,
+              transform: isOpen ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s',
+            }}
+          >
+            <Link
+              href="/"
+              onClick={onClose}
+              className="flex items-center justify-center gap-2 w-full border border-primary/30 text-primary py-3 px-8 font-body text-base hover:bg-primary/5 transition-colors mb-8 text-right"
+            >
+              <span className="material-symbols-outlined text-base">home</span>
+              עמוד הבית
+            </Link>
+          </div>
+
+          {/* Categorised navigation */}
+          <nav className="flex flex-col gap-7 text-right">
+            {navCategoriesWithIndices.map((category, catIdx) => (
+              <div key={category.label}>
+                <span
+                  className="block font-body text-[10px] uppercase tracking-[0.25em] text-secondary/50 mb-3"
                   style={{
                     opacity: isOpen ? 1 : 0,
-                    transform: isOpen ? 'translateY(0)' : 'translateY(16px)',
-                    transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.07}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.07}s, color 0.3s ease`,
+                    transition: `opacity 0.4s ease ${0.15 + catIdx * 0.1}s`,
                   }}
                 >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-[-4px] right-0 h-[2px] bg-secondary transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  />
-                </Link>
-              );
-            })}
+                  {category.label}
+                </span>
+                <div className="flex flex-col gap-3">
+                  {category.links.map((link) => {
+                    const isActive = pathname === link.to;
+                    return (
+                      <Link
+                        key={link.to}
+                        href={link.to}
+                        onClick={onClose}
+                        className={`relative font-headline font-bold text-[1.5rem] leading-tight inline-block transition-all duration-500 group ${
+                          isActive ? 'text-primary' : 'text-secondary hover:text-primary'
+                        }`}
+                        style={{
+                          opacity: isOpen ? 1 : 0,
+                          transform: isOpen ? 'translateY(0)' : 'translateY(16px)',
+                          transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${0.2 + link.staggerIdx * 0.06}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${0.2 + link.staggerIdx * 0.06}s, color 0.3s ease`,
+                        }}
+                      >
+                        {link.label}
+                        <span
+                          className={`absolute bottom-[-4px] right-0 h-[2px] bg-secondary transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                          }`}
+                        />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
 
+          {/* Divider */}
           <div
             className="h-px bg-outline/20 my-8 origin-right transition-transform duration-600"
             style={{
               transform: isOpen ? 'scaleX(1)' : 'scaleX(0)',
-              transitionDelay: isOpen ? '0.5s' : '0s',
+              transitionDelay: isOpen ? '0.85s' : '0s',
             }}
           />
 
+          {/* Legal links */}
           <div className="flex flex-wrap gap-x-8 gap-y-3 justify-end">
-            {secondaryLinks.map((link, i) => (
+            {legalLinks.map((link, i) => (
               <Link
                 key={link.to}
                 href={link.to}
                 onClick={onClose}
-                className="font-label text-sm tracking-wide text-secondary/60 hover:text-primary transition-colors"
+                className="font-body text-sm text-secondary/60 hover:text-primary transition-colors"
                 style={{
                   opacity: isOpen ? 1 : 0,
                   transform: isOpen ? 'translateY(0)' : 'translateY(10px)',
-                  transition: `opacity 0.4s ease ${0.55 + i * 0.05}s, transform 0.4s ease ${0.55 + i * 0.05}s`,
+                  transition: `opacity 0.4s ease ${0.90 + i * 0.05}s, transform 0.4s ease ${0.90 + i * 0.05}s`,
                 }}
               >
                 {link.label}
@@ -115,12 +180,13 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
             ))}
           </div>
 
+          {/* CTA */}
           <div
-            className="mt-10"
+            className="mt-8"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'opacity 0.4s ease 0.72s, transform 0.4s ease 0.72s',
+              transition: 'opacity 0.4s ease 1.0s, transform 0.4s ease 1.0s',
             }}
           >
             <Link
@@ -133,12 +199,13 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           </div>
         </div>
 
+        {/* Footer */}
         <div
           className="px-8 py-6 border-t border-outline/20"
           style={{
             opacity: isOpen ? 1 : 0,
             transform: isOpen ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s',
+            transition: 'opacity 0.5s ease 0.95s, transform 0.5s ease 0.95s',
           }}
         >
           <div className="flex justify-center gap-6 mb-3">
@@ -149,7 +216,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
           </div>
-          <div className="text-center font-label text-[11px] tracking-[0.15em] text-secondary/40">
+          <div className="text-center font-body text-[11px] tracking-[0.15em] text-secondary/40">
             052-8345799 &middot; tahl.goren.arch@gmail.com
           </div>
         </div>
