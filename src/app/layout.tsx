@@ -38,7 +38,7 @@ export default async function RootLayout({
         <LoadingScreen />
         <CursorEffect />
         <Navbar />
-        <main className="pt-24 min-h-screen">{children}</main>
+        <main className="min-h-screen">{children}</main>
         <FloatingBar />
         <Footer />
         {isDraftMode && <VisualEditing />}
