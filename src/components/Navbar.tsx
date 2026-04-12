@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-background shadow-sm">
+      <nav className="relative w-full z-50 bg-background shadow-sm">
         <div className="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
           <div className="flex-shrink-0 order-2 lg:order-1">
             <Link href="/" className="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</Link>
