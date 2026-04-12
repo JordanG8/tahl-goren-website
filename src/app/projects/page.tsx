@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
 import { siteData } from '@/data/siteData';
 
-const subPages = [
+const categories = [
   {
     href: '/projects/completed',
     title: 'בתים מאוכלסים',
@@ -18,13 +19,6 @@ const subPages = [
     icon: 'architecture',
     image: siteData.projects[2]?.image,
   },
-  {
-    href: '/projects/map',
-    title: 'מפת הפרויקטים',
-    description: 'כל הפרויקטים שתכננו לאורך השנים על גבי המפה — מנתניה ועד חיפה.',
-    icon: 'map',
-    image: siteData.projects[4]?.image,
-  },
 ];
 
 export default function Projects() {
@@ -35,14 +29,20 @@ export default function Projects() {
         <div>
           <Breadcrumb current="פרויקטים" />
           <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. בחרו קטגוריה כדי לצפות בעבודות שלנו.</p>
+          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. לחצו על אזור במפה לצפייה בפרויקטים.</p>
         </div>
       </section>
 
-      {/* Sub-page Cards */}
+      {/* Interactive Map */}
+      <section className="px-8 lg:px-12 pb-16 max-w-[1920px] mx-auto">
+        <InteractiveProjectsMap />
+      </section>
+
+      {/* Category Cards */}
       <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {subPages.map((page) => (
+        <h2 className="font-headline font-bold text-2xl text-primary mb-8">קטגוריות</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {categories.map((page) => (
             <Link
               key={page.href}
               href={page.href}
