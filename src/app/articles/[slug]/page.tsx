@@ -117,7 +117,7 @@ export default async function ArticlePage(
 
       {/* Hero */}
       <section className="relative">
-        <div className="aspect-[21/9] max-h-[480px] w-full overflow-hidden">
+        <div className="aspect-[16/9] md:aspect-[21/9] md:max-h-[480px] w-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={article.heroImage}
