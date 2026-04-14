@@ -6,6 +6,7 @@ import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ProcessSteps from '@/components/ProcessSteps';
+import ShapeDivider from '@/components/ShapeDivider';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -137,8 +138,13 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* Hero → About divider */}
+      <div className="relative -mt-24 z-10">
+        <ShapeDivider shape="wave" fillColor="#eeeeea" height={100} />
+      </div>
+
       {/* SHORT ABOUT */}
-      <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden">
+      <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden -mt-1">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div className="flex justify-center lg:justify-start">
@@ -170,18 +176,21 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* About → Projects divider */}
+      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={70} className="bg-surface-container-low" />
+
       {/* FEATURED PROJECTS */}
-      <section className="py-24 lg:py-32">
+      <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-16">
+          <div className="mb-16">
             <div className="space-y-4">
               <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
               <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מהעשייה שלנו</h2>
+              <Link href="/projects/completed" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
+                <span>כל הפרויקטים</span>
+                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+              </Link>
             </div>
-            <Link href="/projects/completed" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>כל הפרויקטים</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project: any) => (
@@ -212,11 +221,17 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* Image strip → Process divider */}
+      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
+
       {/* PROCESS */}
       <ProcessSteps />
 
+      {/* Process → Why Choose Me divider */}
+      <ShapeDivider shape="drops" fillColor="#f5f3f0" height={70} className="bg-surface-container-low" />
+
       {/* WHY CHOOSE ME */}
-      <section className="py-24 lg:py-32 bg-surface-container">
+      <section className="py-24 lg:py-32 bg-surface-container -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 relative">
@@ -251,8 +266,11 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* Why Choose Me → Testimonial divider */}
+      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={80} className="bg-surface-container" />
+
       {/* TESTIMONIAL */}
-      <section className="py-24 lg:py-32 relative overflow-hidden">
+      <section className="py-24 lg:py-32 relative overflow-hidden -mt-1">
         <img
           src="/images/projects/shakolnik-detail.jpg"
           alt=""
@@ -401,8 +419,11 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* Social → FAQ divider */}
+      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
+
       {/* FAQ */}
-      <section className="py-24 lg:py-32 bg-surface-container-low">
+      <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="text-center mb-20 space-y-4">
             <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
@@ -434,8 +455,11 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
+      {/* FAQ → CTA divider */}
+      <ShapeDivider shape="wave" fillColor="#30332f" height={100} className="bg-surface-container-low" />
+
       {/* CTA */}
-      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden">
+      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
         <img
           src="/images/projects/vild-detail.jpg"
           alt=""
