@@ -1,83 +1,82 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
+import { useState } from "react";
 
 const steps = [
-  { id: 1, title: 'בירורים מקדימים', stepDuration: 'חודש אחד', cumulativeTotal: 'חודש 1', description: "'מתכננים מה לתכנן'. בודקים סינכרון בין 3 דברים פשוטים:", bullets: ['מה רוצים לבנות?', 'מה מותר לבנות?', 'מה התקציב, והאם הוא מספיק?'], meetings: ['פגישת היכרות ותיאום ציפיות', 'סגירת תוכנית ודרישות'] },
-  { id: 2, title: 'תכנון מוקדם', stepDuration: 'כ-3 חודשים', cumulativeTotal: '4 חודשים', description: 'יושבים יחד ומתחילים לצייר את הבית. בוחרים את התוכנית הכי טובה ורואים אותה בתלת מימד.', bullets: [], meetings: ['בחינת חלופות לתוכנית הקומות', 'ליטוש ושיפור התוכנית הנבחרת', 'אישור תוכנית סופית', 'הדמיות תלת מימד וחזיתות', 'אישור סופי של הסימולציה'] },
-  { id: 3, title: 'רישוי', stepDuration: 'כ-5 חודשים', cumulativeTotal: '9 חודשים', description: 'מכינים את כל הניירת ומגישים לוועדה המקומית. אנחנו מטפלים בכל הביורוקרטיה, אתם רק חותמים.', bullets: [], meetings: ['איסוף מסמכים מהמשפחה', 'תיקונים לפי הערות הרשויות'] },
-  { id: 4, title: 'תכניות מפורטות', stepDuration: 'כ-3 חודשים', cumulativeTotal: 'שנה', description: 'מתכננים כל פרט קטן בבית: כל שקע חשמל, כל ברז, כל ארון. הכל ביחד, צעד אחרי צעד.', bullets: [], meetings: ['הסברים כלליים ותכנון מערכות', 'אינסטלציה ואלומיניום', 'חשמל ותקשורת', 'חדרי רחצה', 'מטבח', 'עיצוב פנים - חללים ציבוריים', 'עיצוב פנים - חדרי שינה', 'נגרות והכנה לימי בחירות'] },
-  { id: 5, title: 'מכרזים ובניה', stepDuration: 'כ-8 חודשים', cumulativeTotal: 'שנה ו-8 חודשים', description: 'הטרקטורים נכנסים! אנחנו מפקחים על הבנייה ומלווים אתכם גם בבחירת החומרים.', bullets: [], meetings: ['אישור חלוקת קירות בלוקים', 'סימון נקודות אינסטלציה וחשמל', 'הנחיית רצף ומטבח', 'סיור מסירה לפני תעודת גמר'] },
-  { id: 6, title: 'סיום ותעודת גמר', stepDuration: 'שבועות ספורים', cumulativeTotal: 'כשנתיים', description: "אוספים את כל האישורים ומשיגים 'תעודת גמר' מהרשויות. אנחנו מטפלים בהכל — אתם רק נכנסים הביתה.", bullets: [], meetings: [] },
+  { id: 1, title: "בירורים מקדימים", duration: "חודש", icon: "search", description: "בודקים סינכרון בין מה רוצים, מה מותר ומה התקציב." },
+  { id: 2, title: "תכנון מוקדם", duration: "3 חודשים", icon: "draw", description: "יושבים יחד ומתחילים לצייר את הבית. בוחרים את התוכנית הכי טובה ורואים אותה בתלת מימד." },
+  { id: 3, title: "רישוי", duration: "5 חודשים", icon: "gavel", description: "מכינים את כל הניירת ומגישים לוועדה. אנחנו מטפלים בכל הביורוקרטיה, אתם רק חותמים." },
+  { id: 4, title: "תכניות מפורטות", duration: "3 חודשים", icon: "architecture", description: "מתכננים כל פרט: כל שקע חשמל, כל ברז, כל ארון. הכל ביחד, צעד אחרי צעד." },
+  { id: 5, title: "מכרזים ובניה", duration: "8 חודשים", icon: "construction", description: "הטרקטורים נכנסים! אנחנו מפקחים על הבנייה ומלווים אתכם בבחירת החומרים." },
+  { id: 6, title: "סיום ותעודת גמר", duration: "שבועות", icon: "home", description: "אוספים אישורים ומשיגים תעודת גמר. אנחנו מטפלים בהכל — אתם נכנסים הביתה." },
 ];
 
 export default function ProcessSteps() {
+  const [openStep, setOpenStep] = useState<number | null>(null);
+
   return (
-    <>
-      <section className="min-h-[100dvh] flex flex-col items-center justify-center text-center px-6 sm:px-12 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="relative z-10 max-w-3xl space-y-8">
-          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-7xl text-white tracking-tight leading-[1.1]">זה יכול להתחיל<br />ממש עכשיו</h2>
-          <p className="font-body text-xl sm:text-2xl text-white/70 leading-relaxed max-w-2xl mx-auto">אתם שיחת טלפון אחת מלהתחיל לבנות את הבית שתגדלו בו את הילדים שלכם.</p>
-          <a href="tel:0528345799" className="inline-flex items-center gap-3 bg-white text-primary px-12 py-5 font-headline font-bold text-lg uppercase tracking-widest hover:bg-white/90 transition-colors group">
-            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>call</span>
-            התקשרו עכשיו
-          </a>
-          <p className="font-label text-sm text-white/40 tracking-wide">052-8345799 · טל גורן</p>
-        </div>
-      </section>
-
-      <section className="bg-surface-container-low relative">
-        <div className="min-h-[60dvh] flex flex-col items-center justify-center text-center px-6">
-          <div className="space-y-4">
-            <span className="font-label text-xs tracking-[0.3em] text-secondary uppercase block">6 שלבים פשוטים</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight max-w-3xl">מה קורה אחרי השיחה?</h2>
-            <p className="font-body text-lg sm:text-xl text-secondary max-w-xl mx-auto">הנה בדיוק מה שקורה, שלב אחרי שלב. בלי הפתעות.</p>
-          </div>
+    <section className="py-24 lg:py-32 bg-surface-container-low" id="process">
+      <div className="max-w-4xl mx-auto px-8 lg:px-12">
+        <div className="text-center mb-16 space-y-4">
+          <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">6 שלבים פשוטים</span>
+          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה קורה אחרי השיחה?</h2>
+          <p className="font-body text-lg text-secondary max-w-xl mx-auto">הנה בדיוק מה שקורה, שלב אחרי שלב. בלי הפתעות.</p>
         </div>
 
-        <div className="w-full relative pb-24 lg:pb-32">
-          {steps.map((step) => (
-            <div key={step.id} className="w-full min-h-[100dvh] flex items-center justify-center px-6 sm:px-12 lg:px-24 py-16">
-              <div className="w-full max-w-2xl">
-                <div className="bg-surface p-8 sm:p-12 lg:p-16 text-center space-y-8 border border-outline/10">
-                  <div className="space-y-2">
-                    <span className="font-headline font-black text-7xl sm:text-8xl lg:text-9xl text-primary/20 leading-none block select-none">{String(step.id).padStart(2, '0')}</span>
-                    <h3 className="font-headline font-black text-3xl sm:text-4xl lg:text-5xl text-primary tracking-tight leading-[1.1]">{step.title}</h3>
-                  </div>
-                  <div className="inline-flex items-center bg-primary overflow-hidden mx-auto">
-                    <div className="px-5 py-3 text-center">
-                      <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">שלב זה</span>
-                      <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.stepDuration}</span>
-                    </div>
-                    <div className="w-px h-10 bg-white/20" />
-                    <div className="px-5 py-3 text-center">
-                      <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">סה״כ מתחילת התהליך</span>
-                      <span className="font-headline font-bold text-sm sm:text-base text-white block mt-0.5">{step.cumulativeTotal}</span>
-                    </div>
-                  </div>
-                  <p className="font-body text-lg sm:text-xl text-secondary leading-relaxed max-w-lg mx-auto">{step.description}</p>
-                  {step.bullets.length > 0 && (
-                    <ul className="space-y-3">
-                      {step.bullets.map((b, i) => (
-                        <li key={i} className="font-headline font-bold text-lg sm:text-xl text-primary">{b}</li>
-                      ))}
-                    </ul>
-                  )}
-                  {step.meetings.length > 0 && (
-                    <div className="pt-6 border-t border-outline/10 space-y-4">
-                      <span className="font-label text-[10px] tracking-[0.2em] text-secondary/60 uppercase block">פגישות בשלב הזה</span>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {step.meetings.map((m, i) => (
-                          <span key={i} className="font-label text-xs text-secondary bg-surface-container-low border border-outline/10 px-4 py-2 rounded-full">{m}</span>
-                        ))}
+        {/* Flowchart */}
+        <div className="relative">
+          {/* Vertical connector line */}
+          <div className="absolute right-8 md:right-1/2 top-0 bottom-0 w-px bg-outline/20 -translate-x-1/2 hidden sm:block" />
+
+          <div className="space-y-0">
+            {steps.map((step, index) => {
+              const isOpen = openStep === step.id;
+              return (
+                <div key={step.id} className="relative">
+                  {/* Connector dot */}
+                  <div className="absolute right-8 md:right-1/2 top-6 w-3 h-3 rounded-full bg-primary border-2 border-surface-container-low -translate-x-1/2 z-10 hidden sm:block" />
+
+                  <button
+                    onClick={() => setOpenStep(isOpen ? null : step.id)}
+                    className="w-full text-right sm:pr-16 md:pr-0"
+                  >
+                    <div className={`flex items-center gap-4 p-5 sm:p-6 transition-colors ${isOpen ? "bg-primary text-white" : "bg-surface hover:bg-surface-container"} ${index === 0 ? "" : "border-t border-outline/10"}`}>
+                      <div className={`w-12 h-12 flex items-center justify-center flex-shrink-0 ${isOpen ? "bg-white/15" : "bg-surface-container-low"}`}>
+                        <span className={`material-symbols-outlined text-xl ${isOpen ? "text-white" : "text-primary"}`}>{step.icon}</span>
                       </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3">
+                          <span className={`font-headline font-black text-2xl leading-none ${isOpen ? "text-white/30" : "text-primary/20"}`}>{String(step.id).padStart(2, "0")}</span>
+                          <h3 className={`font-headline font-bold text-base sm:text-lg ${isOpen ? "text-white" : "text-primary"}`}>{step.title}</h3>
+                        </div>
+                      </div>
+                      <span className={`font-label text-xs tracking-wider ${isOpen ? "text-white/60" : "text-secondary"}`}>{step.duration}</span>
+                      <span className={`material-symbols-outlined text-xl transition-transform ${isOpen ? "rotate-180 text-white" : "text-secondary"}`}>expand_more</span>
                     </div>
-                  )}
+                  </button>
+
+                  {/* Expandable content */}
+                  <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="px-5 sm:px-6 py-5 bg-surface border-x border-b border-outline/10 sm:pr-16 md:pr-6">
+                      <p className="font-body text-secondary text-sm sm:text-base leading-relaxed pr-16">{step.description}</p>
+                    </div>
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+
+          {/* Total timeline */}
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center bg-primary px-8 py-4 gap-6">
+              <div className="text-center">
+                <span className="font-label text-[10px] text-white/50 uppercase tracking-wider block">סה״כ מתחילת התהליך</span>
+                <span className="font-headline font-bold text-lg text-white block mt-1">כשנתיים</span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

@@ -1,11 +1,10 @@
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { PROJECTS_QUERY, FAQ_QUERY, INSTAGRAM_REELS_QUERY } from "@/sanity/lib/queries";
+import { PROJECTS_QUERY, INSTAGRAM_REELS_QUERY } from "@/sanity/lib/queries";
 import { siteData } from "@/data/siteData";
 import HomePage from "./HomePage";
 
 export default async function Page() {
   let projects = siteData.projects;
-  let faqItems = siteData.faq;
   let reels = siteData.instagramReels;
 
   try {
@@ -24,11 +23,6 @@ export default async function Page() {
   } catch {}
 
   try {
-    const sanityFaq = await sanityFetch<any[]>({ query: FAQ_QUERY });
-    if (sanityFaq?.length) faqItems = sanityFaq;
-  } catch {}
-
-  try {
     const sanityReels = await sanityFetch<any[]>({ query: INSTAGRAM_REELS_QUERY });
     if (sanityReels?.length) {
       reels = sanityReels.map((r: any) => ({
@@ -40,5 +34,5 @@ export default async function Page() {
     }
   } catch {}
 
-  return <HomePage projects={projects} faqItems={faqItems} reels={reels} />;
+  return <HomePage projects={projects} faqItems={[]} reels={reels} />;
 }

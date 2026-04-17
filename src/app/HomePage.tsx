@@ -10,13 +10,43 @@ import ShapeDivider from '@/components/ShapeDivider';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
+const homepageFaq: { question: string; answer: string; articleSlug: string }[] = [
+  { question: "למה חובה להיעזר באדריכלית כשבונים בית?", answer: "בחירת אדריכלית היא ההחלטה החשובה ביותר לקראת בניית בית. היא בעלת המקצוע היחידה אשר מוסמכת חוקית ומקצועית לתת מענה משולב ל-3 תחומים: תכנון הבית, עיצוב הבית, ורישוי בניה. רק שילוב מקצועי של שלושת התחומים עומד בדרישות החוק ומבטיח בית שתהנו ממנו לאורך שנים.", articleSlug: "why-architect" },
+  { question: "איך לבחור אדריכלית?", answer: "בחירת אדריכלית היא תהליך דו-שלבי. בשלב הראשון, חשוב לבצע בדיקה מקצועית: לוודא שהיא בעלת ההסמכה החוקית הנדרשת וניסיון רלוונטי בתכנון בתים, ולקבל עליה המלצות חמות. לאחר מכן, חשוב לוודא שיש ביניכם כימיה טובה ושאתם סומכים עליה שתוביל את הפרויקט להצלחה.", articleSlug: "choose-architect" },
+  { question: "איך לא לבחור אדריכלית?", answer: "חשוב להימנע משתי טעויות נפוצות. ראשית, לא מומלץ לבחור רק על סמך הצעת המחיר הנמוכה ביותר, כי תכנון איכותי הוא השקעה שחוסכת עלויות בנייה יקרות בהמשך. שנית, לא כדאי לפסול אדריכלית בגלל סגנון עיצובי של פרויקט ספציפי.", articleSlug: "how-not-to-choose-architect" },
+  { question: "מהם שלבי העבודה בתכנון ובניית בית?", answer: "תהליך התכנון והבנייה מחולק לשישה שלבים מרכזיים: בירורים מקדימים, תכנון מוקדם, רישוי, תכניות עבודה, בנייה, וסיום ואיכלוס. כל שלב מתבסס על קודמו ודורש תשומת לב מקצועית כדי להבטיח תוצאה מיטבית.", articleSlug: "building-stages" },
+  { question: "מה תפקיד האדריכלית בכל אחד משלבי התכנון והבניה?", answer: "תפקידי כאדריכלית הוא ללוות, לייעץ ולהוביל מקצועית את הפרויקט בכל ששת שלביו — מסיוע בבחינת המגרש ועד סיוע בקבלת תעודת גמר.", articleSlug: "architect-role-stages" },
+  { question: "באיזה שלב של הפרויקט כדאי לערב את האדריכלית?", answer: "מומלץ לערב את האדריכלית בשלב מוקדם ככל האפשר, אפילו לפני רכישת המגרש. השלב שבו המעורבות הופכת להכרחית הוא שלב התכנון המוקדם, שכן על פי החוק נדרשת חתימת אדריכלית על הבקשה להיתר.", articleSlug: "when-to-involve-architect" },
+  { question: "כמה זמן לוקח לתכנן ולבנות בית?", answer: "תהליך התכנון והבנייה המלא נמשך בדרך כלל כשנתיים. התהליך כולל: תכנון מוקדם (3-5 חודשים), רישוי (כחצי שנה עד שנה) ובנייה בפועל (כ-12 חודשים).", articleSlug: "building-timeline" },
+  { question: "כמה תעלה לנו הבנייה בסך הכל?", answer: "ככלל אצבע, העלות המינימלית כיום (2025) מתחילה ב-10,000-12,000 ₪ למ\"ר, רק תשלום לקבלן. המחיר הסופי מושפע מהיקף הבנייה, סטנדרט הגמרים, תנאי השטח, ומספר החלונות והדלתות.", articleSlug: "building-cost-total" },
+  { question: "באיזה אזור גאוגרפי את עובדת?", answer: "משרדי ממוקם בגבעת עדה, ועיקר פעילותי מתרכזת באזור השרון הצפוני — כל המרחב שבין נתניה לחיפה ועד עפולה במזרח. בין היתר: פרדס חנה-כרכור, אור עקיבא, בנימינה, זכרון יעקב, חדרה, קיסריה והסביבה.", articleSlug: "service-area" },
+  { question: "מה כדאי להכין לקראת הפגישה הראשונה?", answer: "אמנם אין חובה להכין דבר, אך כדי להפיק מהפגישה את המירב, מומלץ להגיע עם פרטי המגרש (אם קיים), מסגרת תקציב כללית, ורשימת צרכים וחלומות ראשונית.", articleSlug: "first-meeting-prep" },
+  { question: "כמה יעלו שירותי התכנון והעיצוב האדריכלי?", answer: "עלות התכנון בדרך כלל נעה בין 3-5% מעלות הפרויקט כולו. גיבשתי שלוש חבילות שירות במחיר קבוע, הנבדלות בהיקף עבודת עיצוב הפנים — מתכנון בסיסי ועד ליווי מקיף.", articleSlug: "planning-cost" },
+  { question: "האם כדאי להשקיע גם בעיצוב פנים?", answer: "בהחלט. מה הופך בית יפה ופונקציונלי לבית עם נשמה? עיצוב פנים מדויק. אני מציעה שירותי עיצוב פנים כחלק מחבילות התכנון המורחבות, כדי להבטיח תוצאה שלמה.", articleSlug: "interior-design-value" },
+  { question: "מהו הצעד הראשון כשרוצים לתכנן בית?", answer: "הצעד הראשון הוא לוודא שיש סנכרון בין 3 גורמים: החלום (מהם הצרכים שלכם?), המציאות (מה זכויות הבנייה מאפשרות?), והתקציב (מהי המסגרת הכלכלית?).", articleSlug: "first-step" },
+  { question: "אילו בעלי מקצוע מרכזיים יש בתחום התכנון?", answer: "תפגשו שלושה בעלי מקצוע מרכזיים: אדריכלות (תכנון, עיצוב ורישוי), הנדסת בניין (חוזק ובטיחות המבנה), ועיצוב פנים (תכנון החללים הפנימיים). חשוב להכיר את ההבדלים ביניהם.", articleSlug: "professionals-credentials" },
+  { question: "כמה באמת עולה לבנות בית פרטי בישראל?", answer: "עלות הבנייה תלויה בגורמים ייחודיים לפרויקט שלכם ובמחירי השוק הדינמיים. תפקידי הוא להתחיל על בסיס כללי אצבע ולהפנות אתכם לאומדן מקצועי שיתבסס על התכנון הספציפי שלכם.", articleSlug: "real-building-cost" },
+  { question: "איך מוודאים שלא חורגים מהתקציב?", answer: "באמצעות הגדרת תקציב מראש, ליווי צמוד עם \"דגלים אדומים\", בדיקות תקופתיות בנקודות מפתח, ותכנון גמיש שמשאיר שוליים לקיצוצים ללא פגיעה במהות הבית.", articleSlug: "budget-control" },
+  { question: "אילו \"עלויות נסתרות\" יש בתהליך?", answer: "טעות נפוצה היא לחשוב שמחיר הקבלן הוא העלות הכוללת. יש עלויות \"לפני הבנייה\" (מיסים, אגרות, יועצים) ו\"אחרי הבנייה\" (ריהוט, גינון, מיזוג). אלו יכולות להצטבר למאות אלפי שקלים.", articleSlug: "hidden-costs" },
+  { question: "מה זה היתר בנייה, והאם הוא מספיק כדי להתחיל לבנות?", answer: "היתר בנייה הוא האישור החוקי להקמת ביתכם. כאדריכלית מורשית היתר, יש לי סמכות להנפיק היתר בתהליך מקוצר של \"רישוי עצמי\". חשוב לדעת: נדרש גם \"אישור תחילת עבודה\" מהוועדה.", articleSlug: "building-permit" },
+  { question: "אילו שיטות בנייה עיקריות קיימות בישראל?", answer: "השיטה הנפוצה היא הקונבנציונלית (בטון ובלוקים). לצדה קיימות שיטות מתקדמות (שלד פלדה/עץ) ושיטות מבודדות (ICF, GSB). אני מכווינה כל משפחה לשיטה המתאימה ביותר.", articleSlug: "construction-methods-overview" },
+  { question: "האם ניתן להוסיף יחידת דיור או משרד במגרש?", answer: "התשובה תלויה בתב\"ע החלה על המגרש שלכם. תב\"עות רבות גמישות יותר לגבי משרד מאשר יחידת דיור. חיוני להתייעץ עם אדריכלית שתבחן את ההיתכנות ותתכנן פתרון גמיש.", articleSlug: "housing-unit-addition" },
+  { question: "איך לוודא שהסגנון העיצובי יקלע לטעמנו?", answer: "התהליך מתחיל בניתוח השראות ויזואליות שלכם. לאחר מכן, אני יוצרת הדמיות תלת-ממדיות ריאליסטיות המאפשרות לכם 'לטייל' בבית העתידי לפני תחילת הבנייה.", articleSlug: "design-style-match" },
+];
+
+const featuredArticles = [
+  { slug: "costs", title: "עלויות בניה ומחיר אדריכלות", image: "https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? מדריך מפורט על עלויות הבנייה." },
+  { slug: "choose-architect", title: "איך לבחור אדריכלית?!", image: "https://talgoren.co.il/wp-content/uploads/2020/03/12496261_1550603918564055_4078115768814528292_o-1.jpg", excerpt: "כאשר עומדים לפני פרויקט בניה של בית חדש, איזו אדריכלית לבחור?" },
+  { slug: "living-room-guide", title: "הסלון – טיפים וכלים מעשיים לתכנון", image: "https://talgoren.co.il/wp-content/uploads/2021/01/טבת-אסנת-טל-קבצים-קטנים-22.jpg", excerpt: "חדר המגורים הוא בדרך כלל המרחב הגדול ביותר בבית. טיפים לתכנון נכון." },
+];
+
 type Props = {
   projects: any[];
   faqItems: any[];
   reels: any[];
 };
 
-export default function HomePage({ projects, faqItems, reels }: Props) {
+export default function HomePage({ projects, reels }: Props) {
   const featuredProjects = projects.slice(0, 6);
   const featuredReels = reels.slice(0, 6);
 
@@ -100,7 +130,7 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
 
   return (
     <>
-      {/* HERO */}
+      {/* 1. HERO */}
       <section className="relative h-dvh w-full overflow-hidden">
         {heroVideos.map((src, i) => (
           <video
@@ -143,7 +173,7 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         <ShapeDivider shape="wave" fillColor="#eeeeea" height={100} />
       </div>
 
-      {/* SHORT ABOUT */}
+      {/* 2. ABOUT */}
       <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden -mt-1">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -179,7 +209,7 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
       {/* About → Projects divider */}
       <ShapeDivider shape="curve" fillColor="#fbf9f6" height={70} className="bg-surface-container-low" />
 
-      {/* FEATURED PROJECTS */}
+      {/* 3. PROJECTS */}
       <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="mb-16">
@@ -200,37 +230,173 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
-      {/* IMAGE STRIP */}
-      <section className="py-0 -mt-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
-          {[
-            { src: '/images/projects/persman-exterior.jpg', alt: 'בית פרסמן - חזית' },
-            { src: '/images/projects/shakolnik-warm.jpg', alt: 'בית שקולניק - סלון' },
-            { src: '/images/projects/vild-living.jpg', alt: 'בית וילד - מרחב יומיומי' },
-            { src: '/images/projects/persman-interior.jpg', alt: 'בית פרסמן - פנים' },
-          ].map((img) => (
-            <div key={img.src} className="relative aspect-square overflow-hidden group">
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+      {/* Projects → Testimonial divider */}
+      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
+
+      {/* 4. TESTIMONIALS */}
+      <section className="py-24 lg:py-32 bg-surface-container-low relative overflow-hidden -mt-1">
+        <img
+          src="/images/projects/shakolnik-detail.jpg"
+          alt=""
+          aria-hidden
+          className="hidden lg:block absolute top-1/2 right-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
+        />
+        <img
+          src="/images/projects/nucham-detail.jpg"
+          alt=""
+          aria-hidden
+          className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
+        />
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12 relative">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase block">המלצות</span>
+            <span className="font-headline text-8xl sm:text-9xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
+            <blockquote className="font-headline font-bold text-2xl sm:text-3xl lg:text-4xl text-primary leading-relaxed -mt-12">
+              טל ליוותה אותנו מהרגע הראשון עד הכניסה לבית. היא הקשיבה לכל בקשה, הבינה בדיוק מה אנחנו צריכים, והתוצאה הסופית עלתה על כל הציפיות שלנו.
+            </blockquote>
+            <div className="space-y-1">
+              <span className="font-headline font-bold text-sm text-primary block">משפחת כהן</span>
+              <span className="font-label text-xs text-secondary tracking-wide">בית פרטי, גבעת עדה</span>
             </div>
-          ))}
+            <div className="pt-4">
+              <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+                <span>כל ההמלצות</span>
+                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Image strip → Process divider */}
-      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
+      {/* Testimonial → CTA divider */}
+      <ShapeDivider shape="wave" fillColor="#30332f" height={100} className="bg-surface-container-low" />
 
-      {/* PROCESS */}
+      {/* 5. CTA / CONTACT */}
+      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
+        <img
+          src="/images/projects/vild-detail.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-primary/70" />
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">הבית הבא שלכם<br />מתחיל כאן</h2>
+            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.</p>
+            <div>
+              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
+            </div>
+            <div className="flex justify-center gap-8 pt-4">
+              <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+                <span className="material-symbols-outlined text-lg">call</span>052-8345799
+              </a>
+              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+                <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. PROCESS STEPS (collapsible flowchart) */}
       <ProcessSteps />
 
-      {/* Process → Why Choose Me divider */}
+      {/* Process → FAQ divider */}
+      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={70} className="bg-surface-container-low" />
+
+      {/* 7. FAQ (new content with article links) */}
+      <section className="py-24 lg:py-32 -mt-1">
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+          <div className="text-center mb-20 space-y-4">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">שאלות ותשובות</h2>
+            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.</p>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-0">
+            {homepageFaq.map((item, index) => (
+              <div key={index}>
+                <details className="faq-item bg-surface">
+                  <summary>
+                    <span className="font-headline font-bold text-base sm:text-lg text-primary leading-relaxed pl-4">{item.question}</span>
+                    <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
+                  </summary>
+                  <div className="faq-answer">
+                    <p className="font-body text-sm sm:text-base text-secondary leading-relaxed mb-4">{item.answer}</p>
+                    <Link
+                      href={`/articles/${item.articleSlug}`}
+                      className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary hover:text-secondary transition-colors group"
+                    >
+                      <span>למאמר המלא</span>
+                      <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
+                    </Link>
+                  </div>
+                </details>
+                {index < homepageFaq.length - 1 && <div className="faq-divider" />}
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-16">
+            <Link href="/faq" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+              <span>לכל השאלות והתשובות</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ → Articles divider */}
+      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
+
+      {/* 8. ARTICLES (new section) */}
+      <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+          <div className="mb-16 space-y-4">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מאמרים ומדריכים</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">ידע שחוסך לכם כסף</h2>
+            <p className="font-body text-lg text-secondary max-w-2xl">מאמרים מקצועיים בנושאי תכנון, בנייה ועיצוב — כדי שתגיעו מוכנים לתהליך.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredArticles.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/articles/${article.slug}`}
+                className="group card-hover block bg-surface overflow-hidden"
+              >
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover img-grayscale"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-8 text-right">
+                  <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
+                  <p className="text-secondary text-sm mt-3 leading-relaxed line-clamp-2">{article.excerpt}</p>
+                  <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
+                    לקריאה
+                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/articles" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+              <span>לכל המאמרים</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Articles → Why Choose Me divider */}
       <ShapeDivider shape="drops" fillColor="#f5f3f0" height={70} className="bg-surface-container-low" />
 
-      {/* WHY CHOOSE ME */}
+      {/* 9. WHY CHOOSE ME */}
       <section className="py-24 lg:py-32 bg-surface-container -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
@@ -266,45 +432,11 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
         </div>
       </section>
 
-      {/* Why Choose Me → Testimonial divider */}
+      {/* Why Choose Me → Social divider */}
       <ShapeDivider shape="curve" fillColor="#fbf9f6" height={80} className="bg-surface-container" />
 
-      {/* TESTIMONIAL */}
-      <section className="py-24 lg:py-32 relative overflow-hidden -mt-1">
-        <img
-          src="/images/projects/shakolnik-detail.jpg"
-          alt=""
-          aria-hidden
-          className="hidden lg:block absolute top-1/2 right-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
-        />
-        <img
-          src="/images/projects/nucham-detail.jpg"
-          alt=""
-          aria-hidden
-          className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 w-64 h-80 object-cover img-grayscale opacity-60"
-        />
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12 relative">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <span className="font-headline text-8xl sm:text-9xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
-            <blockquote className="font-headline font-bold text-2xl sm:text-3xl lg:text-4xl text-primary leading-relaxed -mt-12">
-              טל ליוותה אותנו מהרגע הראשון עד הכניסה לבית. היא הקשיבה לכל בקשה, הבינה בדיוק מה אנחנו צריכים, והתוצאה הסופית עלתה על כל הציפיות שלנו.
-            </blockquote>
-            <div className="space-y-1">
-              <span className="font-headline font-bold text-sm text-primary block">משפחת כהן</span>
-              <span className="font-label text-xs text-secondary tracking-wide">בית פרטי, גבעת עדה</span>
-            </div>
-            <div className="pt-4">
-              <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-                <span>כל ההמלצות</span>
-                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SOCIAL */}
-      <section className="py-24 lg:py-32 bg-surface">
+      {/* 10. SOCIAL */}
+      <section className="py-24 lg:py-32 bg-surface -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div className="text-right">
@@ -414,75 +546,6 @@ export default function HomePage({ projects, faqItems, reels }: Props) {
                   <span className="font-label font-bold text-xs uppercase tracking-widest group-hover:text-primary transition-colors">WATCH ON YOUTUBE</span>
                 </a>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social → FAQ divider */}
-      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
-
-      {/* FAQ */}
-      <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-20 space-y-4">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">שאלות ותשובות</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.</p>
-          </div>
-          <div className="max-w-4xl mx-auto space-y-0">
-            {faqItems.map((item: any, index: number) => (
-              <div key={index}>
-                <details className="faq-item bg-surface">
-                  <summary>
-                    <span className="font-headline font-bold text-base sm:text-lg text-primary leading-relaxed pl-4">{item.question}</span>
-                    <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
-                  </summary>
-                  <div className="faq-answer">
-                    <p className="font-body text-sm sm:text-base text-secondary leading-relaxed">{item.answer}</p>
-                  </div>
-                </details>
-                {index < faqItems.length - 1 && <div className="faq-divider" />}
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-16">
-            <Link href="/faq" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>לכל השאלות והתשובות</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ → CTA divider */}
-      <ShapeDivider shape="wave" fillColor="#30332f" height={100} className="bg-surface-container-low" />
-
-      {/* CTA */}
-      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
-        <img
-          src="/images/projects/vild-detail.jpg"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover opacity-15"
-        />
-        <div className="absolute inset-0 bg-primary/70" />
-        <div className="absolute inset-0 blueprint-grid opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)' }} />
-        <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">הבית הבא שלכם<br />מתחיל כאן</h2>
-            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.</p>
-            <div>
-              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
-            </div>
-            <div className="flex justify-center gap-8 pt-4">
-              <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg">call</span>052-8345799
-              </a>
-              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
-              </a>
             </div>
           </div>
         </div>
