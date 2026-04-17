@@ -136,7 +136,7 @@ export default async function Testimonials() {
         {/* Actions */}
         <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
           <a
-            href="https://search.google.com/local/writereview?placeid=ChIJK0RFMitzHRURiLbVxpKnxyQ"
+            href="https://search.google.com/local/writereview?placeid=ChIJJ3hIcCwPHRURDSsOb8puf5g"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors group"
