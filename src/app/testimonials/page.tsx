@@ -63,18 +63,15 @@ function ReviewJsonLd({ reviewData, totalReviews, avgRating }: { reviewData: any
 }
 
 export default async function Testimonials() {
-  // Use static reviews for SEO/JSON-LD, the GoogleReviewsWidget handles the live display
-  const displayReviews = staticReviews.map((r) => ({ 
-    name: r.name, 
-    text: r.text, 
-    rating: r.rating, 
-    location: r.location, 
-    relativeTime: undefined as string | undefined, 
-    photoUrl: null as string | null 
-  }));
+  const googleData = await getGoogleReviews();
 
-  const avgRating = 5.0;
-  const totalReviews = 60;
+  // Use Google reviews if available, otherwise fall back to static
+  const displayReviews = googleData?.reviews.length
+    ? googleData.reviews.map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, relativeTime: r.relativeTime, photoUrl: r.photoUrl }))
+    : staticReviews.map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, relativeTime: undefined as string | undefined, photoUrl: null as string | null }));
+
+  const avgRating = googleData?.rating || 5.0;
+  const totalReviews = googleData?.totalReviews || 60;
 
   return (
     <>

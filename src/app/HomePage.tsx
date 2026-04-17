@@ -47,12 +47,16 @@ type Props = {
   projects: any[];
   faqItems: any[];
   reels: any[];
+  reviewsData?: { reviews: GoogleReview[], rating: number, totalReviews: number } | null;
 };
 
-export default function HomePage({ projects, reels }: Props) {
-  // Use static fallbacks for top rating box (widget handles the live data)
-  const avgRating = 5.0;
-  const totalReviewsCount = 60;
+export default function HomePage({ projects, reels, reviewsData }: Props) {
+  const displayReviews = reviewsData?.reviews.length
+    ? reviewsData.reviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, photoUrl: r.photoUrl }))
+    : staticReviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, photoUrl: null as string | null }));
+  
+  const avgRating = reviewsData?.rating || 5.0;
+  const totalReviewsCount = reviewsData?.totalReviews || 60;
 
   const featuredProjects = projects.slice(0, 6);
   const featuredReels = reels.slice(0, 6);

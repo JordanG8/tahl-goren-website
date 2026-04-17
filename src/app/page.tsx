@@ -35,5 +35,10 @@ export default async function Page() {
     }
   } catch {}
 
-  return <HomePage projects={projects} faqItems={[]} reels={reels} />;
+  let reviewsData = null;
+  try {
+    reviewsData = await getGoogleReviews();
+  } catch {}
+
+  return <HomePage projects={projects} faqItems={[]} reels={reels} reviewsData={reviewsData} />;
 }
