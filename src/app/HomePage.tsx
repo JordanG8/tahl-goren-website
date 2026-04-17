@@ -55,7 +55,7 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
     : staticReviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, photoUrl: null as string | null }));
   
   const avgRating = reviewsData?.rating || 5.0;
-  const totalReviewsCount = reviewsData?.totalReviews || staticReviews.length;
+  const totalReviewsCount = reviewsData?.totalReviews || 60;
 
   const featuredProjects = projects.slice(0, 6);
   const featuredReels = reels.slice(0, 6);

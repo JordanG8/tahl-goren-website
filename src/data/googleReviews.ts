@@ -23,10 +23,13 @@ export async function getGoogleReviews(): Promise<{
           "X-Goog-Api-Key": apiKey,
           "X-Goog-FieldMask": "reviews,rating,userRatingCount",
         },
-        next: { revalidate: 86400 },
+        cache: 'no-store',
       }
     );
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error("Google API failed:", res.status, await res.text());
+      return null;
+    }
     const data = await res.json();
     return {
       reviews: (data.reviews || []).map((r: any) => ({

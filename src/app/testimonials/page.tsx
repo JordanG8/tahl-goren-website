@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 import { getGoogleReviews, GoogleReview } from "@/data/googleReviews";
+import GoogleReviewsWidget from "@/components/GoogleReviewsWidget";
 
 function Stars({ count }: { count: number }) {
   return (
@@ -69,8 +70,8 @@ export default async function Testimonials() {
     ? googleData.reviews.map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, relativeTime: r.relativeTime, photoUrl: r.photoUrl }))
     : staticReviews.map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, relativeTime: undefined as string | undefined, photoUrl: null as string | null }));
 
-  const avgRating = googleData?.rating || 5;
-  const totalReviews = googleData?.totalReviews || displayReviews.length;
+  const avgRating = googleData?.rating || 5.0;
+  const totalReviews = googleData?.totalReviews || 60;
 
   return (
     <>
@@ -104,34 +105,7 @@ export default async function Testimonials() {
 
       {/* Reviews Grid */}
       <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayReviews.map((review, index) => (
-            <div key={index} className="bg-surface border border-outline/10 p-8 flex flex-col gap-5 hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  {review.photoUrl ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={review.photoUrl} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
-                  ) : (
-                    <div className="w-10 h-10 bg-primary text-white flex items-center justify-center font-headline font-bold text-sm flex-shrink-0">
-                      {review.name.charAt(0)}
-                    </div>
-                  )}
-                  <div>
-                    <span className="font-headline font-bold text-sm text-primary block">{review.name}</span>
-                    {review.location && <span className="font-label text-xs text-secondary">{review.location}</span>}
-                    {review.relativeTime && <span className="font-label text-xs text-secondary">{review.relativeTime}</span>}
-                  </div>
-                </div>
-                <GoogleIcon />
-              </div>
-              <Stars count={review.rating} />
-              <p className="font-body text-sm text-secondary leading-relaxed flex-1">
-                &ldquo;{review.text}&rdquo;
-              </p>
-            </div>
-          ))}
-        </div>
+        <GoogleReviewsWidget />
 
         {/* Actions */}
         <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
