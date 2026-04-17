@@ -24,12 +24,7 @@ export const siteData = {
     { id: "choose-architect", title: "איך לבחור אדריכלית?!", image: "https://talgoren.co.il/wp-content/uploads/2020/03/12496261_1550603918564055_4078115768814528292_o-1.jpg", description: "כאשר עומדים לפני פרויקט בניה של בית חדש, איזו אדריכלית לבחור?", originalLink: "https://talgoren.co.il/%d7%90%d7%99%d7%9a-%d7%9c%d7%91%d7%97%d7%95%d7%a8-%d7%90%d7%93%d7%a8%d7%99%d7%9b%d7%9c%d7%99%d7%aa/" },
     { id: "costs", title: "עלויות בניה ומחיר אדריכלות", image: "https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg", description: "חוששים להכנס ל'בור' של הוצאות בלתי נגמרות?", originalLink: "https://talgoren.co.il/%d7%a2%d7%9c%d7%95%d7%99%d7%95%d7%aa-%d7%91%d7%a0%d7%99%d7%94-%d7%95%d7%9e%d7%97%d7%99%d7%a8-%d7%90%d7%93%d7%a8%d7%99%d7%9b%d7%9c%d7%95%d7%aa/" },
   ],
-  mediaArticles: [
-    { title: "מהחלום למציאות: המסע אל עבר הבית", source: "TheMarker - TheMasters", url: "https://www.themarker.com/labels/themasters/2025-10-08/ty-article-labels/0000019b-648b-d7d8-adef-66df37900000", description: "כתבת עומק על תהליך התכנון האדריכלי." },
-    { title: "בית חכם שצומח עם המשפחה", source: "TheMarker - TheMasters", url: "https://www.themarker.com/labels/themasters/2025-09-03/ty-article-labels/00000199-0d4d-dd6c-afdb-6def07750000", description: "תכנון מודולרי המותאם לצרכים המשתנים של משפחה צעירה." },
-    { title: "איך להוציא יותר מהמטרים של הבית?", source: "TheMarker - TheMasters", url: "https://www.themarker.com/labels/themasters/2025-07-31/ty-article-labels/00000198-6934-db3e-a79d-7f758e5e0000", description: "טיפים לתכנון יעיל של חללי הבית." },
-    { title: "להשיג את בית החלומות בלי לחרוג מהתקציב", source: "TheMarker - TheMasters", url: "https://www.themarker.com/labels/themasters/2025-07-02/ty-article-labels/0000019a-6cc7-d86b-a19e-fef79b000000", description: "פתרונות אדריכליים חכמים לחיסכון בעלויות." },
-  ],
+  mediaArticles: [],
   instagramReels: [
     { id: "DGdjBhOuxEy", url: "https://www.instagram.com/reels/DGdjBhOuxEy/", thumbnail: "https://talgoren.co.il/wp-content/uploads/2025/02/חזית-כניסה-בית-מודרני.jpg" },
     { id: "DF2dLO-OniH", url: "https://www.instagram.com/reels/DF2dLO-OniH/", thumbnail: "https://talgoren.co.il/wp-content/uploads/2023/08/שיפוץ-מטבח-ופינת-אוכל.jpg" },

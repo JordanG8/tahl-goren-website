@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 
 export default async function Videos() {
   let videos = siteData.videos;
-  let mediaArticles = siteData.mediaArticles;
+  let mediaArticles: any[] = siteData.mediaArticles;
   let instagramReels = siteData.instagramReels;
   try {
     const sanityVideos = await sanityFetch<any[]>({ query: VIDEOS_QUERY });
@@ -99,39 +99,41 @@ export default async function Videos() {
       </section>
 
       {/* Media Mentions Section */}
-      <section className="py-24 md:py-32 px-8 bg-surface-container-low">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media</span>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
-              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">אזכורים בתקשורת</h2>
-              <p className="text-secondary text-lg max-w-xl">
-                טל גורן בראיונות וכתבות מקצועיות בכלי התקשורת המובילים.
-              </p>
+      {mediaArticles && mediaArticles.length > 0 && (
+        <section className="py-24 md:py-32 px-8 bg-surface-container-low">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-16">
+              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media</span>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
+                <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">אזכורים בתקשורת</h2>
+                <p className="text-secondary text-lg max-w-xl">
+                  טל גורן בראיונות וכתבות מקצועיות בכלי התקשורת המובילים.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {mediaArticles.map((article: any, index: number) => (
+                <a
+                  key={index}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group card-hover block bg-surface p-8 text-right"
+                >
+                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{article.source}</span>
+                  <h3 className="font-headline font-bold text-lg text-primary mt-3 leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
+                  <p className="text-secondary text-sm mt-3 leading-relaxed">{article.description}</p>
+                  <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
+                    לכתבה המלאה
+                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {mediaArticles.map((article: any, index: number) => (
-              <a
-                key={index}
-                href={article.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group card-hover block bg-surface p-8 text-right"
-              >
-                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{article.source}</span>
-                <h3 className="font-headline font-bold text-lg text-primary mt-3 leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
-                <p className="text-secondary text-sm mt-3 leading-relaxed">{article.description}</p>
-                <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
-                  לכתבה המלאה
-                  <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Instagram Feed Section */}
       <section className="py-24 md:py-32 px-8 bg-surface">
