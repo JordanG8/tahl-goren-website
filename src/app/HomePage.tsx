@@ -7,7 +7,8 @@ import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ProcessSteps from '@/components/ProcessSteps';
 import ShapeDivider from '@/components/ShapeDivider';
-import { reviews } from '@/data/reviews';
+import { reviews as staticReviews } from '@/data/reviews';
+import { GoogleReview } from '@/data/googleReviews';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -45,9 +46,17 @@ type Props = {
   projects: any[];
   faqItems: any[];
   reels: any[];
+  reviewsData?: { reviews: GoogleReview[], rating: number, totalReviews: number } | null;
 };
 
-export default function HomePage({ projects, reels }: Props) {
+export default function HomePage({ projects, reels, reviewsData }: Props) {
+  const displayReviews = reviewsData?.reviews.length
+    ? reviewsData.reviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, photoUrl: r.photoUrl }))
+    : staticReviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, photoUrl: null as string | null }));
+  
+  const avgRating = reviewsData?.rating || 5.0;
+  const totalReviewsCount = reviewsData?.totalReviews || staticReviews.length;
+
   const featuredProjects = projects.slice(0, 6);
   const featuredReels = reels.slice(0, 6);
 
@@ -247,9 +256,10 @@ export default function HomePage({ projects, reels }: Props) {
                     <span key={i} className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1", color: '#FBBC04' }}>star</span>
                   ))}
                 </div>
-                <span className="font-headline font-bold text-sm text-primary">5.0</span>
-                <span className="font-label text-xs text-secondary">· {reviews.length} ביקורות בגוגל</span>
+                <span className="font-headline font-bold text-sm text-primary">{avgRating % 1 !== 0 ? avgRating.toFixed(1) : avgRating.toFixed(1)}</span>
+                <span className="font-label text-xs text-secondary">· {totalReviewsCount} ביקורות בגוגל</span>
               </div>
+
             </div>
             <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>כל ההמלצות</span>
@@ -257,11 +267,16 @@ export default function HomePage({ projects, reels }: Props) {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.slice(0, 3).map((review, index) => (
+            {displayReviews.map((review, index) => (
               <div key={index} className="bg-surface border border-outline/10 p-8 flex flex-col gap-4 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary text-white flex items-center justify-center font-headline font-bold text-sm flex-shrink-0">{review.name.charAt(0)}</div>
+                    {review.photoUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={review.photoUrl} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                    ) : (
+                      <div className="w-10 h-10 bg-primary text-white flex items-center justify-center font-headline font-bold text-sm flex-shrink-0">{review.name.charAt(0)}</div>
+                    )}
                     <div>
                       <span className="font-headline font-bold text-sm text-primary block">{review.name}</span>
                       {review.location && <span className="font-label text-xs text-secondary">{review.location}</span>}

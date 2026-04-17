@@ -1,6 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { PROJECTS_QUERY, INSTAGRAM_REELS_QUERY } from "@/sanity/lib/queries";
 import { siteData } from "@/data/siteData";
+import { getGoogleReviews } from "@/data/googleReviews";
 import HomePage from "./HomePage";
 
 export default async function Page() {
@@ -34,5 +35,10 @@ export default async function Page() {
     }
   } catch {}
 
-  return <HomePage projects={projects} faqItems={[]} reels={reels} />;
+  let reviewsData = null;
+  try {
+    reviewsData = await getGoogleReviews();
+  } catch {}
+
+  return <HomePage projects={projects} faqItems={[]} reels={reels} reviewsData={reviewsData} />;
 }
