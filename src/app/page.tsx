@@ -35,10 +35,5 @@ export default async function Page() {
     }
   } catch {}
 
-  let reviewsData = null;
-  try {
-    reviewsData = await getGoogleReviews();
-  } catch {}
-
-  return <HomePage projects={projects} faqItems={[]} reels={reels} reviewsData={reviewsData} />;
+  return <HomePage projects={projects} faqItems={[]} reels={reels} />;
 }
