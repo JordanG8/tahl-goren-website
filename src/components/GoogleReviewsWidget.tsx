@@ -27,7 +27,7 @@ export default function GoogleReviewsWidget({ featurableId = "8b6e1de9-a380-443a
   }, [featurableId]);
 
   return (
-    <div className="google-reviews-wrapper bg-surface-container-low p-6 sm:p-8 md:p-12 border border-outline/10 mb-10 w-full" dir="ltr">
+    <div className="google-reviews-wrapper bg-surface-container-low p-6 sm:p-8 md:p-12 border border-outline/10 mb-10 w-full" dir="rtl">
       <div id={`featurable-${featurableId}`} data-featurable-async></div>
     </div>
   );
