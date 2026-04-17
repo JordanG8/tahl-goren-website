@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link';
 
-export default function ProjectCard({ project }: { project: { title: string; location: string; image: string; originalLink: string } }) {
+export default function ProjectCard({ project }: { project: { id: string; title: string; location: string; image: string; originalLink?: string } }) {
   return (
-    <a
-      href={project.originalLink}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/projects/${project.id}`}
       className="group block relative overflow-hidden card-hover"
     >
       <div className="aspect-[4/3] overflow-hidden">
@@ -23,6 +22,6 @@ export default function ProjectCard({ project }: { project: { title: string; loc
         </div>
         <span className="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
       </div>
-    </a>
+    </Link>
   );
 }

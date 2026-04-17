@@ -38,8 +38,8 @@ const nextConfig: NextConfig = {
       { source: "/tag/:path*", destination: "/articles", permanent: true },
       { source: "/category/:path*", destination: "/articles", permanent: true },
       { source: "/guid", destination: "/articles", permanent: true },
-      // Project pages → projects listing (catch-all for בית-משפחת-* URLs)
-      { source: "/%D7%91%D7%99%D7%AA-%D7%9E%D7%A9%D7%A4%D7%97%D7%AA-:slug", destination: "/projects", permanent: true },
+      // Project pages → projects completed listing (catch-all for בית-משפחת-* URLs)
+      { source: "/%D7%91%D7%99%D7%AA-%D7%9E%D7%A9%D7%A4%D7%97%D7%AA-:slug", destination: "/projects/completed", permanent: true },
     ];
   },
 };
