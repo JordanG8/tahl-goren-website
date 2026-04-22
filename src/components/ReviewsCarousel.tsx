@@ -27,9 +27,17 @@ const reviewImages = [
 ];
 
 export default function ReviewsCarousel() {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
   const half = Math.ceil(reviewImages.length / 2);
   const row1 = reviewImages.slice(0, half);
   const row2 = reviewImages.slice(half);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % reviewImages.length);
+    }, 3250); // 3000ms stay + 250ms transition
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="w-full overflow-hidden flex flex-col gap-10">
@@ -46,8 +54,39 @@ export default function ReviewsCarousel() {
         ></iframe>
       </div>
 
-      {/* Layered Carousels */}
-      <div className="flex flex-col gap-6 relative w-full pt-10" dir="ltr">
+      {/* Mobile-only Stepped Carousel */}
+      <div className="md:hidden relative w-full px-4 overflow-hidden" dir="ltr">
+        <div 
+          className="flex transition-transform duration-[250ms] ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {reviewImages.map((img, i) => (
+            <div key={i} className="w-full flex-shrink-0 flex justify-center px-2">
+              <img 
+                src={"/images/reviews/" + encodeURIComponent(img)} 
+                alt="המלצת לקוח" 
+                className="w-full max-w-sm rounded-xl shadow-lg"
+              />
+            </div>
+          ))}
+        </div>
+        
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-1.5 mt-6 flex-wrap px-4">
+          {reviewImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                currentIndex === i ? "w-6 bg-primary" : "w-1.5 bg-primary/20"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop-only Layered Carousels */}
+      <div className="hidden md:flex flex-col gap-6 relative w-full pt-10" dir="ltr">
         <style>{`
           @keyframes scroll-left {
             0% { transform: translateX(0); }
