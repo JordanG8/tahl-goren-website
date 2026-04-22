@@ -211,10 +211,10 @@ export default function HomePage({ projects }: Props) {
                 className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 text-right flex flex-col h-full"
               >
                 <h3 className="font-headline font-bold text-xl text-primary mb-4 leading-tight group-hover:text-secondary transition-colors">
-                  {item.question}
+                  {item.title}
                 </h3>
                 <p className="font-body text-sm text-secondary leading-relaxed line-clamp-3 mb-6 flex-grow">
-                  {item.shortAnswer.replace(/\*\*\*.*?\*\*\*/g, '').trim()}
+                  {item.excerpt}
                 </p>
                 <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
                   <span>קרא עוד</span>
