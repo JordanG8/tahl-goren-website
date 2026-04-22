@@ -61,7 +61,7 @@ export default function InteractiveProjectsMap() {
           zoom={11}
           theme="light"
           className="w-full h-full"
-          cooperativeGestures={true}
+          cooperativeGestures={false}
         >
         <MapControls 
           showZoom={true} 
