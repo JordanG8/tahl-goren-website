@@ -23,32 +23,34 @@ export default function Navbar() {
   return (
     <>
       <nav className="relative w-full z-50 bg-background shadow-sm">
-        <div className="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
-          <div className="flex-shrink-0 order-2 lg:order-1">
+        <div className="flex justify-between items-center px-8 py-4 max-w-[1920px] mx-auto">
+          <div className="flex items-center gap-8 flex-shrink-0 order-2 lg:order-1">
             <Link href="/" className="flex items-center">
               <Image 
                 src="/images/logo-v2.png" 
                 alt="TAL GOREN" 
-                width={180} 
-                height={60} 
-                className="h-10 w-auto object-contain"
+                width={280} 
+                height={94} 
+                className="h-16 w-auto object-contain"
                 priority
               />
             </Link>
-          </div>
 
-          <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-tight text-sm lg:order-2">
-            {desktopLinks.map((link) => (
-              <Link
-                key={link.to}
-                href={link.to}
-                className={`transition-colors duration-300 ${
-                  pathname === link.to ? 'nav-active text-primary' : 'text-secondary hover:text-primary'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <div className="hidden lg:block w-px h-12 bg-primary/10 mx-2" />
+
+            <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-wide text-base">
+              {desktopLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  href={link.to}
+                  className={`transition-all duration-300 hover:scale-105 ${
+                    pathname === link.to ? 'nav-active text-primary' : 'text-secondary hover:text-primary'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
 
           <div className="flex items-center gap-4 order-1 lg:order-3">

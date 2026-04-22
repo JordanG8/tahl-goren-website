@@ -91,9 +91,9 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
             <Image 
               src="/images/logo-v2.png" 
               alt="TAL GOREN" 
-              width={140} 
-              height={45} 
-              className="h-8 w-auto object-contain"
+              width={210} 
+              height={68} 
+              className="h-12 w-auto object-contain"
             />
           </Link>
         </div>
