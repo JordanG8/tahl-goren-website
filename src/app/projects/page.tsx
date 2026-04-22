@@ -29,12 +29,12 @@ export default function Projects() {
         <div>
           <Breadcrumb current="פרויקטים" />
           <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. לחצו על אזור במפה לצפייה בפרויקטים.</p>
+          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני.<span className="hidden md:inline"> לחצו על אזור במפה לצפייה בפרויקטים.</span></p>
         </div>
       </section>
 
       {/* Interactive Map */}
-      <section className="px-8 lg:px-12 pb-16 max-w-[1920px] mx-auto">
+      <section className="hidden md:block px-8 lg:px-12 py-20 max-w-[1920px] mx-auto">
         <InteractiveProjectsMap />
       </section>
 

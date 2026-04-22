@@ -22,7 +22,12 @@ export default function ProjectsMap() {
       </section>
 
       {/* Map Section */}
-      <section className="px-8 lg:px-12 pb-12 max-w-[1920px] mx-auto">
+      <section className="px-8 lg:px-12 py-12 max-w-[1920px] mx-auto">
+        <div className="md:hidden bg-surface-container-low p-8 rounded-2xl text-center">
+          <span className="material-symbols-outlined text-4xl text-primary mb-4">desktop_windows</span>
+          <h2 className="font-headline font-bold text-xl text-primary mb-2">המפה זמינה במחשב בלבד</h2>
+          <p className="font-body text-secondary text-sm leading-relaxed">כדי להעניק לכם את חוויית הצפייה הטובה ביותר, המפה האינטראקטיבית זמינה בגרסת הדסקטופ של האתר.</p>
+        </div>
         <InteractiveProjectsMap />
       </section>
 
