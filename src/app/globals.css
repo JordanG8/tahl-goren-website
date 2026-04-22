@@ -16,9 +16,9 @@
   --color-outline: #b1b3ad;
   --color-tertiary: #4A4238;
 
-  --font-headline: "Heebo", Arial, sans-serif;
-  --font-body: "Assistant", Arial, sans-serif;
-  --font-label: "Inter", Arial, sans-serif;
+  --font-headline: var(--font-heebo), "Heebo", sans-serif;
+  --font-body: var(--font-assistant), "Assistant", sans-serif;
+  --font-label: "Inter", sans-serif;
 }
 
 ::selection { background: #4A4238; color: white; }
@@ -193,8 +193,8 @@ html {
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heebo), "Heebo", sans-serif;
+  --font-sans: var(--font-assistant), "Assistant", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -319,5 +319,8 @@ html {
   }
   html {
     @apply font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
