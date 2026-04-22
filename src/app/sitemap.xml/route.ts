@@ -1,12 +1,11 @@
-import { MetadataRoute } from 'next'
 import { projects as staticProjects } from '@/data/projectsContent'
 import { articles as staticArticles } from '@/data/articlesContent'
 
 const BASE_URL = 'https://talgoren.co.il'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export async function GET() {
   // 1. Static Routes
-  const staticRoutes: MetadataRoute.Sitemap = [
+  const staticRoutes = [
     { url: `${BASE_URL}/`, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
@@ -27,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   // 2. Dynamic Projects
-  const projectRoutes: MetadataRoute.Sitemap = staticProjects.map((p) => ({
+  const projectRoutes = staticProjects.map((p) => ({
     url: `${BASE_URL}/projects/${p.slug || p.id}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
@@ -35,12 +34,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // 3. Dynamic Articles
-  const articleRoutes: MetadataRoute.Sitemap = staticArticles.map((a) => ({
+  const articleRoutes = staticArticles.map((a) => ({
     url: `${BASE_URL}/articles/${a.slug}`,
     lastModified: new Date(a.updatedAt || new Date()),
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...projectRoutes, ...articleRoutes]
+  const allRoutes = [...staticRoutes, ...projectRoutes, ...articleRoutes]
+
+  // Construct XML
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${allRoutes
+    .map(
+      (route) => `
+  <url>
+    <loc>${route.url}</loc>
+    <lastmod>${route.lastModified.toISOString()}</lastmod>
+    <changefreq>${route.changeFrequency}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>`
+    )
+    .join('')}
+</urlset>`
+
+  return new Response(sitemapXml, {
+    headers: {
+      'Content-Type': 'application/xml',
+    },
+  })
 }

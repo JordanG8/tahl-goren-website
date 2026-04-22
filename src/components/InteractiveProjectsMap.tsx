@@ -1,34 +1,29 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import ProjectCard from './ProjectCard';
+import { useMemo } from 'react';
+import { 
+  Map, 
+  MapControls, 
+  MapMarker, 
+  MarkerContent, 
+  MarkerPopup, 
+  MarkerTooltip 
+} from '@/components/ui/map';
 import { siteData } from '@/data/siteData';
+import Link from 'next/link';
 
-const LOCATIONS = [
-  { name: 'זכרון יעקב', cx: 210, cy: 100, color: '#6B8C6B' },
-  { name: 'אור עקיבא', cx: 110, cy: 260, color: '#6B7FA1' },
-  { name: 'בנימינה', cx: 360, cy: 180, color: '#A6806A' },
-  { name: 'גבעת עדה', cx: 430, cy: 310, color: '#8B7560' },
-  { name: 'פרדס חנה', cx: 580, cy: 360, color: '#887B98' },
-  { name: 'מושב מאור', cx: 720, cy: 210, color: '#5B8A7C' },
-  { name: 'קציר', cx: 850, cy: 410, color: '#A89060' },
-];
-
-const CONNECTIONS: [number, number, number, number][] = [
-  [210, 100, 110, 260],
-  [210, 100, 360, 180],
-  [110, 260, 430, 310],
-  [360, 180, 430, 310],
-  [430, 310, 580, 360],
-  [360, 180, 720, 210],
-  [580, 360, 720, 210],
-  [720, 210, 850, 410],
-];
+const LOCATION_COORDS: Record<string, { lng: number, lat: number }> = {
+  "מושב מאור": { lng: 35.00639, lat: 32.42392 },
+  "בנימינה": { lng: 34.945, lat: 32.52222 },
+  "זכרון יעקב": { lng: 34.95167, lat: 32.57083 },
+  "פרדס חנה": { lng: 34.9675, lat: 32.47111 },
+  "אור עקיבא": { lng: 34.91667, lat: 32.50000 },
+  "קציר": { lng: 35.10194, lat: 32.48806 },
+  "גבעת עדה": { lng: 34.955, lat: 32.517 },
+};
 
 export default function InteractiveProjectsMap() {
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
-
+  // Group projects by location
   const projectsByLocation = useMemo(() => {
     const map: Record<string, typeof siteData.projects> = {};
     siteData.projects.forEach((p) => {
@@ -38,212 +33,102 @@ export default function InteractiveProjectsMap() {
     return map;
   }, []);
 
-  const filteredProjects = selectedLocation
-    ? projectsByLocation[selectedLocation] || []
-    : [];
-
-  const handleClick = (name: string) => {
-    setSelectedLocation((prev) => (prev === name ? null : name));
-  };
+  // Filter locations that have coordinates
+  const locationsWithCoords = Object.keys(projectsByLocation).filter(loc => LOCATION_COORDS[loc]);
 
   return (
-    <div>
-      {/* SVG Map */}
-      <div className="bg-surface-container-low p-4 md:p-8 overflow-hidden">
-        <svg
-          viewBox="0 0 960 520"
-          className="w-full h-auto"
-          role="img"
-          aria-label="מפת פרויקטים אינטראקטיבית"
-        >
-          <defs>
-            <linearGradient id="coastBg" x1="0" y1="0" x2="0.12" y2="0">
-              <stop offset="0%" stopColor="#b5c8d8" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#b5c8d8" stopOpacity="0" />
-            </linearGradient>
-          </defs>
+    <div className="w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-surface-container-low relative">
+      <Map 
+        center={[34.97, 32.5]}
+        zoom={11}
+        className="w-full h-full"
+      >
+        <MapControls 
+          showZoom={true} 
+          showCompass={true} 
+          showFullscreen={true} 
+          showLocate={true}
+          position="bottom-right"
+        />
 
-          {/* Coast background hint */}
-          <rect x="0" y="0" width="960" height="520" fill="url(#coastBg)" />
-          <path
-            d="M 35,0 Q 55,100 45,200 Q 30,300 50,400 Q 60,460 45,520"
-            stroke="#b5c8d8"
-            strokeWidth="2"
-            fill="none"
-            opacity="0.4"
-          />
+        {locationsWithCoords.map((locName) => {
+          const coords = LOCATION_COORDS[locName];
+          const projects = projectsByLocation[locName];
+          const mainProject = projects[0];
 
-          {/* Compass indicator */}
-          <g transform="translate(910, 55)" opacity="0.5">
-            <circle cx="0" cy="0" r="16" fill="none" stroke="#b1b3ad" strokeWidth="1" />
-            <text
-              x="0"
-              y="-4"
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="700"
-              fill="#625e58"
-              fontFamily="Inter, sans-serif"
+          return (
+            <MapMarker 
+              key={locName}
+              longitude={coords.lng} 
+              latitude={coords.lat}
             >
-              N
-            </text>
-            <line x1="0" y1="0" x2="0" y2="9" stroke="#b1b3ad" strokeWidth="1" />
-          </g>
+              <MarkerContent>
+                <div className="relative group">
+                  <div className="w-8 h-8 bg-primary rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white font-bold text-xs transform transition-transform group-hover:scale-110">
+                    {projects.length}
+                  </div>
+                  {/* Pulse animation for the marker */}
+                  <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-20 pointer-events-none"></div>
+                </div>
+              </MarkerContent>
 
-          {/* Road connections */}
-          {CONNECTIONS.map(([x1, y1, x2, y2], i) => (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#ccc9c2"
-              strokeWidth="1.5"
-              strokeDasharray="8,5"
-              opacity="0.45"
-            />
-          ))}
+              <MarkerTooltip>
+                <div className="font-headline font-bold text-sm px-1">
+                  {locName} — {projects.length} פרויקטים
+                </div>
+              </MarkerTooltip>
 
-          {/* Location circles */}
-          {LOCATIONS.map((loc) => {
-            const count = projectsByLocation[loc.name]?.length || 0;
-            const isSelected = selectedLocation === loc.name;
-            const isHovered = hoveredLocation === loc.name;
-            const r = 40 + count * 7;
+              <MarkerPopup closeButton={true} className="min-w-[280px] p-0 overflow-hidden rounded-xl border-none shadow-2xl">
+                <div className="flex flex-col">
+                  {mainProject.image && (
+                    <div className="h-32 w-full overflow-hidden">
+                      <img 
+                        src={mainProject.image} 
+                        alt={mainProject.title} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4 bg-white">
+                    <h4 className="font-headline font-bold text-primary text-base mb-1">{locName}</h4>
+                    <p className="font-body text-secondary text-xs mb-3">
+                      {projects.length} פרויקטים שתכננו באזור זה.
+                    </p>
+                    
+                    <div className="space-y-2 max-h-32 overflow-y-auto custom-scrollbar">
+                      {projects.slice(0, 3).map(p => (
+                        <div key={p.id} className="text-xs border-r-2 border-primary/20 pr-2 py-1">
+                          <p className="font-headline font-semibold text-primary/80 line-clamp-1">{p.title}</p>
+                        </div>
+                      ))}
+                      {projects.length > 3 && (
+                        <p className="text-[10px] text-secondary/60 italic">ועוד {projects.length - 3} פרויקטים נוספים...</p>
+                      )}
+                    </div>
 
-            return (
-              <g
-                key={loc.name}
-                onClick={() => handleClick(loc.name)}
-                onMouseEnter={() => setHoveredLocation(loc.name)}
-                onMouseLeave={() => setHoveredLocation(null)}
-                style={{ cursor: 'pointer' }}
-                role="button"
-                tabIndex={0}
-                aria-label={`${loc.name} – ${count} פרויקטים`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') handleClick(loc.name);
-                }}
-              >
-                {/* Selection ring */}
-                {isSelected && (
-                  <circle
-                    cx={loc.cx}
-                    cy={loc.cy}
-                    r={r + 10}
-                    fill="none"
-                    stroke={loc.color}
-                    strokeWidth="2"
-                    opacity="0.5"
-                    strokeDasharray="4,3"
-                  />
-                )}
-
-                {/* Hover / selected glow */}
-                {(isHovered || isSelected) && (
-                  <circle
-                    cx={loc.cx}
-                    cy={loc.cy}
-                    r={r + 6}
-                    fill={loc.color}
-                    opacity="0.15"
-                  />
-                )}
-
-                {/* Main circle */}
-                <circle
-                  cx={loc.cx}
-                  cy={loc.cy}
-                  r={r}
-                  fill={loc.color}
-                  opacity={isSelected ? 1 : isHovered ? 0.9 : 0.72}
-                  stroke="rgba(255,255,255,0.35)"
-                  strokeWidth="2"
-                />
-
-                {/* Count number */}
-                <text
-                  x={loc.cx}
-                  y={loc.cy + 1}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fill="white"
-                  fontSize={r > 65 ? 30 : 24}
-                  fontWeight="800"
-                  fontFamily="Heebo, sans-serif"
-                  style={{ pointerEvents: 'none' }}
-                >
-                  {count}
-                </text>
-
-                {/* Location name below circle */}
-                <text
-                  x={loc.cx}
-                  y={loc.cy + r + 20}
-                  textAnchor="middle"
-                  fill="#30332f"
-                  fontSize="14"
-                  fontWeight="700"
-                  fontFamily="Heebo, sans-serif"
-                  style={{ pointerEvents: 'none' }}
-                >
-                  {loc.name}
-                </text>
-              </g>
-            );
-          })}
-
-          {/* Instruction */}
-          <text
-            x="480"
-            y="505"
-            textAnchor="middle"
-            fill="#625e58"
-            fontSize="12"
-            fontFamily="Assistant, sans-serif"
-            opacity="0.6"
-          >
-            לחצו על אזור במפה לצפייה בפרויקטים
-          </text>
-        </svg>
-      </div>
-
-      {/* Filtered Projects */}
-      {selectedLocation && filteredProjects.length > 0 && (
-        <div className="pt-10">
-          <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-4 h-4 rounded-full flex-shrink-0"
-                style={{
-                  backgroundColor: LOCATIONS.find(
-                    (l) => l.name === selectedLocation,
-                  )?.color,
-                }}
-              />
-              <h3 className="font-headline font-bold text-2xl text-primary">
-                פרויקטים ב{selectedLocation}
-              </h3>
-              <span className="font-label text-sm text-secondary bg-surface-container-low px-3 py-1 rounded-full">
-                {filteredProjects.length}
-              </span>
-            </div>
-            <button
-              onClick={() => setSelectedLocation(null)}
-              className="flex items-center gap-2 text-secondary hover:text-primary transition-colors font-label text-sm"
-            >
-              <span>נקה בחירה</span>
-              <span className="material-symbols-outlined text-base">close</span>
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
+                    <Link 
+                      href="/projects" 
+                      className="mt-4 inline-flex items-center gap-2 text-primary font-bold text-xs hover:underline group"
+                    >
+                      <span>לכל הפרויקטים</span>
+                      <span className="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">arrow_back</span>
+                    </Link>
+                  </div>
+                </div>
+              </MarkerPopup>
+            </MapMarker>
+          );
+        })}
+      </Map>
+      
+      {/* Decorative Blueprint Overlay */}
+      <div className="absolute top-4 left-4 z-10 pointer-events-none opacity-20">
+        <div className="w-32 h-32 border border-primary/30 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 border border-primary/20 rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 border border-primary/10 rounded-full"></div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

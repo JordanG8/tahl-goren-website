@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
+import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
 
 export default function ProjectsMap() {
   const locations = [...new Set(siteData.projects.map(p => p.location))];
@@ -22,16 +23,7 @@ export default function ProjectsMap() {
 
       {/* Map Section */}
       <section className="px-8 lg:px-12 pb-12 max-w-[1920px] mx-auto">
-        <div className="aspect-[16/9] md:aspect-[21/9] bg-surface-container-low overflow-hidden">
-          <iframe
-            title="מפת הפרויקטים של טל גורן אדריכלות"
-            src="https://maps.google.com/maps?q=%D7%92%D7%91%D7%A2%D7%AA+%D7%A2%D7%93%D7%94&t=&z=10&ie=UTF8&iwloc=&output=embed"
-            className="w-full h-full border-0"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
+        <InteractiveProjectsMap />
       </section>
 
       {/* Locations Legend */}

@@ -25,29 +25,40 @@ export default async function Faq() {
           </div>
         </section>
 
-        {/* FAQ Content */}
-        <section className="py-24 px-8 bg-surface-container-low">
-          <div className="max-w-4xl mx-auto" id="full-faq-container">
-            {faq.map((item: any, index: number) => (
-              <details key={index} className="faq-item bg-surface mb-4">
-                <summary>
-                  <span className="font-headline font-bold text-xl text-primary leading-relaxed pl-4">{item.question}</span>
-                  <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
-                </summary>
-                <div className="faq-answer">
+        {/* FAQ Content with Background Effect */}
+        <section className="relative py-24 px-8 overflow-hidden">
+          {/* Pretty Background Effect */}
+          <div className="bg-mesh-container">
+            <div className="mesh-blob mesh-blob-1"></div>
+            <div className="mesh-blob mesh-blob-2"></div>
+            <div className="mesh-blob mesh-blob-3"></div>
+            <div className="noise-overlay"></div>
+            <div className="absolute inset-0 blueprint-grid opacity-[0.03]"></div>
+          </div>
+
+          <div className="max-w-7xl mx-auto relative z-10" id="full-faq-container">
+            <div className="faq-grid">
+              {faq.map((item: any, index: number) => (
+                <div key={index} className="faq-card">
+                  <h3 className="font-headline font-bold text-2xl text-primary leading-tight">
+                    {item.question}
+                  </h3>
                   <p className="font-body text-base text-secondary leading-relaxed">
                     {item.answer}
                   </p>
                 </div>
-              </details>
-            ))}
+              ))}
+            </div>
 
-            <div className="mt-12 p-10 bg-primary text-white text-center">
-              <h3 className="font-headline font-black text-3xl mb-4">יש לכם שאלה נוספת?</h3>
-              <p className="text-white/70 mb-8">אני זמינה לכל שאלה והתייעצות. בואו נדבר.</p>
-              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors">
-                צרו קשר עכשיו
-              </Link>
+            <div className="mt-24 p-12 bg-primary text-white text-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+              <div className="relative z-10">
+                <h3 className="font-headline font-black text-4xl md:text-5xl mb-6">יש לכם שאלה נוספת?</h3>
+                <p className="text-white/70 text-lg mb-10 max-w-2xl mx-auto">אני זמינה לכל שאלה והתייעצות. בואו נדבר ונבין איך אני יכולה לעזור לכם להגשים את החלום.</p>
+                <Link href="/contact" className="inline-block bg-white text-primary px-16 py-5 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-all hover:scale-105 active:scale-95">
+                  צרו קשר עכשיו
+                </Link>
+              </div>
             </div>
           </div>
         </section>
