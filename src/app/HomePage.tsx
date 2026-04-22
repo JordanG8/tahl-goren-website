@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
-import ProcessSteps from '@/components/ProcessSteps';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
@@ -194,8 +193,7 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
-      {/* 6. PROCESS STEPS (collapsible flowchart) */}
-      <ProcessSteps />
+
 
       {/* 7. FAQ (new content with article links) */}
       <section className="py-24 lg:py-32 -mt-1">

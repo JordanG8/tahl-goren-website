@@ -8,8 +8,6 @@ import MobileMenu from './MobileMenu';
 
 const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
-  { to: '/process', label: 'תהליך העבודה' },
-  { to: '/services', label: 'שירותים' },
   { to: '/about', label: 'אודות' },
   { to: '/articles', label: 'מאמרים' },
   { to: '/testimonials', label: 'לקוחות מספרים' },

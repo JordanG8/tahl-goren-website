@@ -10,8 +10,6 @@ const navCategories = [
     label: 'ראשי',
     links: [
       { to: '/projects', label: 'פרויקטים' },
-      { to: '/process', label: 'תהליך העבודה' },
-      { to: '/services', label: 'שירותים' },
       { to: '/about', label: 'אודות' },
     ],
   },

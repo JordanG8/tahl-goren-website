@@ -24,8 +24,7 @@ export default function Footer() {
             <h4 className="text-primary font-headline font-bold text-xs uppercase tracking-[0.2em]">ניווט</h4>
             <div className="flex flex-col gap-2 font-label text-sm text-secondary">
               <Link href="/projects" className="hover:text-primary transition-colors">פרויקטים</Link>
-              <Link href="/process" className="hover:text-primary transition-colors">תהליך העבודה</Link>
-              <Link href="/services" className="hover:text-primary transition-colors">שירותים</Link>
+
               <Link href="/about" className="hover:text-primary transition-colors">אודות</Link>
               <Link href="/articles" className="hover:text-primary transition-colors">מאמרים</Link>
               <Link href="/faq" className="hover:text-primary transition-colors">שאלות ותשובות</Link>
