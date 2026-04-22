@@ -75,7 +75,7 @@ export default function ReviewsCarousel() {
                 <img 
                   src={"/images/reviews/" + encodeURIComponent(img)} 
                   alt="המלצת לקוח" 
-                  className="w-full h-full object-contain rounded-xl"
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-xl"
                 />
               </div>
             </SwiperSlide>
