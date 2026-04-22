@@ -128,7 +128,7 @@ export default function HomePage({ projects }: Props) {
       {/* 3. PROJECTS */}
       <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="mb-16">
+          <div className="mb-16 text-center">
             <div className="space-y-4">
               <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
               <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מהעשייה שלנו</h2>
@@ -149,12 +149,10 @@ export default function HomePage({ projects }: Props) {
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
-            <div className="space-y-4">
-              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
-              <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
-            </div>
-            <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+          <div className="text-center mb-16 space-y-4">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
+            <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
               <span>כל ההמלצות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
@@ -235,10 +233,10 @@ export default function HomePage({ projects }: Props) {
       {/* 8. ARTICLES (new section) */}
       <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="mb-16 space-y-4">
+          <div className="mb-16 space-y-4 text-center">
             <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מאמרים ומדריכים</span>
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">ידע שחוסך לכם כסף</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl">מאמרים מקצועיים בנושאי תכנון, בנייה ועיצוב — כדי שתגיעו מוכנים לתהליך.</p>
+            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">מאמרים מקצועיים בנושאי תכנון, בנייה ועיצוב — כדי שתגיעו מוכנים לתהליך.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredArticles.map((article) => (
