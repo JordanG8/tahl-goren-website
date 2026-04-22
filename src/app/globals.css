@@ -324,3 +324,11 @@ html {
     @apply font-heading;
   }
 }
+
+/* Swiper Custom Styles */
+.swiper-pagination-bullet-active {
+  background: var(--color-primary) !important;
+}
+.swiper-slide-shadow {
+  border-radius: 1rem !important;
+}

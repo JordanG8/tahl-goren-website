@@ -25,7 +25,7 @@ export default function Projects() {
   return (
     <>
       {/* Page Header */}
-      <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
+      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
         <div>
           <Breadcrumb current="פרויקטים" />
           <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
@@ -34,7 +34,7 @@ export default function Projects() {
       </section>
 
       {/* Interactive Map */}
-      <section className="px-8 lg:px-12 py-12 md:py-20 max-w-[1920px] mx-auto">
+      <section className="px-8 lg:px-12 py-8 md:py-16 max-w-[1920px] mx-auto">
         <InteractiveProjectsMap />
       </section>
 

@@ -14,7 +14,7 @@ export default function Testimonials() {
   return (
     <>
       {/* Header */}
-      <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
+      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
         <Breadcrumb items={[{ label: "ראשי", to: "/" }, { label: "לקוחות מספרים" }]} />
         <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-5xl">
           מה אומרים עלינו
@@ -25,7 +25,7 @@ export default function Testimonials() {
       </section>
 
       {/* Reviews Grid */}
-      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
+      <section className="px-8 lg:px-12 pb-12 md:pb-24 max-w-[1920px] mx-auto">
         <ReviewsCarousel />
 
         {/* Actions */}

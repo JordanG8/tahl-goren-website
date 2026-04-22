@@ -168,7 +168,7 @@ export default function HomePage({ projects }: Props) {
       </section>
 
       {/* 4. TESTIMONIALS — Google Reviews */}
-      <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
+      <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
             <div className="space-y-4">

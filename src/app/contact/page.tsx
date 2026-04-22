@@ -54,7 +54,7 @@ export default function Contact() {
 
   return (
     <>
-      <section className="py-20 px-8 bg-surface">
+      <section className="py-12 md:py-20 px-8 bg-surface">
         <div className="max-w-6xl mx-auto">
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-primary">
             בואו נדבר.
@@ -65,11 +65,10 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="pb-32 px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
 
-            <div className="space-y-16">
+            <div className="space-y-8 md:space-y-16">
               <div className="space-y-12">
                 <div className="flex gap-8 group">
                   <div className="w-16 h-16 bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
@@ -102,7 +101,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="aspect-video bg-surface-container-low overflow-hidden relative">
+              <div className="h-[200px] md:aspect-video bg-surface-container-low overflow-hidden relative">
                 <iframe
                   title="מיקום המשרד - רחוב האלה 22, גבעת עדה"
                   src="https://maps.google.com/maps?q=%D7%94%D7%90%D7%9C%D7%94+22+%D7%92%D7%91%D7%A2%D7%AA+%D7%A2%D7%93%D7%94&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -114,7 +113,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-surface-container p-12 md:p-20">
+            <div className="bg-surface-container p-8 md:p-20">
               <h2 className="font-headline font-black text-4xl text-primary mb-12">שלחו הודעה</h2>
 
               {status === "success" ? (
