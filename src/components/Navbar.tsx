@@ -11,7 +11,6 @@ const desktopLinks = [
   { to: '/about', label: 'אודות' },
   { to: '/articles', label: 'מאמרים' },
   { to: '/testimonials', label: 'לקוחות מספרים' },
-  { to: '/faq', label: 'שאלות ותשובות' },
 ];
 
 export default function Navbar() {

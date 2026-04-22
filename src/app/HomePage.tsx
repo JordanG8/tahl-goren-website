@@ -9,9 +9,9 @@ import ReviewsCarousel from '@/components/ReviewsCarousel';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
-import { faqArticles } from '@/data/faqArticles';
+import { articles as siteArticles } from '@/data/articlesContent';
 
-const homepageFaq = faqArticles.slice(0, 9);
+const homepageFaq = siteArticles.filter(a => a.faq).slice(0, 9);
 
 const featuredArticles = [
   { slug: "costs", title: "עלויות בניה ומחיר אדריכלות", image: "https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? מדריך מפורט על עלויות הבנייה." },
@@ -207,7 +207,7 @@ export default function HomePage({ projects }: Props) {
             {homepageFaq.map((item, index) => (
               <Link 
                 key={index} 
-                href={`/faq/${item.slug}`}
+                href={`/articles/${item.slug}`}
                 className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 text-right flex flex-col h-full"
               >
                 <h3 className="font-headline font-bold text-xl text-primary mb-4 leading-tight group-hover:text-secondary transition-colors">
@@ -224,7 +224,7 @@ export default function HomePage({ projects }: Props) {
             ))}
           </div>
           <div className="text-center mt-16">
-            <Link href="/faq" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
+            <Link href="/articles" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>לכל השאלות והתשובות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>

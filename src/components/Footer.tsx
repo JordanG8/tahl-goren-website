@@ -27,7 +27,6 @@ export default function Footer() {
 
               <Link href="/about" className="hover:text-primary transition-colors">אודות</Link>
               <Link href="/articles" className="hover:text-primary transition-colors">מאמרים</Link>
-              <Link href="/faq" className="hover:text-primary transition-colors">שאלות ותשובות</Link>
             </div>
           </div>
           <div className="space-y-4">

@@ -40,19 +40,6 @@ export default function ReviewsCarousel() {
 
   return (
     <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-10">
-      {/* Map Embed */}
-      <div className="w-full flex justify-center px-4" dir="ltr">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3364.294181639358!2d35.0034882!3d32.5182891!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d0f2c70487827%3A0x987f6eca6f0e2b0d!2z15DXk9eo15nXm9ec15nXqiDXmNecINeS15XXqNefIC0g15zXlNeS16nXmdedINec157Xqdek15fXlCDXqdec15og15HXmdeqINeS157XmdepLCDXmdei15nXnCDXldee16LXldem15E!5e0!3m2!1siw!2sil!4v1776844849551!5m2!1siw!2sil"
-          width="100%"
-          height="200"
-          style={{ border: 0, maxWidth: "800px", borderRadius: "12px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-
       {/* Mobile-only Swiper Carousel */}
       <div className="md:hidden relative w-full px-4 overflow-hidden py-10" dir="ltr">
         <Swiper
