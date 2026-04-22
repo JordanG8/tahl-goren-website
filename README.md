@@ -29,6 +29,18 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Project Structure
+
+- `src/app/api/contact/route.ts`: Form submission handler (Email + Database).
+- `src/app/admin/responses/page.tsx`: Admin dashboard to view form responses.
+- `src/lib/db.ts`: Database utilities.
+
+## Admin Dashboard
+
+The form responses are now stored in a Vercel Postgres database.
+You can access them at: `/admin/responses`
+Default Password: `admin123` (Change this in `.env.local` or Vercel Environment Variables via `ADMIN_PASSWORD`).
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

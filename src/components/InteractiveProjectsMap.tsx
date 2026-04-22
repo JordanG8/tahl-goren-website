@@ -37,16 +37,35 @@ export default function InteractiveProjectsMap() {
   const locationsWithCoords = Object.keys(projectsByLocation).filter(loc => LOCATION_COORDS[loc]);
 
   return (
-    <div className="w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-surface-container-low relative">
-      <Map 
-        center={[34.97, 32.5]}
-        zoom={11}
-        className="w-full h-full"
+    <div className="w-full h-[300px] rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-surface-container-low relative group/map">
+      <button 
+        onClick={() => {
+          const el = document.getElementById('interactive-map-container');
+          if (el) {
+            if (document.fullscreenElement) {
+              document.exitFullscreen();
+            } else {
+              el.requestFullscreen();
+            }
+          }
+        }}
+        className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white text-[#30332f] px-4 py-2 rounded-lg shadow-lg border border-border/50 flex items-center gap-2 font-bold text-sm transition-all active:scale-95"
       >
+        <span className="material-symbols-outlined text-base">fullscreen</span>
+        <span>מסך מלא</span>
+      </button>
+      
+      <div id="interactive-map-container" className="w-full h-full">
+        <Map 
+          center={[34.97, 32.5]}
+          zoom={11}
+          theme="light"
+          className="w-full h-full"
+        >
         <MapControls 
           showZoom={true} 
           showCompass={true} 
-          showFullscreen={true} 
+          showFullscreen={false} 
           showLocate={true}
           position="bottom-right"
         />
@@ -119,7 +138,8 @@ export default function InteractiveProjectsMap() {
             </MapMarker>
           );
         })}
-      </Map>
+        </Map>
+      </div>
       
       {/* Decorative Blueprint Overlay */}
       <div className="absolute top-4 left-4 z-10 pointer-events-none opacity-20">

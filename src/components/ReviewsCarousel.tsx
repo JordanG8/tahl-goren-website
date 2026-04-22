@@ -94,7 +94,7 @@ export default function ReviewsCarousel() {
           <div className="animate-scroll-left">
             {[...row1, ...row1].map((img, i) => (
               <div key={i} className="review-card">
-                <img src={\`/images/reviews/\${img}\`} alt="המלצת לקוח" loading="lazy" />
+                <img src={"/images/reviews/" + encodeURIComponent(img)} alt="המלצת לקוח" loading="lazy" />
               </div>
             ))}
           </div>
@@ -105,7 +105,7 @@ export default function ReviewsCarousel() {
           <div className="animate-scroll-right">
             {[...row2, ...row2].map((img, i) => (
               <div key={i} className="review-card">
-                <img src={\`/images/reviews/\${img}\`} alt="המלצת לקוח" loading="lazy" />
+                <img src={"/images/reviews/" + encodeURIComponent(img)} alt="המלצת לקוח" loading="lazy" />
               </div>
             ))}
           </div>

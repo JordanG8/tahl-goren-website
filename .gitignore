@@ -49,3 +49,4 @@ tahl portrait.png
 # legacy
 /next-site
 /react-site
+.env*.local
