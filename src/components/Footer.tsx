@@ -1,11 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer className="w-full bg-surface-container-low">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-8 lg:px-12 py-20 max-w-[1920px] mx-auto gap-12">
         <div className="space-y-4">
-          <div className="text-lg font-semibold text-primary font-headline">TAL GOREN ARCHITECTS</div>
+          <Link href="/" className="block">
+            <Image 
+              src="/images/logo.jpg" 
+              alt="TAL GOREN ARCHITECTS" 
+              width={200} 
+              height={70} 
+              className="h-12 w-auto object-contain brightness-90"
+            />
+          </Link>
           <p className="font-label text-sm tracking-wide text-secondary max-w-sm leading-relaxed">
             ליווי מקצועי ואישי לחווית בניה רגועה. תכנון אדריכלי חכם לבית שגדל עם המשפחה. למעלה מ-25 שנות ניסיון.
           </p>

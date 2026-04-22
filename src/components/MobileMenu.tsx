@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const navCategories = [
@@ -86,7 +87,15 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           >
             <span className="material-symbols-outlined text-primary text-2xl">close</span>
           </button>
-          <span className="text-xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</span>
+          <Link href="/" onClick={onClose} className="flex items-center">
+            <Image 
+              src="/images/logo.jpg" 
+              alt="TAL GOREN" 
+              width={140} 
+              height={45} 
+              className="h-8 w-auto object-contain"
+            />
+          </Link>
         </div>
 
         <div className="flex-grow overflow-y-auto px-8 py-8">

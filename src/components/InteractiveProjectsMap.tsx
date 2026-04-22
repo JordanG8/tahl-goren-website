@@ -37,7 +37,7 @@ export default function InteractiveProjectsMap() {
   const locationsWithCoords = Object.keys(projectsByLocation).filter(loc => LOCATION_COORDS[loc]);
 
   return (
-    <div className="hidden md:block w-full max-w-7xl mx-auto h-[600px] rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 bg-surface-container-low relative group/map">
+    <div className="w-full max-w-7xl mx-auto h-[400px] md:h-[600px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 bg-surface-container-low relative group/map">
       <button 
         onClick={() => {
           const el = document.getElementById('interactive-map-container');

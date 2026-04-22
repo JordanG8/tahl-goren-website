@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import MobileMenu from './MobileMenu';
 
@@ -24,7 +25,16 @@ export default function Navbar() {
       <nav className="relative w-full z-50 bg-background shadow-sm">
         <div className="flex justify-between items-center px-8 py-6 max-w-[1920px] mx-auto">
           <div className="flex-shrink-0 order-2 lg:order-1">
-            <Link href="/" className="text-2xl font-bold text-primary tracking-tighter font-headline">TAL GOREN</Link>
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/images/logo.jpg" 
+                alt="TAL GOREN" 
+                width={180} 
+                height={60} 
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            </Link>
           </div>
 
           <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-tight text-sm lg:order-2">
