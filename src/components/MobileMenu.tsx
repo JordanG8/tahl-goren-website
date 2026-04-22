@@ -89,7 +89,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           </button>
           <Link href="/" onClick={onClose} className="flex items-center">
             <Image 
-              src="/images/logo.jpg" 
+              src="/images/logo.png" 
               alt="TAL GOREN" 
               width={140} 
               height={45} 
