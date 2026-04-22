@@ -10,29 +10,9 @@ import ReviewsCarousel from '@/components/ReviewsCarousel';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
-const homepageFaq: { question: string; answer: string; articleSlug: string }[] = [
-  { question: "למה חובה להיעזר באדריכלית כשבונים בית?", answer: "בחירת אדריכלית היא ההחלטה החשובה ביותר לקראת בניית בית. היא בעלת המקצוע היחידה אשר מוסמכת חוקית ומקצועית לתת מענה משולב ל-3 תחומים: תכנון הבית, עיצוב הבית, ורישוי בניה. רק שילוב מקצועי של שלושת התחומים עומד בדרישות החוק ומבטיח בית שתהנו ממנו לאורך שנים.", articleSlug: "why-architect" },
-  { question: "איך לבחור אדריכלית?", answer: "בחירת אדריכלית היא תהליך דו-שלבי. בשלב הראשון, חשוב לבצע בדיקה מקצועית: לוודא שהיא בעלת ההסמכה החוקית הנדרשת וניסיון רלוונטי בתכנון בתים, ולקבל עליה המלצות חמות. לאחר מכן, חשוב לוודא שיש ביניכם כימיה טובה ושאתם סומכים עליה שתוביל את הפרויקט להצלחה.", articleSlug: "choose-architect" },
-  { question: "איך לא לבחור אדריכלית?", answer: "חשוב להימנע משתי טעויות נפוצות. ראשית, לא מומלץ לבחור רק על סמך הצעת המחיר הנמוכה ביותר, כי תכנון איכותי הוא השקעה שחוסכת עלויות בנייה יקרות בהמשך. שנית, לא כדאי לפסול אדריכלית בגלל סגנון עיצובי של פרויקט ספציפי.", articleSlug: "how-not-to-choose-architect" },
-  { question: "מהם שלבי העבודה בתכנון ובניית בית?", answer: "תהליך התכנון והבנייה מחולק לשישה שלבים מרכזיים: בירורים מקדימים, תכנון מוקדם, רישוי, תכניות עבודה, בנייה, וסיום ואיכלוס. כל שלב מתבסס על קודמו ודורש תשומת לב מקצועית כדי להבטיח תוצאה מיטבית.", articleSlug: "building-stages" },
-  { question: "מה תפקיד האדריכלית בכל אחד משלבי התכנון והבניה?", answer: "תפקידי כאדריכלית הוא ללוות, לייעץ ולהוביל מקצועית את הפרויקט בכל ששת שלביו — מסיוע בבחינת המגרש ועד סיוע בקבלת תעודת גמר.", articleSlug: "architect-role-stages" },
-  { question: "באיזה שלב של הפרויקט כדאי לערב את האדריכלית?", answer: "מומלץ לערב את האדריכלית בשלב מוקדם ככל האפשר, אפילו לפני רכישת המגרש. השלב שבו המעורבות הופכת להכרחית הוא שלב התכנון המוקדם, שכן על פי החוק נדרשת חתימת אדריכלית על הבקשה להיתר.", articleSlug: "when-to-involve-architect" },
-  { question: "כמה זמן לוקח לתכנן ולבנות בית?", answer: "תהליך התכנון והבנייה המלא נמשך בדרך כלל כשנתיים. התהליך כולל: תכנון מוקדם (3-5 חודשים), רישוי (כחצי שנה עד שנה) ובנייה בפועל (כ-12 חודשים).", articleSlug: "building-timeline" },
-  { question: "כמה תעלה לנו הבנייה בסך הכל?", answer: "ככלל אצבע, העלות המינימלית כיום (2025) מתחילה ב-10,000-12,000 ₪ למ\"ר, רק תשלום לקבלן. המחיר הסופי מושפע מהיקף הבנייה, סטנדרט הגמרים, תנאי השטח, ומספר החלונות והדלתות.", articleSlug: "building-cost-total" },
-  { question: "באיזה אזור גאוגרפי את עובדת?", answer: "משרדי ממוקם בגבעת עדה, ועיקר פעילותי מתרכזת באזור השרון הצפוני — כל המרחב שבין נתניה לחיפה ועד עפולה במזרח. בין היתר: פרדס חנה-כרכור, אור עקיבא, בנימינה, זכרון יעקב, חדרה, קיסריה והסביבה.", articleSlug: "service-area" },
-  { question: "מה כדאי להכין לקראת הפגישה הראשונה?", answer: "אמנם אין חובה להכין דבר, אך כדי להפיק מהפגישה את המירב, מומלץ להגיע עם פרטי המגרש (אם קיים), מסגרת תקציב כללית, ורשימת צרכים וחלומות ראשונית.", articleSlug: "first-meeting-prep" },
-  { question: "כמה יעלו שירותי התכנון והעיצוב האדריכלי?", answer: "עלות התכנון בדרך כלל נעה בין 3-5% מעלות הפרויקט כולו. גיבשתי שלוש חבילות שירות במחיר קבוע, הנבדלות בהיקף עבודת עיצוב הפנים — מתכנון בסיסי ועד ליווי מקיף.", articleSlug: "planning-cost" },
-  { question: "האם כדאי להשקיע גם בעיצוב פנים?", answer: "בהחלט. מה הופך בית יפה ופונקציונלי לבית עם נשמה? עיצוב פנים מדויק. אני מציעה שירותי עיצוב פנים כחלק מחבילות התכנון המורחבות, כדי להבטיח תוצאה שלמה.", articleSlug: "interior-design-value" },
-  { question: "מהו הצעד הראשון כשרוצים לתכנן בית?", answer: "הצעד הראשון הוא לוודא שיש סנכרון בין 3 גורמים: החלום (מהם הצרכים שלכם?), המציאות (מה זכויות הבנייה מאפשרות?), והתקציב (מהי המסגרת הכלכלית?).", articleSlug: "first-step" },
-  { question: "אילו בעלי מקצוע מרכזיים יש בתחום התכנון?", answer: "תפגשו שלושה בעלי מקצוע מרכזיים: אדריכלות (תכנון, עיצוב ורישוי), הנדסת בניין (חוזק ובטיחות המבנה), ועיצוב פנים (תכנון החללים הפנימיים). חשוב להכיר את ההבדלים ביניהם.", articleSlug: "professionals-credentials" },
-  { question: "כמה באמת עולה לבנות בית פרטי בישראל?", answer: "עלות הבנייה תלויה בגורמים ייחודיים לפרויקט שלכם ובמחירי השוק הדינמיים. תפקידי הוא להתחיל על בסיס כללי אצבע ולהפנות אתכם לאומדן מקצועי שיתבסס על התכנון הספציפי שלכם.", articleSlug: "real-building-cost" },
-  { question: "איך מוודאים שלא חורגים מהתקציב?", answer: "באמצעות הגדרת תקציב מראש, ליווי צמוד עם \"דגלים אדומים\", בדיקות תקופתיות בנקודות מפתח, ותכנון גמיש שמשאיר שוליים לקיצוצים ללא פגיעה במהות הבית.", articleSlug: "budget-control" },
-  { question: "אילו \"עלויות נסתרות\" יש בתהליך?", answer: "טעות נפוצה היא לחשוב שמחיר הקבלן הוא העלות הכוללת. יש עלויות \"לפני הבנייה\" (מיסים, אגרות, יועצים) ו\"אחרי הבנייה\" (ריהוט, גינון, מיזוג). אלו יכולות להצטבר למאות אלפי שקלים.", articleSlug: "hidden-costs" },
-  { question: "מה זה היתר בנייה, והאם הוא מספיק כדי להתחיל לבנות?", answer: "היתר בנייה הוא האישור החוקי להקמת ביתכם. כאדריכלית מורשית היתר, יש לי סמכות להנפיק היתר בתהליך מקוצר של \"רישוי עצמי\". חשוב לדעת: נדרש גם \"אישור תחילת עבודה\" מהוועדה.", articleSlug: "building-permit" },
-  { question: "אילו שיטות בנייה עיקריות קיימות בישראל?", answer: "השיטה הנפוצה היא הקונבנציונלית (בטון ובלוקים). לצדה קיימות שיטות מתקדמות (שלד פלדה/עץ) ושיטות מבודדות (ICF, GSB). אני מכווינה כל משפחה לשיטה המתאימה ביותר.", articleSlug: "construction-methods-overview" },
-  { question: "האם ניתן להוסיף יחידת דיור או משרד במגרש?", answer: "התשובה תלויה בתב\"ע החלה על המגרש שלכם. תב\"עות רבות גמישות יותר לגבי משרד מאשר יחידת דיור. חיוני להתייעץ עם אדריכלית שתבחן את ההיתכנות ותתכנן פתרון גמיש.", articleSlug: "housing-unit-addition" },
-  { question: "איך לוודא שהסגנון העיצובי יקלע לטעמנו?", answer: "התהליך מתחיל בניתוח השראות ויזואליות שלכם. לאחר מכן, אני יוצרת הדמיות תלת-ממדיות ריאליסטיות המאפשרות לכם 'לטייל' בבית העתידי לפני תחילת הבנייה.", articleSlug: "design-style-match" },
-];
+import { faqArticles } from '@/data/faqArticles';
+
+const homepageFaq = faqArticles.slice(0, 9);
 
 const featuredArticles = [
   { slug: "costs", title: "עלויות בניה ומחיר אדריכלות", image: "https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? מדריך מפורט על עלויות הבנייה." },
@@ -225,27 +205,24 @@ export default function HomePage({ projects }: Props) {
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">שאלות ותשובות</h2>
             <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.</p>
           </div>
-          <div className="max-w-4xl mx-auto space-y-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {homepageFaq.map((item, index) => (
-              <div key={index}>
-                <details className="faq-item bg-surface">
-                  <summary>
-                    <span className="font-headline font-bold text-base sm:text-lg text-primary leading-relaxed pl-4">{item.question}</span>
-                    <span className="material-symbols-outlined faq-chevron text-2xl">expand_more</span>
-                  </summary>
-                  <div className="faq-answer">
-                    <p className="font-body text-sm sm:text-base text-secondary leading-relaxed mb-4">{item.answer}</p>
-                    <Link
-                      href={`/articles/${item.articleSlug}`}
-                      className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary hover:text-secondary transition-colors group"
-                    >
-                      <span>למאמר המלא</span>
-                      <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
-                    </Link>
-                  </div>
-                </details>
-                {index < homepageFaq.length - 1 && <div className="faq-divider" />}
-              </div>
+              <Link 
+                key={index} 
+                href={`/faq/${item.slug}`}
+                className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 text-right flex flex-col h-full"
+              >
+                <h3 className="font-headline font-bold text-xl text-primary mb-4 leading-tight group-hover:text-secondary transition-colors">
+                  {item.question}
+                </h3>
+                <p className="font-body text-sm text-secondary leading-relaxed line-clamp-3 mb-6 flex-grow">
+                  {item.shortAnswer.replace(/\*\*\*.*?\*\*\*/g, '').trim()}
+                </p>
+                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+                  <span>קרא עוד</span>
+                  <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
+                </div>
+              </Link>
             ))}
           </div>
           <div className="text-center mt-16">
