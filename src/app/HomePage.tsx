@@ -6,7 +6,6 @@ import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ProcessSteps from '@/components/ProcessSteps';
-import ShapeDivider from '@/components/ShapeDivider';
 import GoogleReviewsWidget from '@/components/GoogleReviewsWidget';
 import { reviews as staticReviews } from '@/data/reviews';
 import { GoogleReview } from '@/data/googleReviews';
@@ -46,11 +45,10 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
-  reels: any[];
   reviewsData?: { reviews: GoogleReview[], rating: number, totalReviews: number } | null;
 };
 
-export default function HomePage({ projects, reels, reviewsData }: Props) {
+export default function HomePage({ projects, reviewsData }: Props) {
   const displayReviews = reviewsData?.reviews.length
     ? reviewsData.reviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, photoUrl: r.photoUrl }))
     : staticReviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, photoUrl: null as string | null }));
@@ -59,13 +57,9 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
   const totalReviewsCount = reviewsData?.totalReviews || 60;
 
   const featuredProjects = projects.slice(0, 6);
-  const featuredReels = reels.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const socialCarouselRef = useRef<HTMLDivElement | null>(null);
-  const reelVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [activeReel, setActiveReel] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -88,56 +82,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
       nextVideo.load();
     }
   }, [activeVideo]);
-
-  useEffect(() => {
-    reelVideoRefs.current.forEach((video, idx) => {
-      if (!video) return;
-      if (idx === activeReel) {
-        video.currentTime = 0;
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    });
-  }, [activeReel]);
-
-  const getReelVideoSrc = (reel: any) =>
-    reel.videoUrl ||
-    reel.video?.asset?.url ||
-    reel.video ||
-    reel.mp4Url ||
-    null;
-
-  const scrollToReel = (index: number) => {
-    const container = socialCarouselRef.current;
-    if (!container) return;
-    const card = container.querySelector<HTMLElement>(`[data-reel-index="${index}"]`);
-    if (!card) return;
-    const left = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
-    container.scrollTo({ left, behavior: 'smooth' });
-  };
-
-  const handleReelScroll = () => {
-    const container = socialCarouselRef.current;
-    if (!container) return;
-    const cards = Array.from(container.querySelectorAll<HTMLElement>('[data-reel-index]'));
-    if (!cards.length) return;
-
-    const center = container.scrollLeft + container.clientWidth / 2;
-    let nearest = 0;
-    let nearestDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.clientWidth / 2;
-      const distance = Math.abs(cardCenter - center);
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearest = index;
-      }
-    });
-
-    if (nearest !== activeReel) setActiveReel(nearest);
-  };
 
   return (
     <>
@@ -179,11 +123,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
         </div>
       </section>
 
-      {/* Hero → About divider */}
-      <div className="relative -mt-24 z-10">
-        <ShapeDivider shape="wave" fillColor="#eeeeea" height={100} />
-      </div>
-
       {/* 2. ABOUT */}
       <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden -mt-1">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
@@ -217,9 +156,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
         </div>
       </section>
 
-      {/* About → Projects divider */}
-      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={70} className="bg-surface-container-low" />
-
       {/* 3. PROJECTS */}
       <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -240,9 +176,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
           </div>
         </div>
       </section>
-
-      {/* Projects → Testimonial divider */}
-      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
 
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
@@ -270,9 +203,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
           <GoogleReviewsWidget />
         </div>
       </section>
-
-      {/* Testimonial → CTA divider */}
-      <ShapeDivider shape="wave" fillColor="#30332f" height={100} className="bg-surface-container-low" />
 
       {/* 5. CTA / CONTACT */}
       <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
@@ -306,9 +236,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
 
       {/* 6. PROCESS STEPS (collapsible flowchart) */}
       <ProcessSteps />
-
-      {/* Process → FAQ divider */}
-      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={70} className="bg-surface-container-low" />
 
       {/* 7. FAQ (new content with article links) */}
       <section className="py-24 lg:py-32 -mt-1">
@@ -349,9 +276,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
           </div>
         </div>
       </section>
-
-      {/* FAQ → Articles divider */}
-      <ShapeDivider shape="tilt" fillColor="#eeeeea" height={60} className="bg-surface" />
 
       {/* 8. ARTICLES (new section) */}
       <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
@@ -396,9 +320,6 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
         </div>
       </section>
 
-      {/* Articles → Why Choose Me divider */}
-      <ShapeDivider shape="drops" fillColor="#f5f3f0" height={70} className="bg-surface-container-low" />
-
       {/* 9. WHY CHOOSE ME */}
       <section className="py-24 lg:py-32 bg-surface-container -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -435,120 +356,28 @@ export default function HomePage({ projects, reels, reviewsData }: Props) {
         </div>
       </section>
 
-      {/* Why Choose Me → Social divider */}
-      <ShapeDivider shape="curve" fillColor="#fbf9f6" height={80} className="bg-surface-container" />
-
       {/* 10. SOCIAL */}
-      <section className="py-24 lg:py-32 bg-surface -mt-1">
+      <section className="py-24 lg:py-32 bg-surface -mt-1 text-center">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div className="text-right">
-              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">Social Presence</span>
-              <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight mt-4 italic">TAL GOREN <span className="text-secondary opacity-50 block sm:inline">LIVE</span></h2>
-            </div>
-            <Link href="/social" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>לכל התכנים מהרשתות</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8">
-              <div className="relative">
-                <div
-                  ref={socialCarouselRef}
-                  onScroll={handleReelScroll}
-                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 no-scrollbar"
-                >
-                  {featuredReels.map((reel: any, index: number) => {
-                    const videoSrc = getReelVideoSrc(reel);
-                    const isActive = index === activeReel;
-                    return (
-                      <a
-                        key={reel.id}
-                        data-reel-index={index}
-                        href={reel.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`group relative block flex-shrink-0 snap-center overflow-hidden transition-all duration-300 ${isActive ? 'basis-[80%] md:basis-[52%]' : 'basis-[70%] md:basis-[42%] opacity-85'}`}
-                      >
-                        <div className="relative h-[360px] md:h-[420px]">
-                          {isActive && videoSrc ? (
-                            <video
-                              ref={(el) => { reelVideoRefs.current[index] = el; }}
-                              src={videoSrc}
-                              poster={reel.thumbnail}
-                              muted
-                              loop
-                              playsInline
-                              autoPlay
-                              preload="metadata"
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <img
-                              src={reel.thumbnail}
-                              alt="Instagram Reel thumbnail"
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                          )}
-                          <div className={`absolute inset-0 transition-colors duration-300 flex items-center justify-center ${isActive ? 'bg-black/10' : 'bg-black/25 group-hover:bg-black/40'}`}>
-                            <span className="material-symbols-outlined text-white text-4xl opacity-90 transition-opacity" style={{ fontVariationSettings: "'FILL' 1" }}>
-                              {isActive && videoSrc ? 'volume_off' : 'play_circle'}
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-                <button
-                  onClick={() => scrollToReel(Math.max(activeReel - 1, 0))}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/45 text-white flex items-center justify-center hover:bg-black/65 transition-colors"
-                  aria-label="הקודם"
-                >
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </button>
-                <button
-                  onClick={() => scrollToReel(Math.min(activeReel + 1, featuredReels.length - 1))}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/45 text-white flex items-center justify-center hover:bg-black/65 transition-colors"
-                  aria-label="הבא"
-                >
-                  <span className="material-symbols-outlined">chevron_left</span>
-                </button>
-                <div className="flex items-center justify-center gap-2 mt-5">
-                  {featuredReels.map((reel: any, index: number) => (
-                    <button
-                      key={reel.id}
-                      onClick={() => scrollToReel(index)}
-                      className={`h-1.5 transition-all ${index === activeReel ? 'w-8 bg-primary' : 'w-3 bg-outline/40'}`}
-                      aria-label={`מעבר לסרטון ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="lg:col-span-4 space-y-8">
-              <div className="p-8 bg-surface-container-low border border-outline/10">
-                <h3 className="font-headline font-bold text-xl mb-6">עקבו באינסטגרם</h3>
-                <p className="text-secondary text-sm leading-relaxed mb-8">הצצה יומיומית אל מאחורי הקלעים, פרויקטים בתהליך וטיפים לעיצוב הבית.</p>
-                <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noreferrer" className="flex items-center justify-between group">
-                  <span className="font-label font-bold text-xs uppercase tracking-widest group-hover:text-primary transition-colors">@tahlgoren</span>
-                </a>
-              </div>
-              <div className="p-8 bg-surface-container border border-outline/5">
-                <h3 className="font-headline font-bold text-xl mb-6">דף הפייסבוק</h3>
-                <p className="text-secondary text-sm leading-relaxed mb-8">מאמרים קצרים, מחשבות על אדריכלות ושיתופים מהיומיום במשרד.</p>
-                <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noreferrer" className="flex items-center justify-between group">
-                  <span className="font-label font-bold text-xs uppercase tracking-widest group-hover:text-primary transition-colors">TAL GOREN ARCHITECTS</span>
-                </a>
-              </div>
-              <div className="p-8 bg-surface-container-highest border border-outline/5">
-                <h3 className="font-headline font-bold text-xl mb-6">ערוץ היוטיוב</h3>
-                <p className="text-secondary text-sm leading-relaxed mb-8">סיורים מצולמים בבתים שתכננתי והסברים על תהליכי תכנון.</p>
-                <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noreferrer" className="flex items-center justify-between group">
-                  <span className="font-label font-bold text-xs uppercase tracking-widest group-hover:text-primary transition-colors">WATCH ON YOUTUBE</span>
-                </a>
-              </div>
+          <div className="max-w-2xl mx-auto space-y-8">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">הישארו מעודכנים</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary tracking-tight">עקבו אחרינו ברשתות</h2>
+            <p className="font-body text-lg text-secondary leading-relaxed">
+              הצצה יומיומית אל מאחורי הקלעים, פרויקטים בתהליך, סיורים מצולמים וטיפים לעיצוב הבית.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 pt-4">
+              <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+                <span className="material-symbols-outlined">photo_camera</span>
+                Instagram
+              </a>
+              <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+                <span className="material-symbols-outlined">thumb_up</span>
+                Facebook
+              </a>
+              <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+                <span className="material-symbols-outlined">play_circle</span>
+                YouTube
+              </a>
             </div>
           </div>
         </div>
