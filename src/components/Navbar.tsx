@@ -27,7 +27,7 @@ export default function Navbar() {
           <div className="flex-shrink-0 order-2 lg:order-1">
             <Link href="/" className="flex items-center">
               <Image 
-                src="/images/logo.png" 
+                src="/images/logo-v2.png" 
                 alt="TAL GOREN" 
                 width={180} 
                 height={60} 

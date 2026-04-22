@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="space-y-4">
           <Link href="/" className="block">
             <Image 
-              src="/images/logo.png" 
+              src="/images/logo-v2.png" 
               alt="TAL GOREN ARCHITECTS" 
               width={200} 
               height={70} 

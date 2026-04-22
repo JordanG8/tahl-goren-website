@@ -170,7 +170,7 @@ export default function HomePage({ projects }: Props) {
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
             <div className="space-y-4">
               <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
               <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
