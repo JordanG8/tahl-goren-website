@@ -263,7 +263,7 @@
           </div>
 
           <footer>
-            &copy; <xsl:value-of select="substring(sitemap:urlset/sitemap:url[1]/sitemap:lastmod, 1, 4)"/> טל גורן - אדריכלות ועיצוב פנים. נוצר באופן אוטומטי.
+            &#169; <xsl:value-of select="substring(sitemap:urlset/sitemap:url[1]/sitemap:lastmod, 1, 4)"/> טל גורן - אדריכלות ועיצוב פנים. נוצר באופן אוטומטי.
           </footer>
         </div>
 
