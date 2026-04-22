@@ -1,9 +1,16 @@
 import { projects as staticProjects } from '@/data/projectsContent'
 import { articles as staticArticles } from '@/data/articlesContent'
 
-const BASE_URL = 'https://talgoren.co.il'
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return 'http://localhost:3000'
+}
 
 export async function GET() {
+  const BASE_URL = getBaseUrl()
+
   // 1. Static Routes
   const staticRoutes = [
     { url: `${BASE_URL}/`, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },

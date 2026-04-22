@@ -6,9 +6,7 @@ import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ProcessSteps from '@/components/ProcessSteps';
-import GoogleReviewsWidget from '@/components/GoogleReviewsWidget';
-import { reviews as staticReviews } from '@/data/reviews';
-import { GoogleReview } from '@/data/googleReviews';
+import ReviewsCarousel from '@/components/ReviewsCarousel';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -45,17 +43,9 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
-  reviewsData?: { reviews: GoogleReview[], rating: number, totalReviews: number } | null;
 };
 
-export default function HomePage({ projects, reviewsData }: Props) {
-  const displayReviews = reviewsData?.reviews.length
-    ? reviewsData.reviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: undefined as string | undefined, photoUrl: r.photoUrl }))
-    : staticReviews.slice(0, 3).map((r) => ({ name: r.name, text: r.text, rating: r.rating, location: r.location, photoUrl: null as string | null }));
-  
-  const avgRating = reviewsData?.rating || 5.0;
-  const totalReviewsCount = reviewsData?.totalReviews || 60;
-
+export default function HomePage({ projects }: Props) {
   const featuredProjects = projects.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -184,23 +174,13 @@ export default function HomePage({ projects, reviewsData }: Props) {
             <div className="space-y-4">
               <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
               <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
-              <div className="flex items-center gap-3 mt-2">
-                <div className="flex gap-0.5">
-                  {[1,2,3,4,5].map(i => (
-                    <span key={i} className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1", color: '#FBBC04' }}>star</span>
-                  ))}
-                </div>
-                <span className="font-headline font-bold text-sm text-primary">{avgRating % 1 !== 0 ? avgRating.toFixed(1) : avgRating.toFixed(1)}</span>
-                <span className="font-label text-xs text-secondary">· {totalReviewsCount} ביקורות בגוגל</span>
-              </div>
-
             </div>
             <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
               <span>כל ההמלצות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
           </div>
-          <GoogleReviewsWidget />
+          <ReviewsCarousel />
         </div>
       </section>
 
