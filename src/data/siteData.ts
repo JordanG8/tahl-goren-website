@@ -1,4 +1,4 @@
-// Static fallback data - used when Sanity CMS has no content yet
+// Main site data source
 export const siteData = {
   projects: [
     { id: "m-maor", title: "בית משפחת מנ' במושב מאור", location: "מושב מאור", image: "https://talgoren.co.il/wp-content/uploads/2025/02/חזית-כניסה-בית-מודרני.jpg", description: "בית חדש, אשר נבנה בסמוך לגן ציבורי, כך שהוא פונה אל מרחבים פתוחים. בהתאם לכך תוכנן המרחב המשותף של הבית", originalLink: "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%9e%d7%a0-%d7%91%d7%9e%d7%95%d7%a9%d7%91-%d7%9e%d7%90%d7%95%d7%a8/", status: "completed" },

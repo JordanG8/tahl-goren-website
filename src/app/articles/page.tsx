@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from 'next/link';
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { MEDIA_ARTICLES_QUERY } from '@/sanity/lib/queries';
 import { siteData } from '@/data/siteData';
 import { articles as siteArticles } from '@/data/articlesContent';
 
@@ -12,11 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Articles() {
-  let mediaArticles: any[] = siteData.mediaArticles;
-  try {
-    const sanityMedia = await sanityFetch<any[]>({ query: MEDIA_ARTICLES_QUERY });
-    if (sanityMedia?.length) mediaArticles = sanityMedia;
-  } catch {}
+  const mediaArticles: any[] = siteData.mediaArticles;
 
   return (
     <>

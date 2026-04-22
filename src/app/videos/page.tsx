@@ -1,25 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { VIDEOS_QUERY, MEDIA_ARTICLES_QUERY, INSTAGRAM_REELS_QUERY } from '@/sanity/lib/queries';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
 
 export default async function Videos() {
-  let videos = siteData.videos;
-  let mediaArticles: any[] = siteData.mediaArticles;
-  let instagramReels = siteData.instagramReels;
-  try {
-    const sanityVideos = await sanityFetch<any[]>({ query: VIDEOS_QUERY });
-    if (sanityVideos?.length) videos = sanityVideos;
-  } catch {}
-  try {
-    const sanityMedia = await sanityFetch<any[]>({ query: MEDIA_ARTICLES_QUERY });
-    if (sanityMedia?.length) mediaArticles = sanityMedia;
-  } catch {}
-  try {
-    const sanityReels = await sanityFetch<any[]>({ query: INSTAGRAM_REELS_QUERY });
-    if (sanityReels?.length) instagramReels = sanityReels;
-  } catch {}
+  const videos = siteData.videos;
+  const mediaArticles: any[] = siteData.mediaArticles;
+  const instagramReels = siteData.instagramReels;
 
   const bgClasses = [
     'bg-surface-container',

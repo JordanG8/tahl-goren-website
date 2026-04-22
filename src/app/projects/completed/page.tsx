@@ -1,16 +1,10 @@
 import Link from 'next/link';
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
 import ProjectCard from '@/components/ProjectCard';
 
 export default async function ProjectsCompleted() {
-  let projects = siteData.projects;
-  try {
-    const sanityData = await sanityFetch<any[]>({ query: PROJECTS_QUERY });
-    if (sanityData?.length) projects = sanityData;
-  } catch {}
+  const projects = siteData.projects;
 
   return (
     <>

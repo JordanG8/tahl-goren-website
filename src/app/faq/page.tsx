@@ -1,15 +1,9 @@
 import Link from 'next/link';
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { FAQ_QUERY } from '@/sanity/lib/queries';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
 
 export default async function Faq() {
-  let faq = siteData.faq;
-  try {
-    const sanityData = await sanityFetch<any[]>({ query: FAQ_QUERY });
-    if (sanityData?.length) faq = sanityData;
-  } catch {}
+  const faq = siteData.faq;
 
   return (
     <>

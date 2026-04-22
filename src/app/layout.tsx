@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingBar from "@/components/FloatingBar";
 import LoadingScreen from "@/components/LoadingScreen";
 import CursorEffect from "@/components/CursorEffect";
-import { VisualEditing } from "@/components/VisualEditing";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,8 +16,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isEnabled: isDraftMode } = await draftMode();
-
   return (
     <html lang="he" dir="rtl">
       <head>
@@ -41,7 +37,6 @@ export default async function RootLayout({
         <main className="min-h-screen">{children}</main>
         <FloatingBar />
         <Footer />
-        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );
