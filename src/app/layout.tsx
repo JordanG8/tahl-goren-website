@@ -5,11 +5,12 @@ import FloatingBar from "@/components/FloatingBar";
 import LoadingScreen from "@/components/LoadingScreen";
 import CursorEffect from "@/components/CursorEffect";
 import "./globals.css";
-import { Assistant, Heebo } from "next/font/google";
+import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const assistant = Assistant({ subsets: ['hebrew'], variable: '--font-assistant' });
 const heebo = Heebo({ subsets: ['hebrew'], variable: '--font-heebo' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: "טל גורן אדריכלות | תכנון בתים פרטיים",
@@ -22,14 +23,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable)}>
+    <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable, inter.variable)}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Assistant:wght@400;600;700&family=Inter:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
           rel="stylesheet"

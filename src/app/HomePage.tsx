@@ -1,8 +1,7 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
-
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
@@ -14,9 +13,9 @@ import { articles as siteArticles } from '@/data/articlesContent';
 const homepageFaq = siteArticles.filter(a => a.faq).slice(0, 9);
 
 const featuredArticles = [
-  { slug: "costs", title: "עלויות בניה ומחיר אדריכלות", image: "https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? מדריך מפורט על עלויות הבנייה." },
-  { slug: "choose-architect", title: "איך לבחור אדריכלית?!", image: "https://talgoren.co.il/wp-content/uploads/2020/03/12496261_1550603918564055_4078115768814528292_o-1.jpg", excerpt: "כאשר עומדים לפני פרויקט בניה של בית חדש, איזו אדריכלית לבחור?" },
-  { slug: "living-room-guide", title: "הסלון – טיפים וכלים מעשיים לתכנון", image: "https://talgoren.co.il/wp-content/uploads/2021/01/טבת-אסנת-טל-קבצים-קטנים-22.jpg", excerpt: "חדר המגורים הוא בדרך כלל המרחב הגדול ביותר בבית. טיפים לתכנון נכון." },
+  { slug: "building-cost-total", title: "כמה תעלה לנו הבניה בסך הכל?", image: "/images/blog/building-cost-total.png", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? המדריך המלא להכנת תקציב ריאלי לבניית בית פרטי בישראל." },
+  { slug: "choose-architect", title: "איך בוחרים אדריכלית לבניית בית פרטי?", image: "/images/blog/choose-architect.png", excerpt: "המדריך המלא לבחירת האדריכלית שתוביל את הפרויקט הכי חשוב בחיים שלכם." },
+  { slug: "building-timeline", title: "כמה זמן יקח לנו לתכנן ולבנות בית פרטי?", image: "/images/blog/building-timeline.png", excerpt: "מה שחשוב לדעת לפני שיוצאים לדרך – שלב אחרי שלב, עם לוחות זמנים ריאליים וכל הגורמים שמשפיעים עליהם." },
 ];
 
 type Props = {
@@ -98,8 +97,8 @@ export default function HomePage({ projects }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div className="flex justify-center lg:justify-start">
               <ArchFrame className="w-full max-w-xs sm:max-w-sm">
-                <div className="aspect-[3/4]">
-                  <img src="/images/tahl-portrait.jpg" alt="טל גורן אדריכלית" className="w-full h-full object-cover object-top img-grayscale" />
+                <div className="aspect-[3/4] relative">
+                  <Image src="/images/tahl-portrait.jpg" alt="טל גורן אדריכלית" fill sizes="(max-width: 640px) 100vw, 400px" className="object-cover object-top img-grayscale" />
                 </div>
               </ArchFrame>
             </div>
@@ -163,11 +162,14 @@ export default function HomePage({ projects }: Props) {
 
       {/* 5. CTA / CONTACT */}
       <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
-        <img
+        <Image
           src="/images/projects/vild-detail.jpg"
           alt=""
           aria-hidden
-          className="absolute inset-0 w-full h-full object-cover opacity-15"
+          fill
+          sizes="100vw"
+          quality={80}
+          className="object-cover opacity-15"
         />
         <div className="absolute inset-0 bg-primary/70" />
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -245,11 +247,13 @@ export default function HomePage({ projects }: Props) {
                 href={`/articles/${article.slug}`}
                 className="group card-hover block bg-surface overflow-hidden"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <Image
                     src={article.image}
                     alt={article.title}
-                    className="w-full h-full object-cover img-grayscale"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover img-grayscale"
                     loading="lazy"
                   />
                 </div>
@@ -277,8 +281,8 @@ export default function HomePage({ projects }: Props) {
       <section className="py-24 lg:py-32 bg-surface-container -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            <div className="flex-1 relative">
-              <img src="/images/projects/nucham-living.jpg" alt="טל גורן אדריכלית בעבודה" className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover img-grayscale" />
+            <div className="flex-1 relative w-full h-[400px] sm:h-[500px] lg:h-[600px]">
+              <Image src="/images/projects/nucham-living.jpg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover img-grayscale" />
               <div className="absolute bottom-8 left-8 bg-primary text-white p-6 sm:p-8">
                 <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
                 <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>

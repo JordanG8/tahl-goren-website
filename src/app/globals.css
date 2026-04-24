@@ -18,7 +18,7 @@
 
   --font-headline: var(--font-heebo), "Heebo", sans-serif;
   --font-body: var(--font-assistant), "Assistant", sans-serif;
-  --font-label: "Inter", sans-serif;
+  --font-label: var(--font-inter), "Inter", sans-serif;
 }
 
 ::selection { background: #4A4238; color: white; }

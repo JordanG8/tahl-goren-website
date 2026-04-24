@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProjectCard({ project }: { project: { id: string; title: string; location: string; image: string; originalLink?: string } }) {
   return (
@@ -7,11 +7,13 @@ export default function ProjectCard({ project }: { project: { id: string; title:
       href={`/projects/${project.id}`}
       className="group block relative overflow-hidden card-hover"
     >
-      <div className="aspect-[4/3] overflow-hidden">
-        <img
+      <div className="aspect-[4/3] overflow-hidden relative">
+        <Image
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover img-grayscale"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover img-grayscale"
           loading="lazy"
         />
       </div>
