@@ -105,8 +105,8 @@ export default async function ArticlePage(
   const article = articlesBySlug[slug];
   if (!article) notFound();
 
-  const relatedArticles = article.related
-    .map((s) => articlesBySlug[s])
+  const relatedArticles = (article.related || [])
+    .map((s: string) => articlesBySlug[s])
     .filter(Boolean);
 
   return (

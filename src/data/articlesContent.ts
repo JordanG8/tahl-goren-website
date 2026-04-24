@@ -1,6 +1,33 @@
-import { Article } from '@/types';
+export type ArticleSection = {
+  heading: string;
+  body: string[];
+  list?: string[];
+};
 
-export const articles: any[] = [
+export type ArticleFaq = {
+  question: string;
+  answer: string;
+};
+
+export type Article = {
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  excerpt: string;
+  heroImage: string;
+  heroAlt: string;
+  keywords: string[];
+  publishedAt: string;
+  updatedAt: string;
+  readingTimeMin: number;
+  sections: ArticleSection[];
+  faq?: ArticleFaq[];
+  related?: string[];
+  legacyPaths?: string[];
+};
+
+export const articles: Article[] = [
   {
     "slug": "why-architect",
     "title": "מדוע צריך אדריכלית כשבונים בית חדש?",
@@ -744,4 +771,4 @@ export const articles: any[] = [
 export const articlesBySlug = articles.reduce((acc, article) => {
   acc[article.slug] = article;
   return acc;
-}, {} as Record<string, any>);
+}, {} as Record<string, Article>);
