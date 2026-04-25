@@ -282,7 +282,7 @@ export default function HomePage({ projects }: Props) {
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 relative w-full h-[400px] sm:h-[500px] lg:h-[600px]">
-              <Image src="/images/projects/nucham-living.jpg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover img-grayscale" />
+              <Image src="/images/tahl-goren-first-meeting.jpeg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover img-grayscale" />
               <div className="absolute bottom-8 left-8 bg-primary text-white p-6 sm:p-8">
                 <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
                 <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>
