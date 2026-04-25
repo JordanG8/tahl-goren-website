@@ -62,6 +62,9 @@ export default function ReviewsCarousel() {
               <img 
                 src={"/images/reviews/" + encodeURIComponent(img)} 
                 alt="המלצת לקוח" 
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "low"}
+                decoding="async"
                 className="w-full h-auto object-contain rounded-xl"
               />
             </SwiperSlide>
