@@ -148,16 +148,29 @@ export default function HomePage({ projects }: Props) {
             <div className="space-y-4">
               <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
               <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מהעשייה שלנו</h2>
-              <Link href="/projects/completed" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
-                <span>כל הפרויקטים</span>
-                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-              </Link>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProjects.map((project: any) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {projects.slice(0, 3).map((project: any) => (
               <ProjectCard key={project.id} project={project} />
             ))}
+
+            {/* 4th Project Placeholder - Blurred out */}
+            {projects.length > 3 && (
+              <div className="relative group overflow-hidden rounded-2xl h-full shadow-lg border border-gray-100">
+                {/* The actual project card underneath */}
+                <div className="h-full select-none pointer-events-none">
+                  <ProjectCard project={projects[3]} />
+                </div>
+                {/* Obscuring Overlay */}
+                <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-surface via-surface/95 to-transparent backdrop-blur-[3px] flex flex-col items-center justify-center pt-20 pb-8">
+                  <Link href="/projects/completed" className="bg-primary text-white px-8 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-2xl hover:-translate-y-1 rounded-full flex items-center gap-3 pointer-events-auto">
+                    <span>לכל הפרויקטים</span>
+                    <span className="material-symbols-outlined text-lg">arrow_back</span>
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
