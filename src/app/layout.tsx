@@ -7,6 +7,9 @@ import CursorEffect from "@/components/CursorEffect";
 import "./globals.css";
 import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
+import { PostHogProvider } from "./providers";
+
 
 const assistant = Assistant({ subsets: ['hebrew'], variable: '--font-assistant' });
 const heebo = Heebo({ subsets: ['hebrew'], variable: '--font-heebo' });
@@ -31,12 +34,15 @@ export default async function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface font-body pb-[10vh] sm:pb-0">
-        <LoadingScreen />
-        <CursorEffect />
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <FloatingBar />
-        <Footer />
+        <PostHogProvider>
+          <LoadingScreen />
+          <CursorEffect />
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <FloatingBar />
+          <Footer />
+        </PostHogProvider>
+        <Analytics />
       </body>
     </html>
   );
