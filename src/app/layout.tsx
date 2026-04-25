@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingBar from "@/components/FloatingBar";
@@ -37,6 +38,7 @@ export default async function RootLayout({
         <main className="min-h-screen">{children}</main>
         <FloatingBar />
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
