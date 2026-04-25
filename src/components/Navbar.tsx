@@ -49,11 +49,18 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   href={link.to}
-                  className={`transition-all duration-300 hover:scale-105 ${
-                    pathname === link.to ? 'nav-active text-primary' : 'text-secondary hover:text-primary'
+                  className={`relative group px-1 py-1 transition-all duration-300 ${
+                    pathname === link.to ? 'text-primary' : 'text-secondary hover:text-primary'
                   }`}
                 >
-                  {link.label}
+                  <span className={`inline-block transition-all duration-500 ${
+                    pathname === link.to ? 'tracking-[0.1em]' : 'group-hover:tracking-[0.2em]'
+                  }`}>
+                    {link.label}
+                  </span>
+                  <span className={`absolute bottom-0 left-1/2 h-[2px] bg-primary -translate-x-1/2 transition-all duration-500 ${
+                    pathname === link.to ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
                 </Link>
               ))}
             </div>
