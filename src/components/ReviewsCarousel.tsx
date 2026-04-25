@@ -58,7 +58,7 @@ export default function ReviewsCarousel() {
           className="w-[280px] sm:w-[320px] !pb-12"
         >
           {reviewImages.map((img, i) => (
-            <SwiperSlide key={i} className="rounded-2xl shadow-2xl bg-white border border-gray-100 p-2 h-auto flex flex-col justify-center">
+            <SwiperSlide key={i} className="rounded-2xl shadow-2xl bg-white border border-gray-100 p-2 h-full flex flex-col items-center justify-center">
               <img 
                 src={"/images/reviews/" + encodeURIComponent(img)} 
                 alt="המלצת לקוח" 
