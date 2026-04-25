@@ -129,7 +129,10 @@ export default function HomePage({ projects }: Props) {
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
+          <div className="text-center mb-16 space-y-4 flex flex-col items-center">
+            <a href="https://maps.app.goo.gl/6hAN8p1iuDtFnb77A" target="_blank" rel="noreferrer" className="inline-block hover:-translate-y-1 transition-transform drop-shadow hover:drop-shadow-md mb-2">
+              <Image src="/images/google-maps-logo.svg" alt="Google Maps Reviews" width={56} height={56} className="w-14 h-14" />
+            </a>
             <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
             <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
