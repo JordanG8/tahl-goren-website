@@ -5,6 +5,8 @@ import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
+import HomeCtaForm from '@/components/HomeCtaForm';
+
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
@@ -145,6 +147,22 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
+      {/* CTA BUTTON */}
+      <section className="py-24 bg-surface relative overflow-hidden -mt-1 text-center border-y border-outline/10">
+        <div className="max-w-4xl mx-auto px-8 relative z-10">
+          <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary mb-6">מוכנים לצאת לדרך?</h2>
+          <p className="font-body text-xl text-secondary mb-10">הצעד הראשון לבית החלומות שלכם מתחיל בשיחה.</p>
+          <div className="relative inline-block">
+            <span className="material-symbols-outlined absolute -right-16 top-1/2 -translate-y-1/2 text-5xl text-primary animate-bounce hidden md:block" style={{ transform: "translateY(-50%) rotate(180deg)" }}>arrow_right_alt</span>
+            <span className="material-symbols-outlined absolute -left-16 top-1/2 -translate-y-1/2 text-5xl text-primary animate-bounce hidden md:block">arrow_right_alt</span>
+            <Link href="/contact" className="bg-primary text-white px-12 py-5 font-headline font-black text-lg uppercase tracking-widest hover:bg-primary/90 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 inline-flex items-center gap-3">
+              לקביעת פגישת ייעוץ
+              <span className="material-symbols-outlined">arrow_back</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -229,6 +247,16 @@ export default function HomePage({ projects }: Props) {
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* FORM CTA SECTION */}
+      <section className="py-24 lg:py-32 bg-surface-container-highest relative overflow-hidden -mt-1 text-center">
+        <div className="max-w-5xl mx-auto px-8 relative z-10 flex flex-col items-center">
+          <span className="material-symbols-outlined text-6xl text-primary/30 mb-6 animate-bounce">arrow_downward</span>
+          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">שנתחיל לתכנן את הבית שלכם?</h2>
+          <p className="font-body text-xl text-secondary mb-12 max-w-2xl mx-auto">השאירו פרטים ואחזור אליכם בהקדם האפשרי לשיחת היכרות ראשונית, ללא התחייבות.</p>
+          <HomeCtaForm />
         </div>
       </section>
 

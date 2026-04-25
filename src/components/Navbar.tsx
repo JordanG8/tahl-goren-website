@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -15,12 +15,21 @@ const desktopLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
-      <nav className="relative w-full z-50 bg-background shadow-sm">
-        <div className="flex justify-between items-center px-8 py-4 max-w-[1920px] mx-auto">
+      <nav className={`sticky top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-md shadow-md' : 'bg-background shadow-sm'}`}>
+        <div className={`flex justify-between items-center px-8 max-w-[1920px] mx-auto transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
           <div className="flex items-center gap-8 flex-shrink-0 order-2 lg:order-1">
             <Link href="/" className="flex items-center">
               <Image 
@@ -28,12 +37,12 @@ export default function Navbar() {
                 alt="TAL GOREN" 
                 width={280} 
                 height={94} 
-                className="h-16 w-auto object-contain"
+                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-10' : 'h-16'}`}
                 priority
               />
             </Link>
 
-            <div className="hidden lg:block w-px h-12 bg-primary/10 mx-2" />
+            <div className={`hidden lg:block w-px bg-primary/10 mx-2 transition-all duration-300 ${isScrolled ? 'h-8' : 'h-12'}`} />
 
             <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-wide text-base">
               {desktopLinks.map((link) => (
