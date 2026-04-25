@@ -45,6 +45,7 @@ export default function ReviewsCarousel() {
         <Swiper
           effect={'cards'}
           grabCursor={true}
+          loop={true}
           modules={[EffectCards, Pagination, Autoplay]}
           pagination={{
             clickable: true,
@@ -54,17 +55,15 @@ export default function ReviewsCarousel() {
             delay: 3500,
             disableOnInteraction: false,
           }}
-          className="w-[280px] h-[400px] sm:w-[320px] sm:h-[450px]"
+          className="w-[280px] sm:w-[320px] !pb-12"
         >
           {reviewImages.map((img, i) => (
-            <SwiperSlide key={i} className="rounded-2xl overflow-hidden shadow-2xl bg-white border border-gray-100">
-              <div className="w-full h-full flex items-center justify-center p-2">
-                <img 
-                  src={"/images/reviews/" + encodeURIComponent(img)} 
-                  alt="המלצת לקוח" 
-                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-xl"
-                />
-              </div>
+            <SwiperSlide key={i} className="rounded-2xl shadow-2xl bg-white border border-gray-100 p-2 h-auto flex flex-col justify-center">
+              <img 
+                src={"/images/reviews/" + encodeURIComponent(img)} 
+                alt="המלצת לקוח" 
+                className="w-full h-auto object-contain rounded-xl"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
