@@ -205,41 +205,6 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
-      {/* 5. CTA / CONTACT */}
-      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
-        <Image
-          src="/images/projects/vild-detail.jpg"
-          alt=""
-          aria-hidden
-          fill
-          sizes="100vw"
-          quality={80}
-          className="object-cover opacity-15"
-        />
-        <div className="absolute inset-0 bg-primary/70" />
-        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">הבית הבא שלכם<br />מתחיל כאן</h2>
-            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.</p>
-            <div>
-              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
-            </div>
-            <div className="flex justify-center gap-8 pt-4">
-              <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg">call</span>052-8345799
-              </a>
-              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
       {/* 7. FAQ (new content with article links) */}
       <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -297,13 +262,36 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
-      {/* FORM CTA SECTION */}
-      <section className="py-24 lg:py-32 bg-surface-container-highest relative overflow-hidden -mt-1 text-center">
-        <div className="max-w-5xl mx-auto px-8 relative z-10 flex flex-col items-center">
-          <span className="material-symbols-outlined text-6xl text-primary/30 mb-6 animate-bounce">arrow_downward</span>
-          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">שנתחיל לתכנן את הבית שלכם?</h2>
-          <p className="font-body text-xl text-secondary mb-12 max-w-2xl mx-auto">השאירו פרטים ואחזור אליכם בהקדם האפשרי לשיחת היכרות ראשונית, ללא התחייבות.</p>
-          <HomeCtaForm />
+      {/* 5. CTA / CONTACT */}
+      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
+        <Image
+          src="/images/projects/vild-detail.jpg"
+          alt=""
+          aria-hidden
+          fill
+          sizes="100vw"
+          quality={80}
+          className="object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-primary/70" />
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">הבית הבא שלכם<br />מתחיל כאן</h2>
+            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.</p>
+            <div>
+              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
+            </div>
+            <div className="flex justify-center gap-8 pt-4">
+              <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+                <span className="material-symbols-outlined text-lg">call</span>052-8345799
+              </a>
+              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+                <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -385,6 +373,16 @@ export default function HomePage({ projects }: Props) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FORM CTA SECTION */}
+      <section className="py-24 lg:py-32 bg-surface-container-highest relative overflow-hidden -mt-1 text-center">
+        <div className="max-w-5xl mx-auto px-8 relative z-10 flex flex-col items-center">
+          <span className="material-symbols-outlined text-6xl text-primary/30 mb-6 animate-bounce">arrow_downward</span>
+          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">שנתחיל לתכנן את הבית שלכם?</h2>
+          <p className="font-body text-xl text-secondary mb-12 max-w-2xl mx-auto">השאירו פרטים ואחזור אליכם בהקדם האפשרי לשיחת היכרות ראשונית, ללא התחייבות.</p>
+          <HomeCtaForm />
         </div>
       </section>
 
