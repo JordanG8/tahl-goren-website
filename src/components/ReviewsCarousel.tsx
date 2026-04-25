@@ -42,34 +42,43 @@ export default function ReviewsCarousel() {
     <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-10">
       {/* Mobile-only Swiper Carousel */}
       <div className="md:hidden relative w-full px-4 overflow-hidden py-10" dir="ltr">
-        <Swiper
-          effect={'cards'}
-          grabCursor={true}
-          loop={true}
-          modules={[EffectCards, Pagination, Autoplay]}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-          autoplay={{
-            delay: 3500,
-            disableOnInteraction: false,
-          }}
-          className="w-[280px] sm:w-[320px] !pb-12"
-        >
-          {reviewImages.map((img, i) => (
-            <SwiperSlide key={i} className="rounded-2xl shadow-2xl bg-white border border-gray-100 p-2 h-full flex flex-col items-center justify-center">
-              <img 
-                src={"/images/reviews/" + encodeURIComponent(img)} 
-                alt="המלצת לקוח" 
-                loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "low"}
-                decoding="async"
-                className="w-full h-auto object-contain rounded-xl"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          <Swiper
+            effect={'cards'}
+            grabCursor={true}
+            loop={true}
+            modules={[EffectCards, Pagination, Autoplay]}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+            }}
+            className="w-[280px] sm:w-[320px] !pb-12 reviews-mobile-swiper"
+          >
+            {reviewImages.map((img, i) => (
+              <SwiperSlide key={i} className="rounded-2xl bg-white border border-gray-100 p-2 h-[420px] flex flex-col items-center justify-center transition-all duration-300">
+                <img 
+                  src={"/images/reviews/" + encodeURIComponent(img)} 
+                  alt="המלצת לקוח" 
+                  loading={i === 0 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "low"}
+                  decoding="async"
+                  className="w-full max-h-full object-contain rounded-xl"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <style dangerouslySetInnerHTML={{__html: `
+            .reviews-mobile-swiper .swiper-slide:not(.swiper-slide-active) {
+              filter: blur(2px);
+              opacity: 0.8;
+            }
+            .reviews-mobile-swiper .swiper-slide-active {
+              box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
+            }
+          `}} />
       </div>
 
       {/* Desktop-only Layered Carousels */}
