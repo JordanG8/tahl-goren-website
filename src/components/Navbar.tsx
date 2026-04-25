@@ -49,13 +49,17 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   href={link.to}
-                  className={`relative group px-1 py-1 transition-all duration-300 ${
+                  className={`relative group flex items-center justify-center transition-colors duration-300 ${
                     pathname === link.to ? 'text-primary' : 'text-secondary hover:text-primary'
                   }`}
                 >
-                  <span className={`inline-block transition-all duration-500 ${
+                  <span className={`absolute whitespace-nowrap transition-all duration-500 ${
                     pathname === link.to ? 'tracking-[0.1em]' : 'group-hover:tracking-[0.2em]'
                   }`}>
+                    {link.label}
+                  </span>
+                  {/* Invisible spacer preserves max width so neighboring items don't shift */}
+                  <span className="invisible whitespace-nowrap tracking-[0.2em] px-1 py-1">
                     {link.label}
                   </span>
                   <span className={`absolute bottom-0 left-1/2 h-[2px] bg-primary -translate-x-1/2 transition-all duration-500 ${
