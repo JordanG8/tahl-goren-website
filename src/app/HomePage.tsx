@@ -126,6 +126,21 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
+      {/* 4. TESTIMONIALS — Google Reviews */}
+      <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+          <div className="text-center mb-16 space-y-4">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
+            <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
+              <span>כל ההמלצות</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            </Link>
+          </div>
+          <ReviewsCarousel />
+        </div>
+      </section>
+
       {/* 3. PROJECTS */}
       <section className="py-24 lg:py-32 -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -174,21 +189,6 @@ export default function HomePage({ projects }: Props) {
               </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 4. TESTIMONIALS — Google Reviews */}
-      <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
-            <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
-              <span>כל ההמלצות</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-          <ReviewsCarousel />
         </div>
       </section>
 
@@ -323,9 +323,9 @@ export default function HomePage({ projects }: Props) {
       <section className="py-24 lg:py-32 bg-surface-container -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            <div className="flex-1 relative w-full h-[400px] sm:h-[500px] lg:h-[600px]">
-              <Image src="/images/tahl-goren-first-meeting.jpeg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover img-grayscale" />
-              <div className="absolute bottom-8 left-8 bg-primary text-white p-6 sm:p-8">
+            <div className="flex-1 relative w-full aspect-[4/3] sm:aspect-auto sm:h-[400px] lg:h-[600px]">
+              <Image src="/images/tahl-goren-first-meeting.jpeg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center img-grayscale" />
+              <div className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 bg-primary text-white p-4 sm:p-6 lg:p-8 scale-75 sm:scale-100 origin-bottom-left">
                 <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
                 <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>
               </div>
