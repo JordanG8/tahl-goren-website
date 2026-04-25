@@ -152,13 +152,27 @@ export default function HomePage({ projects }: Props) {
         <div className="max-w-4xl mx-auto px-8 relative z-10">
           <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary mb-6">מוכנים לצאת לדרך?</h2>
           <p className="font-body text-xl text-secondary mb-10">הצעד הראשון לבית החלומות שלכם מתחיל בשיחה.</p>
-          <div className="relative inline-block">
-            <span className="material-symbols-outlined absolute -right-16 top-1/2 -translate-y-1/2 text-5xl text-primary animate-bounce hidden md:block" style={{ transform: "translateY(-50%) rotate(180deg)" }}>arrow_right_alt</span>
-            <span className="material-symbols-outlined absolute -left-16 top-1/2 -translate-y-1/2 text-5xl text-primary animate-bounce hidden md:block">arrow_right_alt</span>
-            <Link href="/contact" className="bg-primary text-white px-12 py-5 font-headline font-black text-lg uppercase tracking-widest hover:bg-primary/90 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 inline-flex items-center gap-3">
-              לקביעת פגישת ייעוץ
-              <span className="material-symbols-outlined">arrow_back</span>
-            </Link>
+          <div className="relative inline-block w-fit">
+            {/* Right Arrow (Physical Right) */}
+            <div className="absolute -right-16 top-0 bottom-0 items-center justify-center hidden md:flex">
+              <div className="animate-bounce">
+                <span className="material-symbols-outlined text-5xl text-primary rotate-180 block">arrow_right_alt</span>
+              </div>
+            </div>
+            {/* Left Arrow (Physical Left) */}
+            <div className="absolute -left-16 top-0 bottom-0 items-center justify-center hidden md:flex">
+              <div className="animate-bounce">
+                <span className="material-symbols-outlined text-5xl text-primary block">arrow_right_alt</span>
+              </div>
+            </div>
+
+            {/* Glowing Border Wrapper */}
+            <div className="relative inline-flex overflow-hidden p-[2px] transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl">
+              <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#d4af37_50%,transparent_100%)]" />
+              <Link href="/contact" className="relative inline-flex items-center justify-center h-full w-full bg-primary text-white px-12 py-5 font-headline font-black text-lg uppercase tracking-widest transition-colors hover:bg-primary/95">
+                לקביעת פגישת ייעוץ
+              </Link>
+            </div>
           </div>
         </div>
       </section>
