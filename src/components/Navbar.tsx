@@ -10,6 +10,7 @@ const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
   { to: '/about', label: 'אודות' },
   { to: '/articles', label: 'מאמרים' },
+  { to: '/faq', label: 'שאלות ותשובות' },
   { to: '/testimonials', label: 'לקוחות מספרים' },
 ];
 
