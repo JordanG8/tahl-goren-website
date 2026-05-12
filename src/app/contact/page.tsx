@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Breadcrumb from "@/components/Breadcrumb";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -56,6 +57,7 @@ export default function Contact() {
     <>
       <section className="py-12 md:py-20 px-8 bg-surface">
         <div className="max-w-6xl mx-auto">
+          <Breadcrumb current="צור קשר" />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-primary">
             בואו נדבר.
           </h1>

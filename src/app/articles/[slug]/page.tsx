@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { articles, articlesBySlug, type Article } from "@/data/articlesContent";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export async function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -128,19 +129,15 @@ export default async function ArticlePage(
         </div>
         <div className="absolute inset-0 flex items-end overflow-hidden">
           <div className="max-w-4xl mx-auto w-full px-8 pb-12 text-right">
-            <div className="flex items-center gap-1 mb-6 font-label text-xs text-white/70 tracking-wide flex-row-reverse">
-              <Link href="/" className="hover:text-white transition-colors">
-                ראשי
-              </Link>
-              <span className="breadcrumb-sep" style={{ color: "rgba(255,255,255,0.4)" }} />
-              <Link
-                href="/articles"
-                className="hover:text-white transition-colors"
-              >
-                מאמרים
-              </Link>
-              <span className="breadcrumb-sep" style={{ color: "rgba(255,255,255,0.4)" }} />
-              <span className="text-white font-medium">{article.title}</span>
+            <div className="mb-6">
+              <Breadcrumb
+                light
+                items={[
+                  { label: "ראשי", to: "/" },
+                  { label: "מאמרים וכתבות", to: "/articles" },
+                  { label: article.title },
+                ]}
+              />
             </div>
             <h1 className="font-headline font-black text-3xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white max-w-3xl">
               {article.title}

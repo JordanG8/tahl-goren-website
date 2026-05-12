@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import ArchFrame from '@/components/ArchFrame';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function About() {
   return (
@@ -16,7 +17,7 @@ export default function About() {
             TAL
           </span>
           <div className="relative z-10 space-y-8">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/40">אודות</span>
+            <Breadcrumb current="אודות" light />
             <h1 className="font-headline font-black text-6xl md:text-7xl lg:text-8xl text-white leading-[0.88] tracking-tight">
               טל<br />גורן
             </h1>

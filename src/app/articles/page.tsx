@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
 import { articles as siteArticles } from '@/data/articlesContent';
 
@@ -18,11 +19,7 @@ export default async function Articles() {
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">
-          <div className="flex items-center justify-start gap-1 mb-10 font-label text-xs text-secondary tracking-wide flex-row-reverse">
-            <Link href="/" className="hover:text-primary transition-colors">ראשי</Link>
-            <span className="breadcrumb-sep"></span>
-            <span className="text-primary font-medium">מאמרים וכתבות</span>
-          </div>
+          <Breadcrumb current="מאמרים וכתבות" />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
             תוכן<br/>והשראה
           </h1>

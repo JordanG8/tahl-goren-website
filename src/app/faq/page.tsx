@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import FaqAccordion from "@/components/FaqAccordion";
 
 export const metadata: Metadata = {
@@ -13,11 +14,7 @@ export default function FaqPage() {
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">
-          <div className="flex items-center justify-start gap-1 mb-10 font-label text-xs text-secondary tracking-wide flex-row-reverse">
-            <Link href="/" className="hover:text-primary transition-colors">ראשי</Link>
-            <span className="breadcrumb-sep"></span>
-            <span className="text-primary font-medium">שאלות ותשובות</span>
-          </div>
+          <Breadcrumb current="שאלות ותשובות" />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
             שאלות<br/>ותשובות
           </h1>
