@@ -16,6 +16,7 @@ const navCategories = [
   {
     label: 'תוכן',
     links: [
+      { to: '/gallery', label: 'גלריה' },
       { to: '/articles', label: 'מאמרים' },
       { to: '/faq', label: 'שאלות ותשובות' },
       { to: '/videos', label: 'סרטונים' },
