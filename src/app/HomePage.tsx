@@ -11,6 +11,7 @@ import HomeCtaForm from '@/components/HomeCtaForm';
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
 import { articles as siteArticles } from '@/data/articlesContent';
+import faqData from '@/data/faqData.json';
 
 const homepageFaq = siteArticles.filter(a => a.faq).slice(0, 9);
 
@@ -217,44 +218,38 @@ export default function HomePage({ projects }: Props) {
             <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {homepageFaq.slice(0, 3).map((item, index) => (
-              <Link 
-                key={index} 
-                href={`/articles/${item.slug}`}
+            {faqData.slice(0, 3).map((item, index) => (
+              <Link
+                key={index}
+                href="/faq"
                 className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 text-right flex flex-col h-full"
               >
-                <h3 className="font-headline font-bold text-xl text-primary mb-4 leading-tight group-hover:text-secondary transition-colors">
-                  {item.title}
+                <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors flex-grow">
+                  {item.question}
                 </h3>
-                <p className="font-body text-sm text-secondary leading-relaxed line-clamp-3 mb-6 flex-grow">
-                  {item.excerpt}
-                </p>
-                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
-                  <span>קרא עוד</span>
+                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mt-6">
+                  <span>לתשובה המלאה</span>
                   <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
                 </div>
               </Link>
             ))}
 
             {/* 4th FAQ Placeholder - Blurred out */}
-            {homepageFaq.length > 3 && (
+            {faqData.length > 3 && (
               <div className="relative group overflow-hidden rounded-2xl h-full shadow-lg border border-gray-100">
                 {/* The actual FAQ card underneath */}
                 <div className="h-full select-none pointer-events-none bg-white p-8 text-right flex flex-col">
-                  <h3 className="font-headline font-bold text-xl text-primary mb-4 leading-tight">
-                    {homepageFaq[3].title}
+                  <h3 className="font-headline font-bold text-xl text-primary leading-tight flex-grow">
+                    {faqData[3].question}
                   </h3>
-                  <p className="font-body text-sm text-secondary leading-relaxed line-clamp-3 mb-6 flex-grow">
-                    {homepageFaq[3].excerpt}
-                  </p>
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
-                    <span>קרא עוד</span>
+                  <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mt-6">
+                    <span>לתשובה המלאה</span>
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
                   </div>
                 </div>
                 {/* Obscuring Overlay */}
                 <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-surface via-surface/95 to-transparent backdrop-blur-[3px] flex flex-col items-center justify-center pt-20 pb-8 text-center px-4">
-                  <Link href="/articles" className="bg-primary text-white px-6 sm:px-8 py-4 font-headline font-black text-xs sm:text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-2xl hover:-translate-y-1 rounded-full flex items-center justify-center gap-2 pointer-events-auto w-full max-w-[200px]">
+                  <Link href="/faq" className="bg-primary text-white px-6 sm:px-8 py-4 font-headline font-black text-xs sm:text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-2xl hover:-translate-y-1 rounded-full flex items-center justify-center gap-2 pointer-events-auto w-full max-w-[200px]">
                     <span>לכל השאלות</span>
                     <span className="material-symbols-outlined text-lg">arrow_back</span>
                   </Link>
