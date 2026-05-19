@@ -1,3 +1,5 @@
+import projectGalleries from "./projectGalleries.json";
+
 export interface ProjectDetail {
   id: string;
   slug: string;
@@ -392,7 +394,7 @@ export const projects: ProjectDetail[] = ([
     metaDescription: "בית מגורים פרטי בקיבוץ משמרות בתכנון אדריכלי פונקציונלי וחכם עם קשר חזק לפנים ולחוץ. תכנון: טל גורן אדריכלית.",
     status: "completed",
   },
-] as ProjectDetail[]).filter(p => !!p.image);
+] as ProjectDetail[]).filter(p => !!p.image && (projectGalleries as any)[p.slug]?.length > 0);
 
 export const projectsBySlug: Record<string, ProjectDetail> = Object.fromEntries(
   projects.map((p) => [p.slug, p])
