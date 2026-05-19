@@ -15,7 +15,7 @@ export interface ProjectDetail {
   status: "completed" | "in-design";
 }
 
-export const projects: ProjectDetail[] = [
+export const projects: ProjectDetail[] = ([
   {
     id: "m-maor",
     slug: "m-maor",
@@ -392,7 +392,7 @@ export const projects: ProjectDetail[] = [
     metaDescription: "בית מגורים פרטי בקיבוץ משמרות בתכנון אדריכלי פונקציונלי וחכם עם קשר חזק לפנים ולחוץ. תכנון: טל גורן אדריכלית.",
     status: "completed",
   },
-];
+] as ProjectDetail[]).filter(p => !!p.image);
 
 export const projectsBySlug: Record<string, ProjectDetail> = Object.fromEntries(
   projects.map((p) => [p.slug, p])

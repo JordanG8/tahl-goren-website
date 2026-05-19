@@ -12,29 +12,6 @@ const introParagraphs = [
   `אני כאן כדי להגיד לכם: אתם לא צריכים לעבור את זה לבד. מתוך ניסיון של מעל 25 שנה, שבהן תכננתי למעלה מ-100 בתים פרטיים, פיתחתי גישה ששמה את השקט הנפשי שלכם במרכז.`,
 ];
 
-const officeIntro = [
-  `בניגוד למשרדי אדריכלות גדולים שעוסקים במגדלים או מבני ציבור, המשרד שלי בגבעת עדה מתמחה אך ורק בתכנון בתים פרטיים ללקוחות פרטיים.`,
-  `המשמעות עבורכם היא דרמטית:`,
-];
-
-const officeValues = [
-  {
-    n: '01',
-    icon: 'person',
-    text: `תשומת לב אישית: אתם לא "עוד פרויקט" במערכת, אתם מרכז העבודה שלי.`,
-  },
-  {
-    n: '02',
-    icon: 'verified',
-    text: `מומחיות ללא פשרות: כל הידע, הכלים והניסיון שלי מוקדשים להבנת הצרכים הייחודיים של משפחות בונות.`,
-  },
-  {
-    n: '03',
-    icon: 'location_on',
-    text: `היכרות מקומית עמוקה: אני חיה ונושמת את האזור שבין נתניה לחיפה. אני מכירה מקרוב את ועדות התכנון והאתגרים הספציפיים בשרון הצפוני, יישובי המועצה האזורית מנשה, חוף הכרמל, בנימינה, פרדס חנה-כרכור והסביבה.`,
-  },
-];
-
 const flexibleHeading = `למה חשוב לי שהבית שלכם יהיה "גמיש" ויעיל?`;
 
 const flexibleParagraphs = [
@@ -71,7 +48,7 @@ export default function About() {
         <div className="bg-primary flex flex-col justify-end px-12 lg:px-20 pt-36 pb-16 lg:pb-20 relative overflow-hidden order-2 lg:order-1">
           {/* Giant decorative background text */}
           <span className="absolute inset-0 flex items-center justify-center font-headline font-black text-[22vw] lg:text-[14vw] leading-none text-white/[0.04] select-none pointer-events-none tracking-tighter">
-            TAL
+            TAHL
           </span>
           <div className="relative z-10 space-y-8">
             <Breadcrumb current="אודות" light />
@@ -159,34 +136,7 @@ export default function About() {
       <section className="py-24 md:py-32 px-8 bg-surface-container-low overflow-hidden">
         <div className="max-w-7xl mx-auto">
 
-          <div className="mb-20">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">המשרד שלי</span>
-            <h2 className="font-headline font-black text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[0.95] text-primary mt-4 max-w-3xl">
-              המשרד שלי: התמחות אחת, מעמיקה ובלעדית
-            </h2>
-            <div className="space-y-6 font-body text-lg text-secondary leading-relaxed max-w-2xl mt-6">
-              {officeIntro.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-            {officeValues.map((v) => (
-              <div key={v.n} className="group relative bg-surface p-12 lg:p-16 card-hover overflow-hidden">
-                <span className="absolute top-4 left-6 font-headline font-black text-8xl text-outline/[0.07] leading-none select-none pointer-events-none">{v.n}</span>
-                <div className="relative z-10 space-y-6 mt-6">
-                  <div className="w-14 h-14 bg-primary flex items-center justify-center">
-                    <span className="material-symbols-outlined text-white text-2xl">{v.icon}</span>
-                  </div>
-                  <p className="font-body text-primary leading-relaxed text-base">{v.text}</p>
-                </div>
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-outline/10 group-hover:bg-primary transition-colors duration-500" />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-20 max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="font-headline font-black text-3xl md:text-4xl text-primary leading-tight">
               {flexibleHeading}
             </h2>
