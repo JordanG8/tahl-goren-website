@@ -372,6 +372,26 @@ export const projects: ProjectDetail[] = [
     metaDescription: "בית מגורים צבעוני וחמים בשטח 200 מ\"ר בפרדס חנה, עם אופי אישי ייחודי ושילוב תחביבי בעלי הבית. תכנון: טל גורן אדריכלית.",
     status: "completed",
   },
+  {
+    id: "e-mishmarot",
+    slug: "e-mishmarot",
+    title: "בית משפחת ע' במשמרות",
+    location: "קיבוץ משמרות",
+    image: "/images/projects/e-mishmarot/optimized/IMG_20180815_125118.webp",
+    description: "בית מגורים כפרי במשמרות.",
+    fullDescription: "בית מגורים פרטי בקיבוץ משמרות. תוכנן עם דגש על פונקציונליות וזרימה נכונה בין חללי הבית השונים, תוך יצירת קשר הדוק לחצר ולסביבה הירוקה.",
+    area: "לא צוין",
+    floors: "קומה אחת",
+    style: "כפרי",
+    features: [
+      "תכנון פונקציונלי וחכם",
+      "קשר חזק בין פנים לחוץ",
+      "חלל מגורים פתוח ומואר",
+    ],
+    metaTitle: "בית משפחת ע' במשמרות | טל גורן אדריכלות",
+    metaDescription: "בית מגורים פרטי בקיבוץ משמרות בתכנון אדריכלי פונקציונלי וחכם עם קשר חזק לפנים ולחוץ. תכנון: טל גורן אדריכלית.",
+    status: "completed",
+  },
 ];
 
 export const projectsBySlug: Record<string, ProjectDetail> = Object.fromEntries(

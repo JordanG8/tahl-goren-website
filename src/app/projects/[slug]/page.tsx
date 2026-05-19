@@ -96,9 +96,15 @@ export default async function ProjectPage(
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
-  const galleryUrls = (projectGalleries as Record<string, string[]>)[project.id] ?? [];
-  const galleryImages = galleryUrls.map((src, i) => ({
-    src,
+  interface GalleryItem {
+    src: string;
+    fullSrc: string;
+    alt: string;
+  }
+  const galleryItems = (projectGalleries as Record<string, GalleryItem[]>)[project.slug] ?? [];
+  const galleryImages = galleryItems.map((item, i) => ({
+    src: item.src,
+    fullSrc: item.fullSrc,
     alt: `${project.title} – תמונה ${i + 1}`,
   }));
 
@@ -154,6 +160,23 @@ export default async function ProjectPage(
           </div>
         </div>
       </section>
+
+      {/* Project Gallery */}
+      {galleryImages.length > 0 && (
+        <section className="py-16 md:py-24 px-8 bg-surface">
+          <div className="max-w-[1920px] mx-auto">
+            <div className="mb-12 text-right">
+              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
+                Gallery
+              </span>
+              <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
+                תמונות מהפרויקט
+              </h2>
+            </div>
+            <GalleryGrid images={galleryImages} />
+          </div>
+        </section>
+      )}
 
       {/* Content */}
       <section className="py-16 md:py-24 px-8" dir="rtl">
@@ -252,22 +275,6 @@ export default async function ProjectPage(
         </div>
       </section>
 
-      {/* Project Gallery */}
-      {galleryImages.length > 0 && (
-        <section className="py-16 md:py-24 px-8 bg-surface">
-          <div className="max-w-[1920px] mx-auto">
-            <div className="mb-12 text-right">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-                Gallery
-              </span>
-              <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
-                תמונות מהפרויקט
-              </h2>
-            </div>
-            <GalleryGrid images={galleryImages} />
-          </div>
-        </section>
-      )}
 
       {/* Related Projects */}
       <section className="py-16 md:py-24 px-8 bg-surface-container-low">

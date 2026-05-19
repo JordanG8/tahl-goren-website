@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-export type GalleryImage = { src: string; alt: string };
+export type GalleryImage = { src: string; alt: string; fullSrc?: string };
 
 const defaultImages: GalleryImage[] = [
   { src: "/images/projects/barak-bathroom.jpg", alt: "Barak Bathroom" },
@@ -161,7 +161,7 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={displayImages[selectedImageIndex].src}
+              src={displayImages[selectedImageIndex].fullSrc || displayImages[selectedImageIndex].src}
               alt={displayImages[selectedImageIndex].alt}
               className="max-w-full max-h-[85vh] object-contain shadow-2xl"
             />
