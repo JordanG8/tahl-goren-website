@@ -7,6 +7,7 @@ import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
+import { aboutExcerpt } from '@/app/about/page';
 
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
@@ -104,7 +105,7 @@ export default function HomePage({ projects }: Props) {
             <div className="space-y-8">
               <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">אודות</span>
               <h2 className="font-headline font-black text-5xl lg:text-6xl xl:text-7xl text-primary tracking-tight leading-[0.88]">נעים<br />מאוד,<br />אני טל.</h2>
-              <p className="font-body text-lg text-secondary leading-relaxed max-w-md">אדריכלית שמאמינה שבית טוב הוא כזה שגדל עם המשפחה. מתמחה בתכנון בתים פרטיים באזור השרון הצפוני, ומלווה משפחות מהשלב הראשון ועד הכניסה לבית.</p>
+              <p className="font-body text-lg text-secondary leading-relaxed max-w-md">{aboutExcerpt}</p>
               <div className="flex gap-10 py-8 border-y border-outline/10">
                 <div><span className="font-headline font-black text-4xl text-primary block">25+</span><span className="font-label text-[10px] text-secondary uppercase tracking-widest">שנות ניסיון</span></div>
                 <div><span className="font-headline font-black text-4xl text-primary block">100+</span><span className="font-label text-[10px] text-secondary uppercase tracking-widest">בתים שתוכננו</span></div>
