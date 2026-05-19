@@ -11,12 +11,12 @@ const navCategories = [
     links: [
       { to: '/projects', label: 'פרויקטים' },
       { to: '/about', label: 'אודות' },
+      { to: '/services', label: 'שירותים' },
     ],
   },
   {
     label: 'תוכן',
     links: [
-      { to: '/gallery', label: 'גלריה' },
       { to: '/articles', label: 'מאמרים' },
       { to: '/faq', label: 'שאלות ותשובות' },
       { to: '/videos', label: 'סרטונים' },

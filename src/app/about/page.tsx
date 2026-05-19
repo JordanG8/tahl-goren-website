@@ -3,6 +3,35 @@ import Link from 'next/link';
 import ArchFrame from '@/components/ArchFrame';
 import Breadcrumb from '@/components/Breadcrumb';
 
+const credentials = [
+  { icon: 'workspace_premium', title: 'הנדסאית אדריכלות בהצטיינות יתרה', sub: 'ביה״ס הארצי להנדסאים בטכניון, 2000' },
+  { icon: 'school', title: 'בוגרת הפקולטה לארכיטקטורה בטכניון בהצטיינות', sub: 'טכניון, 2004' },
+  { icon: 'verified', title: 'אדריכלית רשומה', sub: 'משנת 2004 · מס׳ רישום 118121' },
+  { icon: 'verified_user', title: 'אדריכלית רשויה', sub: 'משנת 2014 · מס׳ רישיון 11085135' },
+  { icon: 'workspace_premium', title: 'אדריכלית מורשית היתר', sub: 'משנת 2025 · מס׳ תעודה 01-002-0000009445' },
+];
+
+const officeValues = [
+  {
+    n: '01',
+    icon: 'person',
+    title: 'תשומת לב אישית',
+    text: 'אתם לא "עוד פרויקט" במערכת — אתם מרכז העבודה שלי.',
+  },
+  {
+    n: '02',
+    icon: 'verified',
+    title: 'מומחיות ללא פשרות',
+    text: 'כל הידע, הכלים והניסיון שלי מוקדשים להבנת הצרכים הייחודיים של משפחות בונות.',
+  },
+  {
+    n: '03',
+    icon: 'location_on',
+    title: 'היכרות מקומית עמוקה',
+    text: 'אני חיה ונושמת את האזור שבין נתניה לחיפה, ומכירה מקרוב את ועדות התכנון והאתגרים בשרון הצפוני, יישובי מנשה, חוף הכרמל, בנימינה, פרדס חנה-כרכור והסביבה.',
+  },
+];
+
 export default function About() {
   return (
     <>
@@ -22,7 +51,7 @@ export default function About() {
               טל<br />גורן
             </h1>
             <p className="font-body text-lg text-white/60 max-w-sm leading-relaxed">
-              אדריכלית מורשית היתר ומעצבת פנים — למעלה מ-25 שנות ניסיון בתכנון בתים פרטיים
+              אדריכלית מורשית היתר — המומחית שלכם לבתים פרטיים
             </p>
             <div className="flex gap-12 pt-8 border-t border-white/10">
               <div>
@@ -31,7 +60,7 @@ export default function About() {
               </div>
               <div>
                 <span className="font-headline font-black text-5xl text-white block leading-none">100+</span>
-                <span className="font-label text-[10px] text-white/40 uppercase tracking-widest mt-2 block">בתים</span>
+                <span className="font-label text-[10px] text-white/40 uppercase tracking-widest mt-2 block">בתים פרטיים</span>
               </div>
             </div>
           </div>
@@ -58,7 +87,7 @@ export default function About() {
         <div className="max-w-5xl mx-auto">
           <span className="font-headline text-8xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
           <blockquote className="font-headline font-black text-3xl md:text-4xl lg:text-5xl text-primary leading-tight tracking-tight -mt-6">
-            אני מאמינה שבית טוב הוא כזה שגדל עם המשפחה — לא נגדה.
+            בסוף הדרך, המטרה שלי היא אחת: שתגיעו הביתה — למקום שמותאם בדיוק לחלומות, לצרכים ולתקציב שלכם.
           </blockquote>
           <div className="flex items-center gap-4 mt-10">
             <div className="w-12 h-[2px] bg-secondary" />
@@ -75,13 +104,22 @@ export default function About() {
 
             {/* Story */}
             <div className="lg:col-span-7 space-y-8">
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">הסיפור שלי</span>
+              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">נעים להכיר</span>
+              <h2 className="font-headline font-black text-3xl md:text-4xl text-primary leading-tight">
+                נעים להכיר, אני טל גורן
+              </h2>
+              <p className="font-body text-primary text-xl leading-relaxed border-r-2 border-secondary pr-6">
+                אדריכלית רשויה ומורשית היתר, בוגרת הטכניון בהצטיינות, בעלת ניסיון של מעל 25 שנה. המשרד מתמחה אך ורק בתכנון בתים פרטיים ללקוחות פרטיים באזור השרון הצפוני, יישובי מנשה, חוף הכרמל והסביבה. המומחיות שלי היא יצירת בתים שגדלים עם המשפחה — תכנון גמיש, פרקטי וחסכוני, המלווה ביחס אישי צמוד ובביטחון מקצועי מלא.
+              </p>
               <div className="space-y-6 font-body text-secondary text-lg leading-relaxed">
                 <p>
-                  אני אדריכלית שמתמחה בתכנון בתים פרטיים למשפחות באזור השרון הצפוני. עם ניסיון של מעל 25 שנה ותכנון של למעלה ממאה בתים, אני מאמינה שבית הוא אחד המסעות המשמעותיים ביותר שמשפחה יכולה לעבור — והזכות ללוות אתכם בו היא מה שהופך את האדריכלות לתשוקה שלי.
+                  אני מבינה מה אתם מרגישים עכשיו מתוך ניסיון אישי. מצד אחד — התרגשות עצומה לקראת הגשמת חלום חייכם. מצד שני — החששות הטבעיים מהלא נודע: הבלבול מול הבירוקרטיה, הפחד מטעויות תכנוניות יקרות והאחריות האדירה שבניהול תקציב של מיליוני שקלים.
                 </p>
                 <p>
-                  כאמא לשלושה בנים בוגרים, חוויתי בעצמי שלבים רבים בחיי המשפחה. אני יודעת שהחיים הם דינמיים ושהצרכים שלנו משתנים כל הזמן — הבנה שעיצבה את כל הפילוסופיה התכנונית שלי.
+                  אני כאן כדי להגיד לכם: אתם לא צריכים לעבור את זה לבד. מתוך ניסיון של מעל 25 שנה, שבהן תכננתי למעלה מ-100 בתים פרטיים, פיתחתי גישה ששמה את השקט הנפשי שלכם במרכז.
+                </p>
+                <p>
+                  בניגוד למשרדי אדריכלות גדולים שעוסקים במגדלים או מבני ציבור, המשרד שלי בגבעת עדה מתמחה אך ורק בתכנון בתים פרטיים ללקוחות פרטיים.
                 </p>
               </div>
             </div>
@@ -89,13 +127,8 @@ export default function About() {
             {/* Credentials card */}
             <div className="lg:col-span-5">
               <div className="bg-surface-container-low p-10 space-y-2">
-                <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary block mb-6">השכלה ורישיונות</span>
-                {[
-                  { icon: 'workspace_premium', title: 'בוגרת הטכניון בהצטיינות', sub: 'פקולטה לאדריכלות, הנדסאית בהצטיינות יתרה' },
-                  { icon: 'verified', title: 'אדריכלית רשויה ומורשית היתר', sub: 'הדרגה המקצועית הגבוהה ביותר בישראל' },
-                  { icon: 'groups', title: 'ארגון האדריכלים ובוני ערים', sub: 'חברה פעילה ורשומה' },
-                  { icon: 'business_center', title: 'ארגון המהנדסים העצמאיים', sub: 'חברה פעילה' },
-                ].map((item, i) => (
+                <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary block mb-6">הכשרה וביטחון מקצועי</span>
+                {credentials.map((item, i) => (
                   <div key={i} className="flex items-start gap-4 py-5 border-b border-outline/10 last:border-0">
                     <span className="material-symbols-outlined text-primary text-xl mt-0.5 flex-shrink-0">{item.icon}</span>
                     <div>
@@ -104,6 +137,9 @@ export default function About() {
                     </div>
                   </div>
                 ))}
+                <p className="font-body text-secondary text-sm leading-relaxed pt-6">
+                  המשמעות עבורכם היא ביטחון מלא בידיעה שהתכנון נעשה באחריות, תוך מיצוי מלא של זכויות הבנייה שלכם וליווי אישי, סבלני ומכיל. אני רואה את עצמי כשותפה שלכם לדרך, והתפקיד שלי הוא להפוך את המסע המורכב הזה לחוויה חיובית, ברורה ומעצימה.
+                </p>
               </div>
             </div>
 
@@ -117,36 +153,22 @@ export default function About() {
         <div className="max-w-7xl mx-auto">
 
           <div className="mb-20">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">הגישה שלי</span>
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">המשרד שלי</span>
             <h2 className="font-headline font-black text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[0.88] text-primary mt-4 max-w-2xl">
               בית שגדל<br />עם המשפחה
             </h2>
-            <p className="font-body text-lg text-secondary leading-relaxed max-w-2xl mt-6">
-              הגישה שלי מושתתת על עיקרון אחד מרכזי: לתכנן בית יעיל, פרקטי וגמיש שיודע להתאים את עצמו לשינויים בחיים. ניצול מקסימלי של שטח ותקציב, ללא &quot;שטחים מתים&quot;.
-            </p>
+            <div className="space-y-6 font-body text-lg text-secondary leading-relaxed max-w-2xl mt-6">
+              <p>
+                כאמא לשלושה בנים בוגרים, חוויתי בעצמי איך צרכי המשפחה משתנים לאורך השנים. הניסיון הזה לימד אותי שהחוכמה היא לא רק לתכנן בית יפה — אלא בית שגדל עם המשפחה.
+              </p>
+              <p>
+                התכנון שלי מושתת על יעילות ופרקטיות. אני מוודאת שהבית שלכם ינצל כל מטר בצורה חכמה, יחסוך לכם כסף בתחזוקה ובאנרגיה, ויידע להשתנות יחד איתכם — מבלי להצריך שיפוצים יקרים ומסורבלים בעתיד.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-            {[
-              {
-                n: '01',
-                icon: 'person',
-                title: 'ליווי אישי וסבלני',
-                text: 'אני יודעת שתהליך בנייה יכול להיות מורכב ומלחיץ. התפקיד שלי הוא להפוך אותו עבורכם לחוויה חיובית, רגועה וברורה. כל משפחה מקבלת את מלוא תשומת הלב שלי.',
-              },
-              {
-                n: '02',
-                icon: 'straighten',
-                title: 'הקשבה עמוקה',
-                text: 'אני לא באה עם אג\'נדה עיצובית משלי. אני באה להקשיב לכם, ללמוד אתכם, ולתרגם את החלומות והצרכים הייחודיים שלכם לבית שתפור בדיוק למידותיכם.',
-              },
-              {
-                n: '03',
-                icon: 'forum',
-                title: 'גמישות מלאה',
-                text: 'הגמישות מלווה את כל העבודה שלי. אני מתאימה את עצמי לכל סגנון עיצובי שתבחרו, ויודעת לתכנן בכל שיטות הבניה הקיימות.',
-              },
-            ].map((v) => (
+            {officeValues.map((v) => (
               <div key={v.n} className="group relative bg-surface p-12 lg:p-16 card-hover overflow-hidden">
                 <span className="absolute top-4 left-6 font-headline font-black text-8xl text-outline/[0.07] leading-none select-none pointer-events-none">{v.n}</span>
                 <div className="relative z-10 space-y-6 mt-6">
@@ -170,16 +192,17 @@ export default function About() {
         <div className="absolute inset-0 bg-primary/95" />
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">בואו נדבר</span>
-          <h2 className="font-headline font-black text-5xl md:text-7xl tracking-tight leading-[0.95] text-white">
-            מוכנים להתחיל?<br />בואו נדבר.
+          <h2 className="font-headline font-black text-4xl md:text-6xl tracking-tight leading-[1.05] text-white">
+            מתכננים לבנות בשרון הצפוני, ביישובי מנשה או בחוף הכרמל?
           </h2>
           <p className="font-body text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">
-            אשמח לשמוע על הפרויקט שלכם ולבחון איך אוכל לעזור לכם להגשים את החזון.
+            אני מזמינה אתכם לשיחת ייעוץ ראשונית, ללא התחייבות, כדי שנכיר ונראה איך נוכל להגשים יחד את הבית שלכם.
           </p>
           <Link href="/contact" className="mt-6 inline-flex items-center gap-4 bg-white text-primary px-12 py-5 font-headline font-black text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors group">
             צרו קשר עכשיו
             <span className="material-symbols-outlined group-hover:translate-x-[-6px] transition-transform">arrow_back</span>
           </Link>
+          <p className="font-body text-white/50 text-base mt-2">איתכם בדרך להגשמת הבית, טל גורן</p>
         </div>
       </section>
 

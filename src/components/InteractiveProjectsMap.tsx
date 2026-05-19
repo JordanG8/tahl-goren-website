@@ -49,7 +49,7 @@ export default function InteractiveProjectsMap() {
             }
           }
         }}
-        className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white text-[#30332f] px-4 py-2 rounded-lg shadow-lg border border-border/50 flex items-center gap-2 font-bold text-sm transition-all active:scale-95"
+        className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white text-primary px-4 py-2 rounded-lg shadow-lg border border-border/50 flex items-center gap-2 font-bold text-sm transition-all active:scale-95"
       >
         <span className="material-symbols-outlined text-base">fullscreen</span>
         <span>מסך מלא</span>

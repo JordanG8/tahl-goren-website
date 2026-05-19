@@ -6,14 +6,10 @@ import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
+import FaqAccordion from '@/components/FaqAccordion';
 
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
-
-import { articles as siteArticles } from '@/data/articlesContent';
-import faqData from '@/data/faqData.json';
-
-const homepageFaq = siteArticles.filter(a => a.faq).slice(0, 9);
 
 const featuredArticles = [
   { slug: "building-cost-total", title: "כמה תעלה לנו הבניה בסך הכל?", image: "/images/blog/building-cost-total.png", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? המדריך המלא להכנת תקציב ריאלי לבניית בית פרטי בישראל." },
@@ -209,53 +205,32 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
-      {/* 7. FAQ (new content with article links) */}
+      {/* 7. FAQ (accordion with full-article links) */}
       <section className="py-24 lg:py-32 -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-20 space-y-4">
+        <div className="max-w-4xl mx-auto px-8 lg:px-12">
+          <div className="text-center mb-16 space-y-4">
             <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">שאלות ותשובות</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי.</p>
+            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי. לחצו על שאלה לתשובה מלאה.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {faqData.slice(0, 3).map((item, index) => (
-              <Link
-                key={index}
-                href="/faq"
-                className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 text-right flex flex-col h-full"
-              >
-                <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors flex-grow">
-                  {item.question}
-                </h3>
-                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mt-6">
-                  <span>לתשובה המלאה</span>
-                  <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
-                </div>
-              </Link>
-            ))}
 
-            {/* 4th FAQ Placeholder - Blurred out */}
-            {faqData.length > 3 && (
-              <div className="relative group overflow-hidden rounded-2xl h-full shadow-lg border border-gray-100">
-                {/* The actual FAQ card underneath */}
-                <div className="h-full select-none pointer-events-none bg-white p-8 text-right flex flex-col">
-                  <h3 className="font-headline font-bold text-xl text-primary leading-tight flex-grow">
-                    {faqData[3].question}
-                  </h3>
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mt-6">
-                    <span>לתשובה המלאה</span>
-                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                  </div>
-                </div>
-                {/* Obscuring Overlay */}
-                <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-surface via-surface/95 to-transparent backdrop-blur-[3px] flex flex-col items-center justify-center pt-20 pb-8 text-center px-4">
-                  <Link href="/faq" className="bg-primary text-white px-6 sm:px-8 py-4 font-headline font-black text-xs sm:text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-2xl hover:-translate-y-1 rounded-full flex items-center justify-center gap-2 pointer-events-auto w-full max-w-[200px]">
-                    <span>לכל השאלות</span>
-                    <span className="material-symbols-outlined text-lg">arrow_back</span>
-                  </Link>
-                </div>
-              </div>
-            )}
+          <FaqAccordion limit={6} />
+
+          <div className="mt-14 flex flex-col items-center gap-5">
+            <Link
+              href="/articles"
+              className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-secondary transition-colors"
+            >
+              לכל המאמרים
+              <span className="material-symbols-outlined text-lg">arrow_back</span>
+            </Link>
+            <Link
+              href="/faq"
+              className="inline-flex items-center gap-2 font-headline font-bold text-xs text-secondary hover:text-primary transition-colors"
+            >
+              לכל השאלות הנפוצות
+              <span className="material-symbols-outlined text-sm">arrow_back</span>
+            </Link>
           </div>
         </div>
       </section>
