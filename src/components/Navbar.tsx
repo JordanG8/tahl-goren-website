@@ -9,10 +9,11 @@ import MobileMenu from './MobileMenu';
 const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
   { to: '/about', label: 'אודות' },
-  { to: '/gallery', label: 'גלריה' },
+  { to: '/services', label: 'שירותים' },
   { to: '/articles', label: 'מאמרים' },
   { to: '/faq', label: 'שאלות ותשובות' },
   { to: '/testimonials', label: 'לקוחות מספרים' },
+  { to: '/contact', label: 'צור קשר' },
 ];
 
 export default function Navbar() {

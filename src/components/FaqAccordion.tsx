@@ -4,8 +4,16 @@ import React, { useState } from "react";
 import Link from "next/link";
 import faqData from "@/data/faqData.json";
 
-export default function FaqAccordion() {
+type FaqItem = {
+  question: string;
+  answer: string;
+  slug?: string;
+};
+
+export default function FaqAccordion({ limit }: { limit?: number }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const items = (faqData as FaqItem[]).slice(0, limit ?? faqData.length);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -13,7 +21,7 @@ export default function FaqAccordion() {
 
   return (
     <div className="space-y-4">
-      {faqData.map((faq, index) => {
+      {items.map((faq, index) => {
         const isOpen = openIndex === index;
         return (
           <div
@@ -50,15 +58,15 @@ export default function FaqAccordion() {
                 <p className="text-secondary leading-relaxed whitespace-pre-line text-base">
                   {faq.answer}
                 </p>
-                
+
                 {faq.slug && (
-                  <div className="mt-8 flex justify-start">
+                  <div className="mt-7 flex justify-start">
                     <Link
                       href={`/articles/${faq.slug}`}
-                      className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary hover:text-secondary transition-colors group/link"
+                      className="group/link inline-flex items-center gap-2 bg-primary text-white px-6 py-3 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
                     >
-                      <span className="material-symbols-outlined text-base transition-transform group-hover/link:translate-x-1">arrow_forward</span>
                       למאמר המלא בנושא
+                      <span className="material-symbols-outlined text-base transition-transform group-hover/link:-translate-x-1">arrow_back</span>
                     </Link>
                   </div>
                 )}
