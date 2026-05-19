@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { projects, projectsBySlug, type ProjectDetail } from "@/data/projectsContent";
 import Breadcrumb from "@/components/Breadcrumb";
+import GalleryGrid from "@/components/GalleryGrid";
+import projectGalleries from "@/data/projectGalleries.json";
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -93,6 +95,12 @@ export default async function ProjectPage(
 
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+
+  const galleryUrls = (projectGalleries as Record<string, string[]>)[project.id] ?? [];
+  const galleryImages = galleryUrls.map((src, i) => ({
+    src,
+    alt: `${project.title} – תמונה ${i + 1}`,
+  }));
 
   return (
     <>
@@ -243,6 +251,23 @@ export default async function ProjectPage(
           </div>
         </div>
       </section>
+
+      {/* Project Gallery */}
+      {galleryImages.length > 0 && (
+        <section className="py-16 md:py-24 px-8 bg-surface">
+          <div className="max-w-[1920px] mx-auto">
+            <div className="mb-12 text-right">
+              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
+                Gallery
+              </span>
+              <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
+                תמונות מהפרויקט
+              </h2>
+            </div>
+            <GalleryGrid images={galleryImages} />
+          </div>
+        </section>
+      )}
 
       {/* Related Projects */}
       <section className="py-16 md:py-24 px-8 bg-surface-container-low">
