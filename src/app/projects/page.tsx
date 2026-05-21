@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
-import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
+// import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
 import { siteData } from '@/data/siteData';
 
 const categories = [
@@ -29,14 +29,18 @@ export default function Projects() {
         <div>
           <Breadcrumb current="פרויקטים" />
           <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני. לחצו על אזור במפה לצפייה בפרויקטים.</p>
+          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">
+            למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני.
+            {/* לחצו על אזור במפה לצפייה בפרויקטים. */}
+          </p>
         </div>
       </section>
 
-      {/* Interactive Map */}
+      {/* Interactive Map - disabled for now
       <section className="px-8 lg:px-12 py-8 md:py-16 max-w-[1920px] mx-auto">
         <InteractiveProjectsMap />
       </section>
+      */}
 
       {/* Category Cards */}
       <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
