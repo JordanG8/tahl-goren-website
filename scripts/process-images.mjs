@@ -7,23 +7,27 @@ const PUBLIC_PROJECTS_DIR = join("public", "images", "projects");
 const GALLERIES_JSON_PATH = join("src", "data", "projectGalleries.json");
 
 const MAPPING = {
-  "בית משפ ה אור עקיבא": "h-or-akiva",
+  "בית משפחת ה אור עקיבא": "h-or-akiva",
   "בית משפחת ג בנימינה": "g-binyamina",
   "בית משפחת ו גבעת עדה": "v-givat-ada-2",
   "בית משפחת ו זכרון יעקב": "v-zichron",
   "בית משפחת וו גבעת עדה": "v-givat-ada",
+  "בית משפחת ז זכרון יעקב": "z-zichron",
+  "בית משפחת ט מאור": "t-maor",
   "בית משפחת מ מאור": "ma-maor",
   "בית משפחת מנ במאור": "m-maor",
   "בית משפחת נ זכרון יעקב": "ni-zichron",
   "בית משפחת נו זכרון יעקב": "n-zichron-2",
+  "בית משפחת נכ גן שומרון": "n-gan-shomron",
   "בית משפחת ס בנימינה": "s-binyamina",
   "בית משפחת ע משמרות": "e-mishmarot",
+  "בית משפחת פ בנימינה": "p-binyamina",
   "בית משפחת פ פרדס חנה": "p-pardes-hanna",
   "בית משפחת ר אור עקיבא": "r-or-akiva",
   "בית משפחת ש מאור": "sh-maor",
   "בית משפחת ש קציר": "sh-katzir",
   "בית משפחת שב פרדס חנה": "sh-pardes-hanna",
-  "בית משפחת שי מאור": "t-maor",
+  "בית משפחת שי מאור": "shai-maor",
   "בית משפחת שק מאור": "shak-maor"
 };
 
