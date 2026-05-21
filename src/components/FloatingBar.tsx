@@ -21,7 +21,8 @@ export default function FloatingBar() {
         </a>
         <a
           href="/contact"
-          className="flex-1 flex items-center justify-center gap-2 bg-white text-primary hover:bg-white/90 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 bg-white text-primary hover:bg-white/90 transition-colors animate-contact-glow-only"
+          style={{ '--glow-color': 'rgba(59, 85, 102, 0.5)' } as any}
         >
           <span className="material-symbols-outlined text-xl">calendar_month</span>
           <span className="font-headline font-bold text-sm">פגישת ייעוץ</span>
@@ -30,7 +31,11 @@ export default function FloatingBar() {
 
       {/* Desktop: floating bar - more prominent */}
       <div className="hidden sm:flex fixed bottom-8 right-8 z-[60] items-center bg-primary rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-105">
-        <a href="/contact" className="flex items-center gap-2 text-primary bg-white hover:bg-white/90 transition-colors px-5 py-3.5 rounded-r-full font-headline font-bold text-xs tracking-wide">
+        <a 
+          href="/contact" 
+          className="flex items-center gap-2 text-primary bg-white hover:bg-white/90 transition-colors px-5 py-3.5 rounded-r-full font-headline font-bold text-xs tracking-wide animate-contact-glow-only"
+          style={{ '--glow-color': 'rgba(59, 85, 102, 0.5)' } as any}
+        >
           <span className="material-symbols-outlined text-lg">calendar_month</span>
           פגישת ייעוץ חינם
         </a>

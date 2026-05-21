@@ -333,3 +333,39 @@ html {
 .swiper-slide-shadow {
   border-radius: 1rem !important;
 }
+
+/* Contact Button Glow Animations */
+@keyframes contactGlowWithScale {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+  }
+  3.33% {
+    box-shadow: 0 0 14px 4px var(--glow-color, rgba(59, 85, 102, 0.6));
+    transform: scale(1.04);
+  }
+  6.67% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+  }
+}
+
+@keyframes contactGlowOnly {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  3.33% {
+    box-shadow: 0 0 14px 4px var(--glow-color, rgba(59, 85, 102, 0.6));
+  }
+  6.67% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-contact-glow-scale {
+  animation: contactGlowWithScale 15s infinite ease-in-out;
+}
+
+.animate-contact-glow-only {
+  animation: contactGlowOnly 15s infinite ease-in-out;
+}
