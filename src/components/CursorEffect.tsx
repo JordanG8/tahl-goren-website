@@ -30,6 +30,8 @@ const getPerimeterDistance = (x: number, y: number, w: number, h: number): numbe
   }
 };
 
+const HOVER_PADDING = 6; // px padding on each side to prevent feeling claustrophobic
+
 export default function CursorEffect() {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
@@ -108,12 +110,12 @@ export default function CursorEffect() {
         if (rect.width > 0 && rect.height > 0) {
           targetX = rect.left + rect.width / 2;
           targetY = rect.top + rect.height / 2;
-          const padding = 0; // snug fit exactly on the border
-          targetW = rect.width + padding;
-          targetH = rect.height + padding;
+          targetW = rect.width + 2 * HOVER_PADDING;
+          targetH = rect.height + 2 * HOVER_PADDING;
           
           const style = window.getComputedStyle(hoveredEl);
-          targetRadius = parseRadius(style.borderRadius, rect.width, rect.height);
+          const baseRadius = parseRadius(style.borderRadius, rect.width, rect.height);
+          targetRadius = baseRadius + HOVER_PADDING;
           targetBorderWidth = 1.5;
           targetArrowOpacity = 0;
           targetAngle = 0;
@@ -254,9 +256,13 @@ export default function CursorEffect() {
         vRadius = 0;
 
         const rect = interactive.getBoundingClientRect();
-        const x = Math.max(0, Math.min(rect.width, mouseX - rect.left));
-        const y = Math.max(0, Math.min(rect.height, mouseY - rect.top));
-        contactPerimeterDist = getPerimeterDistance(x, y, rect.width, rect.height);
+        const wExt = rect.width + 2 * HOVER_PADDING;
+        const hExt = rect.height + 2 * HOVER_PADDING;
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const x = Math.max(0, Math.min(wExt, mouseX - cx + wExt / 2));
+        const y = Math.max(0, Math.min(hExt, mouseY - cy + hExt / 2));
+        contactPerimeterDist = getPerimeterDistance(x, y, wExt, hExt);
       }
       
       hoveredEl = interactive;
