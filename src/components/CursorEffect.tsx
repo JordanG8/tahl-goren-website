@@ -168,12 +168,12 @@ export default function CursorEffect() {
 
       // Transition draw progress
       const targetDrawDist = hoveredEl ? P / 2 : 0;
-      const lerpFactor = 0.18;
+      const lerpFactor = 0.09;
       strokeDrawDist += (targetDrawDist - strokeDrawDist) * lerpFactor;
 
       // Lerp for border width and arrow opacity
-      borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.25;
-      arrowOpacityVal += (targetArrowOpacity - arrowOpacityVal) * 0.25;
+      borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.13;
+      arrowOpacityVal += (targetArrowOpacity - arrowOpacityVal) * 0.13;
 
       const speed = Math.sqrt(vx * vx + vy * vy);
 
@@ -184,21 +184,21 @@ export default function CursorEffect() {
         let angleDiff = targetAngle - currentAngle;
         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-        currentAngle += angleDiff * 0.18;
+        currentAngle += angleDiff * 0.09;
       } else {
         let angleDiff = -currentAngle;
         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-        currentAngle += angleDiff * 0.18;
+        currentAngle += angleDiff * 0.09;
       }
 
       const targetStretch = hoveredEl ? 1 : (1 + Math.min(speed * 0.035, 0.4));
       const targetSquash = 1 / targetStretch;
-      stretch += (targetStretch - stretch) * 0.15;
-      squash += (targetSquash - squash) * 0.15;
+      stretch += (targetStretch - stretch) * 0.08;
+      squash += (targetSquash - squash) * 0.08;
 
       const targetDotScale = hoveredEl ? 0.3 : 1.0;
-      dotScale += (targetDotScale - dotScale) * 0.15;
+      dotScale += (targetDotScale - dotScale) * 0.08;
 
       if (ringRef.current && hasMoved) {
         ringRef.current.style.width = `${ringW}px`;
@@ -303,19 +303,19 @@ export default function CursorEffect() {
       {/* Precision center dot */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-1.5 h-1.5 rounded-full bg-white mix-blend-difference opacity-0 transition-opacity duration-300"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-1.5 h-1.5 rounded-full bg-primary opacity-0 transition-opacity duration-300"
         style={{ willChange: "transform" }}
       />
       {/* Momentum-based trailing arrow */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-6 h-6 mix-blend-difference opacity-0 transition-opacity duration-300 flex items-center justify-center box-border"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-6 h-6 opacity-0 transition-opacity duration-300 flex items-center justify-center box-border"
         style={{ willChange: "transform, width, height, border-radius" }}
       >
         {/* Dynamic Border SVG */}
         <svg
           ref={borderSvgRef}
-          className="w-full h-full absolute top-0 left-0 text-white pointer-events-none"
+          className="w-full h-full absolute top-0 left-0 text-primary pointer-events-none"
           style={{
             overflow: "visible",
             opacity: 0,
@@ -339,7 +339,7 @@ export default function CursorEffect() {
           ref={arrowRef}
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="w-6 h-6 text-white absolute"
+          className="w-6 h-6 text-primary absolute"
           style={{ willChange: "transform, opacity" }}
         >
           {/* Sleek aerodynamic arrow pointing to the right (0 rad) */}
