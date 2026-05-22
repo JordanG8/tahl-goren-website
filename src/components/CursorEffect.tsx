@@ -64,6 +64,7 @@ export default function CursorEffect() {
     let arrowOpacityVal = 1;
     let contactPerimeterDist = 0;
     let strokeDrawDist = 0;
+    let hoverStartTime = 0;
 
     let vx = 0;
     let vy = 0;
@@ -168,10 +169,22 @@ export default function CursorEffect() {
       // Perimeter P of the current ring
       const P = 2 * (ringW + ringH);
 
-      // Transition draw progress
-      const targetDrawDist = hoveredEl ? P / 2 : 0;
-      const lerpFactor = 0.09;
-      strokeDrawDist += (targetDrawDist - strokeDrawDist) * lerpFactor;
+      // Transition draw progress using piecewise linear timing:
+      // 33% in 50ms, then the remaining 67% in 200ms (total 250ms)
+      if (hoveredEl) {
+        const elapsed = performance.now() - hoverStartTime;
+        let progress = 0;
+        if (elapsed <= 50) {
+          progress = (elapsed / 50) * 0.33;
+        } else if (elapsed <= 250) {
+          progress = 0.33 + ((elapsed - 50) / 200) * 0.67;
+        } else {
+          progress = 1.0;
+        }
+        strokeDrawDist = progress * (P / 2);
+      } else {
+        strokeDrawDist += (0 - strokeDrawDist) * 0.18;
+      }
 
       // Lerp for border width and arrow opacity
       borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.13;
@@ -254,6 +267,7 @@ export default function CursorEffect() {
         vW = 0;
         vH = 0;
         vRadius = 0;
+        hoverStartTime = performance.now();
 
         const rect = interactive.getBoundingClientRect();
         const wExt = rect.width + 2 * HOVER_PADDING;
