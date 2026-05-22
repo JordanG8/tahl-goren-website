@@ -86,43 +86,60 @@ export default function CursorEffect() {
         if (rect.width > 0 && rect.height > 0) {
           targetX = rect.left + rect.width / 2;
           targetY = rect.top + rect.height / 2;
-          const padding = 12;
+          const padding = 0; // snug fit exactly on the border
           targetW = rect.width + padding;
           targetH = rect.height + padding;
           
           const style = window.getComputedStyle(hoveredEl);
-          targetRadius = parseRadius(style.borderRadius, rect.width, rect.height) + padding / 2;
+          targetRadius = parseRadius(style.borderRadius, rect.width, rect.height);
           targetBorderWidth = 1.5;
           targetArrowOpacity = 0;
           targetAngle = 0;
         }
       }
 
-      // Position physics
-      const ax = (targetX - ringX) * stiffness;
-      const ay = (targetY - ringY) * stiffness;
-      vx += ax;
-      vy += ay;
-      vx *= damping;
-      vy *= damping;
-      ringX += vx;
-      ringY += vy;
+      if (hoveredEl) {
+        // Viscous lerp (slime flow) with zero bounce, settling in ~300ms
+        const lerpFactor = 0.18;
+        ringX += (targetX - ringX) * lerpFactor;
+        ringY += (targetY - ringY) * lerpFactor;
+        ringW += (targetW - ringW) * lerpFactor;
+        ringH += (targetH - ringH) * lerpFactor;
+        ringRadius += (targetRadius - ringRadius) * lerpFactor;
+        
+        // Reset velocities to prevent residual spring momentum
+        vx = 0;
+        vy = 0;
+        vW = 0;
+        vH = 0;
+        vRadius = 0;
+      } else {
+        // Spring physics for smooth trailing momentum when not hovering
+        const ax = (targetX - ringX) * stiffness;
+        const ay = (targetY - ringY) * stiffness;
+        vx += ax;
+        vy += ay;
+        vx *= damping;
+        vy *= damping;
+        ringX += vx;
+        ringY += vy;
 
-      // Width and Height physics
-      const aW = (targetW - ringW) * stiffness;
-      const aH = (targetH - ringH) * stiffness;
-      vW += aW;
-      vH += aH;
-      vW *= damping;
-      vH *= damping;
-      ringW += vW;
-      ringH += vH;
+        // Width and Height physics
+        const aW = (targetW - ringW) * stiffness;
+        const aH = (targetH - ringH) * stiffness;
+        vW += aW;
+        vH += aH;
+        vW *= damping;
+        vH *= damping;
+        ringW += vW;
+        ringH += vH;
 
-      // Radius physics
-      const aRadius = (targetRadius - ringRadius) * stiffness;
-      vRadius += aRadius;
-      vRadius *= damping;
-      ringRadius += vRadius;
+        // Radius physics
+        const aRadius = (targetRadius - ringRadius) * stiffness;
+        vRadius += aRadius;
+        vRadius *= damping;
+        ringRadius += vRadius;
+      }
 
       // Lerp for border width and arrow opacity
       borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.25;
