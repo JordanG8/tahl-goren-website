@@ -12,10 +12,30 @@ const parseRadius = (radiusStr: string, elementWidth: number, elementHeight: num
   return isNaN(px) ? 0 : px;
 };
 
+const getPerimeterDistance = (x: number, y: number, w: number, h: number): number => {
+  const dLeft = x;
+  const dRight = w - x;
+  const dTop = y;
+  const dBottom = h - y;
+  const minDist = Math.min(dLeft, dRight, dTop, dBottom);
+
+  if (minDist === dTop) {
+    return x;
+  } else if (minDist === dRight) {
+    return w + y;
+  } else if (minDist === dBottom) {
+    return w + h + (w - x);
+  } else {
+    return w + h + w + (h - y);
+  }
+};
+
 export default function CursorEffect() {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
   const arrowRef = useRef<SVGSVGElement | null>(null);
+  const borderSvgRef = useRef<SVGSVGElement | null>(null);
+  const borderRectRef = useRef<SVGRectElement | null>(null);
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
 
@@ -40,6 +60,8 @@ export default function CursorEffect() {
     let ringRadius = 12;
     let borderWidthVal = 0;
     let arrowOpacityVal = 1;
+    let contactPerimeterDist = 0;
+    let strokeDrawDist = 0;
 
     let vx = 0;
     let vy = 0;
@@ -68,7 +90,7 @@ export default function CursorEffect() {
     };
 
     const animate = () => {
-      // Spring physics for smooth trailing momentum
+      // Spring physics for smooth trailing momentum when not hovering
       const stiffness = 0.15;
       const damping = 0.68;
 
@@ -99,13 +121,13 @@ export default function CursorEffect() {
       }
 
       if (hoveredEl) {
-        // Viscous lerp (slime flow) with zero bounce, settling in ~300ms
-        const lerpFactor = 0.18;
-        ringX += (targetX - ringX) * lerpFactor;
-        ringY += (targetY - ringY) * lerpFactor;
-        ringW += (targetW - ringW) * lerpFactor;
-        ringH += (targetH - ringH) * lerpFactor;
-        ringRadius += (targetRadius - ringRadius) * lerpFactor;
+        // Snap instantly so the border box is fixed at target size and position,
+        // and we only animate the stroke draw progress along the perimeter.
+        ringX = targetX;
+        ringY = targetY;
+        ringW = targetW;
+        ringH = targetH;
+        ringRadius = targetRadius;
         
         // Reset velocities to prevent residual spring momentum
         vx = 0;
@@ -141,6 +163,14 @@ export default function CursorEffect() {
         ringRadius += vRadius;
       }
 
+      // Perimeter P of the current ring
+      const P = 2 * (ringW + ringH);
+
+      // Transition draw progress
+      const targetDrawDist = hoveredEl ? P / 2 : 0;
+      const lerpFactor = 0.18;
+      strokeDrawDist += (targetDrawDist - strokeDrawDist) * lerpFactor;
+
       // Lerp for border width and arrow opacity
       borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.25;
       arrowOpacityVal += (targetArrowOpacity - arrowOpacityVal) * 0.25;
@@ -174,8 +204,22 @@ export default function CursorEffect() {
         ringRef.current.style.width = `${ringW}px`;
         ringRef.current.style.height = `${ringH}px`;
         ringRef.current.style.borderRadius = `${ringRadius}px`;
-        ringRef.current.style.border = `${borderWidthVal}px solid white`;
         ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) rotate(${currentAngle}rad) scale(${stretch}, ${squash})`;
+      }
+
+      if (borderSvgRef.current) {
+        borderSvgRef.current.style.opacity = `${1 - arrowOpacityVal}`;
+      }
+
+      if (borderRectRef.current) {
+        const rxVal = `${ringRadius}px`;
+        borderRectRef.current.style.rx = rxVal;
+        borderRectRef.current.style.ry = rxVal;
+        borderRectRef.current.setAttribute("rx", rxVal);
+        borderRectRef.current.setAttribute("ry", rxVal);
+        borderRectRef.current.setAttribute("pathLength", String(P));
+        borderRectRef.current.style.strokeDasharray = `${2 * strokeDrawDist} ${P - 2 * strokeDrawDist}`;
+        borderRectRef.current.style.strokeDashoffset = `${strokeDrawDist - contactPerimeterDist}`;
       }
 
       if (arrowRef.current) {
@@ -198,12 +242,9 @@ export default function CursorEffect() {
       ) as HTMLElement | null;
       
       if (interactive && interactive !== hoveredEl) {
-        // Start from contact point and zero size, no rotation
-        ringX = mouseX;
-        ringY = mouseY;
-        ringW = 0;
-        ringH = 0;
-        ringRadius = 0;
+        // Reset draw progress and compute contact point.
+        // We do NOT reset ringX, ringY, ringW, ringH here, as they snap instantly in the animation loop.
+        strokeDrawDist = 0;
         currentAngle = 0;
         targetAngle = 0;
         vx = 0;
@@ -211,6 +252,11 @@ export default function CursorEffect() {
         vW = 0;
         vH = 0;
         vRadius = 0;
+
+        const rect = interactive.getBoundingClientRect();
+        const x = Math.max(0, Math.min(rect.width, mouseX - rect.left));
+        const y = Math.max(0, Math.min(rect.height, mouseY - rect.top));
+        contactPerimeterDist = getPerimeterDistance(x, y, rect.width, rect.height);
       }
       
       hoveredEl = interactive;
@@ -264,8 +310,31 @@ export default function CursorEffect() {
       <div
         ref={ringRef}
         className="pointer-events-none fixed top-0 left-0 z-[9998] w-6 h-6 mix-blend-difference opacity-0 transition-opacity duration-300 flex items-center justify-center box-border"
-        style={{ willChange: "transform, width, height, border-radius, border" }}
+        style={{ willChange: "transform, width, height, border-radius" }}
       >
+        {/* Dynamic Border SVG */}
+        <svg
+          ref={borderSvgRef}
+          className="w-full h-full absolute top-0 left-0 text-white pointer-events-none"
+          style={{
+            overflow: "visible",
+            opacity: 0,
+            willChange: "opacity",
+          }}
+        >
+          <rect
+            ref={borderRectRef}
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+        </svg>
+
+        {/* Dynamic Arrow SVG */}
         <svg
           ref={arrowRef}
           viewBox="0 0 24 24"
