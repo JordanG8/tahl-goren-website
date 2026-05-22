@@ -197,6 +197,22 @@ export default function CursorEffect() {
         'a, button, [role="button"], summary, input, textarea, select, label'
       ) as HTMLElement | null;
       
+      if (interactive && interactive !== hoveredEl) {
+        // Start from contact point and zero size, no rotation
+        ringX = mouseX;
+        ringY = mouseY;
+        ringW = 0;
+        ringH = 0;
+        ringRadius = 0;
+        currentAngle = 0;
+        targetAngle = 0;
+        vx = 0;
+        vy = 0;
+        vW = 0;
+        vH = 0;
+        vRadius = 0;
+      }
+      
       hoveredEl = interactive;
       const isInteractive = !!interactive;
       hoveringRef.current = isInteractive;
