@@ -37,10 +37,31 @@ const HOVER_PADDING = 6; // px padding on each side to prevent feeling claustrop
 // any other element you also want wrapped.
 const WRAP_SELECTOR = 'button, [role="button"], [data-cursor-wrap]';
 
+// House cursor geometry. viewBox is 24x24; the icon is rendered at ICON_PX.
+const ICON_PX = 32;
+const SCALE = ICON_PX / 24;
+// Chimney tip in viewBox units → screen offset from the cursor (icon is centered).
+const CHIMNEY_TIP_VB = { x: 16.5, y: 3 };
+const TIP_OFFSET_X = CHIMNEY_TIP_VB.x * SCALE - ICON_PX / 2;
+const TIP_OFFSET_Y = CHIMNEY_TIP_VB.y * SCALE - ICON_PX / 2;
+
+const PARTICLE_COUNT = 16;
+
+type Particle = {
+  active: boolean;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  age: number;
+  life: number;
+};
+
 export default function CursorEffect() {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
   const borderRectRef = useRef<SVGRectElement | null>(null);
+  const particleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -64,6 +85,12 @@ export default function CursorEffect() {
     let raf = 0;
     let hoveredEl: HTMLElement | null = null;
 
+    const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, () => ({
+      active: false, x: 0, y: 0, vx: 0, vy: 0, age: 0, life: 0,
+    }));
+    let lastEmit = 0;
+    let lastTime = performance.now();
+
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -74,12 +101,15 @@ export default function CursorEffect() {
     };
 
     const animate = () => {
+      const now = performance.now();
+      const dt = Math.min(now - lastTime, 50);
+      lastTime = now;
+
       let targetBorderOpacity = 0;
 
       if (hoveredEl) {
         const rect = hoveredEl.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
-          // Snap the border box to the button; only the stroke draw is animated.
           ringX = rect.left + rect.width / 2;
           ringY = rect.top + rect.height / 2;
           ringW = rect.width + 2 * HOVER_PADDING;
@@ -92,9 +122,8 @@ export default function CursorEffect() {
 
       const P = 2 * (ringW + ringH);
 
-      // Draw the border with a piecewise timing curve: 33% in 50ms, the rest in 200ms.
       if (hoveredEl) {
-        const elapsed = performance.now() - hoverStartTime;
+        const elapsed = now - hoverStartTime;
         let progress = 0;
         if (elapsed <= 50) {
           progress = (elapsed / 50) * 0.33;
@@ -131,6 +160,43 @@ export default function CursorEffect() {
 
       if (dotRef.current && hasMoved) {
         dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      }
+
+      // Chimney smoke — only while hovering a button.
+      if (hoveredEl && hasMoved && now - lastEmit > 90) {
+        lastEmit = now;
+        const p = particles.find((pp) => !pp.active);
+        if (p) {
+          p.active = true;
+          p.x = mouseX + TIP_OFFSET_X + (Math.random() * 2 - 1);
+          p.y = mouseY + TIP_OFFSET_Y;
+          p.vx = Math.random() * 0.03 - 0.015;
+          p.vy = -(0.04 + Math.random() * 0.03);
+          p.age = 0;
+          p.life = 700 + Math.random() * 450;
+        }
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const el = particleRefs.current[i];
+        if (!el) continue;
+        if (!p.active) {
+          el.style.opacity = "0";
+          continue;
+        }
+        p.age += dt;
+        if (p.age >= p.life) {
+          p.active = false;
+          el.style.opacity = "0";
+          continue;
+        }
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vx *= 0.99;
+        const t = p.age / p.life;
+        el.style.opacity = `${(1 - t) * 0.85}`;
+        el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) translate(-50%, -50%) scale(${0.5 + t * 1.6})`;
       }
 
       raf = requestAnimationFrame(animate);
@@ -184,21 +250,40 @@ export default function CursorEffect() {
 
   if (!enabled) return null;
 
-  // mix-blend-mode: difference keeps the white dot/border always contrasting
-  // against whatever is behind it — light or dark — in an elegant way.
+  // mix-blend-mode: difference keeps the white icon/puffs always contrasting
+  // against whatever is behind them — light or dark — in an elegant way.
   return (
     <>
-      {/* Ultra-abstract home glyph */}
+      {/* Ultra-abstract home glyph: silhouette + cut-out window + chimney */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-[18px] h-[18px] opacity-0 transition-opacity duration-300"
-        style={{ willChange: "transform", mixBlendMode: "difference" }}
+        className="pointer-events-none fixed top-0 left-0 z-[9998] opacity-0 transition-opacity duration-300"
+        style={{ width: ICON_PX, height: ICON_PX, willChange: "transform", mixBlendMode: "difference" }}
       >
-        <svg viewBox="0 0 24 24" fill="white" className="w-full h-full block" aria-hidden="true">
-          {/* house silhouette: roof apex + square body */}
-          <path d="M12 3 21 11 21 21 3 21 3 11Z" />
+        <svg viewBox="0 0 24 24" className="w-full h-full block" aria-hidden="true">
+          {/* chimney */}
+          <rect x="15.5" y="3" width="2" height="5" fill="white" />
+          {/* house body + roof, with the window as an even-odd cut-out */}
+          <path
+            fillRule="evenodd"
+            fill="white"
+            d="M12 3 L21 11 L21 21 L3 21 L3 11 Z M10.5 14 L13.5 14 L13.5 17.5 L10.5 17.5 Z"
+          />
         </svg>
       </div>
+
+      {/* Chimney smoke particles */}
+      {Array.from({ length: PARTICLE_COUNT }).map((_, i) => (
+        <div
+          key={i}
+          ref={(el) => {
+            particleRefs.current[i] = el;
+          }}
+          className="pointer-events-none fixed top-0 left-0 z-[9998] w-1 h-1 rounded-full bg-white opacity-0"
+          style={{ willChange: "transform, opacity", mixBlendMode: "difference" }}
+        />
+      ))}
+
       {/* Wrap-around border (buttons only) */}
       <div
         ref={ringRef}
