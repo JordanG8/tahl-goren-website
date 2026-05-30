@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingBar from "@/components/FloatingBar";
 import LoadingScreen from "@/components/LoadingScreen";
-import CursorEffect from "@/components/CursorEffect";
 import "./globals.css";
 import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -88,7 +87,6 @@ export default async function RootLayout({
       <body className="bg-background text-on-surface font-body pb-[10vh] sm:pb-0">
         <PostHogProvider>
           <LoadingScreen />
-          <CursorEffect />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <FloatingBar />

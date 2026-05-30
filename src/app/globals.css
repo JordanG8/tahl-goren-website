@@ -45,11 +45,6 @@ html {
   animation: loadingBar 1.9s ease-out forwards;
 }
 
-@media (pointer: fine) {
-  html, body { cursor: none; }
-  a, button, [role="button"], summary, input, textarea, select, label { cursor: none; }
-}
-
 .blueprint-grid {
   background-image:
     linear-gradient(to right, rgba(59, 85, 102, 0.06) 1px, transparent 1px),
