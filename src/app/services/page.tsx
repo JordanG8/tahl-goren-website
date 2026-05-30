@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { siteData } from "@/data/siteData";
+import { areas } from "@/data/areasContent";
 
 export const metadata: Metadata = {
   title: "שירותים | טל גורן אדריכלות",
@@ -86,8 +87,31 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Service areas */}
       <section className="py-20 px-8 bg-surface">
+        <div className="max-w-6xl mx-auto text-right">
+          <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
+            Service Areas
+          </span>
+          <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4 mb-8">
+            אזורי שירות
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {areas.map((area) => (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="border border-outline/20 px-5 py-3 font-headline font-bold text-sm text-primary hover:bg-surface-container-highest hover:text-secondary transition-colors"
+              >
+                {area.h1}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 px-8 bg-surface-container-low">
         <div className="max-w-5xl mx-auto p-12 bg-surface-container text-right border border-outline/10">
           <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight leading-tight text-primary mb-6">
             רוצים להתחיל לתכנן את הבית שלכם?

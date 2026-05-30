@@ -1,5 +1,6 @@
 import { projects as staticProjects } from '@/data/projectsContent'
 import { articles as staticArticles } from '@/data/articlesContent'
+import { areas as staticAreas } from '@/data/areasContent'
 
 const getBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL
@@ -48,7 +49,15 @@ export async function GET() {
     priority: 0.8,
   }))
 
-  const allRoutes = [...staticRoutes, ...projectRoutes, ...articleRoutes]
+  // 4. Per-area local landing pages
+  const areaRoutes = staticAreas.map((a) => ({
+    url: `${BASE_URL}/areas/${a.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.85,
+  }))
+
+  const allRoutes = [...staticRoutes, ...projectRoutes, ...articleRoutes, ...areaRoutes]
 
   // Construct XML
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>

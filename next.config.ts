@@ -27,12 +27,12 @@ const nextConfig: NextConfig = {
       { source: "/guid/%D7%A6%D7%A7-%D7%9C%D7%99%D7%A1%D7%98-%D7%9C%D7%AA%D7%9B%D7%A0%D7%95%D7%9F-%D7%9E%D7%98%D7%91%D7%97", destination: "/articles", permanent: true },
       { source: "/guid/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%9C%D7%94%D7%92%D7%A9%D7%99%D7%9D-%D7%91%D7%99%D7%AA-%D7%95%D7%9C%D7%91%D7%A0%D7%95%D7%AA-%D7%97%D7%9C%D7%95%D7%9D", destination: "/articles/first-meeting-prep", permanent: true },
       { source: "/guid/%D7%A9%D7%9C%D7%91%D7%99-%D7%94%D7%AA%D7%9B%D7%A0%D7%95%D7%9F-%D7%95%D7%94%D7%91%D7%A0%D7%99%D7%94-%D7%A2%D7%9C-%D7%A6%D7%99%D7%A8-%D7%94%D7%96%D7%9E%D7%9F", destination: "/articles/building-timeline", permanent: true },
-      // Local landing pages → services
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%99%D7%9D-%D7%A4%D7%A8%D7%93%D7%A1-%D7%97%D7%A0%D7%94-%D7%9B%D7%A8%D7%9B%D7%95%D7%A8", destination: "/services", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%97%D7%95%D7%A3-%D7%94%D7%9B%D7%A8%D7%9E%D7%9C", destination: "/services", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%91%D7%A2%D7%AA%D7%9C%D7%99%D7%AA", destination: "/services", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%A2%D7%9E%D7%A7-%D7%97%D7%A4%D7%A8", destination: "/services", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%96%D7%9B%D7%A8%D7%95%D7%9F-%D7%99%D7%A2%D7%A7%D7%91%D6%BF", destination: "/services", permanent: true },
+      // Local landing pages → dedicated per-area pages (1:1, preserves local SEO intent)
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%99%D7%9D-%D7%A4%D7%A8%D7%93%D7%A1-%D7%97%D7%A0%D7%94-%D7%9B%D7%A8%D7%9B%D7%95%D7%A8", destination: "/areas/pardes-hanna-karkur", permanent: true },
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%97%D7%95%D7%A3-%D7%94%D7%9B%D7%A8%D7%9E%D7%9C", destination: "/areas/hof-hakarmel", permanent: true },
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%91%D7%A2%D7%AA%D7%9C%D7%99%D7%AA", destination: "/areas/atlit", permanent: true },
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%A2%D7%9E%D7%A7-%D7%97%D7%A4%D7%A8", destination: "/areas/emek-hefer", permanent: true },
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C-%D7%96%D7%9B%D7%A8%D7%95%D7%9F-%D7%99%D7%A2%D7%A7%D7%91%D6%BF", destination: "/areas/zichron-yaakov", permanent: true },
       // Site structure
       { source: "/%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98", destination: "/projects", permanent: true },
       { source: "/%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D", destination: "/articles", permanent: true },
