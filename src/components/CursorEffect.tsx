@@ -188,12 +188,17 @@ export default function CursorEffect() {
   // against whatever is behind it — light or dark — in an elegant way.
   return (
     <>
-      {/* Precision center dot */}
+      {/* Ultra-abstract home glyph */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-3 h-3 rounded-full bg-white opacity-0 transition-opacity duration-300"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-[18px] h-[18px] opacity-0 transition-opacity duration-300"
         style={{ willChange: "transform", mixBlendMode: "difference" }}
-      />
+      >
+        <svg viewBox="0 0 24 24" fill="white" className="w-full h-full block" aria-hidden="true">
+          {/* house silhouette: roof apex + square body */}
+          <path d="M12 3 21 11 21 21 3 21 3 11Z" />
+        </svg>
+      </div>
       {/* Wrap-around border (buttons only) */}
       <div
         ref={ringRef}
