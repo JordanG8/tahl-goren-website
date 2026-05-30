@@ -107,6 +107,13 @@ export default function ServicesPage() {
               </Link>
             ))}
           </div>
+          <Link
+            href="/areas"
+            className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors mt-8"
+          >
+            למפת אזורי השירות
+            <span className="material-symbols-outlined text-base">arrow_back</span>
+          </Link>
         </div>
       </section>
 
