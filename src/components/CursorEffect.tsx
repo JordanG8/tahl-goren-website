@@ -41,7 +41,7 @@ const WRAP_SELECTOR = 'button, [role="button"], [data-cursor-wrap]';
 const ICON_PX = 32;
 const SCALE = ICON_PX / 24;
 // Chimney tip in viewBox units → screen offset from the cursor (icon is centered).
-const CHIMNEY_TIP_VB = { x: 16.5, y: 3 };
+const CHIMNEY_TIP_VB = { x: 15.9, y: 4.5 };
 const TIP_OFFSET_X = CHIMNEY_TIP_VB.x * SCALE - ICON_PX / 2;
 const TIP_OFFSET_Y = CHIMNEY_TIP_VB.y * SCALE - ICON_PX / 2;
 
@@ -261,13 +261,13 @@ export default function CursorEffect() {
         style={{ width: ICON_PX, height: ICON_PX, willChange: "transform", mixBlendMode: "difference" }}
       >
         <svg viewBox="0 0 24 24" className="w-full h-full block" aria-hidden="true">
-          {/* chimney */}
-          <rect x="15.5" y="3" width="2" height="5" fill="white" />
-          {/* house body + roof, with the window as an even-odd cut-out */}
+          {/* chimney (sits on the right roof slope, just below the apex) */}
+          <rect x="15" y="4.5" width="1.8" height="4" fill="white" />
+          {/* house body + roof, with a centered window as an even-odd cut-out */}
           <path
             fillRule="evenodd"
             fill="white"
-            d="M12 3 L21 11 L21 21 L3 21 L3 11 Z M10.5 14 L13.5 14 L13.5 17.5 L10.5 17.5 Z"
+            d="M12 3.5 L20 11 L20 20 L4 20 L4 11 Z M10 13.5 L14 13.5 L14 17.5 L10 17.5 Z"
           />
         </svg>
       </div>
