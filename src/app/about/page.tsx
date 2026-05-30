@@ -103,7 +103,6 @@ export default function About() {
 
             {/* Story */}
             <div className="lg:col-span-7 space-y-8">
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">נעים להכיר</span>
               <h2 className="font-headline font-black text-3xl md:text-4xl text-primary leading-tight">
                 נעים להכיר, אני טל גורן
               </h2>

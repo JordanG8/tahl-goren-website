@@ -32,20 +32,16 @@ const getPerimeterDistance = (x: number, y: number, w: number, h: number): numbe
 
 const HOVER_PADDING = 6; // px padding on each side to prevent feeling claustrophobic
 
+// The wrap-around border only appears for explicit buttons — not for every
+// clickable element (links, inputs, labels, etc.). Add `data-cursor-wrap` to
+// any other element you also want wrapped.
+const WRAP_SELECTOR = 'button, [role="button"], [data-cursor-wrap]';
+
 export default function CursorEffect() {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
-  const arrowRef = useRef<SVGSVGElement | null>(null);
-  const borderSvgRef = useRef<SVGSVGElement | null>(null);
   const borderRectRef = useRef<SVGRectElement | null>(null);
   const [enabled, setEnabled] = useState(false);
-  const [hovering, setHovering] = useState(false);
-
-  const hoveringRef = useRef(false);
-
-  useEffect(() => {
-    hoveringRef.current = hovering;
-  }, [hovering]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -60,23 +56,10 @@ export default function CursorEffect() {
     let ringW = 24;
     let ringH = 24;
     let ringRadius = 12;
-    let borderWidthVal = 0;
-    let arrowOpacityVal = 1;
+    let borderOpacityVal = 0;
     let contactPerimeterDist = 0;
     let strokeDrawDist = 0;
     let hoverStartTime = 0;
-
-    let vx = 0;
-    let vy = 0;
-    let vW = 0;
-    let vH = 0;
-    let vRadius = 0;
-
-    let currentAngle = 0;
-    let targetAngle = 0;
-    let stretch = 1;
-    let squash = 1;
-    let dotScale = 1;
     let hasMoved = false;
     let raf = 0;
     let hoveredEl: HTMLElement | null = null;
@@ -84,93 +67,32 @@ export default function CursorEffect() {
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
       if (!hasMoved) {
         hasMoved = true;
         if (dotRef.current) dotRef.current.style.opacity = "1";
-        if (ringRef.current) ringRef.current.style.opacity = hoveringRef.current ? "0.95" : "0.65";
       }
     };
 
     const animate = () => {
-      // Spring physics for smooth trailing momentum when not hovering
-      const stiffness = 0.15;
-      const damping = 0.68;
-
-      let targetX = mouseX;
-      let targetY = mouseY;
-      let targetW = 24;
-      let targetH = 24;
-      let targetRadius = 12;
-      let targetBorderWidth = 0;
-      let targetArrowOpacity = 1;
-      let targetAngle = 0;
+      let targetBorderOpacity = 0;
 
       if (hoveredEl) {
         const rect = hoveredEl.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
-          targetX = rect.left + rect.width / 2;
-          targetY = rect.top + rect.height / 2;
-          targetW = rect.width + 2 * HOVER_PADDING;
-          targetH = rect.height + 2 * HOVER_PADDING;
-          
+          // Snap the border box to the button; only the stroke draw is animated.
+          ringX = rect.left + rect.width / 2;
+          ringY = rect.top + rect.height / 2;
+          ringW = rect.width + 2 * HOVER_PADDING;
+          ringH = rect.height + 2 * HOVER_PADDING;
           const style = window.getComputedStyle(hoveredEl);
-          const baseRadius = parseRadius(style.borderRadius, rect.width, rect.height);
-          targetRadius = baseRadius + HOVER_PADDING;
-          targetBorderWidth = 1.5;
-          targetArrowOpacity = 0;
-          targetAngle = 0;
+          ringRadius = parseRadius(style.borderRadius, rect.width, rect.height) + HOVER_PADDING;
+          targetBorderOpacity = 1;
         }
       }
 
-      if (hoveredEl) {
-        // Snap instantly so the border box is fixed at target size and position,
-        // and we only animate the stroke draw progress along the perimeter.
-        ringX = targetX;
-        ringY = targetY;
-        ringW = targetW;
-        ringH = targetH;
-        ringRadius = targetRadius;
-        
-        // Reset velocities to prevent residual spring momentum
-        vx = 0;
-        vy = 0;
-        vW = 0;
-        vH = 0;
-        vRadius = 0;
-      } else {
-        // Spring physics for smooth trailing momentum when not hovering
-        const ax = (targetX - ringX) * stiffness;
-        const ay = (targetY - ringY) * stiffness;
-        vx += ax;
-        vy += ay;
-        vx *= damping;
-        vy *= damping;
-        ringX += vx;
-        ringY += vy;
-
-        // Width and Height physics
-        const aW = (targetW - ringW) * stiffness;
-        const aH = (targetH - ringH) * stiffness;
-        vW += aW;
-        vH += aH;
-        vW *= damping;
-        vH *= damping;
-        ringW += vW;
-        ringH += vH;
-
-        // Radius physics
-        const aRadius = (targetRadius - ringRadius) * stiffness;
-        vRadius += aRadius;
-        vRadius *= damping;
-        ringRadius += vRadius;
-      }
-
-      // Perimeter P of the current ring
       const P = 2 * (ringW + ringH);
 
-      // Transition draw progress using piecewise linear timing:
-      // 33% in 50ms, then the remaining 67% in 200ms (total 250ms)
+      // Draw the border with a piecewise timing curve: 33% in 50ms, the rest in 200ms.
       if (hoveredEl) {
         const elapsed = performance.now() - hoverStartTime;
         let progress = 0;
@@ -186,44 +108,14 @@ export default function CursorEffect() {
         strokeDrawDist += (0 - strokeDrawDist) * 0.18;
       }
 
-      // Lerp for border width and arrow opacity
-      borderWidthVal += (targetBorderWidth - borderWidthVal) * 0.13;
-      arrowOpacityVal += (targetArrowOpacity - arrowOpacityVal) * 0.13;
-
-      const speed = Math.sqrt(vx * vx + vy * vy);
-
-      if (!hoveredEl) {
-        if (speed > 0.5) {
-          targetAngle = Math.atan2(vy, vx);
-        }
-        let angleDiff = targetAngle - currentAngle;
-        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-        currentAngle += angleDiff * 0.09;
-      } else {
-        let angleDiff = -currentAngle;
-        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-        currentAngle += angleDiff * 0.09;
-      }
-
-      const targetStretch = hoveredEl ? 1 : (1 + Math.min(speed * 0.035, 0.4));
-      const targetSquash = 1 / targetStretch;
-      stretch += (targetStretch - stretch) * 0.08;
-      squash += (targetSquash - squash) * 0.08;
-
-      const targetDotScale = hoveredEl ? 0.3 : 1.0;
-      dotScale += (targetDotScale - dotScale) * 0.08;
+      borderOpacityVal += (targetBorderOpacity - borderOpacityVal) * 0.13;
 
       if (ringRef.current && hasMoved) {
         ringRef.current.style.width = `${ringW}px`;
         ringRef.current.style.height = `${ringH}px`;
         ringRef.current.style.borderRadius = `${ringRadius}px`;
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) rotate(${currentAngle}rad) scale(${stretch}, ${squash})`;
-      }
-
-      if (borderSvgRef.current) {
-        borderSvgRef.current.style.opacity = `${1 - arrowOpacityVal}`;
+        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        ringRef.current.style.opacity = `${borderOpacityVal}`;
       }
 
       if (borderRectRef.current) {
@@ -237,13 +129,8 @@ export default function CursorEffect() {
         borderRectRef.current.style.strokeDashoffset = `${strokeDrawDist - contactPerimeterDist}`;
       }
 
-      if (arrowRef.current) {
-        arrowRef.current.style.opacity = `${arrowOpacityVal}`;
-        arrowRef.current.style.transform = `scale(${arrowOpacityVal})`;
-      }
-
       if (dotRef.current && hasMoved) {
-        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${dotScale})`;
+        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
       }
 
       raf = requestAnimationFrame(animate);
@@ -252,24 +139,13 @@ export default function CursorEffect() {
     const onOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      const interactive = target.closest(
-        'a, button, [role="button"], summary, input, textarea, select, label'
-      ) as HTMLElement | null;
-      
-      if (interactive && interactive !== hoveredEl) {
-        // Reset draw progress and compute contact point.
-        // We do NOT reset ringX, ringY, ringW, ringH here, as they snap instantly in the animation loop.
+      const wrappable = target.closest(WRAP_SELECTOR) as HTMLElement | null;
+
+      if (wrappable && wrappable !== hoveredEl) {
         strokeDrawDist = 0;
-        currentAngle = 0;
-        targetAngle = 0;
-        vx = 0;
-        vy = 0;
-        vW = 0;
-        vH = 0;
-        vRadius = 0;
         hoverStartTime = performance.now();
 
-        const rect = interactive.getBoundingClientRect();
+        const rect = wrappable.getBoundingClientRect();
         const wExt = rect.width + 2 * HOVER_PADDING;
         const hExt = rect.height + 2 * HOVER_PADDING;
         const cx = rect.left + rect.width / 2;
@@ -278,15 +154,8 @@ export default function CursorEffect() {
         const y = Math.max(0, Math.min(hExt, mouseY - cy + hExt / 2));
         contactPerimeterDist = getPerimeterDistance(x, y, wExt, hExt);
       }
-      
-      hoveredEl = interactive;
-      const isInteractive = !!interactive;
-      hoveringRef.current = isInteractive;
-      setHovering(isInteractive);
-      
-      if (hasMoved && ringRef.current) {
-        ringRef.current.style.opacity = isInteractive ? "0.95" : "0.65";
-      }
+
+      hoveredEl = wrappable;
     };
 
     const onMouseLeave = () => {
@@ -295,10 +164,7 @@ export default function CursorEffect() {
     };
 
     const onMouseEnter = () => {
-      if (hasMoved) {
-        if (dotRef.current) dotRef.current.style.opacity = "1";
-        if (ringRef.current) ringRef.current.style.opacity = hoveringRef.current ? "0.95" : "0.65";
-      }
+      if (hasMoved && dotRef.current) dotRef.current.style.opacity = "1";
     };
 
     window.addEventListener("mousemove", onMove);
@@ -318,29 +184,25 @@ export default function CursorEffect() {
 
   if (!enabled) return null;
 
+  // mix-blend-mode: difference keeps the white dot/border always contrasting
+  // against whatever is behind it — light or dark — in an elegant way.
   return (
     <>
       {/* Precision center dot */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-1.5 h-1.5 rounded-full bg-primary opacity-0 transition-opacity duration-300"
-        style={{ willChange: "transform" }}
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-1.5 h-1.5 rounded-full bg-white opacity-0 transition-opacity duration-300"
+        style={{ willChange: "transform", mixBlendMode: "difference" }}
       />
-      {/* Momentum-based trailing arrow */}
+      {/* Wrap-around border (buttons only) */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-6 h-6 opacity-0 transition-opacity duration-300 flex items-center justify-center box-border"
-        style={{ willChange: "transform, width, height, border-radius" }}
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-6 h-6 opacity-0 box-border"
+        style={{ willChange: "transform, width, height, border-radius", mixBlendMode: "difference" }}
       >
-        {/* Dynamic Border SVG */}
         <svg
-          ref={borderSvgRef}
-          className="w-full h-full absolute top-0 left-0 text-primary pointer-events-none"
-          style={{
-            overflow: "visible",
-            opacity: 0,
-            willChange: "opacity",
-          }}
+          className="w-full h-full absolute top-0 left-0 text-white pointer-events-none"
+          style={{ overflow: "visible" }}
         >
           <rect
             ref={borderRectRef}
@@ -352,18 +214,6 @@ export default function CursorEffect() {
             stroke="currentColor"
             strokeWidth="1.5"
           />
-        </svg>
-
-        {/* Dynamic Arrow SVG */}
-        <svg
-          ref={arrowRef}
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-6 h-6 text-primary absolute"
-          style={{ willChange: "transform, opacity" }}
-        >
-          {/* Sleek aerodynamic arrow pointing to the right (0 rad) */}
-          <path d="M21 12L5 5l3 7-3 7z" />
         </svg>
       </div>
     </>
