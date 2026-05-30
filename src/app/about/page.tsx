@@ -12,6 +12,15 @@ const introParagraphs = [
   `אני כאן כדי להגיד לכם: אתם לא צריכים לעבור את זה לבד. מתוך ניסיון של מעל 25 שנה, שבהן תכננתי למעלה מ-100 בתים פרטיים, פיתחתי גישה ששמה את השקט הנפשי שלכם במרכז.`,
 ];
 
+const officeHeading = `המשרד שלי: התמחות אחת, מעמיקה ובלעדית`;
+const officeIntro = `בניגוד למשרדי אדריכלות גדולים שעוסקים במגדלים או מבני ציבור, המשרד שלי בגבעת עדה מתמחה אך ורק בתכנון בתים פרטיים ללקוחות פרטיים.`;
+const officeMeaningLead = `המשמעות עבורכם היא דרמטית:`;
+const officeBullets = [
+  { title: `תשומת לב אישית`, text: `אתם לא "עוד פרויקט" במערכת, אתם מרכז העבודה שלי.` },
+  { title: `מומחיות ללא פשרות`, text: `כל הידע, הכלים והניסיון שלי מוקדשים להבנת הצרכים הייחודיים של משפחות בונות.` },
+  { title: `היכרות מקומית עמוקה`, text: `אני חיה ונושמת את האזור שבין נתניה לחיפה. אני מכירה מקרוב את ועדות התכנון והאתגרים הספציפיים בשרון הצפוני, יישובי המועצה האזורית מנשה, חוף הכרמל, בנימינה, פרדס חנה-כרכור והסביבה.` },
+];
+
 const flexibleHeading = `למה חשוב לי שהבית שלכם יהיה "גמיש" ויעיל?`;
 
 const flexibleParagraphs = [
@@ -132,8 +141,31 @@ export default function About() {
       </section>
 
 
+      {/* ======== OFFICE FOCUS ======== */}
+      <section className="py-24 md:py-32 px-8 bg-surface-container-low">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl">
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">המשרד שלי</span>
+            <h2 className="font-headline font-black text-3xl md:text-4xl text-primary leading-tight mt-4">
+              {officeHeading}
+            </h2>
+            <p className="font-body text-lg text-secondary leading-relaxed mt-6">{officeIntro}</p>
+            <p className="font-body text-lg text-primary font-bold leading-relaxed mt-6">{officeMeaningLead}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+            {officeBullets.map((b, i) => (
+              <div key={i} className="bg-surface p-8 border border-outline/10">
+                <h3 className="font-headline font-bold text-lg text-primary mb-3">{b.title}</h3>
+                <p className="font-body text-secondary text-base leading-relaxed">{b.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       {/* ======== PHILOSOPHY ======== */}
-      <section className="py-24 md:py-32 px-8 bg-surface-container-low overflow-hidden">
+      <section className="py-24 md:py-32 px-8 bg-surface overflow-hidden">
         <div className="max-w-7xl mx-auto">
 
           <div className="max-w-3xl">
@@ -152,7 +184,7 @@ export default function About() {
 
 
       {/* ======== PULL QUOTE ======== */}
-      <section className="py-24 lg:py-32 px-8 bg-surface">
+      <section className="py-24 lg:py-32 px-8 bg-surface-container-low">
         <div className="max-w-5xl mx-auto">
           <span className="font-headline text-8xl text-surface-container-highest leading-none select-none block">&ldquo;</span>
           <blockquote className="font-headline font-black text-3xl md:text-4xl lg:text-5xl text-primary leading-tight tracking-tight -mt-6">
