@@ -191,7 +191,7 @@ export default function CursorEffect() {
       {/* Precision center dot */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] w-1.5 h-1.5 rounded-full bg-white opacity-0 transition-opacity duration-300"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] w-3 h-3 rounded-full bg-white opacity-0 transition-opacity duration-300"
         style={{ willChange: "transform", mixBlendMode: "difference" }}
       />
       {/* Wrap-around border (buttons only) */}
