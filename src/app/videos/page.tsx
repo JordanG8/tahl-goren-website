@@ -170,7 +170,7 @@ export default async function Videos() {
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
               <div className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
                 <img
-                  src="https://talgoren.co.il/wp-content/uploads/2021/01/צילום-עיצוב-פנים.jpg"
+                  src="/images/projects/v-zichron/optimized/%D7%A1%D7%9C%D7%95%D7%9F%20%D7%91%D7%91%D7%99%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99.webp"
                   alt="טל גורן אדריכלית - פייסבוק"
                   className="w-full h-full object-cover img-grayscale"
                 />

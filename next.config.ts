@@ -1,15 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'talgoren.co.il',
-        pathname: '/wp-content/uploads/**',
-      },
-    ],
-  },
   async redirects() {
     return [
       // Articles (old Hebrew slugs → new)

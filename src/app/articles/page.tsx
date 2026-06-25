@@ -106,7 +106,7 @@ export default async function Articles() {
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
               <div className="md:col-span-5 aspect-video md:aspect-auto md:h-full overflow-hidden">
                 <img
-                  src="https://talgoren.co.il/wp-content/uploads/2020/03/כמה-עולה-לבנות-בית-ו-אדריכלות.jpg"
+                  src="/images/blog/architecture-interior-design-costs.png"
                   alt="כתבות פייסבוק"
                   className="w-full h-full object-cover img-grayscale"
                 />
