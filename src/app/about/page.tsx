@@ -163,8 +163,89 @@ export default function About() {
       </section>
 
 
+      {/* ======== OFFICE TEAM ======== */}
+      <section className="py-24 md:py-32 px-8 bg-surface border-t border-outline/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mb-16">
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">האנשים מאחורי התכנון</span>
+            <h2 className="font-headline font-black text-3xl md:text-4xl text-primary leading-tight mt-4">
+              צוות המשרד
+            </h2>
+            <p className="font-body text-lg text-secondary leading-relaxed mt-6">
+              במשרד שלנו תיהנו מליווי מקצועי, יחס אישי וזמינות מלאה. הצוות המקצועי מורכב מהנדסאיות אדריכלות מוכשרות ומנוסות, השותפות לחזון של תכנון בתים פרקטיים, יעילים ומרשימים.
+            </p>
+          </div>
+
+          {/* Wide Team Banner */}
+          <div className="mb-20 overflow-hidden relative group">
+            <div className="aspect-[21/9] w-full bg-surface-container-low overflow-hidden">
+              <img
+                src="/images/team/tal-goren-and-team.jpg"
+                alt="צוות המשרד - טל גורן"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-[1.03]"
+              />
+            </div>
+            <div className="absolute bottom-6 right-6 bg-primary/95 text-white px-6 py-3 font-headline font-bold text-sm tracking-wide">
+              טל גורן וצוות המשרד
+            </div>
+          </div>
+
+          {/* 3-Column Team Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Member 1: Or Zarfati */}
+            <div className="flex flex-col group">
+              <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
+                <img
+                  src="/images/team/or-zarfati.jpg"
+                  alt="אור צרפתי"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="font-headline font-black text-xl text-primary mb-1">אור צרפתי</h3>
+              <p className="font-label text-xs tracking-wider text-secondary mb-3">הנדסאית אדריכלות ועיצוב פנים</p>
+              <p className="font-body text-secondary text-sm leading-relaxed">
+                בוגרת המכללה הטכנולוגית רופין. מתמחה בתכנון פונקציונלי מוקפד, שרטוט תוכניות עבודה מפורטות וליווי שלבים שונים ברישוי.
+              </p>
+            </div>
+
+            {/* Member 2: Yasmin Ichilov */}
+            <div className="flex flex-col group">
+              <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
+                <img
+                  src="/images/team/yasmin-ichilov.jpg"
+                  alt="יסמין איכילוב"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="font-headline font-black text-xl text-primary mb-1">יסמין איכילוב</h3>
+              <p className="font-label text-xs tracking-wider text-secondary mb-3">הנדסאית אדריכלות ועיצוב פנים</p>
+              <p className="font-body text-secondary text-sm leading-relaxed">
+                בוגרת המכללה הטכנולוגית רופין. מביאה איתה חשיבה עיצובית מרעננת ויצירתית, הדמיות תלת-ממדיות מתקדמות וסיוע בגיבוש סקיצות מותאמות אישית.
+              </p>
+            </div>
+
+            {/* Member 3: Hagit Koren */}
+            <div className="flex flex-col group">
+              <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
+                <img
+                  src="/images/team/hagit-koren.jpg"
+                  alt="חגית קורן"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="font-headline font-black text-xl text-primary mb-1">חגית קורן</h3>
+              <p className="font-label text-xs tracking-wider text-secondary mb-3">הנדסאית אדריכלות ועיצוב פנים</p>
+              <p className="font-body text-secondary text-sm leading-relaxed">
+                בוגרת בית הספר הארצי להנדסאים בטכניון. בעלת עין חדה לפרטים טכניים, ניהול מפרטי ביצוע מורכבים ותיאום מול מהנדסים ויועצי הפרויקט השונים.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* ======== PHILOSOPHY ======== */}
-      <section className="py-24 md:py-32 px-8 bg-surface overflow-hidden">
+      <section className="py-24 md:py-32 px-8 bg-surface overflow-hidden border-t border-outline/10">
         <div className="max-w-7xl mx-auto">
 
           <div className="max-w-3xl">

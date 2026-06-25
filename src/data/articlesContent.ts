@@ -1,3 +1,7 @@
+import { roomArticles } from "./roomArticles";
+import { constructionArticles } from "./constructionArticles";
+import { qaArticles } from "./qaArticles";
+
 export type ArticleSection = {
   heading: string;
   body: string[];
@@ -25,9 +29,10 @@ export type Article = {
   faq?: ArticleFaq[];
   related?: string[];
   legacyPaths?: string[];
+  category?: "guides" | "rooms" | "construction";
 };
 
-export const articles: Article[] = [
+const baseArticles: Article[] = [
   {
     "slug": "why-architect",
     "title": "מדוע צריך אדריכלית כשבונים בית חדש?",
@@ -1369,6 +1374,13 @@ export const articles: Article[] = [
     "faq": [],
     "related": []
   }
+];
+
+export const articles: Article[] = [
+  ...baseArticles.map(a => ({ ...a, category: a.category || "guides" as const })),
+  ...roomArticles.map(a => ({ ...a, category: "rooms" as const })),
+  ...constructionArticles.map(a => ({ ...a, category: "construction" as const })),
+  ...qaArticles.map(a => ({ ...a, category: "guides" as const }))
 ];
 
 export const articlesBySlug = articles.reduce((acc, article) => {

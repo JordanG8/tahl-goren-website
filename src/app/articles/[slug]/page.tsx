@@ -110,6 +110,14 @@ export default async function ArticlePage(
     .map((s: string) => articlesBySlug[s])
     .filter(Boolean);
 
+  const isSeries = article.category === "rooms" || article.category === "construction";
+  const seriesArticles = isSeries ? articles.filter(a => a.category === article.category) : [];
+  const currentIndex = isSeries ? seriesArticles.findIndex(a => a.slug === article.slug) : -1;
+  const totalInSeries = seriesArticles.length;
+
+  const prevArticle = currentIndex > 0 ? seriesArticles[currentIndex - 1] : null;
+  const nextArticle = currentIndex < totalInSeries - 1 ? seriesArticles[currentIndex + 1] : null;
+
   return (
     <>
       <ArticleJsonLd article={article} />
@@ -167,6 +175,34 @@ export default async function ArticlePage(
             {article.excerpt}
           </p>
           <div className="w-12 h-[2px] bg-secondary mb-12 mr-0 ml-auto" />
+
+          {/* Series Navigation Card */}
+          {isSeries && (
+            <div className="mb-16 p-8 bg-surface-container-low border-r-4 border-primary text-right">
+              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">
+                {article.category === "construction" ? "סדרת שיטות בנייה בישראל" : "סדרת חדר אחר חדר: הבית שעובד בשבילכם"}
+              </span>
+              <h3 className="font-headline font-black text-xl text-primary mt-2 mb-6">
+                מאמר {currentIndex + 1} מתוך {totalInSeries} בסדרה
+              </h3>
+              <div className="space-y-3">
+                <p className="font-headline font-bold text-xs text-secondary mb-4">כל מאמרי הסדרה:</p>
+                <ol className="space-y-2 list-decimal list-inside pr-2">
+                  {seriesArticles.map((s, idx) => (
+                    <li key={s.slug} className="text-sm font-body">
+                      {idx === currentIndex ? (
+                        <span className="text-primary font-bold">{s.title} <span className="text-xs text-secondary font-normal">(המאמר הנוכחי)</span></span>
+                      ) : (
+                        <Link href={`/articles/${s.slug}`} className="text-secondary hover:text-primary transition-colors hover:underline">
+                          {s.title}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          )}
 
           {/* Table of contents */}
           <nav className="mb-16 p-6 bg-surface-container rounded">
@@ -252,6 +288,45 @@ export default async function ArticlePage(
               </div>
             </section>
           ) : null}
+
+          {/* Series Next / Previous buttons */}
+          {isSeries && (prevArticle || nextArticle) && (
+            <div className="mt-16 pt-8 border-t border-outline/10 flex flex-col sm:flex-row justify-between gap-6 text-right">
+              {prevArticle ? (
+                <Link
+                  href={`/articles/${prevArticle.slug}`}
+                  className="flex-1 group p-6 bg-surface border border-outline/10 hover:border-secondary transition-all flex flex-col justify-between text-right"
+                >
+                  <span className="font-label text-[10px] text-secondary mb-2 flex items-center gap-1 justify-end">
+                    <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                    המאמר הקודם בסדרה
+                  </span>
+                  <span className="font-headline font-bold text-base text-primary group-hover:text-secondary transition-colors line-clamp-2">
+                    {prevArticle.title}
+                  </span>
+                </Link>
+              ) : (
+                <div className="flex-1 hidden sm:block" />
+              )}
+
+              {nextArticle ? (
+                <Link
+                  href={`/articles/${nextArticle.slug}`}
+                  className="flex-1 group p-6 bg-surface border border-outline/10 hover:border-secondary transition-all flex flex-col justify-between text-right"
+                >
+                  <span className="font-label text-[10px] text-secondary mb-2 flex items-center gap-1 justify-end">
+                    המאמר הבא בסדרה
+                    <span className="material-symbols-outlined text-xs">arrow_back</span>
+                  </span>
+                  <span className="font-headline font-bold text-base text-primary group-hover:text-secondary transition-colors line-clamp-2">
+                    {nextArticle.title}
+                  </span>
+                </Link>
+              ) : (
+                <div className="flex-1 hidden sm:block" />
+              )}
+            </div>
+          )}
 
           {/* CTA */}
           <div className="mt-16 p-8 md:p-12 bg-surface-container-low rounded text-right">

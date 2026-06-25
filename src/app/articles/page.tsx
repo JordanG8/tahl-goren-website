@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
 import { articles as siteArticles } from '@/data/articlesContent';
+import ArticlesGrid from '@/components/ArticlesGrid';
 
 export const metadata: Metadata = {
   title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלות",
@@ -37,34 +38,7 @@ export default async function Articles() {
             <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Blog & Tips</span>
             <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">מאמרים וטיפים מקצועיים</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {siteArticles.map((article) => (
-              <Link
-                key={article.slug}
-                href={`/articles/${article.slug}`}
-                className="group card-hover block bg-surface overflow-hidden"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={article.heroImage}
-                    alt={article.heroAlt}
-                    className="w-full h-full object-cover img-grayscale"
-                  />
-                </div>
-                <div className="p-8 text-right">
-                  <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
-                  <p className="text-secondary text-sm mt-3 leading-relaxed line-clamp-2">{article.excerpt}</p>
-                  <div className="flex items-center justify-between mt-6">
-                    <span className="font-label text-[10px] text-secondary">{article.readingTimeMin} דק׳ קריאה</span>
-                    <div className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
-                      לקריאה
-                      <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ArticlesGrid articles={siteArticles} />
         </div>
       </section>
 
