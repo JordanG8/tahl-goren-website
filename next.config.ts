@@ -65,6 +65,34 @@ const nextConfig: NextConfig = {
       { source: "/%D7%91%D7%99%D7%AA-%D7%9E%D7%A9%D7%A4%D7%97%D7%AA-:slug", destination: "/projects/completed", permanent: true },
     ];
   },
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

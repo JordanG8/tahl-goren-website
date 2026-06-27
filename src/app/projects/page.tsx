@@ -1,8 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 // import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
 import { siteData } from '@/data/siteData';
+
+export const metadata: Metadata = {
+  title: "פרויקטים ותיק עבודות | טל גורן אדריכלית",
+  description: "צפו בתיק העבודות של טל גורן אדריכלית: בתים מאוכלסים ובתים בתכנון באזור השרון הצפוני, מנשה, חוף הכרמל והסביבה. מעל 100 בתים פרטיים שתוכננו ונבנו.",
+  alternates: {
+    canonical: "/projects",
+  },
+};
 
 const categories = [
   {
@@ -53,13 +62,14 @@ export default function Projects() {
               className="group block relative overflow-hidden card-hover"
             >
               {/* Image */}
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden relative">
                 {page.image ? (
-                  <img
+                  <Image
                     src={page.image}
                     alt={page.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 img-grayscale"
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105 img-grayscale"
                   />
                 ) : (
                   <div className="w-full h-full bg-surface-container flex items-center justify-center">

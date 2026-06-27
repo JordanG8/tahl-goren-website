@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
 import ProjectCard from '@/components/ProjectCard';
+
+export const metadata: Metadata = {
+  title: "בתים מאוכלסים ופרויקטים גמורים | טל גורן אדריכלית",
+  description: "צפו בגלריית הבתים המאוכלסים והפרויקטים הגמורים שתוכננו ונבנו על ידי טל גורן אדריכלית באזור השרון, מנשה וחוף הכרמל.",
+  alternates: {
+    canonical: "/projects/completed",
+  },
+};
 
 export default async function ProjectsCompleted() {
   const projects = siteData.projects;

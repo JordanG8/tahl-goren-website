@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import type { Metadata } from "next";
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -9,6 +9,9 @@ import ArticlesGrid from '@/components/ArticlesGrid';
 export const metadata: Metadata = {
   title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלות",
   description: "מאמרים מקצועיים על תכנון בית פרטי, עלויות בנייה, אדריכלות מודרנית, שיפוצים ועוד. טיפים מעשיים מהאדריכלית טל גורן.",
+  alternates: {
+    canonical: "/articles",
+  },
 };
 
 export default async function Articles() {
@@ -78,11 +81,13 @@ export default async function Articles() {
         <div className="max-w-5xl mx-auto">
           <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="block bg-surface group card-hover overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-              <div className="md:col-span-5 aspect-video md:aspect-auto md:h-full overflow-hidden">
-                <img
+              <div className="md:col-span-5 aspect-video md:aspect-auto md:h-[250px] overflow-hidden relative">
+                <Image
                   src="/images/blog/architecture-interior-design-costs.png"
                   alt="כתבות פייסבוק"
-                  className="w-full h-full object-cover img-grayscale"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover img-grayscale"
                 />
               </div>
               <div className="md:col-span-7 p-12 flex flex-col gap-6 text-right">

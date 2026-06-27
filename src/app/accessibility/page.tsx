@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "הצהרת נגישות | טל גורן אדריכלות",
   description: "הצהרת הנגישות של אתר טל גורן אדריכלות בהתאם לתקן ישראלי 5568.",
+  alternates: {
+    canonical: "/accessibility",
+  },
 };
 
 export default function AccessibilityPage() {

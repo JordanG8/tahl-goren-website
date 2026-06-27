@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "תנאי שימוש | טל גורן אדריכלות",
   description: "תנאי השימוש באתר טל גורן אדריכלות.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

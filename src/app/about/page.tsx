@@ -1,11 +1,19 @@
-/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import ArchFrame from '@/components/ArchFrame';
 import Breadcrumb from '@/components/Breadcrumb';
+import { aboutExcerpt } from '@/data/siteData';
+
+export const metadata: Metadata = {
+  title: "אודות טל גורן | אדריכלות ותכנון בתים פרטיים",
+  description: "נעים להכיר, אני טל גורן, אדריכלית רשויה ומורשית היתר בוגרת הטכניון עם מעל 25 שנות ניסיון ותכנון של מעל 100 בתים פרטיים באזור השרון והצפון.",
+  alternates: {
+    canonical: "/about",
+  },
+};
 
 const heroSubtitle = `אדריכלית מורשית היתר: המומחית שלכם לבתים פרטיים`;
-
-export const aboutExcerpt = `טל גורן היא אדריכלית רשויה ומורשית היתר (בוגרת הטכניון בהצטיינות), בעלת ניסיון של מעל 25 שנה. המשרד מתמחה אך ורק בתכנון בתים פרטיים ללקוחות פרטיים באזור השרון הצפוני, יישובי מנשה, חוף הכרמל והסביבה. המומחיות של טל היא יצירת "בתים שגדלים עם המשפחה" – תכנון גמיש, פרקטי וחסכוני, המלווה ביחס אישי צמוד ובביטחון מקצועי מלא.`;
 
 const introParagraphs = [
   `אני מבינה מה אתם מרגישים עכשיו מתוך ניסיון אישי. מצד אחד – התרגשות עצומה לקראת הגשמת חלום חייכם. מצד שני – החששות הטבעיים מהלא נודע: הבלבול מול הבירוקרטיה, הפחד מטעויות תכנוניות יקרות והאחריות האדירה שבניהול תקציב של מיליוני שקלים.`,
@@ -83,11 +91,14 @@ export default function About() {
         {/* Portrait right panel */}
         <div className="bg-surface-container-low flex items-center justify-center px-12 lg:px-16 py-20 pt-32 lg:pt-36 order-1 lg:order-2">
           <ArchFrame className="w-full max-w-xs sm:max-w-sm lg:max-w-md">
-            <div className="aspect-[3/4]">
-              <img
+            <div className="aspect-[3/4] relative w-full h-full">
+              <Image
                 src="/images/tahl-portrait.jpg"
                 alt="טל גורן אדריכלית"
-                className="w-full h-full object-cover object-top img-grayscale"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+                className="object-cover object-top img-grayscale"
               />
             </div>
           </ArchFrame>
@@ -178,14 +189,16 @@ export default function About() {
 
           {/* Wide Team Banner */}
           <div className="mb-20 overflow-hidden relative group">
-            <div className="aspect-[21/9] w-full bg-surface-container-low overflow-hidden">
-              <img
+            <div className="aspect-[21/9] w-full bg-surface-container-low overflow-hidden relative">
+              <Image
                 src="/images/team/tal-goren-and-team.jpg"
                 alt="צוות המשרד - טל גורן"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-[1.03]"
+                fill
+                sizes="100vw"
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-[1.03]"
               />
             </div>
-            <div className="absolute bottom-6 right-6 bg-primary/95 text-white px-6 py-3 font-headline font-bold text-sm tracking-wide">
+            <div className="absolute bottom-6 right-6 bg-primary/95 text-white px-6 py-3 font-headline font-bold text-sm tracking-wide z-10">
               טל גורן וצוות המשרד
             </div>
           </div>
@@ -195,10 +208,12 @@ export default function About() {
             {/* Member 1: Or Zarfati */}
             <div className="flex flex-col group">
               <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
-                <img
+                <Image
                   src="/images/team/or-zarfati.jpg"
                   alt="אור צרפתי"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
                 />
               </div>
               <h3 className="font-headline font-black text-xl text-primary mb-1">אור צרפתי</h3>
@@ -211,10 +226,12 @@ export default function About() {
             {/* Member 2: Yasmin Ichilov */}
             <div className="flex flex-col group">
               <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
-                <img
+                <Image
                   src="/images/team/yasmin-ichilov.jpg"
                   alt="יסמין איכילוב"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
                 />
               </div>
               <h3 className="font-headline font-black text-xl text-primary mb-1">יסמין איכילוב</h3>
@@ -227,10 +244,12 @@ export default function About() {
             {/* Member 3: Hagit Koren */}
             <div className="flex flex-col group">
               <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
-                <img
+                <Image
                   src="/images/team/hagit-koren.jpg"
                   alt="חגית קורן"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out scale-100 group-hover:scale-105"
                 />
               </div>
               <h3 className="font-headline font-black text-xl text-primary mb-1">חגית קורן</h3>

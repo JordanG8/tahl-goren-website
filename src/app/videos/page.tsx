@@ -1,6 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
+
+export const metadata: Metadata = {
+  title: "סרטונים ותוכן מקצועי | טל גורן אדריכלית",
+  description: "צפו בסרטונים של טל גורן אדריכלית: סיורים וירטואליים בבתים פרטיים, טיפים לתכנון ובנייה חכמה, ואזכורים בתקשורת הארצית. בואו ללמוד איך לבנות נכון.",
+  alternates: {
+    canonical: "/videos",
+  },
+};
 
 export default async function Videos() {
   const videos = siteData.videos;
@@ -21,8 +30,28 @@ export default async function Videos() {
     'group-hover:bg-surface-container-low',
   ];
 
+  const videosJsonLd = videos.map((video: any) => ({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": video.title,
+    "description": video.description,
+    "thumbnailUrl": [video.thumbnail],
+    "uploadDate": "2024-01-01T08:00:00+02:00",
+    "contentUrl": video.url,
+    "embedUrl": video.url.includes("youtube.com") 
+      ? video.url.replace("watch?v=", "embed/") 
+      : video.url,
+  }));
+
   return (
     <>
+      {videosJsonLd.map((jsonLd: any, idx: number) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
 
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">
@@ -62,12 +91,14 @@ export default async function Videos() {
                 className="group card-hover block"
               >
                 <div className="relative aspect-video overflow-hidden bg-surface-container">
-                  <img
+                  <Image
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover img-grayscale"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover img-grayscale"
                   />
-                  <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/50 transition-colors duration-500 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/50 transition-colors duration-500 flex items-center justify-center z-10">
                     <div className="w-20 h-20 bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                       <span className="material-symbols-outlined text-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
                     </div>
@@ -149,12 +180,14 @@ export default async function Videos() {
                 rel="noopener noreferrer"
                 className="group relative aspect-[9/16] overflow-hidden bg-surface-container"
               >
-                <img
+                <Image
                   src={reel.thumbnail}
                   alt="Instagram Reel"
-                  className="w-full h-full object-cover img-grayscale"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  className="object-cover img-grayscale"
                 />
-                <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center">
+                <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center z-10">
                   <span className="material-symbols-outlined text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
                 </div>
               </a>
@@ -168,11 +201,13 @@ export default async function Videos() {
         <div className="max-w-5xl mx-auto">
           <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="block bg-surface group card-hover overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-              <div className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
-                <img
+              <div className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[350px] overflow-hidden relative">
+                <Image
                   src="/images/projects/v-zichron/optimized/%D7%A1%D7%9C%D7%95%D7%9F%20%D7%91%D7%91%D7%99%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99.webp"
                   alt="טל גורן אדריכלית - פייסבוק"
-                  className="w-full h-full object-cover img-grayscale"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover img-grayscale"
                 />
               </div>
               <div className="md:col-span-7 p-12 md:p-16 flex flex-col gap-6 text-right">

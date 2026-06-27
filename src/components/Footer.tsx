@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="px-12 py-8 border-t border-outline/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">&copy; 2025 TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
+        <span className="font-label text-[10px] tracking-[0.2em] text-secondary uppercase">&copy; {new Date().getFullYear()} TAL GOREN ARCHITECTS. ALL RIGHTS RESERVED.</span>
         <div className="flex gap-6 font-label text-[10px] tracking-[0.2em] uppercase">
           <Link href="/privacy" className="text-secondary hover:text-primary transition-colors">מדיניות פרטיות</Link>
           <Link href="/accessibility" className="text-secondary hover:text-primary transition-colors">הצהרת נגישות</Link>

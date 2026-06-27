@@ -1,6 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+
+export const metadata: Metadata = {
+  title: "בתים בתכנון והדמיות אדריכליות | טל גורן אדריכלית",
+  description: "הצצה לתהליכי העבודה והדמיות תלת-ממד של בתים פרטיים בתהליכי תכנון ורישוי של טל גורן אדריכלית באזור השרון והצפון.",
+  alternates: {
+    canonical: "/projects/in-design",
+  },
+};
 
 const designProjects: any[] = [];
 
@@ -26,12 +35,13 @@ export default function ProjectsInDesign() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {designProjects.map((project: any) => (
               <div key={project.id} className="group block relative overflow-hidden card-hover">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <Image
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">

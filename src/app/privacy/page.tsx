@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "מדיניות פרטיות | טל גורן אדריכלות",
   description: "מדיניות הפרטיות של אתר טל גורן אדריכלות.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

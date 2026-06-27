@@ -7,7 +7,7 @@ import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
-import { aboutExcerpt } from '@/app/about/page';
+import { aboutExcerpt } from '@/data/siteData';
 
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];

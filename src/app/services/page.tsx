@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -60,11 +60,13 @@ export default function ServicesPage() {
                 href={article.href}
                 className="group card-hover block bg-surface overflow-hidden"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <Image
                     src={article.image}
                     alt={article.title}
-                    className="w-full h-full object-cover img-grayscale"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover img-grayscale"
                   />
                 </div>
                 <div className="p-8 text-right">

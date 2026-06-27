@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
+import { reviews } from "@/data/reviews";
 
 export const metadata: Metadata = {
   title: "המלצות לקוחות | טל גורן אדריכלות",
@@ -11,8 +12,49 @@ export const metadata: Metadata = {
 };
 
 export default function Testimonials() {
+  const reviewsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "טל גורן אדריכלית",
+    image: "https://talgoren.co.il/images/tahl-portrait.jpg",
+    telephone: "+972-52-8345799",
+    email: "tahl.goren.arch@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "גבעת עדה",
+      addressRegion: "מחוז חיפה",
+      addressCountry: "IL",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: reviews.length.toString(),
+    },
+    review: reviews.map((item) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: item.name,
+      },
+      datePublished: "2024-01-01",
+      reviewBody: item.text,
+      reviewRating: {
+        "@type": "Rating",
+        bestRating: "5",
+        ratingValue: item.rating.toString(),
+        worstRating: "1",
+      },
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
+      />
       {/* Header */}
       <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
         <Breadcrumb items={[{ label: "ראשי", to: "/" }, { label: "לקוחות מספרים" }]} />

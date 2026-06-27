@@ -99,6 +99,37 @@ function FaqJsonLd({ faq }: { faq: Article["faq"] }) {
   );
 }
 
+function renderParagraphWithLinks(text: string) {
+  // Regex to split by markdown links [text](url)
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, i) => {
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, linkText, url] = linkMatch;
+      return (
+        <Link key={i} href={url} className="text-primary underline hover:text-secondary transition-colors">
+          {linkText}
+        </Link>
+      );
+    }
+
+    // Now split the remaining text by phone number patterns (e.g. 052-8345799 or 0528345799)
+    const phoneParts = part.split(/(05\d-?\d{7})/g);
+    return phoneParts.map((subPart, j) => {
+      const phoneMatch = subPart.match(/^(05\d-?\d{7})$/);
+      if (phoneMatch) {
+        const rawPhone = phoneMatch[1].replace(/-/g, "");
+        return (
+          <a key={`${i}-${j}`} href={`tel:${rawPhone}`} className="text-primary underline hover:text-secondary transition-colors">
+            {phoneMatch[1]}
+          </a>
+        );
+      }
+      return subPart;
+    });
+  });
+}
+
 export default async function ArticlePage(
   props: { params: Promise<{ slug: string }> }
 ) {
@@ -244,7 +275,7 @@ export default async function ArticlePage(
                   key={pi}
                   className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
                 >
-                  {p}
+                  {renderParagraphWithLinks(p)}
                 </p>
               ))}
               {section.list && (
@@ -255,7 +286,7 @@ export default async function ArticlePage(
                       className="flex items-start gap-3 text-secondary text-base leading-relaxed font-body"
                     >
                       <span className="mt-2 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
-                      {item}
+                      {renderParagraphWithLinks(item)}
                     </li>
                   ))}
                 </ul>
@@ -280,7 +311,7 @@ export default async function ArticlePage(
                     </summary>
                     <div className="faq-answer">
                       <p className="text-secondary text-base leading-relaxed font-body">
-                        {item.answer}
+                        {renderParagraphWithLinks(item.answer)}
                       </p>
                     </div>
                   </details>

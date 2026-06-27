@@ -39,6 +39,12 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
   robots: { index: true, follow: true },
+  alternates: {
+    languages: {
+      "he-IL": "/",
+      "x-default": "/",
+    },
+  },
 };
 
 // Local business structured data (helps Google show the firm in local results / rich cards)
@@ -67,6 +73,18 @@ const localBusinessJsonLd = {
   ],
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "טל גורן אדריכלית",
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/articles?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -82,6 +100,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className="bg-background text-on-surface font-body pb-[10vh] sm:pb-0">

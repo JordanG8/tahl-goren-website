@@ -1,5 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import { siteData } from '@/data/siteData';
+
+export const metadata: Metadata = {
+  title: "רשתות חברתיות וקהילה | טל גורן אדריכלית",
+  description: "עקבו אחר טל גורן אדריכלית ברשתות החברתיות: הצטרפו לקהילת הפייסבוק, צפו ב-Reels והשראה באינסטגרם, ולמדו מערוץ היוטיוב עם טיפים לתכנון ובניית בתים.",
+  alternates: {
+    canonical: "/social",
+  },
+};
 
 export default function Social() {
   return (
@@ -41,12 +50,14 @@ export default function Social() {
                     rel="noopener noreferrer"
                     className="group relative aspect-[9/16] overflow-hidden bg-surface-container"
                   >
-                    <img
+                    <Image
                       src={reel.thumbnail}
                       alt="Instagram Reel"
-                      className="w-full h-full object-cover img-grayscale"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                      className="object-cover img-grayscale"
                     />
-                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center z-10">
                       <span className="material-symbols-outlined text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
                     </div>
                   </a>

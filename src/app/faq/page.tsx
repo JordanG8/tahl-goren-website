@@ -2,15 +2,36 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import FaqAccordion from "@/components/FaqAccordion";
+import faqData from "@/data/faqData.json";
 
 export const metadata: Metadata = {
   title: "שאלות נפוצות | טל גורן אדריכלית",
   description: "כל התשובות לשאלות הנפוצות ביותר על תכנון, רישוי ובניית בית פרטי. מידע מקצועי וטיפים מטל גורן, אדריכלית מורשית היתר.",
+  alternates: {
+    canonical: "/faq",
+  },
 };
 
 export default function FaqPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqData.map((item: any) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">

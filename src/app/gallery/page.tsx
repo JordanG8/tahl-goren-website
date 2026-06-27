@@ -6,6 +6,9 @@ import GalleryGrid from "@/components/GalleryGrid";
 export const metadata: Metadata = {
   title: "גלריית פרויקטים | טל גורן אדריכלית",
   description: "הצצה לפרויקטים השונים של משרד טל גורן אדריכלים. תמונות ממגוון בתים פרטיים, עיצוב פנים וחוץ, בסגנונות שונים.",
+  alternates: {
+    canonical: "/gallery",
+  },
 };
 
 export default function GalleryPage() {
