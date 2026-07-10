@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { projects, projectsBySlug, type ProjectDetail } from "@/data/projectsContent";
 import Breadcrumb from "@/components/Breadcrumb";
 import GalleryGrid from "@/components/GalleryGrid";
@@ -33,7 +33,9 @@ export async function generateMetadata(
 function ProjectJsonLd({ project }: { project: ProjectDetail }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ArchitecturalProject",
+    // "ArchitecturalProject" isn't a real schema.org type (not rich-result eligible);
+    // CreativeWork is the closest valid type that still accepts creator/locationCreated.
+    "@type": "CreativeWork",
     name: project.title,
     description: project.metaDescription,
     image: project.image,
@@ -115,11 +117,14 @@ export default async function ProjectPage(
 
       {/* Hero */}
       <section className="relative">
-        <div className="aspect-[3/2] sm:aspect-[21/9] max-h-[560px] w-full overflow-hidden">
-          <img
+        <div className="relative aspect-[3/2] sm:aspect-[21/9] max-h-[560px] w-full overflow-hidden">
+          <Image
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
         </div>
@@ -294,12 +299,13 @@ export default async function ProjectPage(
                 href={`/projects/${related.slug}`}
                 className="group card-hover block relative overflow-hidden"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
                     src={related.image}
                     alt={related.title}
-                    className="w-full h-full object-cover img-grayscale"
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover img-grayscale"
                   />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">

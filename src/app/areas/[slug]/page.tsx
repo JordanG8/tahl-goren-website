@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumb";
 import { areas, areasBySlug } from "@/data/areasContent";
 import { projects } from "@/data/projectsContent";
@@ -74,17 +74,31 @@ export default async function AreaPage({
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ראשי", item: "/" },
+      { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "/areas" },
+      { "@type": "ListItem", position: 3, name: area.city, item: `/areas/${area.slug}` },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       {/* Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">
-          <Breadcrumb items={[{ label: "ראשי", to: "/" }, { label: "אזורי שירות" }, { label: area.city }]} />
+          <Breadcrumb items={[{ label: "ראשי", to: "/" }, { label: "אזורי שירות", to: "/areas" }, { label: area.city }]} />
           <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
             {area.h1}
           </h1>
@@ -172,8 +186,8 @@ export default async function AreaPage({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {featured.map((p) => (
                 <Link key={p.slug} href={`/projects/${p.slug}`} className="group card-hover block bg-surface-container-low overflow-hidden">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover img-grayscale" />
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image src={p.image} alt={p.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover img-grayscale" />
                   </div>
                   <div className="p-8 text-right">
                     <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">
