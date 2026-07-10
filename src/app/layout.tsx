@@ -8,6 +8,7 @@ import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { PostHogProvider } from "./providers";
+import { reviews } from "@/data/reviews";
 
 
 const assistant = Assistant({ subsets: ['hebrew'], variable: '--font-assistant' });
@@ -15,9 +16,9 @@ const heebo = Heebo({ subsets: ['hebrew'], variable: '--font-heebo' });
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const SITE_URL = "https://talgoren.co.il";
-const SITE_TITLE = "טל גורן אדריכלית | אדריכלות, תכנון ועיצוב בתים פרטיים";
+const SITE_TITLE = "טל גורן אדריכלית מומלצת | תכנון ועיצוב בתים פרטיים";
 const SITE_DESCRIPTION =
-  "ליווי מקצועי ואישי לחווית בניה רגועה. תכנון אדריכלי חכם לבית שגדל עם המשפחה. למעלה מ-25 שנות ניסיון.";
+  "אדריכלית מומלצת עם מעל 25 שנות ניסיון בתכנון בתים פרטיים בשרון הצפוני. ליווי מקצועי ואישי מהרעיון הראשון ועד למפתח — פגישת ייעוץ ראשונה ללא עלות.";
 const OG_IMAGE = "/images/tahl-portrait.jpg";
 
 export const metadata: Metadata = {
@@ -71,6 +72,18 @@ const localBusinessJsonLd = {
     "https://www.facebook.com/tahlgoren",
     "https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/",
   ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)),
+    bestRating: 5,
+    reviewCount: reviews.length,
+  },
+  review: reviews.map((r) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: r.name },
+    reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
+    reviewBody: r.text,
+  })),
 };
 
 const websiteJsonLd = {

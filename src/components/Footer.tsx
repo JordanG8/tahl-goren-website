@@ -1,5 +1,8 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { trackLead } from '@/lib/trackLead';
 
 export default function Footer() {
   return (
@@ -33,7 +36,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-primary font-headline font-bold text-xs uppercase tracking-[0.2em]">צור קשר</h4>
             <div className="flex flex-col gap-2 font-label text-sm text-secondary">
-              <a href="tel:0528345799" className="hover:text-primary transition-colors">052-8345799</a>
+              <a href="tel:0528345799" onClick={() => trackLead("phone", { placement: "footer" })} className="hover:text-primary transition-colors">052-8345799</a>
               <a href="mailto:tahl.goren.arch@gmail.com" className="hover:text-primary transition-colors">tahl.goren.arch@gmail.com</a>
               <span>רחוב האלה 22, גבעת עדה</span>
             </div>

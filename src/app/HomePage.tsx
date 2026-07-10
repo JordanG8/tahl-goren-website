@@ -8,6 +8,7 @@ import ReviewsCarousel from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
 import { aboutExcerpt } from '@/data/siteData';
+import { trackLead } from '@/lib/trackLead';
 
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
@@ -258,10 +259,10 @@ export default function HomePage({ projects }: Props) {
               <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
             </div>
             <div className="flex justify-center gap-8 pt-4">
-              <a href="tel:0528345799" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+              <a href="tel:0528345799" onClick={() => trackLead("phone", { placement: "home_hero" })} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
                 <span className="material-symbols-outlined text-lg">call</span>052-8345799
               </a>
-              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
+              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" onClick={() => trackLead("whatsapp", { placement: "home_hero" })} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
                 <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
               </a>
             </div>

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { articles, articlesBySlug, type Article } from "@/data/articlesContent";
 import Breadcrumb from "@/components/Breadcrumb";
 
@@ -157,12 +158,14 @@ export default async function ArticlePage(
 
       {/* Hero */}
       <section className="relative">
-        <div className="aspect-[3/2] sm:aspect-[21/9] max-h-[480px] w-full overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div className="relative aspect-[3/2] sm:aspect-[21/9] max-h-[480px] w-full overflow-hidden">
+          <Image
             src={article.heroImage}
             alt={article.heroAlt}
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
         </div>
@@ -400,12 +403,13 @@ export default async function ArticlePage(
                   href={`/articles/${related.slug}`}
                   className="group card-hover block bg-surface overflow-hidden"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
                       src={related.heroImage}
                       alt={related.heroAlt}
-                      className="w-full h-full object-cover img-grayscale"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover img-grayscale"
                     />
                   </div>
                   <div className="p-8 text-right">

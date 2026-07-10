@@ -7,6 +7,7 @@ type ContactPayload = {
   email?: string;
   message?: string;
   website?: string;
+  sourcePage?: string;
 };
 
 const escapeHtml = (input: string) =>
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
   const phone = (body.phone ?? "").trim();
   const email = (body.email ?? "").trim();
   const message = (body.message ?? "").trim();
+  const sourcePage = (body.sourcePage ?? "").trim().slice(0, 200) || null;
 
   if (!name || !phone || !email || !message) {
     return NextResponse.json({ error: "missing_fields" }, { status: 400 });
@@ -48,14 +50,24 @@ export async function POST(request: Request) {
   // 1. Store in Database
   let dbStored = false;
   try {
+    // source_page requires a migration: ALTER TABLE form_responses ADD COLUMN IF NOT EXISTS source_page TEXT;
     await sql`
-      INSERT INTO form_responses (name, phone, email, message)
-      VALUES (${name}, ${phone}, ${email}, ${message})
+      INSERT INTO form_responses (name, phone, email, message, source_page)
+      VALUES (${name}, ${phone}, ${email}, ${message}, ${sourcePage})
     `;
     dbStored = true;
-  } catch (dbErr) {
-    console.error("[contact] database insertion error", dbErr);
-    // Continue anyway to try sending email
+  } catch {
+    // Falls back to the pre-migration schema so submissions still get captured
+    // if the source_page column hasn't been added yet.
+    try {
+      await sql`
+        INSERT INTO form_responses (name, phone, email, message)
+        VALUES (${name}, ${phone}, ${email}, ${message})
+      `;
+      dbStored = true;
+    } catch (dbErr2) {
+      console.error("[contact] database insertion error", dbErr2);
+    }
   }
 
   // 2. Send via Email (Resend)
@@ -71,6 +83,7 @@ export async function POST(request: Request) {
       <p><strong>אימייל:</strong> ${escapeHtml(email)}</p>
       <p><strong>הודעה:</strong></p>
       <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
+      ${sourcePage ? `<p><strong>דף מקור:</strong> ${escapeHtml(sourcePage)}</p>` : ""}
     </div>
   `;
 
