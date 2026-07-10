@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const serviceArticles = [
   { id: "choose-architect", href: "/articles/choose-architect" },
   { id: "costs", href: "/articles/building-cost-total" },
-  { id: "salon-tips", href: "/articles" },
+  { id: "salon-tips", href: "/articles/rooms-living-room" },
 ].map((s) => {
   const article = siteData.articles.find((a) => a.id === s.id)!;
   return { ...s, ...article };

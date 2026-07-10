@@ -6,12 +6,18 @@ const nextConfig: NextConfig = {
       // Articles (old Hebrew slugs → new)
       { source: "/%D7%A2%D7%9C%D7%95%D7%99%D7%95%D7%AA-%D7%91%D7%A0%D7%99%D7%94-%D7%95%D7%9E%D7%97%D7%99%D7%A8-%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA", destination: "/articles/building-cost-total", permanent: true },
       { source: "/%D7%AA%D7%9B%D7%A0%D7%95%D7%9F-%D7%91%D7%99%D7%AA-%D7%A4%D7%A8%D7%98%D7%99", destination: "/articles/building-stages", permanent: true },
-      { source: "/%D7%94%D7%A1%D7%9C%D7%95%D7%9F-%D7%98%D7%99%D7%A4%D7%99%D7%9D-%D7%95%D7%9B%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%A9%D7%99%D7%99%D7%9D-%D7%9C%D7%AA%D7%9B%D7%A0%D7%95%D7%9F", destination: "/articles", permanent: true },
+      // was /articles (generic hub) — this is the room-planning guide it actually matches
+      { source: "/%D7%94%D7%A1%D7%9C%D7%95%D7%9F-%D7%98%D7%99%D7%A4%D7%99%D7%9D-%D7%95%D7%9B%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%A9%D7%99%D7%99%D7%9D-%D7%9C%D7%AA%D7%9B%D7%A0%D7%95%D7%9F", destination: "/articles/rooms-living-room", permanent: true },
       { source: "/%D7%90%D7%99%D7%9A-%D7%9C%D7%91%D7%97%D7%95%D7%A8-%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%99%D7%AA", destination: "/articles/choose-architect", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA-%D7%91%D7%AA%D7%99%D7%9D-%D7%A4%D7%A8%D7%98%D7%99%D7%99%D7%9D", destination: "/articles", permanent: true },
+      // was /articles (generic hub) — no dedicated residential-architecture pillar page exists yet;
+      // /services is the closest topical match in the meantime (see SEO plan, Sheet 03 §1 / W3)
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA-%D7%91%D7%AA%D7%99%D7%9D-%D7%A4%D7%A8%D7%98%D7%99%D7%99%D7%9D", destination: "/services", permanent: true },
       { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA-%D7%9E%D7%95%D7%93%D7%A8%D7%A0%D7%99%D7%AA", destination: "/articles/modern-architecture", permanent: true },
-      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA-%D7%99%D7%95%D7%A7%D7%A8%D7%94", destination: "/articles", permanent: true },
-      { source: "/%D7%9E%D7%A2%D7%A6%D7%91%D7%AA-%D7%A4%D7%A0%D7%99%D7%9D", destination: "/articles", permanent: true },
+      // was /articles (generic hub) — no dedicated luxury pillar page exists yet;
+      // /projects showcases the actual portfolio in the meantime (see SEO plan, Sheet 03 §1 / W3)
+      { source: "/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA-%D7%99%D7%95%D7%A7%D7%A8%D7%94", destination: "/projects", permanent: true },
+      // was /articles (generic hub) — interior design is a listed service, /services covers it
+      { source: "/%D7%9E%D7%A2%D7%A6%D7%91%D7%AA-%D7%A4%D7%A0%D7%99%D7%9D", destination: "/services", permanent: true },
       // Guid articles
       { source: "/guid/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-%D7%A4%D7%A8%D7%95%D7%92%D7%A8%D7%9E%D7%94-%D7%9C%D7%91%D7%99%D7%AA-%D7%97%D7%93%D7%A9", destination: "/articles", permanent: true },
       { source: "/guid/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-%D7%A4%D7%A8%D7%95%D7%92%D7%A8%D7%9E%D7%94-%D7%9C%D7%A9%D7%99%D7%A4%D7%95%D7%A5-%D7%95%D7%AA%D7%95%D7%A1%D7%A4%D7%AA-%D7%91%D7%A0%D7%99%D7%94", destination: "/articles", permanent: true },
