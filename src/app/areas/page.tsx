@@ -5,16 +5,30 @@ import ServiceAreasMap from "@/components/ServiceAreasMap";
 import { areas } from "@/data/areasContent";
 
 export const metadata: Metadata = {
-  title: "אזורי שירות | טל גורן אדריכלית",
+  title: "אדריכלים בצפון: כל אזורי השירות | טל גורן אדריכלית",
   description:
-    "אזורי השירות של טל גורן אדריכלית — תכנון ועיצוב בתים פרטיים בזכרון יעקב, חוף הכרמל, פרדס חנה כרכור, בנימינה-גבעת עדה, קיסריה, חדרה ועוד. מפת אזורי השירות והעמודים לכל אזור.",
+    "מחפשים אדריכל בצפון? טל גורן אדריכלית מלווה משפחות בתכנון ועיצוב בתים פרטיים בזכרון יעקב, חוף הכרמל, פרדס חנה-כרכור, בנימינה-גבעת עדה, קיסריה, חדרה ועוד. מפת אזורי השירות והעמודים לכל אזור.",
   alternates: { canonical: "/areas" },
   openGraph: { url: "/areas" },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "ראשי", item: "/" },
+    { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "/areas" },
+  ],
 };
 
 export default function ServiceAreasIndexPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">
@@ -23,8 +37,8 @@ export default function ServiceAreasIndexPage() {
             אזורי שירות
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed max-w-3xl mt-8">
-            משרד האדריכלות של טל גורן ממוקם בגבעת עדה, ומלווה משפחות בתכנון, רישוי ובניית בתים פרטיים
-            ברחבי חיפה, חוף הכרמל, מנשה והשרון. בחרו את האזור שלכם במפה או מהרשימה למטה.
+            מחפשים אדריכל בצפון? משרד האדריכלות של טל גורן ממוקם בגבעת עדה, ומלווה משפחות בתכנון, רישוי
+            ובניית בתים פרטיים ברחבי חיפה, חוף הכרמל, מנשה והשרון. בחרו את האזור שלכם במפה או מהרשימה למטה.
           </p>
           <div className="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto"></div>
         </div>
