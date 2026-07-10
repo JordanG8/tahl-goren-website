@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackLead } from "@/lib/trackLead";
 
 export default function HomeCtaForm() {
   const [name, setName] = useState("");
@@ -16,9 +17,17 @@ export default function HomeCtaForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, email: "quick@cta.com", message: "פניה מהירה מדף הבית", website: "" }),
+        body: JSON.stringify({
+          name,
+          phone,
+          email: "quick@cta.com",
+          message: "פניה מהירה מדף הבית",
+          website: "",
+          sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        }),
       });
       if (!res.ok) throw new Error();
+      trackLead("form", { placement: "home_cta" });
       setStatus("success");
       setName("");
       setPhone("");

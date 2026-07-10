@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
+import { trackLead } from "@/lib/trackLead";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -23,7 +24,14 @@ export default function ContactClient() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, email, message, website }),
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          message,
+          website,
+          sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -37,6 +45,7 @@ export default function ContactClient() {
         );
         return;
       }
+      trackLead("form", { placement: "contact_page" });
       setStatus("success");
       setName("");
       setPhone("");
@@ -79,7 +88,7 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h3 className="font-headline font-bold text-xs uppercase tracking-[0.2em] text-secondary mb-2">טלפון</h3>
-                    <a href="tel:0528345799" className="font-headline font-black text-2xl text-primary hover:text-secondary transition-colors">052-8345799</a>
+                    <a href="tel:0528345799" onClick={() => trackLead("phone", { placement: "contact_page_info" })} className="font-headline font-black text-2xl text-primary hover:text-secondary transition-colors">052-8345799</a>
                   </div>
                 </div>
 
@@ -221,6 +230,7 @@ export default function ContactClient() {
                       href={whatsappHref}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={() => trackLead("whatsapp", { placement: "contact_page_form" })}
                       className="w-full border-2 border-primary text-primary py-5 font-headline font-black text-sm uppercase tracking-[0.3em] hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-4"
                     >
                       שליחה בוואטסאפ

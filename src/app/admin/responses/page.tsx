@@ -110,6 +110,11 @@ export default function AdminResponsesPage() {
               <div className="text-gray-700 whitespace-pre-wrap leading-relaxed">
                 {res.message}
               </div>
+              {res.source_page && (
+                <div className="mt-3 pt-3 border-t text-xs text-gray-400">
+                  דף מקור: <span className="font-mono" dir="ltr">{res.source_page}</span>
+                </div>
+              )}
             </div>
           ))}
         </div>
