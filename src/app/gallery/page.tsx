@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import GalleryGrid from "@/components/GalleryGrid";
+import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
   title: "גלריית פרויקטים | טל גורן אדריכלית",
@@ -34,6 +35,11 @@ export default function GalleryPage() {
           <GalleryGrid />
         </div>
       </section>
+
+      <CtaSection
+        title="אהבתם מה שראיתם?"
+        subtitle="בואו נדבר על הבית שאתם חולמים עליו — פגישת ייעוץ ראשונה ללא עלות."
+      />
     </>
   );
 }

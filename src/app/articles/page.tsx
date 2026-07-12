@@ -5,6 +5,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
 import { articles as siteArticles } from '@/data/articlesContent';
 import ArticlesGrid from '@/components/ArticlesGrid';
+import CtaSection from '@/components/CtaSection';
 
 export const metadata: Metadata = {
   title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלות",
@@ -108,6 +109,10 @@ export default async function Articles() {
         </div>
       </section>
 
+      <CtaSection
+        title="קראתם, למדתם — עכשיו בואו נדבר"
+        subtitle="פגישת ייעוץ ראשונה ללא עלות. נשמח להכיר ולהתחיל לחשוב יחד על הפרויקט שלכם."
+      />
     </>
   );
 }
