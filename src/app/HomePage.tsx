@@ -125,6 +125,13 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
+      {/* FORM CTA — TOP */}
+      <HomeCtaForm
+        eyebrow="לפני שממשיכים לגלול"
+        heading="כל הרישיון שאדריכלית יכולה להחזיק בישראל — במשרד אחד"
+        placement="home_cta_top"
+      />
+
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -236,6 +243,13 @@ export default function HomePage({ projects }: Props) {
           </div>
         </div>
       </section>
+
+      {/* FORM CTA — MID */}
+      <HomeCtaForm
+        eyebrow="עוד מתלבטים על המחיר?"
+        heading="תכנון נכון עולה. תכנון גרוע עולה הרבה יותר"
+        placement="home_cta_mid"
+      />
 
       {/* 5. CTA / CONTACT */}
       <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
@@ -351,15 +365,12 @@ export default function HomePage({ projects }: Props) {
         </div>
       </section>
 
-      {/* FORM CTA SECTION */}
-      <section className="py-24 lg:py-32 bg-surface-container-highest relative overflow-hidden -mt-1 text-center">
-        <div className="max-w-5xl mx-auto px-8 relative z-10 flex flex-col items-center">
-          <span className="material-symbols-outlined text-6xl text-primary/30 mb-6 animate-bounce">arrow_downward</span>
-          <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">שנתחיל לתכנן את הבית שלכם?</h2>
-          <p className="font-body text-xl text-secondary mb-12 max-w-2xl mx-auto">השאירו פרטים ואחזור אליכם בהקדם האפשרי לשיחת היכרות ראשונית, ללא התחייבות.</p>
-          <HomeCtaForm />
-        </div>
-      </section>
+      {/* FORM CTA — BOTTOM */}
+      <HomeCtaForm
+        eyebrow="מוכנים להתחיל?"
+        heading="שנתחיל לתכנן את הבית שלכם?"
+        placement="home_cta_bottom"
+      />
 
       {/* 10. SOCIAL */}
       <section className="py-24 lg:py-32 bg-surface -mt-1 text-center">
