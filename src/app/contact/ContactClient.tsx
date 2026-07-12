@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
+import HomeCtaForm from "@/components/HomeCtaForm";
 import { trackLead } from "@/lib/trackLead";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -64,13 +65,17 @@ export default function ContactClient() {
 
   return (
     <>
-      <section className="py-12 md:py-20 px-8 bg-surface">
+      <HomeCtaForm
+        eyebrow="צור קשר"
+        heading="מתכננים לבנות או לשפץ?"
+        placement="contact_page_top"
+        headingTag="h1"
+      />
+
+      <section className="py-8 md:py-12 px-8 bg-surface">
         <div className="max-w-6xl mx-auto">
           <Breadcrumb current="צור קשר" />
-          <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-9xl tracking-tight leading-[0.9] text-primary">
-            בואו נדבר.
-          </h1>
-          <p className="font-body text-lg md:text-xl text-secondary max-w-2xl leading-relaxed mt-8">
+          <p className="font-body text-base md:text-lg text-secondary max-w-2xl leading-relaxed mt-4">
             מתכננים בניית בית פרטי חדש, תוספת בניה או שיפוץ מקיף? הגעתם למקום הנכון! אני מתמחה באדריכלות בתי מגורים באזור השרון הצפוני (בין נתניה לחיפה, ומזרחה עד עפולה). אשמח לעמוד לשרותכם - השאירו פרטים, ואחזור אליכם בהקדם.
           </p>
         </div>

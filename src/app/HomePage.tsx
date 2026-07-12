@@ -127,8 +127,8 @@ export default function HomePage({ projects }: Props) {
 
       {/* FORM CTA — TOP */}
       <HomeCtaForm
-        eyebrow="לפני שממשיכים לגלול"
-        heading="כל הרישיון שאדריכלית יכולה להחזיק בישראל — במשרד אחד"
+        eyebrow="כמה מילים עליי"
+        heading="מתכננים לבנות את הבית הבא שלכם?"
         placement="home_cta_top"
       />
 
@@ -246,8 +246,8 @@ export default function HomePage({ projects }: Props) {
 
       {/* FORM CTA — MID */}
       <HomeCtaForm
-        eyebrow="עוד מתלבטים על המחיר?"
-        heading="תכנון נכון עולה. תכנון גרוע עולה הרבה יותר"
+        eyebrow="יש עוד שאלה?"
+        heading="נשמח לענות ולעזור לכם להתקדם"
         placement="home_cta_mid"
       />
 

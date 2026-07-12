@@ -3,20 +3,17 @@
 import { useState } from "react";
 import { trackLead } from "@/lib/trackLead";
 
-const CREDENTIALS = [
-  { icon: "school", label: "בוגרת הטכניון בהצטיינות" },
-  { icon: "verified_user", label: "אדריכלית רשויה מ-2014" },
-  { icon: "workspace_premium", label: "מורשית היתר — לא לכל אדריכל/ית יש" },
-  { icon: "home_work", label: "100+ בתים פרטיים" },
-];
+const CREDENTIALS_LINE = "בוגרת הטכניון בהצטיינות · אדריכלית רשויה ומורשית היתר · 25+ שנות ניסיון";
 
 type HomeCtaFormProps = {
   eyebrow: string;
   heading: string;
   placement: string;
+  headingTag?: "h1" | "h2";
 };
 
-export default function HomeCtaForm({ eyebrow, heading, placement }: HomeCtaFormProps) {
+export default function HomeCtaForm({ eyebrow, heading, placement, headingTag = "h2" }: HomeCtaFormProps) {
+  const Heading = headingTag;
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -50,52 +47,36 @@ export default function HomeCtaForm({ eyebrow, heading, placement }: HomeCtaForm
   };
 
   return (
-    <section className="relative border-y-[6px] border-[#d4af37] bg-[#0b1116] overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-      <div className="relative z-10 max-w-5xl mx-auto px-8 py-20 lg:py-28 flex flex-col items-center text-center">
-        <span className="font-label text-[11px] uppercase tracking-[0.35em] text-[#d4af37] mb-5">
+    <section className="relative border-y-4 border-[#A96F57] bg-primary blueprint-grid overflow-hidden">
+      <div className="absolute inset-0 bg-primary/95" />
+      <div className="relative z-10 max-w-xl mx-auto px-6 py-10 md:py-12 flex flex-col items-center text-center">
+        <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2">
           {eyebrow}
         </span>
 
-        <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-6 max-w-3xl">
+        <Heading className="font-headline font-black text-2xl sm:text-3xl text-white tracking-tight leading-[1.2] mb-2 max-w-sm">
           {heading}
-        </h2>
+        </Heading>
 
-        <p className="font-headline font-bold text-xl sm:text-2xl text-[#d4af37] mb-10 max-w-2xl">
-          עדיף לשלם טוב פעם אחת — מאשר לשלם פעמיים ביוקר.
+        <p className="font-body text-sm text-white/60 mb-6 max-w-xs">
+          השאירו פרטים לשיחת היכרות קצרה — ללא עלות וללא התחייבות.
         </p>
 
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-12 pb-12 border-b border-white/10 w-full max-w-3xl">
-          {CREDENTIALS.map((c) => (
-            <div key={c.label} className="flex items-center gap-2 text-white/85">
-              <span className="material-symbols-outlined text-[#d4af37] text-xl flex-shrink-0">{c.icon}</span>
-              <span className="font-label text-xs sm:text-sm tracking-wide">{c.label}</span>
-            </div>
-          ))}
-        </div>
-
         {status === "success" ? (
-          <div className="bg-white p-8 text-center w-full max-w-md mx-auto shadow-2xl">
-            <h3 className="font-headline font-black text-2xl text-primary mb-2">תודה רבה!</h3>
-            <p className="font-body text-secondary">קיבלנו את פנייתך. נחזור אליך בהקדם לשיחה.</p>
+          <div className="bg-white p-6 text-center w-full max-w-sm mx-auto shadow-xl">
+            <h3 className="font-headline font-black text-xl text-primary mb-1">תודה רבה!</h3>
+            <p className="font-body text-sm text-secondary">קיבלנו את פנייתך. נחזור אליך בהקדם לשיחה.</p>
           </div>
         ) : (
           <>
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-2xl mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 w-full max-w-xs mx-auto">
               <input
                 type="text"
                 placeholder="שם מלא"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="flex-1 w-full bg-white text-primary placeholder-secondary/60 px-6 py-5 focus:outline-none focus:ring-4 focus:ring-[#d4af37]/50 font-body rounded-none"
+                className="w-full bg-white text-primary placeholder-secondary px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
               />
               <input
                 type="tel"
@@ -103,26 +84,27 @@ export default function HomeCtaForm({ eyebrow, heading, placement }: HomeCtaForm
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
-                className="flex-1 w-full bg-white text-primary placeholder-secondary/60 px-6 py-5 focus:outline-none focus:ring-4 focus:ring-[#d4af37]/50 font-body rounded-none"
+                className="w-full bg-white text-primary placeholder-secondary px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
               />
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="w-full sm:w-auto bg-[#d4af37] text-[#1a1206] px-10 py-5 font-headline font-black text-lg uppercase tracking-widest hover:bg-[#e8c34f] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 disabled:opacity-50 whitespace-nowrap"
+                className="w-full bg-white text-primary px-8 py-3.5 font-headline font-black text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors disabled:opacity-50"
               >
-                {status === "submitting" ? "שולח..." : "דברו איתי עכשיו"}
+                {status === "submitting" ? "שולח..." : "דברו איתי"}
               </button>
             </form>
             {status === "error" && (
-              <p className="font-body text-sm text-red-400 mt-4">
+              <p className="font-body text-xs text-red-300 mt-3">
                 משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות ישירות בטלפון 052-8345799.
               </p>
             )}
-            <p className="font-body text-white/50 text-sm mt-6">
-              ייעוץ ראשוני ללא עלות וללא התחייבות · מענה אישי תוך יום עסקים
-            </p>
           </>
         )}
+
+        <p className="font-label text-[10px] text-white/35 tracking-wide mt-5">
+          {CREDENTIALS_LINE}
+        </p>
       </div>
     </section>
   );
