@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingBar from "@/components/FloatingBar";
-import LoadingScreen from "@/components/LoadingScreen";
 import "./globals.css";
 import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -106,8 +104,10 @@ export default async function RootLayout({
   return (
     <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable, inter.variable)}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
           rel="stylesheet"
         />
         <script
@@ -119,12 +119,10 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="bg-background text-on-surface font-body pb-[10vh] sm:pb-0">
+      <body className="bg-background text-on-surface font-body">
         <PostHogProvider>
-          <LoadingScreen />
           <Navbar />
           <main className="min-h-screen">{children}</main>
-          <FloatingBar />
           <Footer />
         </PostHogProvider>
         <Analytics />

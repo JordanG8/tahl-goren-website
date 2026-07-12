@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
+import CtaSection from '@/components/CtaSection';
 
 export const metadata: Metadata = {
   title: "סרטונים ותוכן מקצועי | טל גורן אדריכלית",
@@ -228,7 +229,12 @@ export default async function Videos() {
         </div>
       </section>
 
-      {/* CTA */}
+      <CtaSection
+        title="ראיתם משהו שדיבר אליכם?"
+        subtitle="בואו נשב יחד ונדבר על הבית הבא שלכם — פגישת ייעוץ ראשונה ללא עלות."
+      />
+
+      {/* Social follow CTA */}
       <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">

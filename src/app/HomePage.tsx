@@ -55,7 +55,7 @@ export default function HomePage({ projects }: Props) {
   return (
     <>
       {/* 1. HERO */}
-      <section className="relative h-[100svh] w-full overflow-hidden">
+      <section className="relative h-[100svh] w-full overflow-hidden -mt-20 sm:-mt-24">
         {heroVideos.map((src, i) => (
           <video
             key={src}

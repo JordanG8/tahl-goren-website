@@ -61,15 +61,24 @@ export default function FaqPage() {
             <p className="text-lg text-secondary mb-10 max-w-2xl leading-relaxed">
               אני כאן כדי לעזור. דברו איתי ויחד נבין מה המסלול הנכון עבור הפרויקט שלכם.
             </p>
-            <a
-              href="https://wa.me/972528345799"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
-            >
-              שלחו לי הודעה בוואטסאפ
-              <span className="material-symbols-outlined text-lg">chat</span>
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
+              >
+                לקביעת פגישת ייעוץ
+                <span className="material-symbols-outlined text-lg">arrow_back</span>
+              </Link>
+              <a
+                href="https://wa.me/972528345799"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 border border-primary/30 text-primary px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-primary/5 transition-colors"
+              >
+                שלחו לי הודעה בוואטסאפ
+                <span className="material-symbols-outlined text-lg">chat</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

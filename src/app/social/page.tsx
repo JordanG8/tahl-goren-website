@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { siteData } from '@/data/siteData';
+import CtaSection from '@/components/CtaSection';
 
 export const metadata: Metadata = {
   title: "רשתות חברתיות וקהילה | טל גורן אדריכלית",
@@ -99,6 +100,11 @@ export default function Social() {
           </div>
         </div>
       </section>
+
+      <CtaSection
+        title="בואו נהפוך את זה לבית אמיתי"
+        subtitle="מעבר לרשתות החברתיות — אני כאן בשבילכם לשיחה אישית על הפרויקט שלכם."
+      />
     </>
   );
 }
