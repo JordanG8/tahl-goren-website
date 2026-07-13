@@ -69,6 +69,7 @@ const localBusinessJsonLd = {
     "https://www.instagram.com/tahlgoren/",
     "https://www.facebook.com/tahlgoren",
     "https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/",
+    "https://maps.app.goo.gl/6hAN8p1iuDtFnb77A",
   ],
   aggregateRating: {
     "@type": "AggregateRating",
