@@ -53,7 +53,7 @@ export const siteData = {
     "title": "בית משפחת ש' במושב מאור",
     "location": "מושב מאור",
     "image": "/images/projects/sh-maor/optimized/%D7%90%D7%99%D7%97%D7%A1%D7%95%D7%9F%20%D7%90%D7%A8%D7%95%D7%9F%20%D7%A7%D7%99%D7%A8%20%D7%91%D7%97%D7%93%D7%A8%20%D7%A9%D7%99%D7%A0%D7%94.webp",
-    "description": "בית מגורים בשטח של כ-190 מ\"ר.",
+    "description": "בית מגורים משפחתי בשטח של כ-190 מ\"ר, שתוכנן במושב מאור תוך התאמה מדוקדקת לצרכי המשפחה ולתקציב שהוגדר מראש.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a9-%d7%91%d7%9e%d7%95%d7%a9%d7%91-%d7%9e%d7%90%d7%95%d7%a8/",
     "status": "completed"
   },
@@ -62,7 +62,7 @@ export const siteData = {
     "title": "בית משפחת שק' במאור",
     "location": "מושב מאור",
     "image": "/images/projects/shak-maor/optimized/%D7%91%D7%95%D7%A6%D7%A8%20%D7%A2%D7%A5%20%D7%91%D7%9E%D7%98%D7%91%D7%97.webp",
-    "description": "בית בן כ-240 מ\"ר.",
+    "description": "בית מגורים בן כ-240 מ\"ר במושב מאור, שתוכנן כך שינצל את שטח המגרש בצורה חכמה ויגדל בנוחות יחד עם המשפחה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a9%d7%a7-%d7%91%d7%9e%d7%90%d7%95%d7%a8/",
     "status": "completed"
   },
@@ -71,7 +71,7 @@ export const siteData = {
     "title": "בית משפחת ס' בבנימינה",
     "location": "בנימינה",
     "image": "/images/projects/s-binyamina/optimized/20200617_113746.webp",
-    "description": "בית בן כ-260 מ\"ר, ב-2 קומות.",
+    "description": "בית מגורים דו-קומתי בבנימינה, בשטח של כ-260 מ\"ר, שתוכנן לחלוקה נוחה בין קומת היום לקומת חדרי השינה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a1-%d7%91%d7%91%d7%a0%d7%99%d7%9e%d7%99%d7%a0%d7%94/",
     "status": "completed"
   },
@@ -80,7 +80,7 @@ export const siteData = {
     "title": "בית משפחת ר' באור עקיבא",
     "location": "אור עקיבא",
     "image": "/images/projects/r-or-akiva/optimized/%D7%91%D7%99%D7%AA%20%D7%91%D7%A2%D7%99%D7%A6%D7%95%D7%91%20%D7%9E%D7%99%D7%A0%D7%99%D7%9E%D7%9C%D7%99%D7%A1%D7%98%D7%99.webp",
-    "description": "בית בן כ-270 מ\"ר.",
+    "description": "בית מגורים מרווח בן כ-270 מ\"ר באור עקיבא, שתוכנן בסגנון מינימליסטי ונקי לאורך כל שלבי התכנון והבנייה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a8-%d7%91%d7%90%d7%95%d7%a8-%d7%a2%d7%a7%d7%99%d7%91%d7%90/",
     "status": "completed"
   },
@@ -89,7 +89,7 @@ export const siteData = {
     "title": "בית משפחת ט' במושב מאור",
     "location": "מושב מאור",
     "image": "/images/projects/t-maor/optimized/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA%20%D7%91%D7%99%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99.webp",
-    "description": "בית מגורים בן כ-200 מ\"ר.",
+    "description": "בית מגורים פרטי בן כ-200 מ\"ר במושב מאור, שתוכנן בליווי צמוד מהרעיון הראשוני ועד לקבלת המפתח.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%98-%d7%91%d7%9e%d7%95%d7%a9%d7%91-%d7%9e%d7%90%d7%95%d7%a8/",
     "status": "completed"
   },
@@ -98,7 +98,7 @@ export const siteData = {
     "title": "בית משפחת ש' בקציר",
     "location": "קציר",
     "image": "/images/projects/sh-katzir/optimized/IMG_1728.webp",
-    "description": "בית מגורים בן כ-200 מ\"ר.",
+    "description": "בית מגורים בן כ-200 מ\"ר בקציר, שתוכנן תוך התאמה לתנאי השטח ולאורח החיים של המשפחה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a9-%d7%91%d7%a7%d7%a6%d7%99%d7%a8/",
     "status": "completed"
   },
@@ -107,7 +107,7 @@ export const siteData = {
     "title": "בית משפחת נו' בזכרון יעקב",
     "location": "זכרון יעקב",
     "image": "/images/projects/n-zichron-2/optimized/IMG_6047.webp",
-    "description": "בית מגורים בן כ-230 מ\"ר.",
+    "description": "בית מגורים בן כ-230 מ\"ר בזכרון יעקב, שתוכנן ברוגע ובתשומת לב לכל פרט תפקודי בבית.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a0-%d7%91%d7%96%d7%9b%d7%a8%d7%95%d7%9f-%d7%99%d7%a2%d7%a7%d7%91-2/",
     "status": "completed"
   },
@@ -116,7 +116,7 @@ export const siteData = {
     "title": "בית משפחת ה' באור עקיבא",
     "location": "אור עקיבא",
     "image": "/images/projects/h-or-akiva/optimized/IMG_4517-1.webp",
-    "description": "בית מגורים בן כ-245 מ\"ר.",
+    "description": "בית מגורים בן כ-245 מ\"ר באור עקיבא, שתוכנן במטרה למקסם כל מטר שטח בצורה פונקציונלית.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%94-%d7%91%d7%90%d7%95%d7%a8-%d7%a2%d7%a7%d7%99%d7%91%d7%90/",
     "status": "completed"
   },
@@ -125,7 +125,7 @@ export const siteData = {
     "title": "בית משפחת ו' בגבעת עדה",
     "location": "גבעת עדה",
     "image": "/images/projects/v-givat-ada-2/optimized/IMG_4288.webp",
-    "description": "בית מגורים בן כ-360 מ\"ר.",
+    "description": "בית מגורים מרווח בן כ-360 מ\"ר בגבעת עדה, שתוכנן לבית משפחתי גדול עם חלוקה נוחה בין המרחבים הציבוריים לפרטיים.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%95-%d7%91%d7%92%d7%91%d7%a2%d7%aa-%d7%a2%d7%93%d7%94-2/",
     "status": "completed"
   },
@@ -134,7 +134,7 @@ export const siteData = {
     "title": "בית משפחת ני' בזכרון יעקב",
     "location": "זכרון יעקב",
     "image": "/images/projects/ni-zichron/optimized/IMG_2115a%20-1.webp",
-    "description": "בית מגורים בן כ-170 מ\"ר.",
+    "description": "בית מגורים קומפקטי ויעיל בן כ-170 מ\"ר בזכרון יעקב, שתוכנן כך שכל מטר בו יעבוד בשביל המשפחה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a0-%d7%91%d7%96%d7%9b%d7%a8%d7%95%d7%9f-%d7%99%d7%a2%d7%a7%d7%91/",
     "status": "completed"
   },
@@ -143,7 +143,7 @@ export const siteData = {
     "title": "בית משפחת וו' בגבעת עדה",
     "location": "גבעת עדה",
     "image": "/images/projects/v-givat-ada/optimized/IMG_1555_1.webp",
-    "description": "בית מגורים בן כ-200 מ\"ר.",
+    "description": "בית מגורים בן כ-200 מ\"ר בגבעת עדה, שתוכנן בליווי אישי צמוד מהשלב הראשוני ועד הכניסה הביתה.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%95-%d7%91%d7%92%d7%91%d7%a2%d7%aa-%d7%a2%d7%93%d7%94/",
     "status": "completed"
   },
@@ -152,7 +152,7 @@ export const siteData = {
     "title": "בית משפחת פ' בפרדס חנה",
     "location": "פרדס חנה",
     "image": "/images/projects/p-pardes-hanna/optimized/%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA%20%D7%91%D7%99%D7%AA%20%D7%97%D7%9D.webp",
-    "description": "בית בן כ-200 מ\"ר.",
+    "description": "בית מגורים בן כ-200 מ\"ר בפרדס חנה, שתוכנן תוך שילוב בין דרישות המשפחה למגבלות המגרש והתקציב.",
     "originalLink": "https://talgoren.co.il/%d7%91%d7%99%d7%aa-%d7%9e%d7%a9%d7%a4%d7%97%d7%aa-%d7%a4-%d7%91%d7%a4%d7%a8%d7%93%d7%a1-%d7%97%d7%a0%d7%94/",
     "status": "completed"
   },

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { articles, articlesBySlug, type Article } from "@/data/articlesContent";
 import Breadcrumb from "@/components/Breadcrumb";
+import ArticleAuthorBox from "@/components/ArticleAuthorBox";
 
 export async function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -44,10 +45,16 @@ function ArticleJsonLd({ article }: { article: Article }) {
       "@type": "Person",
       name: "טל גורן",
       url: "https://talgoren.co.il/about",
+      jobTitle: "אדריכלית רשויה ומורשית היתר",
+      image: "https://talgoren.co.il/images/tahl-portrait.jpg",
     },
     publisher: {
       "@type": "Organization",
       name: "טל גורן אדריכלות",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://talgoren.co.il/images/logo-v2.png",
+      },
     },
   };
   return (
@@ -204,11 +211,13 @@ export default async function ArticlePage(
       {/* Content */}
       <article className="py-16 md:py-24 px-8" dir="rtl">
         <div className="max-w-3xl mx-auto">
-          {/* Intro */}
-          <p className="text-secondary text-lg md:text-xl leading-relaxed mb-12 font-body">
-            {article.excerpt}
-          </p>
-          <div className="w-12 h-[2px] bg-secondary mb-12 mr-0 ml-auto" />
+          {/* Intro / quick answer — direct answer up top for readers and AI search */}
+          <div className="mb-12 p-6 md:p-8 bg-surface-container-low border-r-4 border-tertiary">
+            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-tertiary block mb-2">בקצרה</span>
+            <p className="text-primary text-lg md:text-xl leading-relaxed font-body font-medium">
+              {article.excerpt}
+            </p>
+          </div>
 
           {/* Series Navigation Card */}
           {isSeries && (
@@ -381,6 +390,8 @@ export default async function ArticlePage(
               </span>
             </Link>
           </div>
+
+          <ArticleAuthorBox updatedAt={article.updatedAt} />
         </div>
       </article>
 

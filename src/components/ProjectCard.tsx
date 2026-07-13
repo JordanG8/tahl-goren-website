@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { projectsBySlug } from '@/data/projectsContent';
 
 export default function ProjectCard({ project }: { project: { id: string; title: string; location: string; image: string; originalLink?: string } }) {
+  const teaser = projectsBySlug[project.id]?.description;
+
   return (
     <Link
       href={`/projects/${project.id}`}
@@ -17,12 +20,17 @@ export default function ProjectCard({ project }: { project: { id: string; title:
           loading="lazy"
         />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
-        <div className="flex flex-col text-right">
-          <h3 className="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">{project.title}</h3>
-          <span className="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">{project.location}</span>
+      <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex flex-col gap-1.5">
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col text-right">
+            <h3 className="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">{project.title}</h3>
+            <span className="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">{project.location}</span>
+          </div>
+          <span className="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
         </div>
-        <span className="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
+        {teaser && (
+          <p className="font-body text-white/70 text-[11px] leading-snug text-right line-clamp-2">{teaser}</p>
+        )}
       </div>
     </Link>
   );

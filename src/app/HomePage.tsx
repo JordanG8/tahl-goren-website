@@ -8,6 +8,7 @@ import ReviewsCarousel from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
 import { aboutExcerpt } from '@/data/siteData';
+import { packages as homePackages } from '@/data/packagesContent';
 import { trackLead } from '@/lib/trackLead';
 
 
@@ -132,6 +133,26 @@ export default function HomePage({ projects }: Props) {
         placement="home_cta_top"
       />
 
+      {/* LEAD MAGNET — free plot checklist */}
+      <section className="py-16 md:py-20 bg-surface -mt-1 border-y border-outline/10">
+        <div className="max-w-5xl mx-auto px-8">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 text-center md:text-right">
+            <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center flex-shrink-0">
+              <span className="material-symbols-outlined text-primary text-3xl">checklist</span>
+            </div>
+            <div className="flex-1">
+              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מתנה ממני</span>
+              <h2 className="font-headline font-black text-2xl sm:text-3xl text-primary tracking-tight mt-2">צ&apos;ק-ליסט חינמי: מה בודקים במגרש לפני שבונים</h2>
+              <p className="font-body text-secondary mt-2 max-w-xl">12 נקודות מפתח שיחסכו לכם טעויות יקרות — עוד לפני שקבעתם פגישת ייעוץ.</p>
+            </div>
+            <Link href="/resources/plot-checklist" className="flex-shrink-0 inline-flex items-center gap-2 bg-primary text-white px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-secondary transition-colors">
+              לצ&apos;ק-ליסט החינמי
+              <span className="material-symbols-outlined text-lg">arrow_back</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 4. TESTIMONIALS — Google Reviews */}
       <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
         <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
@@ -180,6 +201,47 @@ export default function HomePage({ projects }: Props) {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* 3.5 PACKAGES / PRICING */}
+      <section className="py-24 lg:py-32 bg-surface-container -mt-1">
+        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
+          <div className="mb-16 text-center space-y-4">
+            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מסלולי ליווי</span>
+            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">איזה מסלול מתאים לכם?</h2>
+            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">שלושה מסלולי ליווי אדריכלי, שקופים ומוגדרים מראש — כדי שתדעו בדיוק מה כלול ותוכלו לבחור את המסלול שמתאים לתקציב ולצרכים שלכם.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {homePackages.map((pkg) => (
+              <Link
+                key={pkg.id}
+                href="/packages"
+                className={`group flex flex-col text-right border transition-all duration-300 hover:-translate-y-1 ${
+                  pkg.recommended ? "border-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
+                }`}
+              >
+                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-accent text-white" : "bg-primary text-white"}`}>
+                  {pkg.recommended && (
+                    <span className="inline-block bg-white/20 font-label text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 mb-2">
+                      הבחירה המומלצת
+                    </span>
+                  )}
+                  <h3 className="font-headline font-black text-lg leading-tight">{pkg.name}</h3>
+                </div>
+                <div className="px-6 py-5 bg-surface flex-1 flex flex-col justify-between">
+                  <div>
+                    <span className="font-headline font-black text-3xl text-primary">{pkg.price.toLocaleString("he-IL")} ₪</span>
+                    <p className="font-body text-xs text-secondary mt-3 leading-relaxed">{pkg.subtitle}</p>
+                  </div>
+                  <div className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors mt-6">
+                    <span>לפרטים המלאים</span>
+                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -346,8 +408,8 @@ export default function HomePage({ projects }: Props) {
               <div className="space-y-10 mt-10">
                 {[
                   { icon: 'verified', title: 'מומחיות מוכחת', text: 'למעלה מ-25 שנות ניסיון בתכנון בתים פרטיים, שיפוצים והרחבות. כל פרויקט מקבל את מלוא תשומת הלב והמקצועיות.', fill: true },
-                  { icon: 'bolt', title: 'תהליך יעיל ומהיר', text: 'ניהול פרויקט מסודר, עמידה בלו"ז ותקציב. אנחנו יודעים לנווט את הביורוקרטיה ולהביא תוצאות בזמן.', fill: false },
-                  { icon: 'family_restroom', title: 'ליווי אישי ומשפחתי', text: 'אני מלווה אתכם לאורך כל הדרך, מהפגישה הראשונה ועד הכניסה הביתה. תמיד זמינה, תמיד עם תשובה.', fill: false },
+                  { icon: 'account_balance_wallet', title: 'שליטה מלאה בתקציב', text: 'אני מכירה את החשש מ"בור" תקציבי ללא תחתית. לכן אני בונה איתכם תקציב ריאלי כבר בפגישה הראשונה, מלווה אתכם צמוד מול הוועדות והיועצים, ודואגת שהחלטות תכנוניות לא יהפכו בהמשך לחריגות ולטעויות יקרות.', fill: false },
+                  { icon: 'family_restroom', title: 'ליווי אישי שחוסך לכם כאב ראש', text: 'אני מלווה אתכם לאורך כל הדרך, מהפגישה הראשונה ועד הכניסה הביתה — כולל מול הבירוקרטיה שמלחיצה הכי הרבה. תמיד זמינה, תמיד עם תשובה.', fill: false },
                 ].map((v) => (
                   <div key={v.title} className="flex gap-6 items-start">
                     <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center flex-shrink-0">

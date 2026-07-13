@@ -89,6 +89,30 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Packages teaser */}
+      <section className="py-20 px-8 bg-surface">
+        <div className="max-w-5xl mx-auto p-12 bg-primary text-right relative overflow-hidden">
+          <div className="relative z-10">
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">מסלולי ליווי</span>
+            <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight leading-tight text-white mt-4 mb-6">
+              שלושה מסלולי ליווי, מחיר ותכולה שקופים
+            </h2>
+            <p className="text-lg text-white/70 mb-10 max-w-2xl leading-relaxed">
+              בסיסי, משתלם או Total Design — כל מסלול מוגדר מראש כך שתדעו
+              בדיוק מה כלול ותוכלו לבחור את המסלול המתאים לתקציב ולצרכים
+              שלכם.
+            </p>
+            <Link
+              href="/packages"
+              className="inline-flex items-center justify-center gap-3 bg-white text-primary px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-surface-container-highest transition-colors"
+            >
+              למסלולים ולמחירים
+              <span className="material-symbols-outlined text-lg">arrow_back</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Service areas */}
       <section className="py-20 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">

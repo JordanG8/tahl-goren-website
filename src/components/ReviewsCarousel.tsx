@@ -59,9 +59,9 @@ export default function ReviewsCarousel() {
           >
             {reviewImages.map((img, i) => (
               <SwiperSlide key={i} className="rounded-2xl bg-white border border-gray-100 p-2 h-[420px] flex flex-col items-center justify-center transition-all duration-300">
-                <img 
-                  src={"/images/reviews/" + encodeURIComponent(img)} 
-                  alt="המלצת לקוח" 
+                <img
+                  src={"/images/reviews/" + encodeURIComponent(img)}
+                  alt={`המלצת לקוח מס' ${i + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`}
                   loading={i === 0 ? "eager" : "lazy"}
                   fetchPriority={i === 0 ? "high" : "low"}
                   decoding="async"
@@ -129,7 +129,7 @@ export default function ReviewsCarousel() {
           <div className="animate-scroll-left">
             {[...row1, ...row1].map((img, i) => (
               <div key={i} className="review-card">
-                <img src={"/images/reviews/" + encodeURIComponent(img)} alt="המלצת לקוח" loading="lazy" />
+                <img src={"/images/reviews/" + encodeURIComponent(img)} alt={`המלצת לקוח מס' ${(i % row1.length) + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`} loading="lazy" />
               </div>
             ))}
           </div>
@@ -140,7 +140,7 @@ export default function ReviewsCarousel() {
           <div className="animate-scroll-right">
             {[...row2, ...row2].map((img, i) => (
               <div key={i} className="review-card">
-                <img src={"/images/reviews/" + encodeURIComponent(img)} alt="המלצת לקוח" loading="lazy" />
+                <img src={"/images/reviews/" + encodeURIComponent(img)} alt={`המלצת לקוח מס' ${half + (i % row2.length) + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`} loading="lazy" />
               </div>
             ))}
           </div>
