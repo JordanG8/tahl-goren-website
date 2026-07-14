@@ -14,6 +14,33 @@ import { trackLead } from '@/lib/trackLead';
 
 const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
+const HERO_LOGO_ID = 'site-logo-hero';
+const NAV_LOGO_ID = 'site-logo-navbar';
+const DOCK_SCROLL_THRESHOLD = 20;
+
+type LogoRect = { top: number; left: number; width: number; height: number };
+
+function readRect(el: Element | null): LogoRect | null {
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  return { top: r.top, left: r.left, width: r.width, height: r.height };
+}
+
+// The navbar's own logo shrinks (h-12/h-16 -> h-9/h-10) via a separate
+// component's scroll listener, which commits a frame or two after ours.
+// Poll until that class swap has actually landed before trusting its rect,
+// instead of guessing a fixed delay (which would read a stale size and
+// make the clone "jump-correct" partway through the flight).
+function waitForDockedNavRect(onReady: (rect: LogoRect | null) => void, attempt = 0) {
+  const el = document.getElementById(NAV_LOGO_ID);
+  const isDockedSize = !!el && (el.className.includes('h-9') || el.className.includes('h-10'));
+  if (isDockedSize || attempt > 15) {
+    onReady(readRect(el));
+    return;
+  }
+  requestAnimationFrame(() => waitForDockedNavRect(onReady, attempt + 1));
+}
+
 const featuredArticles = [
   { slug: "building-cost-total", title: "כמה תעלה לנו הבניה בסך הכל?", image: "/images/blog/building-cost-total.png", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? המדריך המלא להכנת תקציב ריאלי לבניית בית פרטי בישראל." },
   { slug: "choose-architect", title: "איך בוחרים אדריכלית לבניית בית פרטי?", image: "/images/blog/choose-architect.png", excerpt: "המדריך המלא לבחירת האדריכלית שתוביל את הפרויקט הכי חשוב בחיים שלכם." },
@@ -53,8 +80,90 @@ export default function HomePage({ projects }: Props) {
     }
   }, [activeVideo]);
 
+  // Logo dock: the monochrome hero logo "flies" up into the navbar's logo
+  // slot and turns to full color the moment the user scrolls past the hero.
+  const [docked, setDocked] = useState(false);
+  const [heroRect, setHeroRect] = useState<LogoRect | null>(null);
+  const [navRect, setNavRect] = useState<LogoRect | null>(null);
+  const [transitionsReady, setTransitionsReady] = useState(false);
+  const dockedRef = useRef(false);
+
+  useEffect(() => {
+    // Measuring a DOM rect right after mount (to seed the fixed clone's
+    // starting position) has to happen in an effect: it needs the real
+    // client-rendered layout, which doesn't exist during SSR.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
+
+    const initialDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
+    dockedRef.current = initialDocked;
+    setDocked(initialDocked);
+    if (initialDocked) {
+      waitForDockedNavRect(setNavRect);
+    }
+
+    // Skip the initial mount transition so the logo doesn't animate in from
+    // nowhere on first paint — only actual scroll crossings should animate.
+    const readyFrame = requestAnimationFrame(() => setTransitionsReady(true));
+
+    const handleScroll = () => {
+      const nowDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
+      if (nowDocked !== dockedRef.current) {
+        dockedRef.current = nowDocked;
+        setDocked(nowDocked);
+        if (nowDocked) {
+          waitForDockedNavRect(setNavRect);
+        } else {
+          setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
+        }
+      }
+    };
+    const handleResize = () => {
+      if (!dockedRef.current) {
+        setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(readyFrame);
+    };
+  }, []);
+
+  const activeLogoRect = docked ? navRect ?? heroRect : heroRect ?? navRect;
+
   return (
     <>
+      {/* Flying logo clone: docks white-in-hero -> colored-in-navbar on scroll */}
+      {activeLogoRect && (
+        <div
+          id="hero-logo-clone"
+          aria-hidden
+          className="fixed z-[60] pointer-events-none top-0 left-0"
+          style={{
+            width: activeLogoRect.width,
+            height: activeLogoRect.height,
+            transform: `translate3d(${activeLogoRect.left}px, ${activeLogoRect.top}px, 0)`,
+            filter: docked ? 'none' : 'brightness(0) invert(1)',
+            transition: transitionsReady
+              ? 'transform 480ms cubic-bezier(0.16,1,0.3,1), width 480ms cubic-bezier(0.16,1,0.3,1), height 480ms cubic-bezier(0.16,1,0.3,1), filter 320ms ease 80ms'
+              : 'none',
+          }}
+        >
+          <Image
+            src="/images/logo-v2.png"
+            alt=""
+            width={280}
+            height={94}
+            className="w-full h-full object-contain drop-shadow-lg"
+            priority
+          />
+        </div>
+      )}
+
       {/* 1. HERO */}
       <section className="relative h-[100svh] w-full overflow-hidden -mt-20 sm:-mt-24">
         {heroVideos.map((src, i) => (
@@ -74,7 +183,18 @@ export default function HomePage({ projects }: Props) {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)' }} />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="font-headline font-black text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight drop-shadow-lg">טל גורן אדריכלות</h1>
+          <h1 className="sr-only">טל גורן אדריכלות</h1>
+          <div className="w-[240px] sm:w-[320px] lg:w-[420px]">
+            <Image
+              id={HERO_LOGO_ID}
+              src="/images/logo-v2.png"
+              alt=""
+              width={280}
+              height={94}
+              className="w-full h-auto object-contain opacity-0"
+              priority
+            />
+          </div>
           <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-xl lg:text-2xl tracking-wide drop-shadow-md max-w-2xl">ליווי מקצועי ואישי לחווית בניה רגועה</p>
           <p className="mt-2 font-body text-white/70 text-base sm:text-lg lg:text-xl drop-shadow-md max-w-xl">תכנון אדריכלי חכם לבית שגדל עם המשפחה</p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
