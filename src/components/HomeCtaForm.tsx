@@ -69,23 +69,25 @@ export default function HomeCtaForm({ eyebrow, heading, placement, headingTag = 
           </div>
         ) : (
           <>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 w-full max-w-xs mx-auto">
-              <input
-                type="text"
-                placeholder="שם מלא"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full bg-white text-primary placeholder-secondary px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
-              />
-              <input
-                type="tel"
-                placeholder="מספר טלפון"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                className="w-full bg-white text-primary placeholder-secondary px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
-              />
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 w-full max-w-sm mx-auto">
+              <div className="flex flex-row gap-2.5">
+                <input
+                  type="text"
+                  placeholder="שם מלא"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="min-w-0 flex-1 bg-white text-primary placeholder-secondary px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
+                />
+                <input
+                  type="tel"
+                  placeholder="מספר טלפון"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="min-w-0 flex-1 bg-white text-primary placeholder-secondary px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#A96F57] font-body text-sm rounded-none"
+                />
+              </div>
               <button
                 type="submit"
                 disabled={status === "submitting"}

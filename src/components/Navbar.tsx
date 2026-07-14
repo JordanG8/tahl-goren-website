@@ -39,17 +39,25 @@ export default function Navbar() {
           transparent ? 'bg-transparent' : isScrolled ? 'bg-background/95 backdrop-blur-md shadow-md' : 'bg-background shadow-sm'
         }`}
       >
-        <div className={`flex justify-between items-center px-6 sm:px-8 max-w-[1920px] mx-auto transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
+        <div className={`flex justify-between items-center px-6 sm:px-8 max-w-[1920px] mx-auto ${isHome ? '' : 'transition-all duration-300'} ${isScrolled ? 'py-2' : 'py-4'}`}>
           {/* Right side: logo + desktop links */}
           <div className="flex items-center gap-8 flex-shrink-0">
             <Link href="/" className="flex items-center">
               <Image
+                id="site-logo-navbar"
                 src="/images/logo-v2.png"
                 alt="TAL GOREN"
                 width={280}
                 height={94}
-                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
+                className={`w-auto object-contain ${isHome ? '' : 'transition-all duration-300'} ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
                   transparent ? 'brightness-0 invert drop-shadow-md' : ''
+                } ${
+                  // On the homepage the animated hero logo clone always stands in
+                  // visually (docking into this exact slot on scroll), so the
+                  // real logo here stays invisible-but-present for a11y, and its
+                  // size/position must snap instantly (no CSS transition) so the
+                  // clone can measure its true resting rect on the very next frame.
+                  isHome ? 'opacity-0' : 'opacity-100'
                 }`}
                 priority
               />
