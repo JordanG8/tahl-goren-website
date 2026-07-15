@@ -50,10 +50,9 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
-  rating?: { value: number; count: number };
 };
 
-export default function HomePage({ projects, rating }: Props) {
+export default function HomePage({ projects }: Props) {
   const featuredProjects = projects.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -199,16 +198,9 @@ export default function HomePage({ projects, rating }: Props) {
           <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-xl lg:text-2xl tracking-wide drop-shadow-md max-w-2xl">ליווי מקצועי ואישי לחווית בניה רגועה</p>
           <p className="mt-2 font-body text-white/70 text-base sm:text-lg lg:text-xl drop-shadow-md max-w-xl">תכנון אדריכלי חכם לבית שגדל עם המשפחה</p>
 
-          {/* Visible trust strip — the same credentials/rating already live in
+          {/* Visible trust strip — the same credentials already live in
               JSON-LD, surfaced here so human visitors (not just crawlers) see them */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white/85">
-            {rating && rating.count > 0 && (
-              <Link href="/testimonials" className="flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
-                <span className="material-symbols-outlined text-yellow-400 text-lg" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden="true">star</span>
-                <span dir="rtl" className="font-label text-sm">{rating.value.toFixed(1)} ({rating.count} ביקורות בגוגל)</span>
-              </Link>
-            )}
-            <span className="hidden sm:inline text-white/30">·</span>
             <span className="font-label text-sm">אדריכלית רשויה ומורשית היתר · מס&apos; רישיון 11085135</span>
             <span className="hidden sm:inline text-white/30">·</span>
             <span className="font-label text-sm">בוגרת הטכניון בהצטיינות</span>
