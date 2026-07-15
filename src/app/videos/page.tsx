@@ -31,28 +31,28 @@ export default async function Videos() {
     'group-hover:bg-surface-container-low',
   ];
 
-  const videosJsonLd = videos.map((video: any) => ({
+  // Note: no VideoObject structured data here. The source data links every
+  // entry to the same YouTube *channel* URL rather than a real per-video page,
+  // so there is no genuine embedUrl or uploadDate to mark up — fabricating
+  // those (as the previous version did, with an identical hardcoded date on
+  // every item) is exactly the kind of invented structured data that risks a
+  // manual action. Add real VideoObject markup once each entry has its own
+  // verifiable video URL and publish date.
+  const breadcrumbJsonLd = {
     "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "name": video.title,
-    "description": video.description,
-    "thumbnailUrl": [video.thumbnail],
-    "uploadDate": "2024-01-01T08:00:00+02:00",
-    "contentUrl": video.url,
-    "embedUrl": video.url.includes("youtube.com") 
-      ? video.url.replace("watch?v=", "embed/") 
-      : video.url,
-  }));
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+      { "@type": "ListItem", position: 2, name: "סרטונים", item: "https://talgoren.co.il/videos" },
+    ],
+  };
 
   return (
     <>
-      {videosJsonLd.map((jsonLd: any, idx: number) => (
-        <script
-          key={idx}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">

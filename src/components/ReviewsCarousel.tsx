@@ -62,8 +62,8 @@ export default function ReviewsCarousel() {
                 <img
                   src={"/images/reviews/" + encodeURIComponent(img)}
                   alt={`המלצת לקוח מס' ${i + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "low"}
+                  loading="lazy"
+                  fetchPriority="low"
                   decoding="async"
                   className="w-full max-h-full object-contain rounded-xl"
                 />

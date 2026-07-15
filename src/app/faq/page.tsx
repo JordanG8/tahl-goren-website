@@ -26,11 +26,24 @@ export default function FaqPage() {
     })),
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+      { "@type": "ListItem", position: 2, name: "שאלות ותשובות", item: "https://talgoren.co.il/faq" },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">

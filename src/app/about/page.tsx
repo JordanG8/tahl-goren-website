@@ -54,9 +54,22 @@ const ctaHeading = `מתכננים לבנות בשרון הצפוני, בייש�
 const ctaText = `אני מזמינה אתכם לשיחת ייעוץ ראשונית, ללא התחייבות, כדי שנכיר ונראה איך נוכל להגשים יחד את הבית שלכם.`;
 const ctaSignature = `איתכם בדרך להגשמת הבית, טל גורן`;
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+    { "@type": "ListItem", position: 2, name: "אודות", item: "https://talgoren.co.il/about" },
+  ],
+};
+
 export default function About() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       {/* ======== HERO — SPLIT SCREEN ======== */}
       <section className="min-h-[90vh] grid grid-cols-1 lg:grid-cols-2 -mt-24">

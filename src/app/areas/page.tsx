@@ -16,8 +16,8 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "ראשי", item: "/" },
-    { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "/areas" },
+    { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+    { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "https://talgoren.co.il/areas" },
   ],
 };
 

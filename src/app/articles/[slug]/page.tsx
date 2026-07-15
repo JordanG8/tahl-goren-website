@@ -32,30 +32,21 @@ export async function generateMetadata(
   };
 }
 
+const ORG_ID = "https://talgoren.co.il/#organization";
+const PERSON_ID = "https://talgoren.co.il/about#person";
+
 function ArticleJsonLd({ article }: { article: Article }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
+    mainEntityOfPage: `https://talgoren.co.il/articles/${article.slug}`,
     headline: article.title,
     description: article.metaDescription,
     image: article.heroImage,
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
-    author: {
-      "@type": "Person",
-      name: "טל גורן",
-      url: "https://talgoren.co.il/about",
-      jobTitle: "אדריכלית רשויה ומורשית היתר",
-      image: "https://talgoren.co.il/images/tahl-portrait.jpg",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "טל גורן אדריכלות",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://talgoren.co.il/images/logo-v2.png",
-      },
-    },
+    author: { "@id": PERSON_ID },
+    publisher: { "@id": ORG_ID },
   };
   return (
     <script
@@ -70,13 +61,13 @@ function BreadcrumbJsonLd({ article }: { article: Article }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "/" },
-      { "@type": "ListItem", position: 2, name: "מאמרים", item: "/articles" },
+      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+      { "@type": "ListItem", position: 2, name: "מאמרים", item: "https://talgoren.co.il/articles" },
       {
         "@type": "ListItem",
         position: 3,
         name: article.title,
-        item: `/articles/${article.slug}`,
+        item: `https://talgoren.co.il/articles/${article.slug}`,
       },
     ],
   };

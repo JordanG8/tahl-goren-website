@@ -14,15 +14,32 @@ const formatPrice = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "OfferCatalog",
-  name: "מסלולי ליווי אדריכלי - טל גורן אדריכלות",
-  itemListElement: packages.map((p) => ({
-    "@type": "Offer",
-    name: p.name,
-    description: p.forWhom,
-    price: p.price,
-    priceCurrency: "ILS",
-  })),
+  "@type": "Service",
+  name: "ליווי אדריכלי לבית פרטי",
+  provider: { "@id": "https://talgoren.co.il/#organization" },
+  areaServed: "IL",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "מסלולי ליווי אדריכלי - טל גורן אדריכלות",
+    itemListElement: packages.map((p) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: p.name, description: p.forWhom },
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        price: p.price,
+        priceCurrency: "ILS",
+      },
+    })),
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+    { "@type": "ListItem", position: 2, name: "מסלולי ליווי", item: "https://talgoren.co.il/packages" },
+  ],
 };
 
 export default function PackagesPage() {
@@ -31,6 +48,10 @@ export default function PackagesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Header */}

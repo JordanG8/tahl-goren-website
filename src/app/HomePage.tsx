@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
-import ReviewsCarousel from '@/components/ReviewsCarousel';
+import ReviewsCarousel from '@/components/ReviewsCarouselLazy';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
 import { aboutExcerpt } from '@/data/siteData';
@@ -23,9 +23,10 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
+  rating?: { value: number; count: number };
 };
 
-export default function HomePage({ projects }: Props) {
+export default function HomePage({ projects, rating }: Props) {
   const featuredProjects = projects.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -77,6 +78,22 @@ export default function HomePage({ projects }: Props) {
           <h1 className="font-headline font-black text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight drop-shadow-lg">טל גורן אדריכלות</h1>
           <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-xl lg:text-2xl tracking-wide drop-shadow-md max-w-2xl">ליווי מקצועי ואישי לחווית בניה רגועה</p>
           <p className="mt-2 font-body text-white/70 text-base sm:text-lg lg:text-xl drop-shadow-md max-w-xl">תכנון אדריכלי חכם לבית שגדל עם המשפחה</p>
+
+          {/* Visible trust strip — the same credentials/rating already live in
+              JSON-LD, surfaced here so human visitors (not just crawlers) see them */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white/85">
+            {rating && rating.count > 0 && (
+              <Link href="/testimonials" className="flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
+                <span className="material-symbols-outlined text-yellow-400 text-lg" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden="true">star</span>
+                <span dir="rtl" className="font-label text-sm">{rating.value.toFixed(1)} ({rating.count} ביקורות בגוגל)</span>
+              </Link>
+            )}
+            <span className="hidden sm:inline text-white/30">·</span>
+            <span className="font-label text-sm">אדריכלית רשויה ומורשית היתר · מס&apos; רישיון 11085135</span>
+            <span className="hidden sm:inline text-white/30">·</span>
+            <span className="font-label text-sm">בוגרת הטכניון בהצטיינות</span>
+          </div>
+
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link href="/projects" className="bg-white text-black px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/80 transition-colors">לפרויקטים</Link>
             <Link href="/contact" className="border-2 border-white text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">שיחת ייעוץ</Link>

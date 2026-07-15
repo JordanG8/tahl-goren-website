@@ -23,9 +23,22 @@ const serviceArticles = [
   return { ...s, ...article };
 });
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+    { "@type": "ListItem", position: 2, name: "שירותים", item: "https://talgoren.co.il/services" },
+  ],
+};
+
 export default function ServicesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Page Header */}
       <section className="py-16 px-8 bg-surface">
         <div className="max-w-6xl mx-auto text-right">

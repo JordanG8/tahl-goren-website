@@ -6,7 +6,6 @@ import { Assistant, Heebo, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { PostHogProvider } from "./providers";
-import { reviews } from "@/data/reviews";
 
 
 const assistant = Assistant({ subsets: ['hebrew'], variable: '--font-assistant' });
@@ -46,24 +45,61 @@ export const metadata: Metadata = {
   },
 };
 
-// Local business structured data (helps Google show the firm in local results / rich cards)
+// Stable identifiers so the same business / person entity is referenced (not
+// re-declared) across every page's structured data.
+const ORG_ID = `${SITE_URL}/#organization`;
+const PERSON_ID = `${SITE_URL}/about#person`;
+
+// The architect, described once with verifiable professional credentials.
+// Reference this via { "@id": PERSON_ID } elsewhere instead of re-declaring it.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": PERSON_ID,
+  name: "טל גורן",
+  jobTitle: "אדריכלית רשויה ומורשית היתר",
+  url: `${SITE_URL}/about`,
+  image: `${SITE_URL}${OG_IMAGE}`,
+  worksFor: { "@id": ORG_ID },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "הטכניון — מכון טכנולוגי לישראל" },
+  hasCredential: [
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "professional license", name: "אדריכלית רשומה, מס' רישום 118121" },
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "professional license", name: "אדריכלית רשויה, מס' רישיון 11085135" },
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "professional license", name: "אדריכלית מורשית היתר, מס' תעודה 01-002-0000009445" },
+  ],
+};
+
+// Local business structured data (helps Google show the firm in local results / rich cards).
+// Note: self-serving review/aggregateRating markup was intentionally removed — reviews about
+// the business, hosted on its own site, are not eligible for review rich results and risk a
+// structured-data manual action. Genuine, visible review text lives on /testimonials, and the
+// durable source of an aggregate rating is the live Google Business Profile (see /api/reviews).
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": ORG_ID,
   name: "טל גורן אדריכלית",
   description: SITE_DESCRIPTION,
   url: SITE_URL,
   image: `${SITE_URL}${OG_IMAGE}`,
   telephone: "+972-52-8345799",
   email: "tahl.goren.arch@gmail.com",
+  priceRange: "₪₪₪",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "רחוב האלה 22",
     addressLocality: "גבעת עדה",
     addressRegion: "מחוז חיפה",
     addressCountry: "IL",
   },
+  // Approximate office coordinates in Givat Ada — verify the exact pin before relying on it.
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 32.4936,
+    longitude: 34.9317,
+  },
   areaServed: ["חיפה והצפון", "השרון", "אזור מנשה", "חוף הכרמל", "זכרון יעקב", "פרדס חנה-כרכור", "בנימינה"],
-  founder: { "@type": "Person", name: "טל גורן", jobTitle: "אדריכלית רשויה" },
+  founder: { "@id": PERSON_ID },
   knowsAbout: ["אדריכלות", "תכנון בתים פרטיים", "עיצוב פנים", "היתרי בנייה"],
   sameAs: [
     "https://www.instagram.com/tahlgoren/",
@@ -71,18 +107,6 @@ const localBusinessJsonLd = {
     "https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/",
     "https://maps.app.goo.gl/6hAN8p1iuDtFnb77A",
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)),
-    bestRating: 5,
-    reviewCount: reviews.length,
-  },
-  review: reviews.map((r) => ({
-    "@type": "Review",
-    author: { "@type": "Person", name: r.name },
-    reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
-    reviewBody: r.text,
-  })),
 };
 
 const websiteJsonLd = {
@@ -90,6 +114,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "טל גורן אדריכלית",
   url: SITE_URL,
+  publisher: { "@id": ORG_ID },
   potentialAction: {
     "@type": "SearchAction",
     target: `${SITE_URL}/articles?q={search_term_string}`,
@@ -114,6 +139,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <script
           type="application/ld+json"

@@ -66,21 +66,16 @@ export default async function AreaPage({
     name: area.h1,
     description: area.metaDescription,
     areaServed: { "@type": "Place", name: area.city },
-    provider: {
-      "@type": "ProfessionalService",
-      name: "טל גורן אדריכלית",
-      telephone: "+972-52-8345799",
-      url: "https://talgoren.co.il",
-    },
+    provider: { "@id": "https://talgoren.co.il/#organization" },
   };
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "/" },
-      { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "/areas" },
-      { "@type": "ListItem", position: 3, name: area.city, item: `/areas/${area.slug}` },
+      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
+      { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "https://talgoren.co.il/areas" },
+      { "@type": "ListItem", position: 3, name: area.city, item: `https://talgoren.co.il/areas/${area.slug}` },
     ],
   };
 

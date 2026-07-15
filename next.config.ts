@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // Canonical host enforcement: www and apex previously both served
+      // identical content with no redirect between them (duplicate-host risk).
+      // The canonical host declared throughout the app's schema/sitemap/robots
+      // is the apex domain, so redirect www → apex.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.talgoren.co.il" }],
+        destination: "https://talgoren.co.il/:path*",
+        permanent: true,
+      },
       // Articles (old Hebrew slugs → new)
       { source: "/%D7%A2%D7%9C%D7%95%D7%99%D7%95%D7%AA-%D7%91%D7%A0%D7%99%D7%94-%D7%95%D7%9E%D7%97%D7%99%D7%A8-%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA", destination: "/articles/building-cost-total", permanent: true },
       { source: "/%D7%AA%D7%9B%D7%A0%D7%95%D7%9F-%D7%91%D7%99%D7%AA-%D7%A4%D7%A8%D7%98%D7%99", destination: "/articles/building-stages", permanent: true },
@@ -73,6 +83,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // Optimized-image responses were serving `max-age=0, must-revalidate`
+    // (forcing a revalidation round trip on every repeat view) even though
+    // the optimizer URLs already carry content-addressed params and are safe
+    // to cache long-lived. Match the immutable caching already applied to
+    // /_next/static assets.
+    minimumCacheTTL: 31536000,
   },
   async headers() {
     return [
@@ -95,7 +111,43 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            // Baseline CSP: same-origin by default, third parties explicitly
+            // allow-listed by what the app actually loads (PostHog, Vercel
+            // Analytics, Google Fonts, Google Maps embed, Google Places API,
+            // MapLibre/CARTO basemap tiles, YouTube embeds, inline JSON-LD
+            // used throughout). 'unsafe-eval' is dev-only (Next.js dev/HMR).
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "base-uri 'self'",
+              "frame-ancestors 'none'",
+              "object-src 'none'",
+              `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== "production" ? " 'unsafe-eval'" : ""} https://*.posthog.com https://va.vercel-scripts.com`,
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' https://fonts.gstatic.com",
+              "worker-src 'self' blob:",
+              "connect-src 'self' https://*.posthog.com https://vitals.vercel-insights.com https://places.googleapis.com https://basemaps.cartocdn.com",
+              "frame-src 'self' https://www.youtube.com https://www.google.com https://maps.google.com",
+            ].join("; "),
+          },
         ],
+      },
+      {
+        // Static public assets (review screenshots, hero videos, etc.) are
+        // content-stable filenames deployed atomically with each build —
+        // safe to cache immutably, matching /_next/static's caching.
+        source: "/images/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        source: "/videos/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
     ];
   },

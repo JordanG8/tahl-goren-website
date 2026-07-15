@@ -44,12 +44,7 @@ function ProjectJsonLd({ project }: { project: ProjectDetail }) {
       name: project.location,
       address: { "@type": "PostalAddress", addressLocality: project.location, addressCountry: "IL" },
     },
-    creator: {
-      "@type": "Person",
-      name: "טל גורן",
-      jobTitle: "אדריכלית",
-      url: "https://talgoren.co.il/about",
-    },
+    creator: { "@id": "https://talgoren.co.il/about#person" },
   };
   return (
     <script
