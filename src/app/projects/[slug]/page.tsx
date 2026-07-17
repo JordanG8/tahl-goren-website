@@ -59,10 +59,29 @@ function BreadcrumbJsonLd({ project }: { project: ProjectDetail }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-      { "@type": "ListItem", position: 2, name: "פרויקטים", item: "https://talgoren.co.il/projects" },
-      { "@type": "ListItem", position: 3, name: "בתים מאוכלסים", item: "https://talgoren.co.il/projects/completed" },
-      { "@type": "ListItem", position: 4, name: project.title, item: `https://talgoren.co.il/projects/${project.slug}` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: { "@id": "https://talgoren.co.il/projects", name: "פרויקטים" },
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: { "@id": "https://talgoren.co.il/projects/completed", name: "בתים מאוכלסים" },
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        item: {
+          "@id": `https://talgoren.co.il/projects/${project.slug}`,
+          name: project.title,
+        },
+      },
     ],
   };
   return (

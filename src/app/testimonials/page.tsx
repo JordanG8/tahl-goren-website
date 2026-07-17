@@ -75,8 +75,16 @@ export default async function Testimonials() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-      { "@type": "ListItem", position: 2, name: "לקוחות מספרים", item: "https://talgoren.co.il/testimonials" },
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: { "@id": "https://talgoren.co.il/testimonials", name: "לקוחות מספרים" },
+      },
     ],
   };
 

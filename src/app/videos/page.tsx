@@ -42,8 +42,16 @@ export default async function Videos() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-      { "@type": "ListItem", position: 2, name: "סרטונים", item: "https://talgoren.co.il/videos" },
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: { "@id": "https://talgoren.co.il/videos", name: "סרטונים" },
+      },
     ],
   };
 

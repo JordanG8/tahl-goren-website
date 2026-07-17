@@ -61,13 +61,23 @@ function BreadcrumbJsonLd({ article }: { article: Article }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-      { "@type": "ListItem", position: 2, name: "מאמרים", item: "https://talgoren.co.il/articles" },
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: { "@id": "https://talgoren.co.il/articles", name: "מאמרים" },
+      },
       {
         "@type": "ListItem",
         position: 3,
-        name: article.title,
-        item: `https://talgoren.co.il/articles/${article.slug}`,
+        item: {
+          "@id": `https://talgoren.co.il/articles/${article.slug}`,
+          name: article.title,
+        },
       },
     ],
   };

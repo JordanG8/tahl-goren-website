@@ -58,9 +58,35 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-    { "@type": "ListItem", position: 2, name: "אודות", item: "https://talgoren.co.il/about" },
+    {
+      "@type": "ListItem",
+      position: 1,
+      item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      item: { "@id": "https://talgoren.co.il/about", name: "אודות" },
+    },
   ],
+};
+
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  mainEntity: {
+    "@id": "https://talgoren.co.il/about#person",
+    "@type": "Person",
+    name: "טל גורן",
+    jobTitle: "אדריכלית רשויה ומורשית היתר",
+    description: "אדריכלית רשויה ומורשית היתר, בעלת למעלה מ-25 שנות ניסיון בתכנון ועיצוב בתים פרטיים בצפון ובשרון.",
+    image: "https://talgoren.co.il/images/tahl-portrait.jpg",
+    sameAs: [
+      "https://www.instagram.com/tahlgoren/",
+      "https://www.facebook.com/tahlgoren",
+      "https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/",
+    ],
+  },
 };
 
 export default function About() {
@@ -69,6 +95,10 @@ export default function About() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
       />
 
       {/* ======== HERO — SPLIT SCREEN ======== */}

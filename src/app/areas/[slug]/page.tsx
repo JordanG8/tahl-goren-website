@@ -73,9 +73,21 @@ export default async function AreaPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ראשי", item: "https://talgoren.co.il/" },
-      { "@type": "ListItem", position: 2, name: "אזורי שירות", item: "https://talgoren.co.il/areas" },
-      { "@type": "ListItem", position: 3, name: area.city, item: `https://talgoren.co.il/areas/${area.slug}` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: { "@id": "https://talgoren.co.il/", name: "ראשי" },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: { "@id": "https://talgoren.co.il/areas", name: "אזורי שירות" },
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: { "@id": `https://talgoren.co.il/areas/${area.slug}`, name: area.city },
+      },
     ],
   };
 
