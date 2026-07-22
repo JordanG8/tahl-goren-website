@@ -217,7 +217,13 @@ export default function HomePage({ projects }: Props) {
         </div>
         <div className="absolute bottom-8 right-8 flex gap-2">
           {heroVideos.map((_, i) => (
-            <button key={i} onClick={() => setActiveVideo(i)} className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideo === i ? 'bg-white w-6' : 'bg-white/40'}`} />
+            <button
+              key={i}
+              onClick={() => setActiveVideo(i)}
+              aria-label={`מעבר לוידאו רקע ${i + 1}`}
+              aria-current={activeVideo === i}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideo === i ? 'bg-white w-6' : 'bg-white/40'}`}
+            />
           ))}
         </div>
       </section>

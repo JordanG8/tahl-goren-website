@@ -126,33 +126,36 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
           onClick={() => setSelectedImageIndex(null)}
         >
           <button
+            aria-label="סגירת התצוגה המוגדלת"
             className="absolute top-6 right-6 lg:top-10 lg:right-10 text-white/70 hover:text-white transition-colors p-2"
             onClick={(e) => {
               e.stopPropagation();
               setSelectedImageIndex(null);
             }}
           >
-            <span className="material-symbols-outlined text-4xl">close</span>
+            <span className="material-symbols-outlined text-4xl" aria-hidden="true">close</span>
           </button>
 
           <button
+            aria-label="התמונה הקודמת"
             className="absolute right-4 lg:right-12 text-white/50 hover:text-white transition-colors p-4 hidden md:block"
             onClick={(e) => {
               e.stopPropagation();
               showPrev();
             }}
           >
-            <span className="material-symbols-outlined text-5xl">chevron_right</span>
+            <span className="material-symbols-outlined text-5xl" aria-hidden="true">chevron_right</span>
           </button>
 
           <button
+            aria-label="התמונה הבאה"
             className="absolute left-4 lg:left-12 text-white/50 hover:text-white transition-colors p-4 hidden md:block"
             onClick={(e) => {
               e.stopPropagation();
               showNext();
             }}
           >
-            <span className="material-symbols-outlined text-5xl">chevron_left</span>
+            <span className="material-symbols-outlined text-5xl" aria-hidden="true">chevron_left</span>
           </button>
 
           <div

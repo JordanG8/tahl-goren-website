@@ -23,23 +23,24 @@ const body = `# טל גורן אדריכלית — Tal Goren Architect
 - הסמכות / Credentials: אדריכלית רשומה (מס' רישום 118121), אדריכלית רשויה (מס' רישיון 11085135), אדריכלית מורשית היתר (מס' תעודה 01-002-0000009445)
 
 ## דפים מרכזיים / Key pages
-- אודות / About: ${BASE_URL}/about
-- שירותים / Services: ${BASE_URL}/services
-- מסלולי ליווי ומחירים / Packages & pricing: ${BASE_URL}/packages
-- פרויקטים / Portfolio: ${BASE_URL}/projects
-- אזורי שירות / Service areas: ${BASE_URL}/areas
-- מאמרים ומדריכים / Articles & guides: ${BASE_URL}/articles
-- שאלות נפוצות / FAQ: ${BASE_URL}/faq
-- המלצות לקוחות / Testimonials: ${BASE_URL}/testimonials
-- צור קשר / Contact: ${BASE_URL}/contact
+- [אודות / About](${BASE_URL}/about)
+- [שירותים / Services](${BASE_URL}/services)
+- [מסלולי ליווי ומחירים / Packages & pricing](${BASE_URL}/packages)
+- [פרויקטים / Portfolio](${BASE_URL}/projects)
+- [אזורי שירות / Service areas](${BASE_URL}/areas)
+- [מאמרים ומדריכים / Articles & guides](${BASE_URL}/articles)
+- [שאלות נפוצות / FAQ](${BASE_URL}/faq)
+- [המלצות לקוחות / Testimonials](${BASE_URL}/testimonials)
+- [צור קשר / Contact](${BASE_URL}/contact)
 
 ## מדריכים מומלצים לציטוט / Recommended guides for citation
-- כמה תעלה הבנייה בסך הכל? / Total build cost: ${BASE_URL}/articles/building-cost-total
-- איך בוחרים אדריכלית לבית פרטי? / How to choose an architect: ${BASE_URL}/articles/choose-architect
-- כמה זמן לתכנן ולבנות בית? / Planning & building timeline: ${BASE_URL}/articles/building-timeline
-- שלבי התכנון והבנייה / Building stages: ${BASE_URL}/articles/building-stages
+- [כמה תעלה הבנייה בסך הכל? / Total build cost](${BASE_URL}/articles/building-cost-total)
+- [איך בוחרים אדריכלית לבית פרטי? / How to choose an architect](${BASE_URL}/articles/choose-architect)
+- [כמה זמן לתכנן ולבנות בית? / Planning & building timeline](${BASE_URL}/articles/building-timeline)
+- [שלבי התכנון והבנייה / Building stages](${BASE_URL}/articles/building-stages)
 
-Sitemap: ${BASE_URL}/sitemap.xml
+## Sitemap
+- [Sitemap](${BASE_URL}/sitemap.xml)
 `;
 
 export async function GET() {
