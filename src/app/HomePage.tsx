@@ -4,8 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
-import ReviewsCarousel from '@/components/ReviewsCarouselLazy';
-import type { CarouselReview } from '@/components/ReviewsCarousel';
+import GoogleReviews from '@/components/GoogleReviewsLazy';
+import StarRating from '@/components/StarRating';
+import type { SiteReviews } from '@/lib/reviews';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
 import { aboutExcerpt } from '@/data/siteData';
@@ -51,10 +52,10 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
-  reviews: CarouselReview[];
+  reviewsData: SiteReviews;
 };
 
-export default function HomePage({ projects, reviews }: Props) {
+export default function HomePage({ projects, reviewsData }: Props) {
   const featuredProjects = projects.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -299,12 +300,17 @@ export default function HomePage({ projects, reviews }: Props) {
             </a>
             <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
             <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
+            <div className="flex items-center gap-2" dir="rtl">
+              <span className="font-bold text-lg text-[#202124]">{reviewsData.rating.toFixed(1)}</span>
+              <StarRating rating={Math.round(reviewsData.rating)} className="w-5 h-5" />
+              <span className="text-sm text-[#70757a]">({reviewsData.totalReviews} ביקורות בגוגל)</span>
+            </div>
             <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
               <span>כל ההמלצות</span>
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
           </div>
-          <ReviewsCarousel reviews={reviews} />
+          <GoogleReviews reviews={reviewsData.reviews} />
         </div>
       </section>
 

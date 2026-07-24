@@ -1,10 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
-import ReviewsCarousel from "@/components/ReviewsCarouselLazy";
-import type { CarouselReview } from "@/components/ReviewsCarousel";
-import { reviews as staticReviews } from "@/data/reviews";
-import { getGoogleReviews } from "@/lib/googleReviews";
+import GoogleReviews from "@/components/GoogleReviewsLazy";
+import StarRating from "@/components/StarRating";
+import { getReviews } from "@/lib/reviews";
 
 export const metadata: Metadata = {
   title: "המלצות לקוחות | טל גורן אדריכלות",
@@ -16,46 +15,12 @@ export const metadata: Metadata = {
 const ORG_ID = "https://talgoren.co.il/#organization";
 
 export default async function Testimonials() {
-  const live = await getGoogleReviews();
-
-  // Prefer live Google review data (real text, real dates, real counts).
-  // Fall back to the hand-curated static list only when no API key is
-  // configured — and never invent a date/count we don't actually have.
-  const displayReviews = live && live.reviews.length > 0
-    ? live.reviews.map((r) => ({
-        name: r.name,
-        text: r.text,
-        rating: r.rating,
-        datePublished: r.publishTime || undefined,
-        relativeTime: r.relativeTime,
-      }))
-    : staticReviews.map((r) => ({
-        name: r.name,
-        text: r.text,
-        rating: r.rating,
-        datePublished: undefined as string | undefined,
-        relativeTime: undefined as string | undefined,
-      }));
-
-  const carouselReviews: CarouselReview[] =
-    live && live.reviews.length > 0
-      ? live.reviews.map((r) => ({
-          name: r.name,
-          photoUrl: r.photoUrl,
-          rating: r.rating,
-          text: r.text,
-          relativeTime: r.relativeTime,
-        }))
-      : staticReviews.map((r) => ({ name: r.name, rating: r.rating, text: r.text }));
-
-  const aggregateRating = live
-    ? { ratingValue: live.rating, reviewCount: live.totalReviews }
-    : {
-        ratingValue: Number(
-          (staticReviews.reduce((sum, r) => sum + r.rating, 0) / staticReviews.length).toFixed(1)
-        ),
-        reviewCount: staticReviews.length,
-      };
+  // Single source of truth for review data (Business Profile → Places →
+  // curated static; see src/lib/reviews.ts). Real text, real dates, real
+  // counts — never invent a date/count we don't actually have.
+  const data = await getReviews();
+  const displayReviews = data.reviews;
+  const aggregateRating = { ratingValue: data.rating, reviewCount: data.totalReviews };
 
   // The single Review/AggregateRating structured-data block for the whole
   // site — placed only here, where every review it describes is genuinely
@@ -79,7 +44,7 @@ export default async function Testimonials() {
       author: { "@type": "Person", name: r.name },
       reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
       reviewBody: r.text,
-      ...(r.datePublished ? { datePublished: r.datePublished } : {}),
+      ...(r.publishTime ? { datePublished: r.publishTime } : {}),
     })),
   };
 
@@ -102,9 +67,11 @@ export default async function Testimonials() {
 
   return (
     <>
+      {/* Escape "<" — review text is third-party content and must not be able
+          to break out of the JSON-LD script tag. */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd).replace(/</g, "\\u003c") }}
       />
       <script
         type="application/ld+json"
@@ -120,9 +87,9 @@ export default async function Testimonials() {
           הביקורות של הלקוחות שלנו מדברות בעד עצמן. מוזמנים להתרשם מהמלצות של משפחות שליווינו לאורך השנים.
         </p>
         {aggregateRating.reviewCount > 0 && (
-          <p className="font-body text-base text-secondary mt-4 flex items-center gap-2" dir="ltr">
-            <span className="material-symbols-outlined text-yellow-500 text-xl" aria-hidden="true">star</span>
-            <span dir="rtl">
+          <p className="font-body text-base text-secondary mt-4 flex items-center gap-2">
+            <StarRating rating={Math.round(aggregateRating.ratingValue)} className="w-5 h-5" />
+            <span>
               {aggregateRating.ratingValue.toFixed(1)} מתוך 5 · {aggregateRating.reviewCount} ביקורות בגוגל
             </span>
           </p>
@@ -134,18 +101,7 @@ export default async function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayReviews.map((r, i) => (
             <div key={i} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm flex flex-col gap-3">
-              <div className="flex items-center gap-1" aria-label={`דירוג ${r.rating} מתוך 5`}>
-                {Array.from({ length: 5 }).map((_, star) => (
-                  <span
-                    key={star}
-                    className="material-symbols-outlined text-lg"
-                    style={{ color: star < r.rating ? "#eab308" : "#e5e7eb" }}
-                    aria-hidden="true"
-                  >
-                    star
-                  </span>
-                ))}
-              </div>
+              <StarRating rating={r.rating} className="w-5 h-5" />
               <p className="font-body text-secondary leading-relaxed">{r.text}</p>
               <div className="mt-auto pt-2 flex items-center justify-between text-sm text-gray-500">
                 <span className="font-medium text-primary">{r.name}</span>
@@ -161,7 +117,7 @@ export default async function Testimonials() {
         <h2 className="font-headline font-bold text-2xl text-primary mb-6">
           עוד ביקורות מגוגל
         </h2>
-        <ReviewsCarousel reviews={carouselReviews} />
+        <GoogleReviews reviews={displayReviews} />
 
         {/* Actions */}
         <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
