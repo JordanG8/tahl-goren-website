@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ReviewsCarousel from "@/components/ReviewsCarouselLazy";
+import type { CarouselReview } from "@/components/ReviewsCarousel";
 import { reviews as staticReviews } from "@/data/reviews";
 import { getGoogleReviews } from "@/lib/googleReviews";
 
@@ -35,6 +36,17 @@ export default async function Testimonials() {
         datePublished: undefined as string | undefined,
         relativeTime: undefined as string | undefined,
       }));
+
+  const carouselReviews: CarouselReview[] =
+    live && live.reviews.length > 0
+      ? live.reviews.map((r) => ({
+          name: r.name,
+          photoUrl: r.photoUrl,
+          rating: r.rating,
+          text: r.text,
+          relativeTime: r.relativeTime,
+        }))
+      : staticReviews.map((r) => ({ name: r.name, rating: r.rating, text: r.text }));
 
   const aggregateRating = live
     ? { ratingValue: live.rating, reviewCount: live.totalReviews }
@@ -149,7 +161,7 @@ export default async function Testimonials() {
         <h2 className="font-headline font-bold text-2xl text-primary mb-6">
           עוד ביקורות מגוגל
         </h2>
-        <ReviewsCarousel />
+        <ReviewsCarousel reviews={carouselReviews} />
 
         {/* Actions */}
         <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, EffectCards } from "swiper/modules";
 
@@ -9,34 +10,78 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-cards";
 
-const reviewImages = [
-  "המלצת לקוח על טל גורן 01.jpg",
-  "המלצת לקוח על טל גורן 02.jpg",
-  "המלצת לקוח על טל גורן 03.jpg",
-  "המלצת לקוח על טל גורן 04.jpg",
-  "המלצת לקוח על טל גורן 05.jpg",
-  "המלצת לקוח על טל גורן 06.jpg",
-  "המלצת לקוח על טל גורן 07.jpg",
-  "המלצת לקוח על טל גורן 08.jpg",
-  "המלצת לקוח על טל גורן 09.jpg",
-  "המלצת לקוח על טל גורן 10.jpg",
-  "המלצת לקוח על טל גורן 11.jpg",
-  "המלצת לקוח על טל גורן 12.jpg",
-  "המלצת לקוח על טל גורן 13.jpg",
-  "המלצת לקוח על טל גורן 14.jpg",
-  "המלצת לקוח על טל גורן 15.jpg",
-  "המלצת לקוח על טל גורן 16.jpg",
-  "המלצת לקוח על טל גורן 17.jpg",
-  "המלצת לקוח על טל גורן 18.jpg",
-  "המלצת לקוח על טל גורן 19.jpg",
-  "המלצת לקוח על טל גורן 20.jpg",
-  "המלצת לקוח על טל גורן 21.jpg",
-];
+export type CarouselReview = {
+  name: string;
+  photoUrl?: string | null;
+  rating: number;
+  text: string;
+  relativeTime?: string;
+};
 
-export default function ReviewsCarousel() {
-  const half = Math.ceil(reviewImages.length / 2);
-  const row1 = reviewImages.slice(0, half);
-  const row2 = reviewImages.slice(half);
+function GoogleG({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.8 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/>
+      <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+      <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.7-3.1-11.3-7.6l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.2 5.2C41 35.6 44 30.2 44 24c0-1.3-.1-2.7-.4-3.5z"/>
+    </svg>
+  );
+}
+
+function initials(name: string) {
+  return name.trim().charAt(0) || "?";
+}
+
+function ReviewCard({ review }: { review: CarouselReview }) {
+  return (
+    <div className="rounded-2xl bg-white border border-gray-100 shadow-sm p-5 flex flex-col gap-3 h-full">
+      <div className="flex items-center gap-3">
+        {review.photoUrl ? (
+          <Image
+            src={review.photoUrl}
+            alt=""
+            width={40}
+            height={40}
+            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center flex-shrink-0" aria-hidden="true">
+            {initials(review.name)}
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <p className="font-medium text-primary truncate">{review.name}</p>
+          {review.relativeTime && (
+            <p className="text-xs text-gray-500">{review.relativeTime}</p>
+          )}
+        </div>
+        <GoogleG className="w-5 h-5 flex-shrink-0" />
+      </div>
+      <div className="flex items-center gap-0.5" aria-label={`דירוג ${review.rating} מתוך 5`}>
+        {Array.from({ length: 5 }).map((_, star) => (
+          <span
+            key={star}
+            className="material-symbols-outlined text-base"
+            style={{ color: star < review.rating ? "#eab308" : "#e5e7eb" }}
+            aria-hidden="true"
+          >
+            star
+          </span>
+        ))}
+      </div>
+      <p className="font-body text-sm text-secondary leading-relaxed line-clamp-6">{review.text}</p>
+    </div>
+  );
+}
+
+export default function ReviewsCarousel({ reviews }: { reviews: CarouselReview[] }) {
+  if (reviews.length === 0) return null;
+
+  const half = Math.ceil(reviews.length / 2);
+  const row1 = reviews.slice(0, half);
+  const row2 = reviews.slice(half);
+  const canLoopRows = row1.length > 0 && row2.length > 0;
 
   return (
     <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-10">
@@ -45,7 +90,7 @@ export default function ReviewsCarousel() {
           <Swiper
             effect={'cards'}
             grabCursor={true}
-            loop={true}
+            loop={reviews.length > 1}
             modules={[EffectCards, Pagination, Autoplay]}
             pagination={{
               clickable: true,
@@ -57,16 +102,9 @@ export default function ReviewsCarousel() {
             }}
             className="w-[280px] sm:w-[320px] !pb-12 reviews-mobile-swiper"
           >
-            {reviewImages.map((img, i) => (
-              <SwiperSlide key={i} className="rounded-2xl bg-white border border-gray-100 p-2 h-[420px] flex flex-col items-center justify-center transition-all duration-300">
-                <img
-                  src={"/images/reviews/" + encodeURIComponent(img)}
-                  alt={`המלצת לקוח מס' ${i + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`}
-                  loading="lazy"
-                  fetchPriority="low"
-                  decoding="async"
-                  className="w-full max-h-full object-contain rounded-xl"
-                />
+            {reviews.map((review, i) => (
+              <SwiperSlide key={i} className="rounded-2xl !h-[420px]" dir="rtl">
+                <ReviewCard review={review} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -86,65 +124,56 @@ export default function ReviewsCarousel() {
         <style>{`
           @keyframes scroll-left {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-300px * ${row1.length})); }
+            100% { transform: translateX(calc(-320px * ${row1.length})); }
           }
           @keyframes scroll-right {
-            0% { transform: translateX(calc(-300px * ${row2.length})); }
+            0% { transform: translateX(calc(-320px * ${row2.length})); }
             100% { transform: translateX(0); }
           }
           .animate-scroll-left {
             animation: scroll-left 40s linear infinite;
             display: flex;
-            width: calc(300px * ${row1.length * 2});
+            width: calc(320px * ${row1.length * 2});
           }
           .animate-scroll-right {
             animation: scroll-right 40s linear infinite;
             display: flex;
-            width: calc(300px * ${row2.length * 2});
+            width: calc(320px * ${row2.length * 2});
           }
           .animate-scroll-left:hover, .animate-scroll-right:hover {
             animation-play-state: paused;
           }
-          .review-card {
-            width: 300px;
-            padding: 0 15px;
+          .review-card-slot {
+            width: 320px;
+            padding: 0 12px;
             flex-shrink: 0;
-            display: flex;
-            align-items: center;
-          }
-          .review-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-          }
-          .review-card img:hover {
-            transform: scale(1.03);
+            height: 260px;
           }
         `}</style>
-        
+
         {/* Row 1: moves left */}
         <div className="overflow-hidden w-full flex">
-          <div className="animate-scroll-left">
-            {[...row1, ...row1].map((img, i) => (
-              <div key={i} className="review-card">
-                <img src={"/images/reviews/" + encodeURIComponent(img)} alt={`המלצת לקוח מס' ${(i % row1.length) + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`} loading="lazy" />
+          <div className={canLoopRows ? "animate-scroll-left" : "flex"} dir="rtl">
+            {(canLoopRows ? [...row1, ...row1] : row1).map((review, i) => (
+              <div key={i} className="review-card-slot">
+                <ReviewCard review={review} />
               </div>
             ))}
           </div>
         </div>
 
         {/* Row 2: moves right */}
-        <div className="overflow-hidden w-full flex">
-          <div className="animate-scroll-right">
-            {[...row2, ...row2].map((img, i) => (
-              <div key={i} className="review-card">
-                <img src={"/images/reviews/" + encodeURIComponent(img)} alt={`המלצת לקוח מס' ${half + (i % row2.length) + 1} על טל גורן אדריכלות, מתוך ביקורות גוגל`} loading="lazy" />
-              </div>
-            ))}
+        {row2.length > 0 && (
+          <div className="overflow-hidden w-full flex">
+            <div className={canLoopRows ? "animate-scroll-right" : "flex"} dir="rtl">
+              {(canLoopRows ? [...row2, ...row2] : row2).map((review, i) => (
+                <div key={i} className="review-card-slot">
+                  <ReviewCard review={review} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

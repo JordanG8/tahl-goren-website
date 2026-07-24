@@ -83,6 +83,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // Reviewer profile photos returned by the Places API (New) live here.
+    remotePatterns: [{ protocol: "https", hostname: "lh3.googleusercontent.com" }],
     // Optimized-image responses were serving `max-age=0, must-revalidate`
     // (forcing a revalidation round trip on every repeat view) even though
     // the optimizer URLs already carry content-addressed params and are safe

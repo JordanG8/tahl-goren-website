@@ -5,6 +5,7 @@ import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
 import ArchFrame from '@/components/ArchFrame';
 import ReviewsCarousel from '@/components/ReviewsCarouselLazy';
+import type { CarouselReview } from '@/components/ReviewsCarousel';
 import HomeCtaForm from '@/components/HomeCtaForm';
 import FaqAccordion from '@/components/FaqAccordion';
 import { aboutExcerpt } from '@/data/siteData';
@@ -50,9 +51,10 @@ const featuredArticles = [
 type Props = {
   projects: any[];
   faqItems: any[];
+  reviews: CarouselReview[];
 };
 
-export default function HomePage({ projects }: Props) {
+export default function HomePage({ projects, reviews }: Props) {
   const featuredProjects = projects.slice(0, 6);
 
   const [activeVideo, setActiveVideo] = useState(0);
@@ -302,7 +304,7 @@ export default function HomePage({ projects }: Props) {
               <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
             </Link>
           </div>
-          <ReviewsCarousel />
+          <ReviewsCarousel reviews={reviews} />
         </div>
       </section>
 
