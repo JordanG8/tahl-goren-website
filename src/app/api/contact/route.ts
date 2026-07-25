@@ -72,7 +72,11 @@ export async function POST(request: Request) {
 
   // 2. Send via Email (Resend)
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? "jordangoren1234@gmail.com";
+  // CONTACT_TO_EMAIL accepts a comma-separated list, e.g. "tahl@…,jordan@…"
+  const to = (process.env.CONTACT_TO_EMAIL ?? "tahl.goren.arch@gmail.com")
+    .split(",")
+    .map((addr) => addr.trim())
+    .filter(Boolean);
   const from = process.env.CONTACT_FROM_EMAIL ?? "Tal Goren Site <onboarding@resend.dev>";
 
   const html = `
