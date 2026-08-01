@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
+import { sendNotificationEmail } from "@/lib/sendNotificationEmail";
 
 type ContactPayload = {
   name?: string;
@@ -70,11 +71,7 @@ export async function POST(request: Request) {
     }
   }
 
-  // 2. Send via Email (Resend)
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? "jordangoren1234@gmail.com";
-  const from = process.env.CONTACT_FROM_EMAIL ?? "Tal Goren Site <onboarding@resend.dev>";
-
+  // 2. Send the notification email
   const html = `
     <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
       <h2>פנייה חדשה מהאתר</h2>
@@ -87,44 +84,24 @@ export async function POST(request: Request) {
     </div>
   `;
 
-  if (!apiKey) {
-    console.log("[contact] RESEND_API_KEY not set — logging submission instead");
-    console.log({ name, phone, email, message });
-    return NextResponse.json({ ok: true, delivered: false, stored: dbStored });
-  }
+  const result = await sendNotificationEmail({
+    subject: `פנייה חדשה מהאתר - ${name}`,
+    html,
+    replyTo: email,
+  });
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        from,
-        to,
-        reply_to: email,
-        subject: `פנייה חדשה מהאתר - ${name}`,
-        html,
-      }),
-    });
-
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("[contact] resend error", res.status, detail);
-      // Even if email fails, if it's stored in DB, we can return success
-      if (dbStored) {
-        return NextResponse.json({ ok: true, delivered: false, stored: true });
-      }
-      return NextResponse.json({ error: "send_failed" }, { status: 502 });
-    }
-
-    return NextResponse.json({ ok: true, delivered: true, stored: dbStored });
-  } catch (err) {
-    console.error("[contact] resend exception", err);
+  if (!result.delivered) {
+    console.error(
+      `[contact] email not delivered (provider=${result.provider}): ${result.error}`,
+      { name, phone, email, sourcePage },
+    );
+    // The submission is safe in Postgres, so don't fail the visitor's request
+    // over a provider outage — it's recoverable from /admin/responses.
     if (dbStored) {
       return NextResponse.json({ ok: true, delivered: false, stored: true });
     }
     return NextResponse.json({ error: "send_failed" }, { status: 502 });
   }
+
+  return NextResponse.json({ ok: true, delivered: true, stored: dbStored });
 }
