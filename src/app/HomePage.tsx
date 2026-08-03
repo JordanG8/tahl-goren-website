@@ -126,7 +126,10 @@ export default function HomePage({ projects, reviewsData }: Props) {
       <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-primary -mt-20 sm:-mt-24">
         <HeroSlideshow images={heroImages} />
 
-        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center">
+        {/* On tall phones dead-centering leaves the block floating; the top padding
+            shifts it down by half its value. Narrow-and-tall only, so the SE and
+            every desktop size stay centered. */}
+        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center [@media(max-width:639px)_and_(min-height:750px)]:pt-16">
           <div className="max-w-[780px]">
             {/* The regions are dropped below sm: at 0.42em they push the line to two
                 rows and shove the eyebrow into the navbar on a 375px screen. */}
