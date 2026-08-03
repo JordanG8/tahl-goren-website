@@ -150,13 +150,15 @@ export default function HomePage({ projects, reviewsData }: Props) {
               data-reveal
               className="mt-5 sm:mt-7 font-body font-light text-lg sm:text-[22px] leading-[1.7] text-white/80 max-w-[560px] text-pretty"
             >
-              {/* Two lines on a phone, the full sentence from sm: up. */}
+              {/* Two lines on a phone, the full sentence from sm: up. The dash is
+                  glued to the preceding word with an NBSP so it can never wrap to
+                  the start of the next line. */}
               <span className="sm:hidden">
-                אני טל גורן. 25 שנה אני מלווה משפחות שבונות בית — עם תשובות ברורות על תקציב וזמנים.
+                אני טל גורן. 25 שנה אני מלווה משפחות שבונות בית{" "}— עם תשובות ברורות על תקציב וזמנים.
               </span>
               <span className="hidden sm:inline">
-                אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו — עם מגרש, עם חלום, ועם
-                המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
+                אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו{" "}— עם מגרש, עם
+                חלום, ועם המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
               </span>
             </p>
 
@@ -183,17 +185,10 @@ export default function HomePage({ projects, reviewsData }: Props) {
                 </span>
               </PhoneLink>
             </div>
-            <p data-reveal className="mt-3 sm:mt-4.5 font-label text-xs tracking-wide text-white/50">
-              <span className="sm:hidden">שיחה ראשונה ללא עלות · בלי מכירות, בלי לחץ</span>
-              <span className="hidden sm:inline">
-                שיחה ראשונה ללא עלות · תשובה בדרך כלל באותו יום · בלי מכירות, בלי לחץ
-              </span>
-            </p>
           </div>
         </div>
 
-        {/* Hidden on phones: it collided with the reassurance line, and a touch
-            screen needs no hint that the page scrolls. */}
+        {/* Hidden on phones: a touch screen needs no hint that the page scrolls. */}
         <div className="absolute bottom-8 right-6 sm:right-10 z-10 hidden sm:flex items-center gap-3">
           <span className="font-label text-[10px] tracking-[0.3em] uppercase text-white/45">גלילה</span>
           <span className="block w-px h-[46px] bg-white/50 animate-scrollcue" />
