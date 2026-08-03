@@ -128,8 +128,14 @@ export default function HomePage({ projects, reviewsData }: Props) {
 
         <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center">
           <div className="max-w-[780px]">
-            <span data-reveal className="block font-label text-[11px] tracking-[0.42em] uppercase text-white/60 mb-7">
-              אדריכלות לבתים פרטיים · שרון, מנשה וחוף הכרמל
+            {/* The regions are dropped below sm: at 0.42em they push the line to two
+                rows and shove the eyebrow into the navbar on a 375px screen. */}
+            <span
+              data-reveal
+              className="block font-label text-[11px] tracking-[0.22em] sm:tracking-[0.42em] uppercase text-white/60 mb-4 sm:mb-7"
+            >
+              אדריכלות לבתים פרטיים
+              <span className="hidden sm:inline"> · שרון, מנשה וחוף הכרמל</span>
             </span>
             <h1
               data-reveal
@@ -142,38 +148,53 @@ export default function HomePage({ projects, reviewsData }: Props) {
             </h1>
             <p
               data-reveal
-              className="mt-7 font-body font-light text-lg sm:text-[22px] leading-[1.7] text-white/80 max-w-[560px] text-pretty"
+              className="mt-5 sm:mt-7 font-body font-light text-lg sm:text-[22px] leading-[1.7] text-white/80 max-w-[560px] text-pretty"
             >
-              אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו — עם מגרש, עם חלום, ועם
-              המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
+              {/* Two lines on a phone, the full sentence from sm: up. */}
+              <span className="sm:hidden">
+                אני טל גורן. 25 שנה אני מלווה משפחות שבונות בית — עם תשובות ברורות על תקציב וזמנים.
+              </span>
+              <span className="hidden sm:inline">
+                אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו — עם מגרש, עם חלום, ועם
+                המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
+              </span>
             </p>
 
-            <div data-reveal className="flex flex-wrap items-center gap-3.5 mt-11">
+            <div data-reveal className="flex flex-wrap items-center gap-3 sm:gap-3.5 mt-7 sm:mt-11">
               <WhatsAppLink
                 placement="home_hero"
                 message="היי טל, יש לי שאלה על תכנון בית פרטי — אפשר להתייעץ?"
-                className="inline-flex items-center gap-3 bg-white text-primary px-8 py-5 font-headline font-bold text-base tracking-wide shadow-[0_18px_50px_rgba(0,0,0,0.28)] hover:bg-surface-container-highest transition-colors"
+                className="inline-flex items-center gap-3 bg-white text-primary px-6 sm:px-8 py-4 sm:py-5 font-headline font-bold text-base tracking-wide shadow-[0_18px_50px_rgba(0,0,0,0.28)] hover:bg-surface-container-highest transition-colors"
               >
                 <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                   chat
                 </span>
-                <span>לשאול אותי שאלה בוואטסאפ</span>
+                <span className="sm:hidden">לשאול שאלה בוואטסאפ</span>
+                <span className="hidden sm:inline">לשאול אותי שאלה בוואטסאפ</span>
               </WhatsAppLink>
               <PhoneLink
                 placement="home_hero"
-                className="inline-flex items-center gap-3 border border-white/45 text-white px-7 py-5 font-headline text-base hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-3 border border-white/45 text-white px-5 sm:px-7 py-4 sm:py-5 font-headline text-base hover:bg-white/10 transition-colors"
               >
                 <span className="material-symbols-outlined text-xl">call</span>
-                <span>או פשוט תתקשרו · {PHONE_DISPLAY}</span>
+                <span>
+                  <span className="hidden sm:inline">או פשוט תתקשרו · </span>
+                  {PHONE_DISPLAY}
+                </span>
               </PhoneLink>
             </div>
-            <p data-reveal className="mt-4.5 font-label text-xs tracking-wide text-white/50">
-              שיחה ראשונה ללא עלות · תשובה בדרך כלל באותו יום · בלי מכירות, בלי לחץ
+            <p data-reveal className="mt-3 sm:mt-4.5 font-label text-xs tracking-wide text-white/50">
+              <span className="sm:hidden">שיחה ראשונה ללא עלות · בלי מכירות, בלי לחץ</span>
+              <span className="hidden sm:inline">
+                שיחה ראשונה ללא עלות · תשובה בדרך כלל באותו יום · בלי מכירות, בלי לחץ
+              </span>
             </p>
           </div>
         </div>
 
-        <div className="absolute bottom-8 right-6 sm:right-10 z-10 flex items-center gap-3">
+        {/* Hidden on phones: it collided with the reassurance line, and a touch
+            screen needs no hint that the page scrolls. */}
+        <div className="absolute bottom-8 right-6 sm:right-10 z-10 hidden sm:flex items-center gap-3">
           <span className="font-label text-[10px] tracking-[0.3em] uppercase text-white/45">גלילה</span>
           <span className="block w-px h-[46px] bg-white/50 animate-scrollcue" />
         </div>
