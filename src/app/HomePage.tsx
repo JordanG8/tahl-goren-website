@@ -1,608 +1,635 @@
-"use client";
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import ProjectCard from '@/components/ProjectCard';
-import ArchFrame from '@/components/ArchFrame';
-import GoogleReviews from '@/components/GoogleReviewsLazy';
-import StarRating from '@/components/StarRating';
-import type { SiteReviews } from '@/lib/reviews';
-import HomeCtaForm from '@/components/HomeCtaForm';
-import FaqAccordion from '@/components/FaqAccordion';
-import { aboutExcerpt } from '@/data/siteData';
-import { packages as homePackages } from '@/data/packagesContent';
-import { trackLead } from '@/lib/trackLead';
+import Link from "next/link";
+import Image from "next/image";
+import type { SiteReviews } from "@/lib/reviews";
+import { reviews as curatedReviews } from "@/data/reviews";
+import { PHONE_DISPLAY } from "@/lib/whatsapp";
+import RevealObserver from "@/components/home/RevealObserver";
+import HeroSlideshow from "@/components/home/HeroSlideshow";
+import CostCalculator from "@/components/home/CostCalculator";
+import StickyDock from "@/components/home/StickyDock";
+import { PhoneLink, WhatsAppLink } from "@/components/home/ContactLinks";
+import StarRating from "@/components/StarRating";
 
-
-const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
-
-const HERO_LOGO_ID = 'site-logo-hero';
-const NAV_LOGO_ID = 'site-logo-navbar';
-const DOCK_SCROLL_THRESHOLD = 20;
-
-type LogoRect = { top: number; left: number; width: number; height: number };
-
-function readRect(el: Element | null): LogoRect | null {
-  if (!el) return null;
-  const r = el.getBoundingClientRect();
-  return { top: r.top, left: r.left, width: r.width, height: r.height };
-}
-
-// The navbar's own logo shrinks (h-12/h-16 -> h-9/h-10) via a separate
-// component's scroll listener, which commits a frame or two after ours.
-// Poll until that class swap has actually landed before trusting its rect,
-// instead of guessing a fixed delay (which would read a stale size and
-// make the clone "jump-correct" partway through the flight).
-function waitForDockedNavRect(onReady: (rect: LogoRect | null) => void, attempt = 0) {
-  const el = document.getElementById(NAV_LOGO_ID);
-  const isDockedSize = !!el && (el.className.includes('h-9') || el.className.includes('h-10'));
-  if (isDockedSize || attempt > 15) {
-    onReady(readRect(el));
-    return;
-  }
-  requestAnimationFrame(() => waitForDockedNavRect(onReady, attempt + 1));
-}
-
-const featuredArticles = [
-  { slug: "building-cost-total", title: "כמה תעלה לנו הבניה בסך הכל?", image: "/images/blog/building-cost-total.png", excerpt: "חוששים להיכנס ל'בור' של הוצאות בלתי נגמרות? המדריך המלא להכנת תקציב ריאלי לבניית בית פרטי בישראל." },
-  { slug: "choose-architect", title: "איך בוחרים אדריכלית לבניית בית פרטי?", image: "/images/blog/choose-architect.png", excerpt: "המדריך המלא לבחירת האדריכלית שתוביל את הפרויקט הכי חשוב בחיים שלכם." },
-  { slug: "building-timeline", title: "כמה זמן יקח לנו לתכנן ולבנות בית פרטי?", image: "/images/blog/building-timeline.png", excerpt: "מה שחשוב לדעת לפני שיוצאים לדרך – שלב אחרי שלב, עם לוחות זמנים ריאליים וכל הגורמים שמשפיעים עליהם." },
-];
+type Project = { id: string; title: string; location: string; image: string; description: string };
 
 type Props = {
-  projects: any[];
-  faqItems: any[];
+  projects: Project[];
+  faqItems: unknown[];
   reviewsData: SiteReviews;
 };
 
+/** The three anxieties every family arrives with, each answered in the same breath. */
+const FEARS = [
+  {
+    num: "01",
+    title: "״נכנסנו לבור תקציבי בלי תחתית״",
+    body: "רוב חריגות התקציב לא נולדות באתר הבנייה. הן נולדות בהחלטה תכנונית שהתקבלה בלי לבדוק מה היא עולה.",
+    answer: "אנחנו בונים תקציב ריאלי כבר בפגישה הראשונה, וכל החלטה נבדקת מול המספר הזה.",
+  },
+  {
+    num: "02",
+    title: "״אין לנו מושג כמה זמן זה ייקח״",
+    body: "חוסר ודאות בלוחות זמנים הוא מה שהופך פרויקט מרגש לפרויקט מלחיץ — במיוחד כשיש שכירות שמתקתקת.",
+    answer: "אתם מקבלים לוח זמנים בפועל לכל שלב, ואני מעדכנת אותו כשמשהו זז.",
+  },
+  {
+    num: "03",
+    title: "״הבירוקרטיה תשגע אותנו״",
+    body: "ועדות, יועצים, מודד, קונסטרוקטור, היתר. אף אחד מאלה לא באמת אמור להיות באחריות שלכם.",
+    answer: "כמורשית היתר אני מנהלת את כל הרישוי מול הוועדה — אתם מקבלים עדכון, לא משימות.",
+  },
+];
+
+const STEPS = [
+  {
+    num: "01",
+    duration: "שיחה קצרה",
+    title: "היכרות וכיוון",
+    body: 'מספרים לי מה יש לכם ביד: מגרש, תב"ע, משפחה, תקציב. אני אומרת לכם מה ריאלי ומה לא — עוד לפני שהתחייבתם למשהו.',
+    yours: "מה שאתם צריכים להביא: כלום.",
+  },
+  {
+    num: "02",
+    duration: "2–4 שבועות",
+    title: "בירורים ותכנון מוקדם",
+    body: "בודקים זכויות בנייה, מגבלות מגרש, כניסות ותנועת שמש, ומגיעים לסקיצה ראשונה שמשקפת את החיים שלכם.",
+    yours: "אתם מחליטים על התכנית. אני מציעה.",
+  },
+  {
+    num: "03",
+    duration: "6–9 חודשים",
+    title: "רישוי והיתר בנייה",
+    body: "אני מרכזת את היועצים, מגישה לוועדה ומטפלת בכל הדרישות עד שההיתר בידיים.",
+    yours: "הבירוקרטיה עליי, לא עליכם.",
+  },
+  {
+    num: "04",
+    duration: "8–12 שבועות",
+    title: "תכניות עבודה מפורטות",
+    body: "תכניות 1:50, נגרות, חשמל, פריסות וכתב כמויות — כדי שהקבלן יתמחר בדיוק ולא בהערכה.",
+    yours: "כאן נשמר התקציב באמת.",
+  },
+  {
+    num: "05",
+    duration: "12–18 חודשים",
+    title: "בנייה ופיקוח עליון",
+    body: "ביקורי פיקוח באתר, החלטות בזמן אמת, ופתרון בעיות מול הקבלן — עד תעודת גמר וכניסה הביתה.",
+    yours: "אתם לא מנהלים את הקבלן לבד.",
+  },
+];
+
+const CREDENTIALS = [
+  "אדריכלית רשויה · 11085135",
+  "מורשית היתר",
+  "בוגרת הטכניון בהצטיינות",
+  "אדריכלות ועיצוב פנים",
+];
+
+const HERO_PROJECT_IDS = ["m-maor", "shai-maor", "n-gan-shomron"];
+const FEATURED_PROJECT_IDS = ["m-maor", "sh-katzir", "r-or-akiva"];
+
+const AVATAR_COLORS = ["#455A64", "#00796B", "#5D4037", "#3B5566", "#A96F57"];
+
+const EYEBROW = "block font-label text-[11px] tracking-[0.35em] uppercase text-accent mb-5";
+const SECTION_H2 =
+  "m-0 font-headline font-extralight text-[34px] sm:text-[42px] lg:text-[52px] leading-[1.12] tracking-tight text-primary";
+
+/** Picks the named projects, in order, and tolerates any of them being absent. */
+function pickProjects(projects: Project[], ids: string[]) {
+  return ids.map((id) => projects.find((p) => p.id === id)).filter((p): p is Project => Boolean(p));
+}
+
 export default function HomePage({ projects, reviewsData }: Props) {
-  const featuredProjects = projects.slice(0, 6);
+  const heroProjects = pickProjects(projects, HERO_PROJECT_IDS);
+  const heroImages = (heroProjects.length > 0 ? heroProjects : projects.slice(0, 3)).map((p) => ({
+    src: p.image,
+    alt: p.title,
+  }));
 
-  const [activeVideo, setActiveVideo] = useState(0);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const featured = pickProjects(projects, FEATURED_PROJECT_IDS);
+  const featuredProjects = featured.length === 3 ? featured : projects.slice(0, 3);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveVideo((prev) => (prev + 1) % heroVideos.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    videoRefs.current.forEach((video) => {
-      if (video) video.play().catch(() => {});
-    });
-  }, []);
-
-  useEffect(() => {
-    const nextIndex = (activeVideo + 1) % heroVideos.length;
-    const nextVideo = videoRefs.current[nextIndex];
-    if (nextVideo && nextVideo.preload === 'none') {
-      nextVideo.preload = 'auto';
-      nextVideo.load();
-    }
-  }, [activeVideo]);
-
-  // Logo dock: the monochrome hero logo "flies" up into the navbar's logo
-  // slot and turns to full color the moment the user scrolls past the hero.
-  const [docked, setDocked] = useState(false);
-  const [heroRect, setHeroRect] = useState<LogoRect | null>(null);
-  const [navRect, setNavRect] = useState<LogoRect | null>(null);
-  const [transitionsReady, setTransitionsReady] = useState(false);
-  const dockedRef = useRef(false);
-
-  useEffect(() => {
-    // Measuring a DOM rect right after mount (to seed the fixed clone's
-    // starting position) has to happen in an effect: it needs the real
-    // client-rendered layout, which doesn't exist during SSR.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-
-    const initialDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
-    dockedRef.current = initialDocked;
-    setDocked(initialDocked);
-    if (initialDocked) {
-      waitForDockedNavRect(setNavRect);
-    }
-
-    // Skip the initial mount transition so the logo doesn't animate in from
-    // nowhere on first paint — only actual scroll crossings should animate.
-    const readyFrame = requestAnimationFrame(() => setTransitionsReady(true));
-
-    const handleScroll = () => {
-      const nowDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
-      if (nowDocked !== dockedRef.current) {
-        dockedRef.current = nowDocked;
-        setDocked(nowDocked);
-        if (nowDocked) {
-          waitForDockedNavRect(setNavRect);
-        } else {
-          setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-        }
-      }
-    };
-    const handleResize = () => {
-      if (!dockedRef.current) {
-        setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(readyFrame);
-    };
-  }, []);
-
-  const activeLogoRect = docked ? navRect ?? heroRect : heroRect ?? navRect;
+  // Live Google reviews when available; the curated list only supplies the
+  // town name, which the API doesn't return.
+  const homeReviews = reviewsData.reviews.slice(0, 3).map((r, i) => ({
+    ...r,
+    location: curatedReviews.find((c) => c.name.trim() === r.name.trim())?.location,
+    initial: r.name.trim().charAt(0),
+    avatar: AVATAR_COLORS[i % AVATAR_COLORS.length],
+  }));
 
   return (
     <>
-      {/* Flying logo clone: docks white-in-hero -> colored-in-navbar on scroll */}
-      {activeLogoRect && (
-        <div
-          id="hero-logo-clone"
-          aria-hidden
-          className="fixed z-[60] pointer-events-none top-0 left-0"
-          style={{
-            width: activeLogoRect.width,
-            height: activeLogoRect.height,
-            transform: `translate3d(${activeLogoRect.left}px, ${activeLogoRect.top}px, 0)`,
-            filter: docked ? 'none' : 'brightness(0) invert(1)',
-            transition: transitionsReady
-              ? 'transform 480ms cubic-bezier(0.16,1,0.3,1), width 480ms cubic-bezier(0.16,1,0.3,1), height 480ms cubic-bezier(0.16,1,0.3,1), filter 320ms ease 80ms'
-              : 'none',
-          }}
-        >
-          <Image
-            src="/images/logo-v2.png"
-            alt=""
-            width={280}
-            height={94}
-            className="w-full h-full object-contain drop-shadow-lg"
-            priority
-          />
-        </div>
-      )}
+      <RevealObserver />
 
-      {/* 1. HERO */}
-      <section className="relative h-[100svh] w-full overflow-hidden -mt-20 sm:-mt-24">
-        {heroVideos.map((src, i) => (
-          <video
-            key={src}
-            ref={(el) => { videoRefs.current[i] = el; }}
-            src={src}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload={i === 0 ? 'auto' : 'none'}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
-            style={{ opacity: activeVideo === i ? 1 : 0 }}
-          />
-        ))}
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)' }} />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="sr-only">טל גורן אדריכלות</h1>
-          <div className="w-[240px] sm:w-[320px] lg:w-[420px]">
-            <Image
-              id={HERO_LOGO_ID}
-              src="/images/logo-v2.png"
-              alt=""
-              width={280}
-              height={94}
-              className="w-full h-auto object-contain opacity-0"
-              priority
-            />
-          </div>
-          <p className="mt-4 font-headline font-bold text-white/90 text-lg sm:text-xl lg:text-2xl tracking-wide drop-shadow-md max-w-2xl">ליווי מקצועי ואישי לחווית בניה רגועה</p>
-          <p className="mt-2 font-body text-white/70 text-base sm:text-lg lg:text-xl drop-shadow-md max-w-xl">תכנון אדריכלי חכם לבית שגדל עם המשפחה</p>
+      {/* ============ 1. HERO ============ */}
+      <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-primary -mt-20 sm:-mt-24">
+        <HeroSlideshow images={heroImages} />
 
-          {/* Visible trust strip — the same credentials already live in
-              JSON-LD, surfaced here so human visitors (not just crawlers) see them */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white/85">
-            <span className="font-label text-sm">אדריכלית רשויה ומורשית היתר · מס&apos; רישיון 11085135</span>
-            <span className="hidden sm:inline text-white/30">·</span>
-            <span className="font-label text-sm">בוגרת הטכניון בהצטיינות</span>
-          </div>
+        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center">
+          <div className="max-w-[780px]">
+            <span data-reveal className="block font-label text-[11px] tracking-[0.42em] uppercase text-white/60 mb-7">
+              אדריכלות לבתים פרטיים · שרון, מנשה וחוף הכרמל
+            </span>
+            <h1
+              data-reveal
+              className="m-0 font-headline font-light text-[42px] sm:text-[56px] lg:text-[74px] leading-[1.06] tracking-[-0.03em] text-white"
+              style={{ textShadow: "0 2px 30px rgba(20,30,36,0.45)" }}
+            >
+              לבנות בית
+              <br />
+              <span className="font-bold">בלי לאבד שליטה.</span>
+            </h1>
+            <p
+              data-reveal
+              className="mt-7 font-body font-light text-lg sm:text-[22px] leading-[1.7] text-white/80 max-w-[560px] text-pretty"
+            >
+              אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו — עם מגרש, עם חלום, ועם
+              המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
+            </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <Link href="/projects" className="bg-white text-black px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/80 transition-colors">לפרויקטים</Link>
-            <Link href="/contact" className="border-2 border-white text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">שיחת ייעוץ</Link>
+            <div data-reveal className="flex flex-wrap items-center gap-3.5 mt-11">
+              <WhatsAppLink
+                placement="home_hero"
+                message="היי טל, יש לי שאלה על תכנון בית פרטי — אפשר להתייעץ?"
+                className="inline-flex items-center gap-3 bg-white text-primary px-8 py-5 font-headline font-bold text-base tracking-wide shadow-[0_18px_50px_rgba(0,0,0,0.28)] hover:bg-surface-container-highest transition-colors"
+              >
+                <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  chat
+                </span>
+                <span>לשאול אותי שאלה בוואטסאפ</span>
+              </WhatsAppLink>
+              <PhoneLink
+                placement="home_hero"
+                className="inline-flex items-center gap-3 border border-white/45 text-white px-7 py-5 font-headline text-base hover:bg-white/10 transition-colors"
+              >
+                <span className="material-symbols-outlined text-xl">call</span>
+                <span>או פשוט תתקשרו · {PHONE_DISPLAY}</span>
+              </PhoneLink>
+            </div>
+            <p data-reveal className="mt-4.5 font-label text-xs tracking-wide text-white/50">
+              שיחה ראשונה ללא עלות · תשובה בדרך כלל באותו יום · בלי מכירות, בלי לחץ
+            </p>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
-          <span className="font-label text-[10px] tracking-[0.3em] uppercase">גלילה</span>
-          <div className="w-px h-8 bg-white/30" />
-        </div>
-        <div className="absolute bottom-8 right-8 flex gap-2">
-          {heroVideos.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveVideo(i)}
-              aria-label={`מעבר לוידאו רקע ${i + 1}`}
-              aria-current={activeVideo === i}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideo === i ? 'bg-white w-6' : 'bg-white/40'}`}
-            />
-          ))}
+
+        <div className="absolute bottom-8 right-6 sm:right-10 z-10 flex items-center gap-3">
+          <span className="font-label text-[10px] tracking-[0.3em] uppercase text-white/45">גלילה</span>
+          <span className="block w-px h-[46px] bg-white/50 animate-scrollcue" />
         </div>
       </section>
 
-      {/* 2. ABOUT */}
-      <section className="py-24 lg:py-32 bg-surface-container-low overflow-hidden -mt-1">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div className="flex justify-center lg:justify-start">
-              <ArchFrame className="w-full max-w-xs sm:max-w-sm">
-                <div className="aspect-[3/4] relative">
-                  <Image src="/images/tahl-portrait.jpg" alt="טל גורן אדריכלית" fill sizes="(max-width: 640px) 100vw, 400px" className="object-cover object-top img-grayscale" />
-                </div>
-              </ArchFrame>
+      {/* ============ 2. TRUST STRIP ============ */}
+      <section className="bg-surface border-b border-outline/40">
+        <div className="max-w-[1680px] mx-auto px-6 sm:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div data-reveal className="py-8 pe-7 flex flex-col gap-1.5">
+              <span className="font-headline font-light text-[34px] text-primary leading-none">25+</span>
+              <span className="font-label text-[11px] tracking-[0.18em] uppercase text-secondary">שנות ניסיון</span>
             </div>
-            <div className="space-y-8">
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">אודות</span>
-              <h2 className="font-headline font-black text-5xl lg:text-6xl xl:text-7xl text-primary tracking-tight leading-[0.88]">נעים<br />מאוד,<br />אני טל.</h2>
-              <p className="font-body text-lg text-secondary leading-relaxed max-w-md">{aboutExcerpt}</p>
-              <div className="flex gap-10 py-8 border-y border-outline/10">
-                <div><span className="font-headline font-black text-4xl text-primary block">25+</span><span className="font-label text-[10px] text-secondary uppercase tracking-widest">שנות ניסיון</span></div>
-                <div><span className="font-headline font-black text-4xl text-primary block">100+</span><span className="font-label text-[10px] text-secondary uppercase tracking-widest">בתים שתוכננו</span></div>
+            <div data-reveal className="py-8 px-7 sm:border-s border-outline/40 flex flex-col gap-1.5">
+              <span className="font-headline font-light text-[34px] text-primary leading-none">100+</span>
+              <span className="font-label text-[11px] tracking-[0.18em] uppercase text-secondary">בתים שתוכננו</span>
+            </div>
+            <div data-reveal className="py-8 px-7 lg:border-s border-outline/40 flex flex-col gap-2">
+              <span className="flex items-center gap-2">
+                <span className="font-headline font-light text-[34px] text-primary leading-none">
+                  {reviewsData.rating.toFixed(1)}
+                </span>
+                <StarRating rating={Math.round(reviewsData.rating)} className="w-[15px] h-[15px]" />
+              </span>
+              <span className="font-label text-[11px] tracking-[0.18em] uppercase text-secondary">
+                דירוג לקוחות בגוגל
+              </span>
+            </div>
+            <div data-reveal className="py-8 ps-7 sm:border-s border-outline/40 flex flex-col gap-1.5">
+              <span className="font-headline font-light text-xl text-primary leading-snug">
+                אדריכלית רשויה
+                <br />
+                ומורשית היתר
+              </span>
+              <span className="font-label text-[11px] tracking-[0.18em] uppercase text-secondary">
+                רישיון 11085135 · בוגרת הטכניון
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 3. THE THREE FEARS ============ */}
+      <section className="py-20 lg:py-32 bg-surface">
+        <div className="max-w-[1680px] mx-auto px-6 sm:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-14 lg:gap-[90px] items-start">
+            <div data-reveal>
+              <span className={EYEBROW}>בדרך כלל זה מתחיל כאן</span>
+              <h2 className={SECTION_H2}>
+                שלושה דברים
+                <br />
+                שלא נותנים לכם לישון.
+              </h2>
+              <p className="mt-7 font-body font-light text-[19px] leading-[1.8] text-secondary max-w-[420px] text-pretty">
+                אחרי מאה בתים אני יכולה להגיד לכם בדיוק מה מטריד כל משפחה שנכנסת אליי למשרד. וגם — מה עושים עם
+                זה. לא בסוף התהליך. בפגישה הראשונה.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              {FEARS.map((f) => (
+                <div
+                  key={f.num}
+                  data-reveal
+                  className="grid grid-cols-[38px_1fr] sm:grid-cols-[54px_1fr] gap-5 sm:gap-6 py-9 border-t border-outline/55"
+                >
+                  <span className="font-label text-xs tracking-wider text-accent pt-2">{f.num}</span>
+                  <div>
+                    <h3 className="m-0 font-headline font-medium text-[22px] sm:text-[25px] text-primary leading-[1.35]">
+                      {f.title}
+                    </h3>
+                    <p className="mt-3 font-body font-light text-[17px] leading-[1.8] text-secondary text-pretty">
+                      {f.body}
+                    </p>
+                    <p className="mt-4 flex items-start gap-2.5 font-body font-semibold text-base leading-[1.7] text-primary">
+                      <span className="material-symbols-outlined text-[19px] text-tertiary flex-shrink-0 mt-[3px]">
+                        check
+                      </span>
+                      <span>{f.answer}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 4. COST CALCULATOR ============ */}
+      <section
+        id="calculator"
+        className="py-20 lg:py-32 bg-surface-container border-y border-outline/50 scroll-mt-24"
+      >
+        <div className="max-w-[1240px] mx-auto px-6 sm:px-10">
+          <div data-reveal className="text-center max-w-[700px] mx-auto mb-14">
+            <span className={EYEBROW}>הצעד הראשון · בלי להשאיר פרטים</span>
+            <h2 className={SECTION_H2}>
+              כמה תעלה הבנייה
+              <br />
+              <span className="font-bold">על המגרש שלכם?</span>
+            </h2>
+            <p className="mt-6 font-body font-light text-[19px] leading-[1.8] text-secondary">
+              הזיזו את המספרים ותקבלו טווח עלויות ריאלי לפי אזור, גודל ורמת גמר — אותו חישוב שאני עושה איתכם
+              בפגישה הראשונה.
+            </p>
+          </div>
+          <div data-reveal>
+            <CostCalculator />
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 5. PROCESS ============ */}
+      <section id="process" className="py-20 lg:py-32 bg-surface scroll-mt-24">
+        <div className="max-w-[1680px] mx-auto px-6 sm:px-10">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-x-16 gap-y-10 mb-16">
+            <div className="max-w-[640px]">
+              <span className={EYEBROW}>הדרך, שלב אחר שלב</span>
+              <h2 className={SECTION_H2}>
+                מהשיחה הראשונה
+                <br />
+                <span className="font-bold">ועד שאתם מקבלים מפתח.</span>
+              </h2>
+            </div>
+            <p className="m-0 font-body font-light text-lg leading-[1.8] text-secondary max-w-[400px] text-pretty">
+              אף אחד לא בונה בית פעמיים. לכן בכל שלב אתם יודעים מה קורה עכשיו, מה הצעד הבא, ומה נשאר לי לטפל בו
+              בשבילכם.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-y-11">
+            {STEPS.map((s, i) => (
+              <div
+                key={s.num}
+                data-reveal
+                className="relative pe-7 border-t-2"
+                style={{ borderTopColor: i === 0 ? "#3B5566" : "rgba(194,205,210,0.8)" }}
+              >
+                <span
+                  className="absolute -top-[7px] start-0 w-3 h-3 rounded-full"
+                  style={{ background: i === 0 ? "#A96F57" : "#c2cdd2" }}
+                />
+                <div className="pt-9">
+                  <span className="block font-label text-[11px] tracking-[0.2em] text-accent mb-3.5">
+                    {s.num} · {s.duration}
+                  </span>
+                  <h3 className="m-0 font-headline font-medium text-[22px] text-primary leading-[1.3]">{s.title}</h3>
+                  <p className="mt-3.5 font-body font-light text-base leading-[1.75] text-secondary text-pretty">
+                    {s.body}
+                  </p>
+                  <p className="mt-4.5 font-label text-xs leading-relaxed text-tertiary">{s.yours}</p>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {['מורשית היתר', 'בוגרת הטכניון', 'אדריכלות ועיצוב פנים'].map((b) => (
-                  <span key={b} className="font-label text-[10px] uppercase tracking-[0.15em] text-secondary border border-outline/30 px-3 py-1.5">{b}</span>
+            ))}
+          </div>
+
+          <div
+            data-reveal
+            className="mt-16 bg-surface-container-low px-6 py-8 sm:px-12 sm:py-11 flex flex-wrap items-center justify-between gap-10"
+          >
+            <div className="flex items-center gap-6">
+              <span className="material-symbols-outlined text-[34px] text-primary">schedule</span>
+              <p className="m-0 font-body font-light text-lg sm:text-xl leading-relaxed text-primary max-w-[640px]">
+                בסך הכול: <span className="font-bold">כשנה עד היתר, וכ-12–18 חודשי בנייה.</span> מי שיודע את זה
+                מראש לא נלחץ באמצע.
+              </p>
+            </div>
+            <WhatsAppLink
+              placement="home_process"
+              message="היי טל, אני רוצה להבין באיזה שלב בתהליך אני נמצא ומה הצעד הבא."
+              className="flex-shrink-0 inline-flex items-center gap-2.5 bg-primary text-white px-7 py-4.5 font-headline font-medium text-[15px] hover:bg-secondary transition-colors"
+            >
+              <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                chat
+              </span>
+              <span>לשאול איפה אני נמצא בתהליך</span>
+            </WhatsAppLink>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 6. ABOUT ============ */}
+      <section id="about" className="bg-surface-container-low scroll-mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-stretch">
+          <div className="relative w-full max-w-[400px] mx-auto aspect-[3/4] mt-14 lg:mt-0 lg:max-w-none lg:mx-0 lg:aspect-auto lg:min-h-[720px] overflow-hidden">
+            <Image
+              src="/images/tahl-portrait.jpg"
+              alt="טל גורן, אדריכלית"
+              fill
+              sizes="(max-width: 1024px) 90vw, 40vw"
+              className="object-cover object-top"
+            />
+            {/* Corner ticks — the drafting-frame motif used across the site. */}
+            <div className="absolute inset-0 pointer-events-none">
+              <span className="absolute top-10 left-10 w-11 h-px bg-white/70" />
+              <span className="absolute top-10 left-10 w-px h-11 bg-white/70" />
+              <span className="absolute bottom-10 right-10 w-11 h-px bg-white/70" />
+              <span className="absolute bottom-10 right-10 w-px h-11 bg-white/70" />
+            </div>
+          </div>
+          <div className="px-6 sm:px-10 lg:px-[90px] py-16 lg:py-32 flex flex-col justify-center">
+            <div data-reveal className="max-w-[640px]">
+              <span className={EYEBROW}>מי תלווה אתכם</span>
+              <h2 className="m-0 font-headline font-extralight text-[34px] sm:text-[42px] lg:text-[54px] leading-[1.1] tracking-tight text-primary">
+                נעים מאוד,
+                <br />
+                <span className="font-bold">אני טל.</span>
+              </h2>
+              <p className="mt-7 font-body font-light text-lg sm:text-xl leading-[1.85] text-secondary text-pretty">
+                אדריכלית רשויה ומורשית היתר, בוגרת הטכניון בהצטיינות, ומעל 25 שנה מתכננת בתים פרטיים — ורק בתים
+                פרטיים. בשרון הצפוני, ביישובי מנשה, בחוף הכרמל ובסביבה.
+              </p>
+              <p className="mt-5 font-body font-light text-lg sm:text-xl leading-[1.85] text-secondary text-pretty">
+                המומחיות שלי היא &quot;בתים שגדלים עם המשפחה&quot;: תכנון גמיש, פרקטי וחסכוני, שמתאים לחיים שלכם
+                גם בעוד עשר שנים. ואת כל הדרך — הוועדות, היועצים, הקבלן — אתם עוברים איתי, לא לבד.
+              </p>
+              <div className="flex flex-wrap gap-2.5 mt-9">
+                {CREDENTIALS.map((c) => (
+                  <span
+                    key={c}
+                    className="font-label text-[11px] tracking-[0.14em] uppercase text-secondary border border-outline/90 px-4 py-2.5"
+                  >
+                    {c}
+                  </span>
                 ))}
               </div>
-              <Link href="/about" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-                <span>קראו עוד עליי</span>
-                <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FORM CTA — TOP */}
-      <HomeCtaForm
-        eyebrow="כמה מילים עליי"
-        heading="מתכננים לבנות את הבית הבא שלכם?"
-        placement="home_cta_top"
-      />
-
-      {/* LEAD MAGNET — free plot checklist */}
-      <section className="py-16 md:py-20 bg-surface -mt-1 border-y border-outline/10">
-        <div className="max-w-5xl mx-auto px-8">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 text-center md:text-right">
-            <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center flex-shrink-0">
-              <span className="material-symbols-outlined text-primary text-3xl">checklist</span>
-            </div>
-            <div className="flex-1">
-              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מתנה ממני</span>
-              <h2 className="font-headline font-black text-2xl sm:text-3xl text-primary tracking-tight mt-2">צ&apos;ק-ליסט חינמי: מה בודקים במגרש לפני שבונים</h2>
-              <p className="font-body text-secondary mt-2 max-w-xl">12 נקודות מפתח שיחסכו לכם טעויות יקרות — עוד לפני שקבעתם פגישת ייעוץ.</p>
-            </div>
-            <Link href="/resources/plot-checklist" className="flex-shrink-0 inline-flex items-center gap-2 bg-primary text-white px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-secondary transition-colors">
-              לצ&apos;ק-ליסט החינמי
-              <span className="material-symbols-outlined text-lg">arrow_back</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. TESTIMONIALS — Google Reviews */}
-      <section className="py-12 md:py-24 lg:py-32 bg-surface-container-low -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-16 space-y-4 flex flex-col items-center">
-            <a href="https://maps.app.goo.gl/6hAN8p1iuDtFnb77A" target="_blank" rel="noreferrer" className="inline-block hover:-translate-y-1 transition-transform drop-shadow hover:drop-shadow-md mb-2">
-              <Image src="/images/google-maps-logo.svg" alt="Google Maps Reviews" width={56} height={56} className="w-14 h-14" />
-            </a>
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">המלצות לקוחות</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מה אומרים עלינו</h2>
-            <div className="flex items-center gap-2" dir="rtl">
-              <span className="font-bold text-lg text-[#202124]">{reviewsData.rating.toFixed(1)}</span>
-              <StarRating rating={Math.round(reviewsData.rating)} className="w-5 h-5" />
-              <span className="text-sm text-[#70757a]">({reviewsData.totalReviews} ביקורות בגוגל)</span>
-            </div>
-            <Link href="/testimonials" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group mt-2">
-              <span>כל ההמלצות</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
-          <GoogleReviews reviews={reviewsData.reviews} />
-        </div>
-      </section>
-
-      {/* 3. PROJECTS */}
-      <section className="py-24 lg:py-32 -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="mb-16 text-center">
-            <div className="space-y-4">
-              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">פרויקטים נבחרים</span>
-              <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">מהעשייה שלנו</h2>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {projects.slice(0, 3).map((project: any) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-
-            {/* 4th Project Placeholder - Blurred out */}
-            {projects.length > 3 && (
-              <div className="relative group overflow-hidden rounded-2xl h-full shadow-lg border border-gray-100">
-                {/* The actual project card underneath */}
-                <div className="h-full select-none pointer-events-none">
-                  <ProjectCard project={projects[3]} />
-                </div>
-                {/* Obscuring Overlay */}
-                <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-surface via-surface/95 to-transparent backdrop-blur-[3px] flex flex-col items-center justify-center pt-20 pb-8">
-                  <Link href="/projects/completed" className="bg-primary text-white px-8 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-2xl hover:-translate-y-1 rounded-full flex items-center gap-3 pointer-events-auto">
-                    <span>לכל הפרויקטים</span>
-                    <span className="material-symbols-outlined text-lg">arrow_back</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* 3.5 PACKAGES / PRICING */}
-      <section className="py-24 lg:py-32 bg-surface-container -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="mb-16 text-center space-y-4">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מסלולי ליווי</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">איזה מסלול מתאים לכם?</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">שלושה מסלולי ליווי אדריכלי, שקופים ומוגדרים מראש — כדי שתדעו בדיוק מה כלול ותוכלו לבחור את המסלול שמתאים לתקציב ולצרכים שלכם.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {homePackages.map((pkg) => (
-              <Link
-                key={pkg.id}
-                href="/packages"
-                className={`group flex flex-col text-right border transition-all duration-300 hover:-translate-y-1 ${
-                  pkg.recommended ? "border-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
-                }`}
-              >
-                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-accent text-white" : "bg-primary text-white"}`}>
-                  {pkg.recommended && (
-                    <span className="inline-block bg-white/20 font-label text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 mb-2">
-                      הבחירה המומלצת
-                    </span>
-                  )}
-                  <h3 className="font-headline font-black text-lg leading-tight">{pkg.name}</h3>
-                </div>
-                <div className="px-6 py-5 bg-surface flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="font-headline font-black text-3xl text-primary">{pkg.price.toLocaleString("he-IL")} ₪</span>
-                    <p className="font-body text-xs text-secondary mt-3 leading-relaxed">{pkg.subtitle}</p>
-                  </div>
-                  <div className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors mt-6">
-                    <span>לפרטים המלאים</span>
-                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA BUTTON */}
-      <section className="py-24 bg-surface relative overflow-hidden -mt-1 text-center border-y border-outline/10">
-        <div className="max-w-4xl mx-auto px-8 relative z-10">
-          <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary mb-6">מוכנים לצאת לדרך?</h2>
-          <p className="font-body text-xl text-secondary mb-10">הצעד הראשון לבית החלומות שלכם מתחיל בשיחה.</p>
-          <div className="relative inline-block w-fit">
-            {/* Right Arrow (Physical Right) */}
-            <div className="absolute -right-16 top-0 bottom-0 items-center justify-center hidden md:flex">
-              <div className="animate-bounce">
-                <span className="material-symbols-outlined text-5xl text-primary rotate-180 block">arrow_right_alt</span>
+              <div className="flex flex-wrap items-center gap-4 mt-10">
+                <WhatsAppLink
+                  placement="home_about"
+                  message="היי טל, קראתי עלייך באתר ואשמח להתייעץ אישית."
+                  className="inline-flex items-center gap-2.5 bg-primary text-white px-7 py-4.5 font-headline font-medium text-[15px] hover:bg-secondary transition-colors"
+                >
+                  <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    chat
+                  </span>
+                  <span>להתייעץ איתי אישית</span>
+                </WhatsAppLink>
+                <Link
+                  href="/about"
+                  className="group inline-flex items-center gap-2 font-headline font-medium text-[15px] text-primary hover:text-secondary transition-colors"
+                >
+                  <span>קראו עוד עליי</span>
+                  <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">
+                    arrow_back
+                  </span>
+                </Link>
               </div>
             </div>
-            {/* Left Arrow (Physical Left) */}
-            <div className="absolute -left-16 top-0 bottom-0 items-center justify-center hidden md:flex">
-              <div className="animate-bounce">
-                <span className="material-symbols-outlined text-5xl text-primary block">arrow_right_alt</span>
-              </div>
-            </div>
-
-            {/* Glowing Border Wrapper */}
-            <div className="relative inline-flex overflow-hidden p-[2px] transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl">
-              <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#d4af37_50%,transparent_100%)]" />
-              <Link href="/contact" className="relative inline-flex items-center justify-center h-full w-full bg-primary text-white px-12 py-5 font-headline font-black text-lg uppercase tracking-widest transition-colors hover:bg-primary/95">
-                לקביעת פגישת ייעוץ
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 7. FAQ (accordion with full-article links) */}
-      <section className="py-24 lg:py-32 -mt-1">
-        <div className="max-w-4xl mx-auto px-8 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">שאלות נפוצות</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">שאלות ותשובות</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">ריכזנו עבורכם את השאלות הנפוצות ביותר שלקוחות שואלים לפני ובמהלך תהליך הבנייה והתכנון האדריכלי. לחצו על שאלה לתשובה מלאה.</p>
-          </div>
-
-          <FaqAccordion limit={6} />
-
-          <div className="mt-14 flex flex-col items-center gap-5">
-            <Link
-              href="/articles"
-              className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-secondary transition-colors"
-            >
-              לכל המאמרים
-              <span className="material-symbols-outlined text-lg">arrow_back</span>
-            </Link>
-            <Link
-              href="/faq"
-              className="inline-flex items-center gap-2 font-headline font-bold text-xs text-secondary hover:text-primary transition-colors"
-            >
-              לכל השאלות הנפוצות
-              <span className="material-symbols-outlined text-sm">arrow_back</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FORM CTA — MID */}
-      <HomeCtaForm
-        eyebrow="יש עוד שאלה?"
-        heading="נשמח לענות ולעזור לכם להתקדם"
-        placement="home_cta_mid"
-      />
-
-      {/* 5. CTA / CONTACT */}
-      <section className="py-24 lg:py-32 bg-primary relative overflow-hidden -mt-1">
-        <Image
-          src="/images/projects/vild-detail.jpg"
-          alt=""
-          aria-hidden
-          fill
-          sizes="100vw"
-          quality={80}
-          className="object-cover opacity-15"
-        />
-        <div className="absolute inset-0 bg-primary/70" />
-        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="relative z-10 max-w-[1920px] mx-auto px-8 lg:px-12 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">בואו נתחיל</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">הבית הבא שלכם<br />מתחיל כאן</h2>
-            <p className="font-body text-lg text-white/70 max-w-xl mx-auto leading-relaxed">מוזמנים לפנות אליי לשיחת ייעוץ ראשונית ללא עלות. נשב יחד, נבין את הצרכים שלכם, ונתחיל לתכנן את הבית שתמיד חלמתם עליו.</p>
+      {/* ============ 7. PROJECTS ============ */}
+      <section id="projects" className="py-20 lg:py-32 bg-surface scroll-mt-24">
+        <div className="max-w-[1680px] mx-auto px-6 sm:px-10">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-x-16 gap-y-8 mb-14">
             <div>
-              <Link href="/contact" className="inline-block bg-white text-primary px-12 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-white/90 transition-colors">לפגישת ייעוץ</Link>
+              <span className={EYEBROW}>בתים שכבר גרים בהם</span>
+              <h2 className={SECTION_H2}>מהעשייה שלנו</h2>
             </div>
-            <div className="flex justify-center gap-8 pt-4">
-              <a href="tel:0528345799" onClick={() => trackLead("phone", { placement: "home_hero" })} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg">call</span>052-8345799
-              </a>
-              <a href="https://wa.me/972528345799" target="_blank" rel="noreferrer" onClick={() => trackLead("whatsapp", { placement: "home_hero" })} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-label text-sm">
-                <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>WhatsApp
-              </a>
-            </div>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 font-headline font-medium text-[15px] text-primary pb-2 border-b border-outline/90 hover:text-secondary transition-colors"
+            >
+              <span>לכל הפרויקטים</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">
+                arrow_back
+              </span>
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* 8. ARTICLES (new section) */}
-      <section className="py-24 lg:py-32 bg-surface-container-low -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="mb-16 space-y-4 text-center">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">מאמרים ומדריכים</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-primary tracking-tight">ידע שחוסך לכם כסף</h2>
-            <p className="font-body text-lg text-secondary max-w-2xl mx-auto">מאמרים מקצועיים בנושאי תכנון, בנייה ועיצוב — כדי שתגיעו מוכנים לתהליך.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredArticles.map((article) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[22px]">
+            {featuredProjects.map((p) => (
               <Link
-                key={article.slug}
-                href={`/articles/${article.slug}`}
-                className="group card-hover block bg-surface overflow-hidden"
+                key={p.id}
+                href={`/projects/${p.id}`}
+                data-reveal
+                className="group block relative overflow-hidden bg-surface-container"
               >
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <Image
-                    src={article.image}
-                    alt={article.title}
+                    src={p.image}
+                    alt={p.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover img-grayscale"
+                    className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>
-                <div className="p-8 text-right">
-                  <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
-                  <p className="text-secondary text-sm mt-3 leading-relaxed line-clamp-2">{article.excerpt}</p>
-                  <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
-                    לקריאה
-                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                  </div>
+                <div className="px-[26px] pt-[26px] pb-[30px]">
+                  <span className="block font-label text-[11px] tracking-[0.2em] uppercase text-accent mb-3">
+                    {p.location}
+                  </span>
+                  <h3 className="m-0 font-headline text-[21px] text-primary leading-[1.35]">{p.title}</h3>
+                  <p className="mt-3 font-body font-light text-base leading-[1.7] text-secondary">{p.description}</p>
                 </div>
               </Link>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <Link href="/articles" className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>לכל המאמרים</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+        </div>
+      </section>
+
+      {/* ============ 8. REVIEWS ============ */}
+      <section id="reviews" className="py-20 lg:py-32 bg-surface-container border-t border-outline/50 scroll-mt-24">
+        <div className="max-w-[1680px] mx-auto px-6 sm:px-10">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-x-16 gap-y-8 mb-14">
+            <div>
+              <span className={EYEBROW}>
+                {reviewsData.totalReviews} ביקורות · {reviewsData.rating.toFixed(1)} בגוגל
+              </span>
+              <h2 className={SECTION_H2}>
+                מה אומרות המשפחות
+                <br />
+                <span className="font-bold">שכבר עברו את זה.</span>
+              </h2>
+            </div>
+            <a
+              href="https://maps.app.goo.gl/6hAN8p1iuDtFnb77A"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3.5 flex-shrink-0 hover:opacity-80 transition-opacity"
+            >
+              <Image src="/images/google-maps-logo.svg" alt="" width={40} height={40} className="w-10 h-10" />
+              <span className="font-headline font-medium text-[15px] text-primary">לכל הביקורות בגוגל</span>
+            </a>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[22px]">
+            {homeReviews.map((r) => (
+              <div
+                key={r.name}
+                data-reveal
+                className="bg-surface border border-outline/55 px-8 py-9 flex flex-col gap-4.5"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className="w-[42px] h-[42px] rounded-full text-white flex items-center justify-center font-label text-[17px] flex-shrink-0"
+                    style={{ background: r.avatar }}
+                    aria-hidden
+                  >
+                    {r.initial}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="m-0 font-body font-semibold text-base text-primary">{r.name}</p>
+                    {r.location && (
+                      <p className="mt-0.5 mb-0 font-label text-[11px] tracking-wide text-secondary">{r.location}</p>
+                    )}
+                  </div>
+                  <svg viewBox="0 0 48 48" className="w-[19px] h-[19px] flex-shrink-0" aria-hidden>
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.5H42V20H24v8h11.3C33.8 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.7-3.1-11.3-7.6l-6.5 5C9.6 39.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.2 5.2C41 35.6 44 30.2 44 24c0-1.3-.1-2.7-.4-3.5z"
+                    />
+                  </svg>
+                </div>
+                <StarRating rating={Math.round(r.rating)} className="w-[15px] h-[15px]" />
+                <p className="m-0 font-body font-light text-[17px] leading-[1.8] text-secondary text-pretty">
+                  {r.text}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link
+              href="/testimonials"
+              className="group inline-flex items-center gap-2 font-headline font-medium text-[15px] text-primary hover:text-secondary transition-colors"
+            >
+              <span>כל ההמלצות</span>
+              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">
+                arrow_back
+              </span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 9. WHY CHOOSE ME */}
-      <section className="py-24 lg:py-32 bg-surface-container -mt-1">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            <div className="flex-1 relative w-full aspect-[4/3] sm:aspect-auto sm:h-[400px] lg:h-[600px]">
-              <Image src="/images/tahl-goren-first-meeting.jpeg" alt="טל גורן אדריכלית בעבודה" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center img-grayscale" />
-              <div className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 bg-primary text-white p-4 sm:p-6 lg:p-8 scale-75 sm:scale-100 origin-bottom-left">
-                <span className="font-headline font-black text-5xl sm:text-6xl block leading-none">25+</span>
-                <span className="font-label text-xs tracking-widest uppercase mt-2 block text-white/70">שנות ניסיון</span>
-              </div>
-            </div>
-            <div className="flex-1 space-y-6">
-              <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">למה לבחור בנו</span>
-              <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary tracking-tight leading-tight">ניסיון, מקצועיות<br />ויחס אישי</h2>
-              <div className="space-y-10 mt-10">
-                {[
-                  { icon: 'verified', title: 'מומחיות מוכחת', text: 'למעלה מ-25 שנות ניסיון בתכנון בתים פרטיים, שיפוצים והרחבות. כל פרויקט מקבל את מלוא תשומת הלב והמקצועיות.', fill: true },
-                  { icon: 'account_balance_wallet', title: 'שליטה מלאה בתקציב', text: 'אני מכירה את החשש מ"בור" תקציבי ללא תחתית. לכן אני בונה איתכם תקציב ריאלי כבר בפגישה הראשונה, מלווה אתכם צמוד מול הוועדות והיועצים, ודואגת שהחלטות תכנוניות לא יהפכו בהמשך לחריגות ולטעויות יקרות.', fill: false },
-                  { icon: 'family_restroom', title: 'ליווי אישי שחוסך לכם כאב ראש', text: 'אני מלווה אתכם לאורך כל הדרך, מהפגישה הראשונה ועד הכניסה הביתה — כולל מול הבירוקרטיה שמלחיצה הכי הרבה. תמיד זמינה, תמיד עם תשובה.', fill: false },
-                ].map((v) => (
-                  <div key={v.title} className="flex gap-6 items-start">
-                    <div className="w-14 h-14 bg-surface-container-low flex items-center justify-center flex-shrink-0">
-                      <span className="material-symbols-outlined text-primary text-2xl" style={v.fill ? { fontVariationSettings: "'FILL' 1" } : undefined}>{v.icon}</span>
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="font-headline font-bold text-lg text-primary">{v.title}</h3>
-                      <p className="font-body text-sm text-secondary leading-relaxed">{v.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* ============ 9. FINAL CTA ============ */}
+      <section className="relative py-24 lg:py-36 bg-primary overflow-hidden">
+        {featuredProjects[0] && (
+          <Image
+            src={featuredProjects[0].image}
+            alt=""
+            aria-hidden
+            fill
+            sizes="100vw"
+            quality={70}
+            className="object-cover opacity-[0.16]"
+            loading="lazy"
+          />
+        )}
+        <div className="absolute inset-0 bg-primary/70" />
+        <div
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.5) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <div className="relative z-10 max-w-[900px] mx-auto px-6 sm:px-10 text-center">
+          <span
+            data-reveal
+            className="block font-label text-[11px] tracking-[0.4em] uppercase text-white/50 mb-7"
+          >
+            הצעד הבא הוא שיחה. זה הכול.
+          </span>
+          <h2
+            data-reveal
+            className="m-0 font-headline font-extralight text-[34px] sm:text-[44px] lg:text-[58px] leading-[1.12] tracking-tight text-white"
+          >
+            בואו נדבר על המגרש שלכם
+            <br />
+            <span className="font-bold">לפני שאתם מחליטים משהו.</span>
+          </h2>
+          <p
+            data-reveal
+            className="mt-7 mx-auto font-body font-light text-lg sm:text-xl leading-[1.8] text-white/75 max-w-[620px] text-pretty"
+          >
+            שיחה קצרה, ללא עלות וללא התחייבות. תספרו לי מה יש לכם ביד, ואני אגיד לכם בכתב מה אפשרי, מה זה עולה
+            בגדול, וכמה זמן זה לוקח.
+          </p>
+          <div data-reveal className="flex flex-wrap items-center justify-center gap-3.5 mt-11">
+            <WhatsAppLink
+              placement="home_final_cta"
+              message="היי טל, אשמח לשיחה קצרה על המגרש שלנו."
+              className="inline-flex items-center gap-3 bg-white text-primary px-9 py-5 font-headline font-bold text-[17px] hover:bg-surface-container-highest transition-colors"
+            >
+              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                chat
+              </span>
+              <span>לפתוח שיחה בוואטסאפ</span>
+            </WhatsAppLink>
+            <PhoneLink
+              placement="home_final_cta"
+              className="inline-flex items-center gap-3 border border-white/45 text-white px-8 py-5 font-headline text-[17px] hover:bg-white/10 transition-colors"
+            >
+              <span className="material-symbols-outlined text-xl">call</span>
+              <span>{PHONE_DISPLAY}</span>
+            </PhoneLink>
           </div>
+          <p data-reveal className="mt-5 font-label text-xs tracking-wide text-white/45">
+            טל גורן · אדריכלית רשויה ומורשית היתר · רחוב האלה 22, גבעת עדה
+          </p>
         </div>
       </section>
 
-      {/* FORM CTA — BOTTOM */}
-      <HomeCtaForm
-        eyebrow="מוכנים להתחיל?"
-        heading="שנתחיל לתכנן את הבית שלכם?"
-        placement="home_cta_bottom"
-      />
-
-      {/* 10. SOCIAL */}
-      <section className="py-24 lg:py-32 bg-surface -mt-1 text-center">
-        <div className="max-w-[1920px] mx-auto px-8 lg:px-12">
-          <div className="max-w-2xl mx-auto space-y-8">
-            <span className="font-label text-[10px] tracking-[0.3em] text-secondary uppercase">הישארו מעודכנים</span>
-            <h2 className="font-headline font-black text-4xl sm:text-5xl text-primary tracking-tight">עקבו אחרינו ברשתות</h2>
-            <p className="font-body text-lg text-secondary leading-relaxed">
-              הצצה יומיומית אל מאחורי הקלעים, פרויקטים בתהליך, סיורים מצולמים וטיפים לעיצוב הבית.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
-                <span className="material-symbols-outlined">photo_camera</span>
-                Instagram
-              </a>
-              <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
-                <span className="material-symbols-outlined">thumb_up</span>
-                Facebook
-              </a>
-              <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noreferrer" className="bg-surface-container-low border border-outline/10 text-primary px-8 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors flex items-center gap-2">
-                <span className="material-symbols-outlined">play_circle</span>
-                YouTube
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <StickyDock />
     </>
   );
 }

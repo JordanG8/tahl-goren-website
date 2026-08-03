@@ -49,15 +49,8 @@ export default function Navbar() {
                 alt="TAL GOREN"
                 width={280}
                 height={94}
-                className={`w-auto object-contain ${isHome ? '' : 'transition-all duration-300'} ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
+                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
                   transparent ? 'brightness-0 invert drop-shadow-md' : ''
-                } ${
-                  // On the homepage the animated hero logo clone always stands in
-                  // visually (docking into this exact slot on scroll), so the
-                  // real logo here stays invisible-but-present for a11y, and its
-                  // size/position must snap instantly (no CSS transition) so the
-                  // clone can measure its true resting rect on the very next frame.
-                  isHome ? 'opacity-0' : 'opacity-100'
                 }`}
                 priority
               />
@@ -65,7 +58,10 @@ export default function Navbar() {
 
             <div className={`hidden lg:block w-px mx-2 transition-all duration-300 ${isScrolled ? 'h-8' : 'h-12'} ${transparent ? 'bg-white/25' : 'bg-primary/10'}`} />
 
-            <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-wide text-base">
+            {/* The gap has to scale with the viewport: seven links plus the
+                logo, socials and CTA overflow the row below ~1600px at a
+                fixed gap-10, which pushed every page into horizontal scroll. */}
+            <div className="hidden lg:flex gap-5 xl:gap-7 2xl:gap-10 items-center font-headline font-bold uppercase tracking-wide text-base">
               {desktopLinks.map((link) => {
                 const isActive = pathname === link.to;
                 return (
