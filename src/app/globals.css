@@ -16,6 +16,11 @@
   --color-outline: #c2cdd2;
   --color-tertiary: #318BA2;
   --color-accent: #A96F57;
+  /* The shadcn token block below redefines --color-accent as var(--accent),
+     a near-white hover tint (#e9eef0). That silently won, so every brand
+     `bg-accent` surface rendered white-on-white. Brand highlights use this
+     token instead; `accent` stays the shadcn UI hover colour. */
+  --color-brand-accent: #A96F57;
 
   --font-headline: var(--font-heebo), "Heebo", sans-serif;
   --font-body: var(--font-assistant), "Assistant", sans-serif;

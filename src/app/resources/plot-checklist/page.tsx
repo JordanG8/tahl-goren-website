@@ -89,7 +89,7 @@ export default function PlotChecklistPage() {
             <ol className="space-y-8">
               {checklist.map((item, i) => (
                 <li key={item.title} className="flex gap-5">
-                  <span className="font-headline font-black text-2xl text-accent flex-shrink-0 w-10">
+                  <span className="font-headline font-black text-2xl text-brand-accent flex-shrink-0 w-10">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>

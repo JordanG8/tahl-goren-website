@@ -84,7 +84,7 @@ export default function LeadMagnetForm({ placement }: { placement: string }) {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="w-full bg-accent text-white px-8 py-3.5 font-headline font-black text-sm uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full bg-brand-accent text-white px-8 py-3.5 font-headline font-black text-sm uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {status === "submitting" ? "שולח..." : "שלחו לי פרטים"}
         </button>

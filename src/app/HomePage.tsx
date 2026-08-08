@@ -362,10 +362,10 @@ export default function HomePage({ projects, reviewsData }: Props) {
                 key={pkg.id}
                 href="/packages"
                 className={`group flex flex-col text-right border transition-all duration-300 hover:-translate-y-1 ${
-                  pkg.recommended ? "border-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
+                  pkg.recommended ? "border-brand-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
                 }`}
               >
-                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-accent text-white" : "bg-primary text-white"}`}>
+                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-brand-accent text-white" : "bg-primary text-white"}`}>
                   {pkg.recommended && (
                     <span className="inline-block bg-white/20 font-label text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 mb-2">
                       הבחירה המומלצת

@@ -12,6 +12,14 @@ export const metadata: Metadata = {
 
 const formatPrice = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
 
+// Displayed cheapest-first. `packageSpecs.values` is positionally tied to the
+// source order of `packages`, so look values up by the source index rather
+// than reversing the data itself — reversing the array alone would silently
+// mismatch every row of the comparison table.
+const displayPackages = [...packages].reverse();
+const sourceIndexOf = (id: (typeof packages)[number]["id"]) =>
+  packages.findIndex((p) => p.id === id);
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -84,16 +92,16 @@ export default function PackagesPage() {
       <section className="py-16 md:py-24 px-8 bg-surface-container-low">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            {packages.map((pkg) => (
+            {displayPackages.map((pkg) => (
               <div
                 key={pkg.id}
                 className={`flex flex-col bg-surface border text-right h-full ${
                   pkg.recommended
-                    ? "border-accent shadow-2xl md:-translate-y-4"
+                    ? "border-brand-accent shadow-2xl md:-translate-y-4"
                     : "border-outline/10"
                 }`}
               >
-                <div className={`px-8 pt-8 pb-6 ${pkg.recommended ? "bg-accent text-white" : "bg-primary text-white"}`}>
+                <div className={`px-8 pt-8 pb-6 ${pkg.recommended ? "bg-brand-accent text-white" : "bg-primary text-white"}`}>
                   {pkg.recommended && (
                     <span className="inline-block bg-white/20 font-label text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-3">
                       הבחירה המומלצת שלי
@@ -130,7 +138,7 @@ export default function PackagesPage() {
                     href="/contact"
                     className={`block text-center w-full px-6 py-4 font-headline font-bold text-sm uppercase tracking-widest transition-colors ${
                       pkg.recommended
-                        ? "bg-accent text-white hover:opacity-90"
+                        ? "bg-brand-accent text-white hover:opacity-90"
                         : "bg-primary text-white hover:bg-secondary"
                     }`}
                   >
@@ -160,10 +168,10 @@ export default function PackagesPage() {
               <thead>
                 <tr className="border-b-2 border-primary/20">
                   <th className="py-4 px-4 font-headline font-bold text-sm text-secondary"></th>
-                  {packages.map((pkg) => (
+                  {displayPackages.map((pkg) => (
                     <th
                       key={pkg.id}
-                      className={`py-4 px-4 font-headline font-black text-base ${pkg.recommended ? "text-accent" : "text-primary"}`}
+                      className={`py-4 px-4 font-headline font-black text-base ${pkg.recommended ? "text-brand-accent" : "text-primary"}`}
                     >
                       {pkg.name}
                     </th>
@@ -174,16 +182,16 @@ export default function PackagesPage() {
                 {packageSpecs.map((row) => (
                   <tr key={row.label} className="border-b border-outline/10">
                     <td className="py-4 px-4 font-body text-sm text-secondary">{row.label}</td>
-                    {row.values.map((v, i) => (
-                      <td key={i} className="py-4 px-4 font-headline font-bold text-lg text-primary">
-                        {v}
+                    {displayPackages.map((pkg) => (
+                      <td key={pkg.id} className="py-4 px-4 font-headline font-bold text-lg text-primary">
+                        {row.values[sourceIndexOf(pkg.id)]}
                       </td>
                     ))}
                   </tr>
                 ))}
                 <tr className="border-b border-outline/10">
                   <td className="py-4 px-4 font-body text-sm text-secondary font-bold">עיצוב פנים כלול</td>
-                  {packages.map((pkg) => (
+                  {displayPackages.map((pkg) => (
                     <td key={pkg.id} className="py-4 px-4 align-top">
                       {pkg.includesDesign.length ? (
                         <ul className="space-y-1.5">

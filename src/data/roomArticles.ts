@@ -11,7 +11,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון אדריכלי חדר אחר חדר — המדריך השלם | טל גורן",
     metaDescription: "סדרת מאמרים מקיפה על תכנון אדריכלי של כל חדר בבית הפרטי — מטבח, סלון, חדרי שינה, חדרי רחצה ועוד. טל גורן אדריכלית מלווה אתכם צעד אחר צעד.",
     excerpt: "מאיפה מתחילים לתכנן בית? סדרת המאמרים הזו מפרקת את התהליך לחלקים ברורים ונגישים, חדר אחר חדר, עם גישה מקצועית שמתמקדת בתכנון יעיל, גמיש ופרקטי.",
-    heroImage: "/images/articles/rooms-intro.jpg",
+    heroImage: "/images/articles/rooms-intro.webp",
     heroAlt: "תכנון אדריכלי חכם של בית פרטי — מבוא לסדרה",
     keywords: [
       "תכנון אדריכלי בית פרטי",
@@ -85,7 +85,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון מטבח בבית פרטי — המדריך המקצועי | טל גורן",
     metaDescription: "איך מתכננים מטבח פונקציונלי ויעיל בבית פרטי? מיקום, זרימת עבודה, אחסון חכם, תשתיות ועיצוב — המדריך המלא מאת טל גורן אדריכלית.",
     excerpt: "המטבח הוא הרבה יותר ממקום לבשל — הוא לב הבית הפועם. במאמר זה נצלול לעומק שיקולי המיקום, זרימת העבודה, פתרונות האחסון והתשתיות לתכנון מטבח שעובד בשבילכם.",
-    heroImage: "/images/articles/rooms-kitchen.jpg",
+    heroImage: "/images/articles/rooms-kitchen.webp",
     heroAlt: "תכנון אדריכלי של מטבח בבית פרטי",
     keywords: [
       "תכנון מטבח",
@@ -230,7 +230,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון סלון בבית פרטי — טיפים מקצועיים | טל גורן",
     metaDescription: "איך מתכננים סלון מוצלח בבית פרטי? כיווני אוויר, נוף, פרטיות, גמישות ועיצוב — כל מה שצריך לדעת לתכנון המרחב המשפחתי המזמין.",
     excerpt: "הסלון הוא המרחב הציבורי המרכזי בבית — מקום לאירוח, למפגשים משפחתיים ולביטוי אישי. איך מוודאים שהוא גם יפה וגם פונקציונלי?",
-    heroImage: "/images/articles/rooms-living-room.jpg",
+    heroImage: "/images/articles/rooms-living-room.webp",
     heroAlt: "תכנון סלון מרווח ומזמין בבית פרטי",
     keywords: [
       "תכנון סלון",
@@ -366,7 +366,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון פינת אוכל בבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים פינת אוכל שתשמש גם למפגשים יומיומיים וגם לאירוח? גודל, מרחב תנועה, תאורה, שולחן ועיצוב — המדריך המקצועי של טל גורן.",
     excerpt: "פינת האוכל היא צומת מרכזית בחלל הציבורי — גשר בין המטבח לסלון ומקום למפגשים. איך מתכננים אותה נכון?",
-    heroImage: "/images/articles/rooms-dining.jpg",
+    heroImage: "/images/articles/rooms-dining.webp",
     heroAlt: "פינת אוכל מעוצבת ופונקציונלית בבית פרטי",
     keywords: [
       "תכנון פינת אוכל",
@@ -512,7 +512,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון גינה ומרפסת בבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים חללי חוץ שהם הרחבה טבעית של הבית? הצללה, ריצוף, תאורה, צמחייה ומטבח חוץ — המדריך לתכנון גינה ומרפסת באקלים הישראלי.",
     excerpt: "הגינה והמרפסת הן פוטנציאל אדיר להרחבת מרחב המחיה — ״חדר נוסף״ שלא נספר בזכויות הבנייה. איך מתכננים אותן נכון?",
-    heroImage: "/images/articles/rooms-outdoor.jpg",
+    heroImage: "/images/articles/rooms-outdoor.webp",
     heroAlt: "חלל חוץ מעוצב בבית פרטי — גינה ומרפסת",
     keywords: [
       "תכנון גינה",
@@ -638,7 +638,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון סוויטת הורים בבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים יחידת הורים מושלמת? חדר שינה, חדר רחצה, אחסון, פרטיות וגמישות — המדריך המקצועי לתכנון סוויטת ההורים בבית פרטי.",
     excerpt: "יחידת ההורים היא הרבה יותר מחדר שינה — זה המפלט הפרטי שלכם. איך מתכננים סוויטה שהיא גם מפנקת וגם פונקציונלית?",
-    heroImage: "/images/articles/rooms-parents-suite.jpg",
+    heroImage: "/images/articles/rooms-parents-suite.webp",
     heroAlt: "יחידת הורים מעוצבת ופונקציונלית בבית פרטי",
     keywords: [
       "תכנון יחידת הורים",
@@ -787,7 +787,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון פינת משפחה בבית פרטי | טל גורן אדריכלית",
     metaDescription: "האם צריכים חדר משפחה נפרד? איפה למקם אותו, איך לתכנן גמישות לעתיד, ואיך ליצור חלל נוח ועמיד — המדריך המקצועי של טל גורן.",
     excerpt: "פינת המשפחה היא ה\"סלון השני\" — מקום ייעודי לשגרת היומיום, למשחקים, לטלוויזיה ול\"בלגן\" הקטן של החיים. איך מתכננים אותה נכון?",
-    heroImage: "/images/articles/rooms-family-corner.jpg",
+    heroImage: "/images/articles/rooms-family-corner.webp",
     heroAlt: "פינת משפחה נוחה ופונקציונלית בבית פרטי",
     keywords: [
       "פינת משפחה",
@@ -926,7 +926,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון חדרי ילדים ונוער בבית פרטי | טל גורן",
     metaDescription: "איך מתכננים חדרי ילדים גמישים שיגדלו עם הילדים? בטיחות, אחסון, גמישות, ממ\"ד כחדר ילדים — המדריך המקצועי של טל גורן.",
     excerpt: "חדר הילדים צריך להתאים לתינוק, לפעוט, לילד וגם למתבגר. המפתח? תכנון גמיש וחכם שגדל ומתפתח יחד איתם.",
-    heroImage: "/images/articles/rooms-kids.jpg",
+    heroImage: "/images/articles/rooms-kids.webp",
     heroAlt: "חדר ילדים מתוכנן ומעוצב בבית פרטי",
     keywords: [
       "חדר ילדים",
@@ -1067,7 +1067,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון חדר רחצה משפחתי בבית פרטי | טל גורן",
     metaDescription: "איך מתכננים חדר רחצה שיעמוד בשימוש אינטנסיבי של ילדים? בטיחות, ריצוף מונע החלקה, אוורור, חימום ותחזוקה — המדריך המלא.",
     excerpt: "חדר הרחצה המשפחתי צריך לעמוד בלחץ הבוקר, ברטיבות ובשימוש לא תמיד עדין. איך מתכננים אותו בטוח, עמיד ופונקציונלי?",
-    heroImage: "/images/articles/rooms-kids-bathroom.jpg",
+    heroImage: "/images/articles/rooms-kids-bathroom.webp",
     heroAlt: "חדר רחצה משפחתי פונקציונלי ובטוח",
     keywords: [
       "חדר רחצה ילדים",
@@ -1199,7 +1199,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון חדר עבודה ביתי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים חדר עבודה מהבית שמאפשר ריכוז ופרודוקטיביות? מיקום, אקוסטיקה, תאורה, תשתיות ועיצוב — המדריך המקצועי.",
     excerpt: "עבודה מהבית היא חלק משגרת החיים. איך מתכננים חדר עבודה ביתי שיהיה נוח, שקט ותומך פרודוקטיביות?",
-    heroImage: "/images/articles/rooms-home-office.jpg",
+    heroImage: "/images/articles/rooms-home-office.webp",
     heroAlt: "חדר עבודה ביתי מתוכנן ופונקציונלי",
     keywords: [
       "חדר עבודה מהבית",
@@ -1314,7 +1314,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון מבואת כניסה לבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים כניסה לבית שהיא גם מרשימה וגם פונקציונלית? אחסון, תאורה, זרימה ועיצוב — המדריך המקצועי לתכנון מבואת כניסה.",
     excerpt: "מבואת הכניסה היא כרטיס הביקור של הבית — החלל הראשון שפוגשים. איך מוודאים שהיא גם מזמינה וגם פרקטית?",
-    heroImage: "/images/articles/rooms-entrance.jpg",
+    heroImage: "/images/articles/rooms-entrance.webp",
     heroAlt: "מבואת כניסה מעוצבת ופונקציונלית",
     keywords: [
       "מבואת כניסה",
@@ -1414,7 +1414,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון חדר כביסה בבית פרטי | טל גורן אדריכלית",
     metaDescription: "למה חדר כביסה נפרד הוא חובה? מיקום אידיאלי, פריסה, תשתיות ואחסון — המדריך המקצועי לתכנון חדר כביסה יעיל בבית פרטי.",
     excerpt: "חדר כביסה מאורגן ופונקציונלי עושה את החיים קלים יותר. למה דווקא ליד חדרי השינה? ואיך מתכננים אותו נכון?",
-    heroImage: "/images/articles/rooms-laundry.jpg",
+    heroImage: "/images/articles/rooms-laundry.webp",
     heroAlt: "חדר כביסה מתוכנן ופונקציונלי בבית פרטי",
     keywords: [
       "חדר כביסה",
@@ -1564,7 +1564,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון שירותי אורחים בבית פרטי | טל גורן",
     metaDescription: "איך הופכים את החדר הקטן ביותר בבית ל\"פנינה\" עיצובית? מיקום דיסקרטי, כלים סניטריים, אוורור ועיצוב — המדריך לשירותי אורחים מרשימים.",
     excerpt: "שירותי האורחים הם החדר הקטן ביותר בבית, אך יש בהם פוטנציאל עצום ליצור רושם. איך מנצלים כל סנטימטר?",
-    heroImage: "/images/articles/rooms-guest-wc.jpg",
+    heroImage: "/images/articles/rooms-guest-wc.webp",
     heroAlt: "שירותי אורחים מעוצבים ומרשימים",
     keywords: [
       "שירותי אורחים",
@@ -1694,7 +1694,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון אחסון חכם בבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים אחסון חכם ומספק בכל חדר? ארונות מובנים, מחסן, ניצול שטחים מתים ופתרונות גמישים — המדריך המקצועי לאחסון בבית פרטי.",
     excerpt: "\"איפה נשים את כל הדברים?\" — השאלה שעולה בכל פגישה ראשונה. תכנון אחסון חכם מההתחלה הוא המפתח לבית מסודר ונוח.",
-    heroImage: "/images/articles/rooms-storage.jpg",
+    heroImage: "/images/articles/rooms-storage.webp",
     heroAlt: "פתרונות אחסון חכמים בבית פרטי",
     keywords: [
       "אחסון בבית",
@@ -1825,7 +1825,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון חניה ומוסך בבית פרטי | טל גורן אדריכלית",
     metaDescription: "איך מתכננים חניה ומוסך שהם גם נוחים וגם משתלבים בעיצוב הבית? סוגים, מידות, תשתיות לרכב חשמלי ושימושים נוספים — המדריך המקצועי.",
     excerpt: "החניה היא הרבה יותר ממקום לאוטו — אחסון, סדנה, כניסה נוחה לבית, ותשתית לרכב חשמלי. איך מתכננים נכון?",
-    heroImage: "/images/articles/rooms-parking.jpg",
+    heroImage: "/images/articles/rooms-parking.webp",
     heroAlt: "חניה ומוסך מתוכננים בבית פרטי",
     keywords: [
       "תכנון חניה",
@@ -1962,7 +1962,7 @@ export const roomArticles: Article[] = [
     metaTitle: "תכנון מסדרונות ומדרגות בבית פרטי | טל גורן",
     metaDescription: "איך הופכים מסדרונות ומדרגות מ\"שטח מת\" לחלק חי מהבית? יעילות מרחבית, בטיחות, תאורה ועיצוב — המדריך לתכנון חללי מעבר.",
     excerpt: "מסדרונות, מדרגות ומבואות — ה\"דבק\" שמחבר את הבית. תכנון נכון שלהם מונע בזבוז שטח והופך אותם לחלק מהחוויה.",
-    heroImage: "/images/articles/rooms-transitions.jpg",
+    heroImage: "/images/articles/rooms-transitions.webp",
     heroAlt: "מדרגות ומסדרון מעוצבים בבית פרטי",
     keywords: [
       "תכנון מסדרון",
@@ -2055,7 +2055,7 @@ export const roomArticles: Article[] = [
     metaTitle: "סיכום סדרת תכנון חדרי הבית | טל גורן אדריכלית",
     metaDescription: "סיכום סדרת המאמרים על תכנון אדריכלי חדר אחר חדר — עקרונות המפתח: תכנון הוליסטי, גמישות, יעילות, פרטים קטנים והתאמה אישית.",
     excerpt: "אחרי שצללנו חדר אחר חדר, הגיע הזמן להסתכל על התמונה הגדולה. מהם עקרונות המפתח לתכנון בית שבאמת עובד?",
-    heroImage: "/images/articles/rooms-summary.jpg",
+    heroImage: "/images/articles/rooms-summary.webp",
     heroAlt: "תכנון אדריכלי כולל של בית פרטי — סיכום",
     keywords: [
       "תכנון אדריכלי כולל",
