@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { packages, packageSpecs, packagesFootnote, packagesBottomLine } from "@/data/packagesContent";
 
 export const metadata: Metadata = {
-  title: "מסלולי ליווי אדריכלי ומחירים | טל גורן אדריכלות",
+  title: "מסלולי ליווי אדריכלי ומחירים | טל גורן אדריכלית",
   description:
     "שלושה מסלולי ליווי אדריכלי לבניית בית פרטי — בסיסי, משתלם ו-Total Design. השוואת מחירים ומה כלול בכל מסלול, כדי לבחור את המסלול המתאים לתקציב ולצרכים שלכם.",
   alternates: { canonical: "/packages" },
@@ -20,7 +20,7 @@ const jsonLd = {
   areaServed: "IL",
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "מסלולי ליווי אדריכלי - טל גורן אדריכלות",
+    name: "מסלולי ליווי אדריכלי - טל גורן אדריכלית",
     itemListElement: packages.map((p) => ({
       "@type": "Offer",
       itemOffered: { "@type": "Service", name: p.name, description: p.forWhom },

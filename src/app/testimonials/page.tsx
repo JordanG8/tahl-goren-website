@@ -6,7 +6,7 @@ import StarRating from "@/components/StarRating";
 import { getReviews } from "@/lib/reviews";
 
 export const metadata: Metadata = {
-  title: "המלצות לקוחות | טל גורן אדריכלות",
+  title: "המלצות לקוחות | טל גורן אדריכלית",
   description:
     "קראו מה לקוחות אומרים על העבודה עם טל גורן אדריכלית. ביקורות אמיתיות ממשפחות שבנו את בית חלומותיהן.",
   alternates: { canonical: "/testimonials" },

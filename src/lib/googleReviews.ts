@@ -67,7 +67,7 @@ export async function getGoogleReviews(): Promise<GoogleReviewsResult | null> {
       reviews,
       rating: data.rating || 5,
       totalReviews: data.userRatingCount || reviews.length,
-      businessName: data.displayName?.text || "טל גורן אדריכלות",
+      businessName: data.displayName?.text || "טל גורן אדריכלית",
     };
   } catch (err) {
     console.error("Failed to fetch Google reviews:", err);

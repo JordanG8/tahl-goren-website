@@ -4,9 +4,10 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { siteData } from "@/data/siteData";
 import { areas } from "@/data/areasContent";
+import { packages } from "@/data/packagesContent";
 
 export const metadata: Metadata = {
-  title: "שירותים | טל גורן אדריכלות",
+  title: "שירותים | טל גורן אדריכלית",
   description:
     "שירותי אדריכלות ועיצוב פנים לבית פרטי: בחירת אדריכלית, עלויות בנייה ותכנון, וטיפים מעשיים לתכנון הבית. מדריכים מקצועיים מטל גורן אדריכלית.",
   alternates: { canonical: "/services" },
@@ -110,11 +111,11 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Packages teaser */}
-      <section className="py-20 px-8 bg-surface">
+      {/* Packages — moved in from the former top-level "מסלולים ומחירים" page */}
+      <section id="packages" className="py-20 px-8 bg-surface scroll-mt-24">
         <div className="max-w-5xl mx-auto p-12 bg-primary text-right relative overflow-hidden">
           <div className="relative z-10">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">מסלולי ליווי</span>
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">מסלולים ומחירים</span>
             <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight leading-tight text-white mt-4 mb-6">
               שלושה מסלולי ליווי, מחיר ותכולה שקופים
             </h2>
@@ -123,11 +124,32 @@ export default function ServicesPage() {
               בדיוק מה כלול ותוכלו לבחור את המסלול המתאים לתקציב ולצרכים
               שלכם.
             </p>
+            <ul className="grid gap-4 md:grid-cols-3 mb-10">
+              {packages.map((pkg) => (
+                <li
+                  key={pkg.id}
+                  className="border border-white/20 p-6 text-right flex flex-col"
+                >
+                  <h3 className="font-headline font-bold text-lg text-white leading-snug">
+                    {pkg.name}
+                  </h3>
+                  <p className="text-sm text-white/60 mt-2 leading-relaxed flex-1">
+                    {pkg.subtitle}
+                  </p>
+                  <p className="font-headline font-black text-xl text-white mt-4">
+                    {pkg.price.toLocaleString("he-IL")} ₪
+                    <span className="font-body font-normal text-xs text-white/50 block mt-1">
+                      {pkg.priceWithVat.toLocaleString("he-IL")} ₪ כולל מע״מ
+                    </span>
+                  </p>
+                </li>
+              ))}
+            </ul>
             <Link
               href="/packages"
               className="inline-flex items-center justify-center gap-3 bg-white text-primary px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-surface-container-highest transition-colors"
             >
-              למסלולים ולמחירים
+              להשוואה המלאה ולפירוט התכולה
               <span className="material-symbols-outlined text-lg">arrow_back</span>
             </Link>
           </div>

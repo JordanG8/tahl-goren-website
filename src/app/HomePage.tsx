@@ -186,7 +186,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)' }} />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="sr-only">טל גורן אדריכלות</h1>
+          <h1 className="sr-only">טל גורן אדריכלית</h1>
           <div className="w-[240px] sm:w-[320px] lg:w-[420px]">
             <Image
               id={HERO_LOGO_ID}

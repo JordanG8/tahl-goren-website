@@ -8,7 +8,7 @@ import ArticlesGrid from '@/components/ArticlesGrid';
 import CtaSection from '@/components/CtaSection';
 
 export const metadata: Metadata = {
-  title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלות",
+  title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלית",
   description: "מאמרים מקצועיים על תכנון בית פרטי, עלויות בנייה, אדריכלות מודרנית, שיפוצים ועוד. טיפים מעשיים מהאדריכלית טל גורן.",
   alternates: {
     canonical: "/articles",

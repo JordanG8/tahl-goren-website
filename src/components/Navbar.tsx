@@ -9,8 +9,8 @@ import MobileMenu from './MobileMenu';
 const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
   { to: '/about', label: 'אודות' },
+  // "מסלולים ומחירים" now lives inside the Services page rather than the top nav.
   { to: '/services', label: 'שירותים' },
-  { to: '/packages', label: 'מסלולים ומחירים' },
   { to: '/articles', label: 'מאמרים' },
   { to: '/faq', label: 'שאלות ותשובות' },
   { to: '/testimonials', label: 'לקוחות מספרים' },
