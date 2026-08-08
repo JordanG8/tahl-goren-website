@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "he_IL",
-    siteName: "טל גורן אדריכלות",
+    siteName: "טל גורן אדריכלית",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: [{ url: OG_IMAGE, alt: "טל גורן אדריכלית" }],

@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import LeadMagnetForm from "@/components/LeadMagnetForm";
 
 export const metadata: Metadata = {
-  title: "צ'ק-ליסט: מה בודקים במגרש לפני שבונים בית פרטי | טל גורן אדריכלות",
+  title: "צ'ק-ליסט: מה בודקים במגרש לפני שבונים בית פרטי | טל גורן אדריכלית",
   description:
     "צ'ק-ליסט מקצועי וחינמי מאת אדריכלית: 12 דברים שחייבים לבדוק במגרש לפני קניה או תחילת תכנון בית פרטי — זכויות בנייה, תשתיות, קרקע, גישה ועוד.",
   alternates: { canonical: "/resources/plot-checklist" },
@@ -89,7 +89,7 @@ export default function PlotChecklistPage() {
             <ol className="space-y-8">
               {checklist.map((item, i) => (
                 <li key={item.title} className="flex gap-5">
-                  <span className="font-headline font-black text-2xl text-accent flex-shrink-0 w-10">
+                  <span className="font-headline font-black text-2xl text-brand-accent flex-shrink-0 w-10">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>

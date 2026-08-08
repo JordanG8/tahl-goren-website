@@ -10,8 +10,8 @@ const navLinks = [
   { to: '/', label: 'עמוד הבית', icon: 'home' },
   { to: '/projects', label: 'פרויקטים', icon: 'apartment' },
   { to: '/about', label: 'אודות', icon: 'person' },
+  // "מסלולים ומחירים" now lives inside the Services page rather than the top nav.
   { to: '/services', label: 'שירותים', icon: 'design_services' },
-  { to: '/packages', label: 'מסלולים ומחירים', icon: 'payments' },
   { to: '/articles', label: 'מאמרים', icon: 'menu_book' },
   { to: '/faq', label: 'שאלות ותשובות', icon: 'quiz' },
   { to: '/videos', label: 'סרטונים', icon: 'play_circle' },

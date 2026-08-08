@@ -186,7 +186,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)' }} />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="sr-only">טל גורן אדריכלות</h1>
+          <h1 className="sr-only">טל גורן אדריכלית</h1>
           <div className="w-[240px] sm:w-[320px] lg:w-[420px]">
             <Image
               id={HERO_LOGO_ID}
@@ -362,10 +362,10 @@ export default function HomePage({ projects, reviewsData }: Props) {
                 key={pkg.id}
                 href="/packages"
                 className={`group flex flex-col text-right border transition-all duration-300 hover:-translate-y-1 ${
-                  pkg.recommended ? "border-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
+                  pkg.recommended ? "border-brand-accent shadow-xl md:-translate-y-3" : "border-outline/10 bg-surface"
                 }`}
               >
-                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-accent text-white" : "bg-primary text-white"}`}>
+                <div className={`px-6 pt-6 pb-4 ${pkg.recommended ? "bg-brand-accent text-white" : "bg-primary text-white"}`}>
                   {pkg.recommended && (
                     <span className="inline-block bg-white/20 font-label text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 mb-2">
                       הבחירה המומלצת
