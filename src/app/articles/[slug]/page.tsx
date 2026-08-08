@@ -248,6 +248,20 @@ export default async function ArticlePage(
             </div>
           )}
 
+          {/* Article intro — opening paragraphs before the first section */}
+          {article.intro?.length ? (
+            <div className="mb-12">
+              {article.intro.map((p, i) => (
+                <p
+                  key={i}
+                  className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
+                >
+                  {renderParagraphWithLinks(p)}
+                </p>
+              ))}
+            </div>
+          ) : null}
+
           {/* Table of contents */}
           <nav className="mb-16 p-6 bg-surface-container rounded">
             <h2 className="font-headline font-bold text-sm text-primary mb-4">
@@ -304,6 +318,21 @@ export default async function ArticlePage(
                   ))}
                 </ul>
               )}
+              {section.subsections?.map((sub, si) => (
+                <div key={si} className="mt-8">
+                  <h3 className="font-headline font-bold text-lg md:text-xl text-primary mb-3 leading-snug">
+                    {sub.heading}
+                  </h3>
+                  {sub.body.map((p, pi) => (
+                    <p
+                      key={pi}
+                      className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
+                    >
+                      {renderParagraphWithLinks(p)}
+                    </p>
+                  ))}
+                </div>
+              ))}
             </section>
           ))}
 

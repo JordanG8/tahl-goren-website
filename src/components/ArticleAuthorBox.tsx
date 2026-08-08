@@ -1,18 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Order and wording per Tal's spec (August 2026) — do not reorder.
 const CREDENTIALS = [
-  "בוגרת הפקולטה לארכיטקטורה בטכניון בהצטיינות",
-  "אדריכלית רשומה (מס' רישום 118121) ואדריכלית רשויה",
-  "אדריכלית מורשית היתר",
+  "אדריכלית מורשית היתר, מס' תעודה 01-002-0000009445",
+  "אדריכלית רשויה מספר 11085135",
   "25+ שנות ניסיון ותכנון של 100+ בתים פרטיים",
+  "בוגרת הפקולטה לארכיטקטורה בטכניון, בהצטיינות",
 ];
 
 export default function ArticleAuthorBox({ updatedAt }: { updatedAt: string }) {
   const formattedDate = new Date(updatedAt).toLocaleDateString("he-IL", {
     year: "numeric",
     month: "long",
-    day: "numeric",
   });
 
   return (

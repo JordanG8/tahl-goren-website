@@ -2,10 +2,16 @@ import { roomArticles } from "./roomArticles";
 import { constructionArticles } from "./constructionArticles";
 import { qaArticles } from "./qaArticles";
 
+export type ArticleSubsection = {
+  heading: string;
+  body: string[];
+};
+
 export type ArticleSection = {
   heading: string;
   body: string[];
   list?: string[];
+  subsections?: ArticleSubsection[];
 };
 
 export type ArticleFaq = {
@@ -25,6 +31,7 @@ export type Article = {
   publishedAt: string;
   updatedAt: string;
   readingTimeMin: number;
+  intro?: string[];
   sections: ArticleSection[];
   faq?: ArticleFaq[];
   related?: string[];
