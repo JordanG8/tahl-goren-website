@@ -54,16 +54,9 @@ export default function Navbar() {
                 alt="TAL GOREN"
                 width={280}
                 height={94}
-                className={`w-auto object-contain ${isHome ? '' : 'transition-all duration-500'} ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
-                  transparent ? 'brightness-0 invert drop-shadow-md' : ''
-                } ${
-                  // On the homepage the animated hero logo clone always stands in
-                  // visually (docking into this exact slot on scroll), so the
-                  // real logo here stays invisible-but-present for a11y, and its
-                  // size/position must snap instantly (no CSS transition) so the
-                  // clone can measure its true resting rect on the very next frame.
-                  isHome ? 'opacity-0' : 'opacity-100'
-                }`}
+                className={`w-auto object-contain transition-all duration-500 ${
+                  isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'
+                } ${transparent ? 'brightness-0 invert drop-shadow-md' : ''}`}
                 priority
               />
             </Link>

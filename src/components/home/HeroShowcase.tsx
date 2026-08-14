@@ -6,7 +6,7 @@ import Link from "next/link";
 import type { HeroSlide } from "@/data/heroSlides";
 import { ArrowIcon } from "@/components/ui/Icon";
 
-const SLIDE_MS = 7000;
+const SLIDE_MS = 6500;
 
 /**
  * The hero's photographic layer.
@@ -68,14 +68,14 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(20,29,36,0.86) 0%, rgba(20,29,36,0.34) 42%, rgba(20,29,36,0.58) 100%)",
+            "linear-gradient(to top, rgba(26,38,46,0.88) 0%, rgba(26,38,46,0.5) 45%, rgba(26,38,46,0.66) 100%)",
         }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to left, rgba(20,29,36,0.82) 0%, rgba(20,29,36,0.42) 44%, transparent 76%)",
+            "linear-gradient(to left, rgba(26,38,46,0.85) 0%, rgba(26,38,46,0.55) 42%, transparent 78%)",
         }}
       />
 
@@ -85,7 +85,7 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
           never competes with the headline. */}
       {current && (
         <div className="absolute bottom-7 sm:bottom-9 inset-x-0 z-20 px-6 sm:px-10 pointer-events-none">
-          <div className="max-w-[1680px] mx-auto flex items-end justify-between gap-6">
+          <div className="max-w-[1680px] mx-auto flex flex-row-reverse items-end justify-end gap-5 sm:gap-7">
             <Link
               href={`/projects/${current.projectId}`}
               onFocus={() => setPaused(true)}

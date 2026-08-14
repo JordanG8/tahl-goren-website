@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ProjectCard from '@/components/ProjectCard';
@@ -11,9 +10,10 @@ import HeroShowcase from '@/components/home/HeroShowcase';
 import FaqAccordion from '@/components/FaqAccordion';
 import Reveal from '@/components/motion/Reveal';
 import { Section, SectionHeading, ArrowLink, ButtonLink } from '@/components/ui/Section';
-import { SealIcon, BudgetIcon, PlanIcon, ArrowIcon, CompassIcon } from '@/components/ui/Icon';
+import { SealIcon, BudgetIcon, PlanIcon, ArrowIcon, CompassIcon, ChatIcon, PhoneIcon } from '@/components/ui/Icon';
 import { aboutExcerpt } from '@/data/siteData';
 import { heroSlides } from '@/data/heroSlides';
+import { trackLead } from '@/lib/trackLead';
 
 /* ---------------------------------------------------------------------------
    Homepage.
@@ -30,33 +30,6 @@ import { heroSlides } from '@/data/heroSlides';
    make contact → what it costs (05) → what clients say (06) → what she knows
    (07) → open questions (08) → the ask.
 --------------------------------------------------------------------------- */
-
-const HERO_LOGO_ID = 'site-logo-hero';
-const NAV_LOGO_ID = 'site-logo-navbar';
-const DOCK_SCROLL_THRESHOLD = 20;
-
-type LogoRect = { top: number; left: number; width: number; height: number };
-
-function readRect(el: Element | null): LogoRect | null {
-  if (!el) return null;
-  const r = el.getBoundingClientRect();
-  return { top: r.top, left: r.left, width: r.width, height: r.height };
-}
-
-// The navbar's own logo shrinks (h-12/h-16 -> h-9/h-10) via a separate
-// component's scroll listener, which commits a frame or two after ours.
-// Poll until that class swap has actually landed before trusting its rect,
-// instead of guessing a fixed delay (which would read a stale size and
-// make the clone "jump-correct" partway through the flight).
-function waitForDockedNavRect(onReady: (rect: LogoRect | null) => void, attempt = 0) {
-  const el = document.getElementById(NAV_LOGO_ID);
-  const isDockedSize = !!el && (el.className.includes('h-9') || el.className.includes('h-10'));
-  if (isDockedSize || attempt > 15) {
-    onReady(readRect(el));
-    return;
-  }
-  requestAnimationFrame(() => waitForDockedNavRect(onReady, attempt + 1));
-}
 
 const featuredArticles = [
   { slug: "building-cost-total", title: "כמה תעלה לנו הבנייה בסך הכל?", image: "/images/blog/building-cost-total.png", excerpt: "המדריך המלא להכנת תקציב ריאלי לבניית בית פרטי בישראל." },
@@ -119,140 +92,85 @@ type Props = {
 };
 
 export default function HomePage({ projects, reviewsData }: Props) {
-  // Logo dock: the monochrome hero logo "flies" up into the navbar's logo
-  // slot and turns to full color the moment the user scrolls past the hero.
-  const [docked, setDocked] = useState(false);
-  const [heroRect, setHeroRect] = useState<LogoRect | null>(null);
-  const [navRect, setNavRect] = useState<LogoRect | null>(null);
-  const [transitionsReady, setTransitionsReady] = useState(false);
-  const dockedRef = useRef(false);
-
-  useEffect(() => {
-    // Measuring a DOM rect right after mount (to seed the fixed clone's
-    // starting position) has to happen in an effect: it needs the real
-    // client-rendered layout, which doesn't exist during SSR.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-
-    const initialDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
-    dockedRef.current = initialDocked;
-    setDocked(initialDocked);
-    if (initialDocked) {
-      waitForDockedNavRect(setNavRect);
-    }
-
-    // Skip the initial mount transition so the logo doesn't animate in from
-    // nowhere on first paint — only actual scroll crossings should animate.
-    const readyFrame = requestAnimationFrame(() => setTransitionsReady(true));
-
-    const handleScroll = () => {
-      const nowDocked = window.scrollY > DOCK_SCROLL_THRESHOLD;
-      if (nowDocked !== dockedRef.current) {
-        dockedRef.current = nowDocked;
-        setDocked(nowDocked);
-        if (nowDocked) {
-          waitForDockedNavRect(setNavRect);
-        } else {
-          setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-        }
-      }
-    };
-    const handleResize = () => {
-      if (!dockedRef.current) {
-        setHeroRect(readRect(document.getElementById(HERO_LOGO_ID)));
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(readyFrame);
-    };
-  }, []);
-
-  const activeLogoRect = docked ? navRect ?? heroRect : heroRect ?? navRect;
-
   const [lead, ...restProjects] = projects.slice(0, 6);
 
   return (
     <>
-      {/* Flying logo clone: docks white-in-hero -> colored-in-navbar on scroll */}
-      {activeLogoRect && (
-        <div
-          id="hero-logo-clone"
-          aria-hidden
-          className="fixed z-[60] pointer-events-none top-0 left-0"
-          style={{
-            width: activeLogoRect.width,
-            height: activeLogoRect.height,
-            transform: `translate3d(${activeLogoRect.left}px, ${activeLogoRect.top}px, 0)`,
-            filter: docked ? 'none' : 'brightness(0) invert(1)',
-            transition: transitionsReady
-              ? 'transform 480ms cubic-bezier(0.16,1,0.3,1), width 480ms cubic-bezier(0.16,1,0.3,1), height 480ms cubic-bezier(0.16,1,0.3,1), filter 320ms ease 80ms'
-              : 'none',
-          }}
-        >
-          <Image
-            src="/images/logo-v2.png"
-            alt=""
-            width={280}
-            height={94}
-            className="w-full h-full object-contain drop-shadow-lg"
-            priority
-          />
-        </div>
-      )}
-
       {/* ================= HERO =================
-          The work, at full bleed. Video footage was doing less for this site
-          than the photography does: the stills are the actual houses, shot
-          properly, and at this scale one of them can carry a whole screen.
-
-          Copy sits on the reading edge rather than centred, which is what lets
-          the scrim be directional — dark where the type is, clear where the
-          photograph is worth looking at. The credit chip in the corner is the
-          way out: fall for a house here and you can go straight to it. */}
-      <section className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-primary -mt-20 sm:-mt-24">
+          The lead-generation hero: photography at full bleed, the promise set
+          on the reading edge, and the two things a visitor actually wants to do
+          from here — ask a question, or call. The credit chip in the corner
+          links to whichever house is currently on screen. */}
+      <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-primary -mt-20 sm:-mt-24">
         <HeroShowcase slides={heroSlides} />
 
-        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center pb-28 sm:pb-24">
-          <h1 className="sr-only">טל גורן אדריכלית — תכנון בתים פרטיים</h1>
+        {/* On tall phones dead-centering leaves the block floating; the top
+            padding shifts it down by half its value. Narrow-and-tall only, so
+            small phones and every desktop size stay centred. */}
+        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center [@media(max-width:639px)_and_(min-height:750px)]:pt-16">
+          <div className="max-w-[780px]">
+            {/* The regions are dropped below sm: at full tracking the line wraps
+                and shoves the eyebrow into the navbar on a 375px screen. */}
+            <span className="block font-label font-medium text-[13px] tracking-[0.16em] sm:tracking-[0.3em] uppercase text-white/70 mb-4 sm:mb-7">
+              אדריכלות לבתים פרטיים
+              <span className="hidden sm:inline"> · שרון, מנשה וחוף הכרמל</span>
+            </span>
 
-          <div className="w-[210px] sm:w-[260px] lg:w-[300px]">
-            <Image
-              id={HERO_LOGO_ID}
-              src="/images/logo-v2.png"
-              alt=""
-              width={280}
-              height={94}
-              className="w-full h-auto object-contain opacity-0"
-              priority
-            />
+            <h1
+              className="m-0 font-headline font-light text-[42px] sm:text-[56px] lg:text-[74px] leading-[1.06] tracking-[-0.03em] text-white"
+              style={{ textShadow: "0 2px 30px rgba(20,30,36,0.45)" }}
+            >
+              לבנות בית
+              <br />
+              <span className="font-bold">בלי לאבד שליטה.</span>
+            </h1>
+
+            <p className="mt-5 sm:mt-7 font-body font-light text-lg sm:text-[22px] leading-[1.7] text-white/85 max-w-[560px] text-pretty">
+              {/* Two lines on a phone, the full sentence from sm: up. The dash is
+                  glued to the preceding word with an NBSP so it can never wrap to
+                  the start of the next line. */}
+              <span className="sm:hidden">
+                אני טל גורן. 25 שנה אני מלווה משפחות שבונות בית{"\u00A0"}— עם תשובות ברורות על תקציב וזמנים.
+              </span>
+              <span className="hidden sm:inline">
+                אני טל גורן. 25 שנה אני מלווה משפחות בדיוק בנקודה שאתם נמצאים בה עכשיו{"\u00A0"}— עם מגרש, עם
+                חלום, ועם המון שאלות פתוחות על כמה זה יעלה וכמה זמן זה ייקח.
+              </span>
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 sm:gap-3.5 mt-7 sm:mt-11">
+              <a
+                href="https://wa.me/972528345799?text=%D7%94%D7%99%D7%99%20%D7%98%D7%9C%2C%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%AA%D7%9B%D7%A0%D7%95%D7%9F%20%D7%91%D7%99%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99%20%E2%80%94%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%94%D7%AA%D7%99%D7%99%D7%A2%D7%A5%3F"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackLead("whatsapp", { placement: "home_hero" })}
+                className="inline-flex items-center gap-3 bg-white text-primary px-6 sm:px-8 py-4 sm:py-5 font-headline font-bold text-base tracking-wide shadow-[0_18px_50px_rgba(0,0,0,0.28)] hover:bg-surface-container-highest transition-colors"
+              >
+                <ChatIcon size={21} />
+                <span className="sm:hidden">לשאול שאלה בוואטסאפ</span>
+                <span className="hidden sm:inline">לשאול אותי שאלה בוואטסאפ</span>
+              </a>
+              <a
+                href="tel:0528345799"
+                onClick={() => trackLead("phone", { placement: "home_hero" })}
+                className="inline-flex items-center gap-3 border border-white/45 text-white px-5 sm:px-7 py-4 sm:py-5 font-headline text-base hover:bg-white/10 transition-colors"
+              >
+                <PhoneIcon size={19} />
+                <span>
+                  <span className="hidden sm:inline">או פשוט תתקשרו · </span>
+                  052-8345799
+                </span>
+              </a>
+            </div>
           </div>
+        </div>
 
-          <p
-            aria-hidden
-            className="mt-7 sm:mt-9 font-headline font-bold text-white text-[26px] sm:text-4xl lg:text-[2.9rem] tracking-tight leading-[1.18] max-w-[16ch]"
-            style={{ textShadow: "0 2px 34px rgba(16,24,30,0.5)" }}
-          >
-            ליווי מקצועי ואישי
-            <br />
-            לחוויית בנייה רגועה
-          </p>
-          <p className="mt-4 sm:mt-5 font-body text-white/80 text-lg sm:text-xl lg:text-[1.4rem] leading-[1.6] max-w-[34ch]">
-            תכנון אדריכלי חכם לבית שגדל עם המשפחה.
-          </p>
-
-          <div className="mt-9 sm:mt-11 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8">
-            <ButtonLink href="/quiz" variant="paper">
-              בדקו את הבית שלכם
-            </ButtonLink>
-            <ArrowLink href="/projects" tone="paper" className="!text-base">
-              לצפייה בפרויקטים
-            </ArrowLink>
-          </div>
+        {/* Hidden on phones: a touch screen needs no hint that the page scrolls. */}
+        <div className="absolute bottom-8 right-6 sm:right-10 z-10 hidden sm:flex items-center gap-3">
+          <span className="font-label font-medium text-[13px] tracking-[0.18em] uppercase text-white/55">גלילה</span>
+          <span className="relative block w-px h-[46px] bg-white/25 overflow-hidden">
+            <span className="scroll-cue-fill absolute inset-x-0 top-0 h-1/2 bg-white/80" />
+          </span>
         </div>
       </section>
 
