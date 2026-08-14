@@ -36,7 +36,7 @@ export default function ArticleAuthorBox({ updatedAt }: { updatedAt: string }) {
           />
         </Link>
         <div className="flex-1">
-          <p className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute mb-2">
+          <p className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute mb-2">
             נכתב ונבדק מקצועית על ידי
           </p>
           <Link

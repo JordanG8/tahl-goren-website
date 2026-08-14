@@ -42,7 +42,7 @@ export default function LeadMagnetForm({ placement }: { placement: string }) {
     return (
       <div className="bg-white p-6 md:p-8 text-center border border-outline/10">
         <h3 className="font-headline font-black text-xl text-primary mb-2">תודה, {name || ""}!</h3>
-        <p className="font-body text-sm text-secondary leading-relaxed">
+        <p className="font-body text-base text-secondary leading-relaxed">
           קיבלנו את הפרטים. הצ&apos;ק-ליסט המלא נמצא ממש כאן למטה בעמוד — ואם
           תרצו, אחזור אליכם גם באופן אישי כדי לעבור יחד על המגרש הספציפי
           שלכם.
@@ -54,7 +54,7 @@ export default function LeadMagnetForm({ placement }: { placement: string }) {
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 border border-outline/10">
       <h3 className="font-headline font-black text-xl text-primary mb-1">רוצים שאעבור איתכם על המגרש?</h3>
-      <p className="font-body text-sm text-secondary mb-6 leading-relaxed">
+      <p className="font-body text-base text-secondary mb-6 leading-relaxed">
         השאירו פרטים ואחזור אליכם — ללא עלות וללא התחייבות.
       </p>
       <div className="flex flex-col gap-3">
@@ -84,7 +84,7 @@ export default function LeadMagnetForm({ placement }: { placement: string }) {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="w-full bg-brand-accent text-white px-8 py-3.5 font-headline font-black text-sm uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full bg-brand-accent text-white px-8 py-3.5 font-headline font-black text-sm uppercase tracking-[0.13em] hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {status === "submitting" ? "שולח..." : "שלחו לי פרטים"}
         </button>

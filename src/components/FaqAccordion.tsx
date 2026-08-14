@@ -73,7 +73,7 @@ export default function FaqAccordion({ limit }: { limit?: number }) {
                     isOpen ? "border-clay/50" : "border-transparent"
                   }`}
                 >
-                  <p className="font-body text-secondary leading-[1.85] whitespace-pre-line text-[15px] sm:text-base measure">
+                  <p className="font-body text-secondary leading-[1.85] whitespace-pre-line text-base sm:text-base measure">
                     {faq.answer}
                   </p>
 

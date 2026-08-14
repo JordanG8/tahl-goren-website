@@ -39,7 +39,7 @@ export default function ArticlesGrid({ articles }: ArticlesGridProps) {
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               aria-pressed={isActive}
-              className={`relative pb-4 font-label text-[13px] tracking-[0.04em] transition-colors duration-300 ${
+              className={`relative pb-4 font-label font-medium text-[13px] tracking-[0.04em] transition-colors duration-300 ${
                 isActive ? 'text-primary' : 'text-ink-mute hover:text-primary'
               }`}
             >
@@ -69,13 +69,13 @@ export default function ArticlesGrid({ articles }: ArticlesGridProps) {
                 />
               </div>
               <div className="pt-5 mt-5 border-t border-hairline">
-                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute">
+                <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute">
                   {article.readingTimeMin} דק׳ קריאה
                 </span>
                 <h3 className="font-headline font-bold text-lg text-primary leading-snug mt-2.5 transition-colors duration-300 group-hover:text-clay">
                   {article.title}
                 </h3>
-                <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed line-clamp-2">
+                <p className="font-body text-base text-secondary mt-3 leading-relaxed line-clamp-2">
                   {article.excerpt}
                 </p>
                 <div className="inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors mt-5">

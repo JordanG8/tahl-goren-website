@@ -194,7 +194,7 @@ export default async function ArticlePage(
             <h1 className="font-headline font-black text-3xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white max-w-3xl">
               {article.title}
             </h1>
-            <div className="flex items-center gap-4 mt-6 font-label text-xs text-white/60 flex-row-reverse">
+            <div className="flex items-center gap-4 mt-6 font-label font-medium text-[13px] text-white/60 flex-row-reverse">
               <span>טל גורן</span>
               <span>·</span>
               <time dateTime={article.updatedAt}>
@@ -216,7 +216,7 @@ export default async function ArticlePage(
         <div className="max-w-[46rem] mx-auto">
           {/* Intro / quick answer — direct answer up top for readers and AI search */}
           <div className="mb-14 border-s-2 border-clay ps-6">
-            <span className="font-label text-[10px] uppercase tracking-[0.28em] text-clay block mb-3">בקצרה</span>
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.18em] text-clay block mb-3">בקצרה</span>
             <p className="text-primary text-lg md:text-xl leading-[1.75] font-body">
               {article.excerpt}
             </p>
@@ -225,7 +225,7 @@ export default async function ArticlePage(
           {/* Series Navigation Card */}
           {isSeries && (
             <div className="mb-16 border-y border-hairline py-8">
-              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary">
                 {article.category === "construction" ? "סדרת שיטות בנייה בישראל" : "סדרת חדר אחר חדר: הבית שעובד בשבילכם"}
               </span>
               <h3 className="font-headline font-black text-xl text-primary mt-2 mb-6">
@@ -266,7 +266,7 @@ export default async function ArticlePage(
 
           {/* Table of contents */}
           <nav className="mb-16 border-y border-hairline py-7">
-            <h2 className="font-label text-[10px] uppercase tracking-[0.28em] text-ink-mute mb-5">
+            <h2 className="font-label font-medium text-[13px] uppercase tracking-[0.18em] text-ink-mute mb-5">
               תוכן עניינים
             </h2>
             <ol className="space-y-2 list-decimal list-inside">
@@ -274,7 +274,7 @@ export default async function ArticlePage(
                 <li key={i}>
                   <a
                     href={`#section-${i}`}
-                    className="font-body text-secondary hover:text-clay transition-colors text-[15px]"
+                    className="font-body text-secondary hover:text-clay transition-colors text-base"
                   >
                     {section.heading}
                   </a>
@@ -284,7 +284,7 @@ export default async function ArticlePage(
                 <li>
                   <a
                     href="#faq"
-                    className="font-body text-secondary hover:text-clay transition-colors text-[15px]"
+                    className="font-body text-secondary hover:text-clay transition-colors text-base"
                   >
                     שאלות נפוצות
                   </a>
@@ -380,7 +380,7 @@ export default async function ArticlePage(
                   href={`/articles/${prevArticle.slug}`}
                   className="flex-1 group border border-hairline p-6 hover:border-clay transition-colors duration-500 flex flex-col justify-between"
                 >
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute mb-3 flex items-center gap-2">
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute mb-3 flex items-center gap-2">
                     <ArrowIcon size={14} direction="back" />
                     המאמר הקודם בסדרה
                   </span>
@@ -397,7 +397,7 @@ export default async function ArticlePage(
                   href={`/articles/${nextArticle.slug}`}
                   className="flex-1 group border border-hairline p-6 hover:border-clay transition-colors duration-500 flex flex-col justify-between"
                 >
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute mb-3 flex items-center gap-2">
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute mb-3 flex items-center gap-2">
                     המאמר הבא בסדרה
                     <ArrowIcon size={14} />
                   </span>
@@ -455,7 +455,7 @@ export default async function ArticlePage(
                     <h3 className="font-headline font-bold text-lg text-primary leading-snug group-hover:text-clay transition-colors">
                       {related.title}
                     </h3>
-                    <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed line-clamp-2">
+                    <p className="font-body text-base text-secondary mt-3 leading-relaxed line-clamp-2">
                       {related.excerpt}
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors">

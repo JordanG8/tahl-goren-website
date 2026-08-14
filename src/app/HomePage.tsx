@@ -7,12 +7,13 @@ import GoogleReviews from '@/components/GoogleReviewsLazy';
 import StarRating from '@/components/StarRating';
 import type { SiteReviews } from '@/lib/reviews';
 import HomeCtaForm from '@/components/HomeCtaForm';
+import HeroShowcase from '@/components/home/HeroShowcase';
 import FaqAccordion from '@/components/FaqAccordion';
 import Reveal from '@/components/motion/Reveal';
 import { Section, SectionHeading, ArrowLink, ButtonLink } from '@/components/ui/Section';
 import { SealIcon, BudgetIcon, PlanIcon, ArrowIcon, CompassIcon } from '@/components/ui/Icon';
 import { aboutExcerpt } from '@/data/siteData';
-import { packages as homePackages } from '@/data/packagesContent';
+import { heroSlides } from '@/data/heroSlides';
 
 /* ---------------------------------------------------------------------------
    Homepage.
@@ -29,8 +30,6 @@ import { packages as homePackages } from '@/data/packagesContent';
    make contact → what it costs (05) → what clients say (06) → what she knows
    (07) → open questions (08) → the ask.
 --------------------------------------------------------------------------- */
-
-const heroVideos = ['/videos/hero-1.mp4', '/videos/hero-2.mp4', '/videos/hero-3.mp4'];
 
 const HERO_LOGO_ID = 'site-logo-hero';
 const NAV_LOGO_ID = 'site-logo-navbar';
@@ -65,13 +64,20 @@ const featuredArticles = [
   { slug: "building-timeline", title: "כמה זמן ייקח לתכנן ולבנות בית?", image: "/images/blog/building-timeline.png", excerpt: "שלב אחרי שלב, עם לוחות זמנים ריאליים והגורמים שמשפיעים עליהם." },
 ];
 
-// The facts that answer "can I trust her" — stated once, in one line, instead
-// of being repeated inside four different sections.
+/**
+ * The facts that answer "can I trust her", stated once.
+ *
+ * This was four cells, each pairing a big number with a 10px caption in
+ * wide-tracked caps. The captions carried the actual meaning and were the least
+ * readable thing on the page. It is now one sentence at reading size, with only
+ * the figures emphasised — the same information, said out loud instead of
+ * arranged into a dashboard.
+ */
 const trustFacts = [
   { value: '25+', label: 'שנות ניסיון' },
-  { value: '100+', label: 'בתים שתוכננו' },
-  { value: 'הטכניון', label: 'בוגרת בהצטיינות' },
-  { value: 'מורשית היתר', label: 'אדריכלית רשויה' },
+  { value: '100+', label: 'בתים פרטיים שתוכננו' },
+  { value: null, label: 'בוגרת הטכניון בהצטיינות' },
+  { value: null, label: 'אדריכלית רשויה ומורשית היתר' },
 ];
 
 /**
@@ -113,33 +119,6 @@ type Props = {
 };
 
 export default function HomePage({ projects, reviewsData }: Props) {
-  const [activeVideo, setActiveVideo] = useState(0);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-
-  useEffect(() => {
-    // 3s was quick enough to register as a slideshow. 7s lets a shot settle,
-    // so the hero reads as film rather than as a rotating banner.
-    const interval = setInterval(() => {
-      setActiveVideo((prev) => (prev + 1) % heroVideos.length);
-    }, 7000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    videoRefs.current.forEach((video) => {
-      if (video) video.play().catch(() => {});
-    });
-  }, []);
-
-  useEffect(() => {
-    const nextIndex = (activeVideo + 1) % heroVideos.length;
-    const nextVideo = videoRefs.current[nextIndex];
-    if (nextVideo && nextVideo.preload === 'none') {
-      nextVideo.preload = 'auto';
-      nextVideo.load();
-    }
-  }, [activeVideo]);
-
   // Logo dock: the monochrome hero logo "flies" up into the navbar's logo
   // slot and turns to full color the moment the user scrolls past the hero.
   const [docked, setDocked] = useState(false);
@@ -227,38 +206,21 @@ export default function HomePage({ projects, reviewsData }: Props) {
       )}
 
       {/* ================= HERO =================
-          One promise, one action. The credential list that used to crowd the
-          hero moved to the ribbon directly below, where it can be read rather
-          than skimmed past. The scrim is a bottom-weighted gradient instead of
-          a flat 40% black wash, so the footage stays bright where it matters
-          and goes dark only under the type. */}
-      <section className="relative h-[100svh] min-h-[600px] w-full overflow-hidden -mt-20 sm:-mt-24">
-        {heroVideos.map((src, i) => (
-          <video
-            key={src}
-            ref={(el) => { videoRefs.current[i] = el; }}
-            src={src}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload={i === 0 ? 'auto' : 'none'}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1600ms] ease-in-out"
-            style={{ opacity: activeVideo === i ? 1 : 0 }}
-          />
-        ))}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to bottom, rgba(20,30,37,0.55) 0%, rgba(20,30,37,0.20) 35%, rgba(20,30,37,0.45) 72%, rgba(20,30,37,0.85) 100%)',
-          }}
-        />
+          The work, at full bleed. Video footage was doing less for this site
+          than the photography does: the stills are the actual houses, shot
+          properly, and at this scale one of them can carry a whole screen.
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="sr-only">טל גורן אדריכלית</h1>
+          Copy sits on the reading edge rather than centred, which is what lets
+          the scrim be directional — dark where the type is, clear where the
+          photograph is worth looking at. The credit chip in the corner is the
+          way out: fall for a house here and you can go straight to it. */}
+      <section className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-primary -mt-20 sm:-mt-24">
+        <HeroShowcase slides={heroSlides} />
 
-          <div className="w-[230px] sm:w-[310px] lg:w-[400px]">
+        <div className="relative z-10 h-full max-w-[1680px] mx-auto px-6 sm:px-10 flex flex-col justify-center pb-28 sm:pb-24">
+          <h1 className="sr-only">טל גורן אדריכלית — תכנון בתים פרטיים</h1>
+
+          <div className="w-[210px] sm:w-[260px] lg:w-[300px]">
             <Image
               id={HERO_LOGO_ID}
               src="/images/logo-v2.png"
@@ -270,72 +232,44 @@ export default function HomePage({ projects, reviewsData }: Props) {
             />
           </div>
 
-          <p className="mt-8 font-headline font-bold text-white text-xl sm:text-2xl lg:text-[1.9rem] tracking-tight leading-snug max-w-2xl">
-            ליווי מקצועי ואישי לחוויית בנייה רגועה
+          <p
+            aria-hidden
+            className="mt-7 sm:mt-9 font-headline font-bold text-white text-[26px] sm:text-4xl lg:text-[2.9rem] tracking-tight leading-[1.18] max-w-[16ch]"
+            style={{ textShadow: "0 2px 34px rgba(16,24,30,0.5)" }}
+          >
+            ליווי מקצועי ואישי
+            <br />
+            לחוויית בנייה רגועה
           </p>
-          <p className="mt-3 font-body text-white/70 text-base sm:text-lg lg:text-xl max-w-lg leading-relaxed">
-            תכנון אדריכלי חכם לבית שגדל עם המשפחה
+          <p className="mt-4 sm:mt-5 font-body text-white/80 text-lg sm:text-xl lg:text-[1.4rem] leading-[1.6] max-w-[34ch]">
+            תכנון אדריכלי חכם לבית שגדל עם המשפחה.
           </p>
 
-          <div className="mt-11 flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
-            <ButtonLink href="/contact" variant="paper">
-              שיחת ייעוץ ללא עלות
+          <div className="mt-9 sm:mt-11 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8">
+            <ButtonLink href="/quiz" variant="paper">
+              בדקו את הבית שלכם
             </ButtonLink>
-            <ArrowLink href="/projects" tone="paper" className="text-[13px] uppercase tracking-[0.18em]">
+            <ArrowLink href="/projects" tone="paper" className="!text-base">
               לצפייה בפרויקטים
             </ArrowLink>
           </div>
         </div>
-
-        {/* Scroll cue: a hairline that fills downward on a slow loop — the same
-            drawn-line language used for section rules. */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 pointer-events-none">
-          <span className="font-label text-[9px] tracking-[0.35em] uppercase text-white/45">גלילה</span>
-          <span className="relative block w-px h-10 bg-white/20 overflow-hidden">
-            <span className="scroll-cue-fill absolute inset-x-0 top-0 h-1/2 bg-white/70" />
-          </span>
-        </div>
-
-        {/* Chapter markers for the background films */}
-        <div className="absolute bottom-9 right-6 sm:right-10 flex gap-3">
-          {heroVideos.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveVideo(i)}
-              aria-label={`מעבר לוידאו רקע ${i + 1}`}
-              aria-current={activeVideo === i}
-              className={`h-px transition-all duration-700 ${
-                activeVideo === i ? 'w-10 bg-white' : 'w-5 bg-white/40 hover:bg-white/70'
-              }`}
-            />
-          ))}
-        </div>
       </section>
 
       {/* ================= TRUST RIBBON =================
-          Four facts, one hairline row. This is the entire "credentials" story
-          that used to be scattered across the hero, the about block and every
-          form footer. */}
+          One sentence, at reading size. See the note on `trustFacts`. */}
       <section className="bg-background border-b border-hairline">
-        <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12">
-          <Reveal className="grid grid-cols-2 lg:grid-cols-4">
-            {trustFacts.map((f, i) => (
-              <div
-                key={f.label}
-                className={`py-8 sm:py-10 px-4 sm:px-8 text-center border-hairline ${
-                  // Hairlines between cells only — never on the outer edges, so
-                  // the ribbon reads as one measured run rather than four boxes.
-                  i % 2 === 1 ? 'border-s' : ''
-                } ${i < 2 ? 'border-b lg:border-b-0' : ''} ${i === 2 ? 'lg:border-s' : ''}`}
-              >
-                <span className="font-headline font-black text-2xl sm:text-[2rem] text-primary block leading-none">
-                  {f.value}
+        <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 py-9 sm:py-11">
+          <Reveal>
+            <p className="font-headline text-xl sm:text-2xl lg:text-[1.7rem] text-secondary leading-[1.6] text-center">
+              {trustFacts.map((f, i) => (
+                <span key={f.label} className="inline-block">
+                  {i > 0 && <span aria-hidden className="text-hairline mx-3 sm:mx-4">·</span>}
+                  {f.value && <span className="font-black text-primary">{f.value} </span>}
+                  <span className={f.value ? '' : 'font-bold text-primary'}>{f.label}</span>
                 </span>
-                <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-3 block">
-                  {f.label}
-                </span>
-              </div>
-            ))}
+              ))}
+            </p>
           </Reveal>
         </div>
       </section>
@@ -410,7 +344,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
                 />
               </div>
               <div className="h-px w-24 bg-clay mt-6 rule-draw" />
-              <span className="font-label text-[10px] uppercase tracking-[0.25em] text-ink-mute mt-4 block">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.17em] text-ink-mute mt-4 block">
                 טל גורן · אדריכלית רשויה ומורשית היתר
               </span>
             </div>
@@ -431,7 +365,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
                 {['תכנון בתים פרטיים', 'רישוי והיתרי בנייה', 'עיצוב פנים', 'ליווי בביצוע'].map((b) => (
                   <span
                     key={b}
-                    className="font-label text-[10px] uppercase tracking-[0.16em] text-secondary border border-hairline px-3.5 py-2"
+                    className="font-label font-medium text-[13px] uppercase tracking-[0.12em] text-secondary border border-hairline px-3.5 py-2"
                   >
                     {b}
                   </span>
@@ -479,13 +413,13 @@ export default function HomePage({ projects, reviewsData }: Props) {
                   aria-hidden
                   className="absolute top-0 start-0 w-[13px] h-[13px] rounded-full border border-clay bg-background"
                 />
-                <span className="font-label text-[11px] tracking-[0.22em] text-clay block mb-2.5">
+                <span className="font-label font-medium text-[13px] tracking-[0.15em] text-clay block mb-2.5">
                   {s.n}
                 </span>
                 <h3 className="font-headline font-bold text-lg text-primary leading-snug">
                   {s.title}
                 </h3>
-                <p className="font-body text-sm text-secondary leading-relaxed mt-2.5">
+                <p className="font-body text-base text-secondary leading-relaxed mt-2.5">
                   {s.text}
                 </p>
               </li>
@@ -525,7 +459,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
                     <v.Icon size={30} className="text-clay mt-1 flex-shrink-0" strokeWidth={1} />
                     <div>
                       <h3 className="font-headline font-bold text-lg text-primary">{v.title}</h3>
-                      <p className="font-body text-[15px] text-secondary leading-relaxed mt-2 measure">
+                      <p className="font-body text-base text-secondary leading-relaxed mt-2 measure">
                         {v.text}
                       </p>
                     </div>
@@ -544,61 +478,60 @@ export default function HomePage({ projects, reviewsData }: Props) {
         placement="home_cta_mid"
       />
 
-      {/* ================= 05 · PACKAGES ================= */}
+      {/* ================= 05 · THE QUIZ =================
+          This slot used to be the price list: three cards, three numbers, on
+          the homepage of an architect people have not met yet. A price with no
+          context is the fastest way to lose someone who would have been a good
+          fit — it invites a comparison against a number they have in their head
+          rather than against what they actually want to build.
+
+          The prices have not been hidden: /packages and /services still publish
+          all three tracks in full. What sits here now is the question the
+          visitor actually arrived with, and a way to get a real answer to it. */}
       <Section tone="paper">
-        <SectionHeading
-          index="05"
-          eyebrow="מסלולי ליווי"
-          size="lg"
-          title="שלושה מסלולים, מחיר גלוי"
-          lede="ההבדל בין המסלולים הוא כמה מעיצוב הפנים אני לוקחת על עצמי. האדריכלות, הרישוי והליווי עד תעודת גמר כלולים בכולם."
-          className="mb-14 lg:mb-20"
-        />
-
-        {/* Cheapest first, matching /services — the eye climbs the price ladder
-            rather than being met by the largest number. The cards are separated
-            by hairlines (a 1px grid gap over an ink-tinted ground) instead of
-            being three floating boxes with their own borders and shadows. */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline">
-          {[...homePackages].reverse().map((pkg, i) => (
-            <Reveal key={pkg.id} delay={i * 100} className="bg-surface">
-              <Link
-                href="/packages"
-                className="group flex flex-col h-full p-8 lg:p-10 transition-colors duration-500 hover:bg-surface-container-low"
-              >
-                <div className="min-h-[1.75rem]">
-                  {pkg.recommended && (
-                    <span className="font-label text-[9px] uppercase tracking-[0.2em] text-clay border border-clay/40 px-2.5 py-1">
-                      הבחירה המומלצת
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="font-headline font-black text-xl text-primary leading-tight mt-6">
-                  {pkg.name}
-                </h3>
-                <p className="font-body text-[15px] text-secondary leading-relaxed mt-3">
-                  {pkg.subtitle}
-                </p>
-                <p className="font-body text-sm text-ink-mute leading-relaxed mt-4 flex-1 line-clamp-4">
-                  {pkg.forWhom}
-                </p>
-
-                <div className="mt-8 pt-6 border-t border-hairline">
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute block mb-2">
-                    מחיר, לפני מע&quot;מ
-                  </span>
-                  <span className="font-headline font-black text-3xl text-primary block">
-                    {pkg.price.toLocaleString('he-IL')} ₪
-                  </span>
-                  <div className="flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors mt-6">
-                    <span className="link-quiet">לפרטים המלאים</span>
-                    <ArrowIcon size={16} className="transition-transform duration-500 group-hover:-translate-x-1" />
-                  </div>
-                </div>
-              </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="lg:col-span-7">
+            <SectionHeading
+              index="05"
+              eyebrow="בדיקת היתכנות · ללא עלות"
+              size="lg"
+              title={<>כמה יעלה הבית<br />שאתם מדמיינים?</>}
+              lede="תשע שאלות קצרות, בערך שתי דקות. בסוף תקבלו למייל דוח אישי — הערכת עלויות לפי מה שתיארתם, לוח זמנים ריאלי לכל שלב, ומסלול הליווי שמתאים לכם."
+            />
+            <Reveal delay={140} className="mt-9">
+              <ButtonLink href="/quiz">להתחלת השאלון</ButtonLink>
             </Reveal>
-          ))}
+          </div>
+
+          {/* What they get, as a numbered list — the same chapter device used
+              for the process, because this is a small process too. */}
+          <Reveal delay={200} className="lg:col-span-5">
+            <ol className="border-t border-hairline">
+              {[
+                { n: '01', t: 'הערכת תקציב', d: 'טווח עלות לפי הגודל, הסוג והאזור שתבחרו — כולל יועצים, אגרות ורזרבה.' },
+                { n: '02', t: 'לוח זמנים', d: 'כמה זמן לוקח כל שלב, מהבירורים המקדימים ועד תעודת גמר.' },
+                { n: '03', t: 'מסלול מתאים', d: 'איזה מסלול ליווי הגיוני עבורכם, ולמה דווקא הוא.' },
+                { n: '04', t: 'המלצות אישיות', d: 'מה כדאי לעשות עכשיו, לפי מה שסימנתם שהכי מדאיג אתכם.' },
+              ].map((item) => (
+                <li key={item.n} className="py-6 border-b border-hairline">
+                  <span className="font-label font-semibold text-sm tracking-[0.14em] text-clay">
+                    {item.n}
+                  </span>
+                  <h3 className="font-headline font-bold text-lg text-primary mt-2">{item.t}</h3>
+                  <p className="font-body text-base text-secondary leading-relaxed mt-1.5">
+                    {item.d}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p className="font-body text-base text-ink-mute mt-5">
+              רוצים לראות את המחירים המלאים קודם?{' '}
+              <Link href="/packages" className="text-primary link-quiet hover:text-clay transition-colors">
+                כל שלושת המסלולים כאן
+              </Link>
+              .
+            </p>
+          </Reveal>
         </div>
       </Section>
 
@@ -619,7 +552,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
               </span>
               <StarRating rating={Math.round(reviewsData.rating)} className="w-5 h-5" />
             </div>
-            <p className="font-body text-sm text-secondary mt-3">
+            <p className="font-body text-base text-secondary mt-3">
               מבוסס על {reviewsData.totalReviews} ביקורות אמיתיות ב־Google
             </p>
             <div className="mt-6">
@@ -669,7 +602,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
                   <h3 className="font-headline font-bold text-lg text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                     {article.title}
                   </h3>
-                  <p className="font-body text-[15px] text-secondary leading-relaxed mt-3">
+                  <p className="font-body text-base text-secondary leading-relaxed mt-3">
                     {article.excerpt}
                   </p>
                   <div className="inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors mt-5">
@@ -688,13 +621,13 @@ export default function HomePage({ projects, reviewsData }: Props) {
           <div className="border-y border-hairline py-9 flex flex-col md:flex-row md:items-center gap-7 md:gap-10">
             <CompassIcon size={34} className="text-clay flex-shrink-0" strokeWidth={1} />
             <div className="flex-1">
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-ink-mute">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-ink-mute">
                 מתנה ממני
               </span>
               <h3 className="font-headline font-bold text-xl sm:text-2xl text-primary mt-2 leading-snug">
                 צ&apos;ק-ליסט חינמי: מה בודקים במגרש לפני שבונים
               </h3>
-              <p className="font-body text-[15px] text-secondary mt-2 measure">
+              <p className="font-body text-base text-secondary mt-2 measure">
                 12 נקודות מפתח שיחסכו לכם טעויות יקרות — עוד לפני שקבעתם פגישה.
               </p>
             </div>

@@ -35,7 +35,7 @@ export default function NotFound() {
 
         <Link
           href="/"
-          className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors mt-12"
+          className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-[0.13em] hover:bg-secondary transition-colors mt-12"
         >
           חזרה לדף הבית
           <ArrowIcon size={17} />

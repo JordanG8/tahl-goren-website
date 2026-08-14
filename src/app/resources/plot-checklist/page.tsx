@@ -74,7 +74,7 @@ export default function PlotChecklistPage() {
             צ&apos;ק-ליסט: מה בודקים במגרש לפני שבונים
           </h1>
           <div className="mb-2 mt-6 p-6 bg-surface-container-low border-r-4 border-tertiary">
-            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-tertiary block mb-2">בקצרה</span>
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-tertiary block mb-2">בקצרה</span>
             <p className="text-primary text-lg leading-relaxed font-body font-medium">
               12 נקודות מפתח לבדיקה לפני רכישת מגרש או תחילת תכנון בית פרטי —
               מזכויות בנייה ועד תשתיות וגישה — כדי שלא תגלו הפתעות יקרות

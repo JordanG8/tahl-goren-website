@@ -123,7 +123,7 @@ export default function InteractiveProjectsMap() {
                         </div>
                       ))}
                       {projects.length > 3 && (
-                        <p className="text-[10px] text-secondary/60 italic">ועוד {projects.length - 3} פרויקטים נוספים...</p>
+                        <p className="text-[13px] text-secondary/60 italic">ועוד {projects.length - 3} פרויקטים נוספים...</p>
                       )}
                     </div>
 

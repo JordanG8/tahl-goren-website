@@ -81,7 +81,7 @@ export default async function Videos() {
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">YouTube</span>
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">YouTube</span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">מערוץ היוטיוב</h2>
               <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 font-headline font-bold text-sm text-secondary hover:text-primary transition-colors group">
@@ -115,7 +115,7 @@ export default async function Videos() {
                   </div>
                 </div>
                 <div className={`p-8 ${bgClasses[index] || 'bg-surface-container'} ${hoverBgClasses[index] || 'group-hover:bg-surface-container-low'} transition-colors duration-300`}>
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{video.category}</span>
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary">{video.category}</span>
                   <h3 className="font-headline font-bold text-xl text-primary mt-2">{video.title}</h3>
                   <p className="text-secondary text-sm mt-2 leading-relaxed">{video.description}</p>
                 </div>
@@ -130,7 +130,7 @@ export default async function Videos() {
         <section className="py-24 md:py-32 px-8 bg-surface-container-low">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media</span>
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">Media</span>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
                 <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">אזכורים בתקשורת</h2>
                 <p className="text-secondary text-lg max-w-xl">
@@ -148,9 +148,9 @@ export default async function Videos() {
                   rel="noopener noreferrer"
                   className="group card-hover block bg-surface p-8 text-right"
                 >
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{article.source}</span>
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary">{article.source}</span>
                   <h3 className="font-headline font-bold text-lg text-primary mt-3 leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
-                  <p className="text-secondary text-sm mt-3 leading-relaxed">{article.description}</p>
+                  <p className="text-secondary text-base mt-3 leading-relaxed">{article.description}</p>
                   <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
                     לכתבה המלאה
                     <ArrowIcon size={16} className="group-hover:-translate-x-1 transition-transform duration-500" />
@@ -166,7 +166,7 @@ export default async function Videos() {
       <section className="py-24 md:py-32 px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Instagram Reels</span>
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">Instagram Reels</span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
               <div>
                 <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">מהאינסטגרם שלי</h2>
@@ -221,7 +221,7 @@ export default async function Videos() {
                 />
               </div>
               <div className="md:col-span-7 p-12 md:p-16 flex flex-col gap-6 text-right">
-                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary text-center md:text-right">Facebook</span>
+                <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary text-center md:text-right">Facebook</span>
                 <h3 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary leading-tight text-center md:text-right">
                   עקבו אחריי בפייסבוק
                 </h3>
@@ -247,7 +247,7 @@ export default async function Videos() {
       <section className="py-32 px-8 bg-primary blueprint-grid relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/95"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
-          <span className="font-label text-xs uppercase tracking-[0.3em] text-white/50">ברשתות החברתיות</span>
+          <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-white/50">ברשתות החברתיות</span>
           <h2 className="font-headline font-black text-5xl md:text-7xl tracking-tight leading-[0.95] text-white">
             רוצים לראות עוד?<br/>עקבו אחריי ברשתות
           </h2>
@@ -255,15 +255,15 @@ export default async function Videos() {
             טיפים, סיורים בפרויקטים, מאחורי הקלעים ועוד - בכל הפלטפורמות.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 mt-6">
-            <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white text-primary px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors">
+            <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white text-primary px-10 py-4 font-headline font-black text-sm uppercase tracking-[0.13em] hover:bg-surface-container-highest transition-colors">
               <YoutubeIcon size={20} />
               YouTube
             </a>
-            <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-white/20 transition-colors">
+            <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-[0.13em] hover:bg-white/20 transition-colors">
               <InstagramIcon size={20} />
               Instagram
             </a>
-            <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-white/20 transition-colors">
+            <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-[0.13em] hover:bg-white/20 transition-colors">
               <FacebookIcon size={20} />
               Facebook
             </a>

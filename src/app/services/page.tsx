@@ -89,7 +89,7 @@ export default function ServicesPage() {
                   <h3 className="font-headline font-bold text-lg text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                     {article.title}
                   </h3>
-                  <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed line-clamp-3">
+                  <p className="font-body text-base text-secondary mt-3 leading-relaxed line-clamp-3">
                     {article.description}
                   </p>
                   <div className="inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors mt-5">
@@ -124,7 +124,7 @@ export default function ServicesPage() {
               <div className="flex flex-col h-full p-8 lg:p-10">
                 <div className="min-h-[1.75rem]">
                   {pkg.recommended && (
-                    <span className="font-label text-[9px] uppercase tracking-[0.2em] text-clay border border-clay/40 px-2.5 py-1">
+                    <span className="font-label text-[12px] uppercase tracking-[0.14em] text-clay border border-clay/40 px-2.5 py-1">
                       הבחירה המומלצת שלי
                     </span>
                   )}
@@ -133,7 +133,7 @@ export default function ServicesPage() {
                 <h3 className="font-headline font-black text-2xl text-primary leading-tight mt-6">
                   {pkg.name}
                 </h3>
-                <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed">
+                <p className="font-body text-base text-secondary mt-3 leading-relaxed">
                   {pkg.subtitle}
                 </p>
 
@@ -141,16 +141,16 @@ export default function ServicesPage() {
                   <span className="font-headline font-black text-4xl text-primary block">
                     {pkg.price.toLocaleString("he-IL")} ₪
                   </span>
-                  <p className="font-label text-xs text-ink-mute mt-2">
+                  <p className="font-label font-medium text-[13px] text-ink-mute mt-2">
                     {pkg.priceWithVat.toLocaleString("he-IL")} ₪ כולל מע&quot;מ
                   </p>
                 </div>
 
                 <div className="mt-7 pt-6 border-t border-hairline flex-1">
-                  <h4 className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute">
+                  <h4 className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute">
                     למי זה מתאים
                   </h4>
-                  <p className="font-body text-[15px] text-secondary leading-relaxed mt-3">
+                  <p className="font-body text-base text-secondary leading-relaxed mt-3">
                     {pkg.forWhom}
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export default function ServicesPage() {
             <Link
               key={area.slug}
               href={`/areas/${area.slug}`}
-              className="border border-hairline px-5 py-3 font-body text-[15px] text-secondary hover:border-clay hover:text-primary transition-colors duration-300"
+              className="border border-hairline px-5 py-3 font-body text-base text-secondary hover:border-clay hover:text-primary transition-colors duration-300"
             >
               {area.h1}
             </Link>

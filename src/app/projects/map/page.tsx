@@ -38,7 +38,7 @@ export default function ProjectsMap() {
                 <div key={loc} className="flex items-center gap-2 bg-surface px-4 py-2">
                   <PinIcon size={15} className="text-clay" />
                   <span className="font-label text-sm text-primary">{loc}</span>
-                  <span className="font-label text-xs text-secondary">({count})</span>
+                  <span className="font-label font-medium text-[13px] text-secondary">({count})</span>
                 </div>
               );
             })}
@@ -51,7 +51,7 @@ export default function ProjectsMap() {
         <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
           <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">הבית הבא על המפה יכול להיות שלכם</h2>
           <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הפרויקט שלכם ונוסיף אותו למפה.</p>
-          <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">
+          <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-[0.13em] hover:opacity-80 transition-opacity">
             <span>בואו נדבר</span>
             <ArrowIcon size={17} />
           </Link>

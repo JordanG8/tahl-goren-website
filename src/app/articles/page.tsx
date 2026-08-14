@@ -59,13 +59,13 @@ export default async function Articles() {
                   rel="noopener noreferrer"
                   className="group grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 py-7 border-b border-hairline items-baseline"
                 >
-                  <span className="md:col-span-2 font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute">
+                  <span className="md:col-span-2 font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute">
                     {article.source}
                   </span>
                   <h3 className="md:col-span-4 font-headline font-bold text-lg text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                     {article.title}
                   </h3>
-                  <p className="md:col-span-5 font-body text-[15px] text-secondary leading-relaxed">
+                  <p className="md:col-span-5 font-body text-base text-secondary leading-relaxed">
                     {article.description}
                   </p>
                   <span className="md:col-span-1 flex md:justify-end">

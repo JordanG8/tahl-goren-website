@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The PDF report reads its Hebrew fonts from disk at request time. Next's
+  // tracer cannot see a path built with path.join at runtime, so the files
+  // would be missing from the deployed function bundle without this.
+  outputFileTracingIncludes: {
+    "/api/quiz": ["./src/lib/report/fonts/**"],
+  },
+
   async redirects() {
     return [
       // Canonical host enforcement: www and apex previously both served
@@ -83,6 +90,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // Next 16 rejects any `quality` an <Image> asks for that is not listed
+    // here. The hero photography is served at 82 (and the existing CTA
+    // backdrop at 80); without these entries both fall back to unoptimised
+    // delivery and log a warning on every request.
+    qualities: [75, 80, 82],
     // Reviewer profile photos returned by the Places API (New) live here.
     remotePatterns: [{ protocol: "https", hostname: "lh3.googleusercontent.com" }],
     // Optimized-image responses were serving `max-age=0, must-revalidate`

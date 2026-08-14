@@ -16,6 +16,7 @@ import {
 
 const navLinks = [
   { to: '/', label: 'עמוד הבית' },
+  { to: '/quiz', label: 'בדיקת היתכנות' },
   { to: '/projects', label: 'פרויקטים' },
   { to: '/about', label: 'אודות' },
   // "מסלולים ומחירים" now lives inside the Services page rather than the top nav.
@@ -112,7 +113,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
                       transition: `opacity 0.5s var(--ease-quiet) ${0.1 + i * 0.045}s, transform 0.5s var(--ease-quiet) ${0.1 + i * 0.045}s, color 0.3s ease`,
                     }}
                   >
-                    <span className="font-label text-[10px] tracking-[0.2em] text-ink-mute w-6 shrink-0">
+                    <span className="font-label font-medium text-[13px] tracking-[0.14em] text-ink-mute w-6 shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span className="font-headline font-bold text-2xl leading-none flex-1">
@@ -140,7 +141,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           <Link
             href="/contact"
             onClick={onClose}
-            className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-4 px-8 font-headline font-bold text-[13px] uppercase tracking-[0.18em] hover:bg-clay transition-colors duration-500"
+            className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-4 px-8 font-headline font-bold text-[13px] uppercase tracking-[0.13em] hover:bg-clay transition-colors duration-500"
           >
             <PhoneIcon size={16} />
             לשיחת ייעוץ ללא עלות
@@ -176,7 +177,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
                 <FacebookIcon size={16} title="Facebook" />
               </a>
             </div>
-            <div className="flex gap-4 font-label text-[10px] tracking-wide text-ink-mute">
+            <div className="flex gap-4 font-label font-medium text-[13px] tracking-wide text-ink-mute">
               <Link href="/privacy" onClick={onClose} className="hover:text-primary transition-colors">פרטיות</Link>
               <Link href="/terms" onClick={onClose} className="hover:text-primary transition-colors">תנאי שימוש</Link>
             </div>

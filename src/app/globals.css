@@ -134,6 +134,22 @@ p { text-wrap: pretty; }
   animation: scrollCue 2.6s var(--ease-quiet) infinite;
 }
 
+/* Hero photography drifts almost imperceptibly across its slot, so a still
+   image reads as a held shot rather than a frozen one. The scale never drops
+   below 1 — a photo must never reveal its own edges. */
+@keyframes heroKenburns {
+  from { transform: scale(1.045) translate3d(0, 0, 0); }
+  to   { transform: scale(1.11) translate3d(-1.1%, -1%, 0); }
+}
+.hero-kenburns {
+  animation: heroKenburns 22s ease-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-kenburns { animation: none; transform: scale(1.045); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue-fill { animation: none; opacity: 0.6; }
 }
@@ -167,11 +183,15 @@ p { text-wrap: pretty; }
 .breadcrumb-sep::after { content: '/'; margin: 0 0.75rem; color: var(--color-hairline); }
 
 /* --- Type helpers -------------------------------------------------------- */
-/* The eyebrow is the site's smallest voice: wide-tracked, muted, never bold. */
+/* The eyebrow is the site's quietest voice — but quiet is a matter of colour
+   and weight, not of size. It was 10px at 0.3em tracking, which is past the
+   point where wide letter-spacing stops looking refined and starts costing
+   people the ability to read it. 13px, medium weight, and half the tracking. */
 .eyebrow {
   font-family: var(--font-label);
-  font-size: 0.625rem;
-  letter-spacing: 0.3em;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-ink-mute);
 }
@@ -187,13 +207,13 @@ p { text-wrap: pretty; }
    once on wider screens rather than at every breakpoint. */
 .prose-p {
   font-family: var(--font-body);
-  color: #3F5260;
-  font-size: 1.0625rem;
+  color: #3A4C59;
+  font-size: 1.125rem;
   line-height: 1.9;
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.4rem;
 }
 @media (min-width: 768px) {
-  .prose-p { font-size: 1.125rem; }
+  .prose-p { font-size: 1.1875rem; }
 }
 .prose-p:last-child { margin-bottom: 0; }
 /* Inline links inside prose stay in the reading colour and are marked by a

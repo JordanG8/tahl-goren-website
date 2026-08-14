@@ -67,7 +67,7 @@ export default function Projects() {
                     <h2 className="font-headline font-black text-2xl text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                       {page.title}
                     </h2>
-                    <p className="font-body text-[15px] text-secondary leading-relaxed mt-2.5 measure">
+                    <p className="font-body text-base text-secondary leading-relaxed mt-2.5 measure">
                       {page.description}
                     </p>
                   </div>

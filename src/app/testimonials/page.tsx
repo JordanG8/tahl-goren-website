@@ -91,7 +91,7 @@ export default async function Testimonials() {
               {aggregateRating.ratingValue.toFixed(1)}
             </span>
             <StarRating rating={Math.round(aggregateRating.ratingValue)} className="w-5 h-5" />
-            <span className="font-body text-sm text-secondary">
+            <span className="font-body text-base text-secondary">
               מתוך 5 · {aggregateRating.reviewCount} ביקורות בגוגל
             </span>
           </div>
@@ -111,9 +111,9 @@ export default async function Testimonials() {
                   {r.text}
                 </blockquote>
                 <figcaption className="mt-6 flex items-baseline justify-between gap-4">
-                  <span className="font-headline font-bold text-primary text-[15px]">{r.name}</span>
+                  <span className="font-headline font-bold text-primary text-base">{r.name}</span>
                   {r.relativeTime && (
-                    <span className="font-label text-[10px] uppercase tracking-[0.18em] text-ink-mute">
+                    <span className="font-label font-medium text-[13px] uppercase tracking-[0.13em] text-ink-mute">
                       {r.relativeTime}
                     </span>
                   )}

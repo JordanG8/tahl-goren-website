@@ -63,13 +63,13 @@ export function SectionHeading({
           className={`flex items-center gap-4 mb-6 ${centered ? "justify-center" : ""}`}
         >
           {index && (
-            <span className={`font-label text-[11px] tracking-[0.2em] ${tone === "paper" ? "text-white/60" : "text-clay"}`}>
+            <span className={`font-label font-semibold text-sm tracking-[0.14em] ${tone === "paper" ? "text-white/70" : "text-clay"}`}>
               {index}
             </span>
           )}
           <span className={`rule-draw h-px w-10 ${ruleTone}`} />
           {eyebrow && (
-            <span className={`font-label text-[10px] uppercase tracking-[0.3em] ${muted}`}>
+            <span className={`font-label font-medium text-sm uppercase tracking-[0.14em] ${muted}`}>
               {eyebrow}
             </span>
           )}
@@ -84,7 +84,7 @@ export function SectionHeading({
 
       {lede && (
         <p
-          className={`font-body text-base sm:text-lg ${soft} leading-relaxed mt-6 measure ${
+          className={`font-body text-lg sm:text-xl ${soft} leading-[1.7] mt-6 measure ${
             centered ? "mx-auto" : ""
           }`}
         >
@@ -132,7 +132,7 @@ export function ArrowLink({
     </>
   );
 
-  const classes = `group inline-flex items-center gap-2.5 font-headline font-bold text-sm transition-colors duration-300 ${color} ${className}`;
+  const classes = `group inline-flex items-center gap-2.5 font-headline font-bold text-base transition-colors duration-300 ${color} ${className}`;
 
   if (external) {
     return (
@@ -175,7 +175,7 @@ export function ButtonLink({
     "paper-outline": "border border-white/45 text-white hover:bg-white hover:text-primary backdrop-blur-[2px]",
   }[variant];
 
-  const classes = `group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-all duration-500 ${styles} ${className}`;
+  const classes = `group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-[1.15rem] font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-all duration-500 ${styles} ${className}`;
 
   const inner = (
     <>

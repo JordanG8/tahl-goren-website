@@ -70,7 +70,7 @@ export default function HomeCtaForm({
   };
 
   const field =
-    "w-full bg-white/[0.06] border border-white/20 text-white placeholder-white/45 px-4 py-3.5 font-body text-[15px] rounded-none transition-colors duration-300 focus:outline-none focus:border-clay focus:bg-white/10";
+    "w-full bg-white/[0.06] border border-white/20 text-white placeholder-white/45 px-4 py-3.5 font-body text-base rounded-none transition-colors duration-300 focus:outline-none focus:border-clay focus:bg-white/10";
 
   return (
     <section className="relative bg-primary overflow-hidden">
@@ -85,7 +85,7 @@ export default function HomeCtaForm({
           <Reveal className="lg:col-span-6">
             <div className="flex items-center gap-4 mb-6">
               <span className="rule-draw h-px w-10 bg-white/30" />
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-white/50">
                 {eyebrow}
               </span>
             </div>
@@ -99,7 +99,7 @@ export default function HomeCtaForm({
 
             <ul className="flex flex-wrap gap-x-6 gap-y-2 mt-8">
               {CREDENTIALS.map((c) => (
-                <li key={c} className="flex items-center gap-2 text-white/55 font-label text-xs">
+                <li key={c} className="flex items-center gap-2 text-white/55 font-label font-medium text-[13px]">
                   <CheckIcon size={14} className="text-clay" />
                   {c}
                 </li>
@@ -146,7 +146,7 @@ export default function HomeCtaForm({
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="group w-full bg-white text-primary px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-colors duration-500 hover:bg-clay hover:text-white disabled:opacity-50 inline-flex items-center justify-center gap-3"
+                  className="group w-full bg-white text-primary px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.13em] transition-colors duration-500 hover:bg-clay hover:text-white disabled:opacity-50 inline-flex items-center justify-center gap-3"
                 >
                   {status === "submitting" ? "שולח..." : "דברו איתי"}
                   {status !== "submitting" && (
@@ -158,7 +158,7 @@ export default function HomeCtaForm({
                 </button>
 
                 {status === "error" && (
-                  <p className="font-body text-sm text-red-300 mt-1">
+                  <p className="font-body text-base text-red-300 mt-1">
                     משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות ישירות בטלפון 052-8345799.
                   </p>
                 )}

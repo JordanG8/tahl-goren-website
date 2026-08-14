@@ -38,7 +38,7 @@ export default function PageHeader({
           {eyebrow && (
             <div className="flex items-center gap-4 mb-6">
               <span className="rule-draw h-px w-10 bg-hairline" />
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-ink-mute">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-ink-mute">
                 {eyebrow}
               </span>
             </div>

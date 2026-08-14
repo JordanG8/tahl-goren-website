@@ -177,7 +177,7 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-label text-xs tracking-[0.2em] text-white/60">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-label font-medium text-[13px] tracking-[0.14em] text-white/60">
             {selectedImageIndex + 1} / {displayImages.length}
           </div>
         </div>

@@ -6,6 +6,7 @@ import { trackLead } from '@/lib/trackLead';
 import { InstagramIcon, FacebookIcon, YoutubeIcon } from '@/components/ui/Icon';
 
 const NAV = [
+  { href: '/quiz', label: 'בדיקת היתכנות' },
   { href: '/projects', label: 'פרויקטים' },
   { href: '/about', label: 'אודות' },
   { href: '/services', label: 'שירותים' },
@@ -63,13 +64,13 @@ export default function Footer() {
 
           {/* Navigation */}
           <div className="lg:col-span-3">
-            <h2 className="font-label text-[10px] uppercase tracking-[0.28em] text-white/40">ניווט</h2>
+            <h2 className="font-label font-medium text-[13px] uppercase tracking-[0.18em] text-white/40">ניווט</h2>
             <ul className="mt-6 space-y-3">
               {NAV.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="font-body text-[15px] text-white/70 hover:text-white transition-colors duration-300 link-quiet"
+                    className="font-body text-base text-white/70 hover:text-white transition-colors duration-300 link-quiet"
                   >
                     {l.label}
                   </Link>
@@ -80,8 +81,8 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-4">
-            <h2 className="font-label text-[10px] uppercase tracking-[0.28em] text-white/40">יצירת קשר</h2>
-            <div className="mt-6 space-y-3 font-body text-[15px]">
+            <h2 className="font-label font-medium text-[13px] uppercase tracking-[0.18em] text-white/40">יצירת קשר</h2>
+            <div className="mt-6 space-y-3 font-body text-base">
               <a
                 href="tel:0528345799"
                 onClick={() => trackLead('phone', { placement: 'footer' })}
@@ -99,7 +100,7 @@ export default function Footer() {
             </div>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-3 border border-white/30 text-white px-8 py-3.5 mt-8 font-headline font-bold text-[12px] uppercase tracking-[0.18em] hover:bg-white hover:text-primary transition-colors duration-500"
+              className="group inline-flex items-center gap-3 border border-white/30 text-white px-8 py-3.5 mt-8 font-headline font-bold text-[13px] uppercase tracking-[0.13em] hover:bg-white hover:text-primary transition-colors duration-500"
             >
               לפגישת ייעוץ
             </Link>
@@ -107,10 +108,10 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/12 py-7 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-label text-[10px] tracking-[0.2em] text-white/35 uppercase text-center">
+          <span className="font-label font-medium text-[13px] tracking-[0.14em] text-white/35 uppercase text-center">
             &copy; {new Date().getFullYear()} TAL GOREN ARCHITECTS
           </span>
-          <div className="flex flex-wrap justify-center gap-6 font-label text-[10px] tracking-[0.2em] uppercase">
+          <div className="flex flex-wrap justify-center gap-6 font-label font-medium text-[13px] tracking-[0.14em] uppercase">
             <Link href="/privacy" className="text-white/35 hover:text-white transition-colors">מדיניות פרטיות</Link>
             <Link href="/accessibility" className="text-white/35 hover:text-white transition-colors">הצהרת נגישות</Link>
             <Link href="/terms" className="text-white/35 hover:text-white transition-colors">תנאי שימוש</Link>

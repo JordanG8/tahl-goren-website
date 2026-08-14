@@ -186,7 +186,7 @@ export default async function AreaPage({
         <section className="py-24 px-8 bg-surface">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 text-right">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Projects</span>
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">Projects</span>
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight text-primary mt-4">
                 פרויקטים נבחרים
               </h2>
@@ -222,7 +222,7 @@ export default async function AreaPage({
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
+            className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-[0.13em] hover:bg-secondary transition-colors"
           >
             לקביעת פגישת ייעוץ
             <ArrowIcon size={17} />

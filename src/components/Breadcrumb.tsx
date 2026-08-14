@@ -8,7 +8,7 @@ export default function Breadcrumb({ current, items, light }: { current?: string
     const active = light ? "text-white font-medium" : "text-primary font-medium";
     const hover = light ? "hover:text-white" : "hover:text-primary";
     return (
-      <div className={`flex items-center gap-1 mb-10 font-label text-xs ${base} tracking-wide`}>
+      <div className={`flex items-center gap-1 mb-10 font-label font-medium text-[13px] ${base} tracking-wide`}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
           return (
@@ -27,7 +27,7 @@ export default function Breadcrumb({ current, items, light }: { current?: string
   }
 
   return (
-    <div className="flex items-center gap-1 mb-10 font-label text-xs text-secondary tracking-wide">
+    <div className="flex items-center gap-1 mb-10 font-label font-medium text-[13px] text-secondary tracking-wide">
       <Link href="/" className="hover:text-primary transition-colors">ראשי</Link>
       <span className="breadcrumb-sep" />
       <span className="text-primary font-medium">{current}</span>

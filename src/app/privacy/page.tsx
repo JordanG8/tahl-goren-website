@@ -12,9 +12,9 @@ export default function PrivacyPage() {
   return (
     <article className="max-w-3xl mx-auto px-6 lg:px-8 py-20 lg:py-28 space-y-8 text-right" dir="rtl">
       <header className="space-y-3">
-        <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">משפטי</span>
+        <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">משפטי</span>
         <h1 className="font-headline font-black text-4xl lg:text-5xl text-primary tracking-tight">מדיניות פרטיות</h1>
-        <p className="font-label text-xs text-secondary">עודכן לאחרונה: אפריל 2026</p>
+        <p className="font-label font-medium text-[13px] text-secondary">עודכן לאחרונה: אפריל 2026</p>
       </header>
 
       <section className="space-y-4 font-body text-secondary leading-relaxed">

@@ -93,7 +93,7 @@ export default function PackagesPage() {
               <div className="flex flex-col h-full p-8 lg:p-10">
                 <div className="min-h-[1.75rem]">
                   {pkg.recommended && (
-                    <span className="font-label text-[9px] uppercase tracking-[0.2em] text-clay border border-clay/40 px-2.5 py-1">
+                    <span className="font-label text-[12px] uppercase tracking-[0.14em] text-clay border border-clay/40 px-2.5 py-1">
                       הבחירה המומלצת שלי
                     </span>
                   )}
@@ -102,7 +102,7 @@ export default function PackagesPage() {
                 <h2 className="font-headline font-black text-2xl text-primary leading-tight mt-6">
                   {pkg.name}
                 </h2>
-                <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed">
+                <p className="font-body text-base text-secondary mt-3 leading-relaxed">
                   {pkg.subtitle}
                 </p>
 
@@ -110,7 +110,7 @@ export default function PackagesPage() {
                   <span className="font-headline font-black text-4xl text-primary block">
                     {formatPrice(pkg.price)}
                   </span>
-                  <p className="font-label text-xs text-ink-mute mt-2">
+                  <p className="font-label font-medium text-[13px] text-ink-mute mt-2">
                     {formatPrice(pkg.priceWithVat)} כולל מע&quot;מ
                   </p>
                 </div>
@@ -122,10 +122,10 @@ export default function PackagesPage() {
                     { q: 'מה נשאר באחריותכם', a: pkg.remainsWithYou },
                   ].map((row) => (
                     <div key={row.q}>
-                      <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute">
+                      <dt className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute">
                         {row.q}
                       </dt>
-                      <dd className="font-body text-[15px] text-secondary leading-relaxed mt-2.5">
+                      <dd className="font-body text-base text-secondary leading-relaxed mt-2.5">
                         {row.a}
                       </dd>
                     </div>
@@ -167,7 +167,7 @@ export default function PackagesPage() {
                   >
                     {pkg.name}
                     {pkg.recommended && (
-                      <span className="block font-label text-[9px] uppercase tracking-[0.2em] text-clay mt-2">
+                      <span className="block font-label text-[12px] uppercase tracking-[0.14em] text-clay mt-2">
                         מומלץ
                       </span>
                     )}
@@ -178,7 +178,7 @@ export default function PackagesPage() {
             <tbody>
               {packageSpecs.map((row) => (
                 <tr key={row.label} className="border-b border-hairline">
-                  <td className="py-4 pe-4 font-body text-[15px] text-secondary">{row.label}</td>
+                  <td className="py-4 pe-4 font-body text-base text-secondary">{row.label}</td>
                   {displayPackages.map((pkg) => (
                     <td key={pkg.id} className="py-4 px-4 font-headline font-bold text-lg text-primary">
                       {row.values[sourceIndexOf(pkg.id)]}
@@ -187,7 +187,7 @@ export default function PackagesPage() {
                 </tr>
               ))}
               <tr className="border-b border-hairline">
-                <td className="py-5 pe-4 font-body text-[15px] text-primary font-bold align-top">
+                <td className="py-5 pe-4 font-body text-base text-primary font-bold align-top">
                   עיצוב פנים כלול
                 </td>
                 {displayPackages.map((pkg) => (
@@ -195,7 +195,7 @@ export default function PackagesPage() {
                     {pkg.includesDesign.length ? (
                       <ul className="space-y-2">
                         {pkg.includesDesign.map((item) => (
-                          <li key={item} className="flex items-start gap-2.5 text-[15px] text-secondary leading-snug">
+                          <li key={item} className="flex items-start gap-2.5 text-base text-secondary leading-snug">
                             <CheckIcon size={15} className="text-clay mt-1" />
                             {item}
                           </li>
@@ -224,7 +224,7 @@ export default function PackagesPage() {
           <Reveal className="max-w-3xl">
             <div className="flex items-center gap-4 mb-7">
               <span className="rule-draw h-px w-10 bg-white/30" />
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-white/50">
                 השורה התחתונה שלי
               </span>
             </div>
@@ -237,7 +237,9 @@ export default function PackagesPage() {
 
       <CtaSection
         title="לא בטוחים איזה מסלול מתאים לכם?"
-        subtitle="בפגישת הייעוץ הראשונה — ללא עלות וללא התחייבות — נבין יחד את הצרכים, התקציב והאופי שלכם, ואמליץ על המסלול הנכון לפרויקט."
+        subtitle="ענו על תשע שאלות קצרות ותקבלו למייל דוח אישי עם הערכת עלויות, לוח זמנים והמסלול שמתאים לכם — ללא עלות וללא התחייבות."
+        primaryLabel="לבדיקת ההיתכנות"
+        primaryHref="/quiz"
       />
     </>
   );

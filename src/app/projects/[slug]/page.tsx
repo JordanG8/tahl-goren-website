@@ -158,7 +158,7 @@ export default async function ProjectPage(
             <h1 className="font-headline font-black text-3xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white max-w-3xl mt-4">
               {project.title}
             </h1>
-            <div className="flex items-center gap-4 mt-4 font-label text-xs text-white/60 flex-row-reverse">
+            <div className="flex items-center gap-4 mt-4 font-label font-medium text-[13px] text-white/60 flex-row-reverse">
               <span className="flex items-center gap-1">
                 <PinIcon size={14} />
                 {project.location}
@@ -187,7 +187,7 @@ export default async function ProjectPage(
         <section className="py-16 md:py-24 px-8 bg-surface">
           <div className="max-w-[1920px] mx-auto">
             <div className="mb-12 text-right">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">
                 Gallery
               </span>
               <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
@@ -208,19 +208,19 @@ export default async function ProjectPage(
               chrome and to the numbers. */}
           <dl className="grid grid-cols-2 md:grid-cols-4 border-t border-hairline mb-16">
             <div className="py-6 pe-6 border-b border-hairline md:border-b-0">
-              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">מיקום</dt>
+              <dt className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute block mb-2">מיקום</dt>
               <dd className="font-headline font-bold text-base text-primary">{project.location}</dd>
             </div>
             <div className="py-6 px-6 border-b border-hairline md:border-b-0 border-s border-s-hairline">
-              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">שטח</dt>
+              <dt className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute block mb-2">שטח</dt>
               <dd className="font-headline font-bold text-base text-primary">{project.area}</dd>
             </div>
             <div className="py-6 px-6 md:border-s md:border-s-hairline">
-              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">קומות</dt>
+              <dt className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute block mb-2">קומות</dt>
               <dd className="font-headline font-bold text-base text-primary">{project.floors}</dd>
             </div>
             <div className="py-6 ps-6 border-s border-s-hairline">
-              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">סגנון</dt>
+              <dt className="font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute block mb-2">סגנון</dt>
               <dd className="font-headline font-bold text-base text-primary">{project.style}</dd>
             </div>
           </dl>
@@ -268,7 +268,7 @@ export default async function ProjectPage(
               >
                 <ArrowIcon size={18} direction="back" className="group-hover:translate-x-1 transition-transform duration-500" />
                 <div className="text-right">
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block">הפרויקט הבא</span>
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary block">הפרויקט הבא</span>
                   <span className="line-clamp-1">{nextProject.title}</span>
                 </div>
               </Link>
@@ -279,7 +279,7 @@ export default async function ProjectPage(
                 className="group flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors text-left"
               >
                 <div className="text-left">
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block">הפרויקט הקודם</span>
+                  <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-secondary block">הפרויקט הקודם</span>
                   <span className="line-clamp-1">{prevProject.title}</span>
                 </div>
                 <ArrowIcon size={18} className="group-hover:-translate-x-1 transition-transform duration-500" />
@@ -294,7 +294,7 @@ export default async function ProjectPage(
       <section className="py-16 md:py-24 px-8 bg-surface-container-low">
         <div className="max-w-[1920px] mx-auto">
           <div className="mb-12 text-right">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-secondary">
               More Projects
             </span>
             <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
@@ -318,7 +318,7 @@ export default async function ProjectPage(
                     <h3 className="font-headline font-bold text-base text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                       {related.title}
                     </h3>
-                    <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-1.5 block">
+                    <span className="font-label font-medium text-[13px] uppercase tracking-[0.15em] text-ink-mute mt-1.5 block">
                       {related.location}
                     </span>
                   </div>

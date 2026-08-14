@@ -49,7 +49,7 @@ export default function ProjectsInDesign() {
                     <h2 className="font-headline font-bold text-base text-primary leading-snug">
                       {project.title}
                     </h2>
-                    <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-1.5 block">
+                    <span className="font-label font-medium text-[13px] uppercase tracking-[0.15em] text-ink-mute mt-1.5 block">
                       {project.location}
                     </span>
                   </div>

@@ -67,11 +67,11 @@ export default function ProjectCard({
           >
             {project.title}
           </h3>
-          <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-1.5 block">
+          <span className="font-label font-medium text-[13px] uppercase tracking-[0.15em] text-ink-mute mt-1.5 block">
             {project.location}
           </span>
           {showTeaser && teaser && size !== 'sm' && (
-            <p className="font-body text-sm text-secondary leading-relaxed mt-3 line-clamp-2 measure">
+            <p className="font-body text-base text-secondary leading-relaxed mt-3 line-clamp-2 measure">
               {teaser}
             </p>
           )}

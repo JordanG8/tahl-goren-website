@@ -74,7 +74,7 @@ export default function Navbar() {
                 tracking, not in bold uppercase headline type. The previous
                 version also re-tracked each label on hover, which nudged every
                 item in the bar; the underline alone carries the state now. */}
-            <div className="hidden lg:flex gap-9 items-center font-label text-[13px] tracking-[0.06em]">
+            <div className="hidden lg:flex gap-9 items-center font-label font-medium text-[13px] tracking-[0.06em]">
               {desktopLinks.map((link) => {
                 const isActive = pathname === link.to;
                 return (
@@ -123,7 +123,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className={`flex items-center gap-2 font-headline font-bold text-[11px] sm:text-xs uppercase tracking-[0.18em] transition-colors duration-500 px-5 sm:px-8 py-2.5 sm:py-3 ${
+              className={`flex items-center gap-2 font-headline font-bold text-[13px] sm:text-xs uppercase tracking-[0.13em] transition-colors duration-500 px-5 sm:px-8 py-2.5 sm:py-3 ${
                 transparent
                   ? 'border border-white/60 text-white hover:bg-white hover:text-primary backdrop-blur-[2px]'
                   : 'bg-primary text-white hover:bg-clay animate-contact-glow-scale'

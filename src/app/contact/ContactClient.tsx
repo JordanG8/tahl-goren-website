@@ -76,8 +76,8 @@ export default function ContactClient() {
   // four grey rectangles dominate everything. The rule turns clay on focus, so
   // the active field is unmistakable without a heavy ring.
   const field =
-    "w-full bg-transparent border-0 border-b border-hairline py-3.5 px-0 focus:outline-none focus:border-clay transition-colors duration-300 font-body text-[17px] text-primary placeholder:text-ink-mute/70";
-  const labelCls = "font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute";
+    "w-full bg-transparent border-0 border-b border-hairline py-3.5 px-0 focus:outline-none focus:border-clay transition-colors duration-300 font-body text-lg text-primary placeholder:text-ink-mute/70";
+  const labelCls = "font-label font-medium text-[13px] uppercase tracking-[0.16em] text-ink-mute";
 
   const contactRows = [
     { Icon: PhoneIcon, label: "טלפון", value: "052-8345799", href: "tel:0528345799", track: true },
@@ -93,7 +93,7 @@ export default function ContactClient() {
             <Breadcrumb current="צור קשר" />
             <div className="flex items-center gap-4 mb-6">
               <span className="rule-draw h-px w-10 bg-hairline" />
-              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-ink-mute">
+              <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-ink-mute">
                 צור קשר
               </span>
             </div>
@@ -249,14 +249,14 @@ export default function ContactClient() {
                     </div>
 
                     {status === "error" && (
-                      <p className="font-body text-sm text-red-600" role="alert">{errorMsg}</p>
+                      <p className="font-body text-base text-red-600" role="alert">{errorMsg}</p>
                     )}
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-2">
                       <button
                         type="submit"
                         disabled={status === "submitting"}
-                        className="group flex-1 inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-colors duration-500 hover:bg-clay disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="group flex-1 inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.13em] transition-colors duration-500 hover:bg-clay disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {status === "submitting" ? "שולח..." : "שלחו הודעה"}
                         {status !== "submitting" && (
@@ -268,7 +268,7 @@ export default function ContactClient() {
                         target="_blank"
                         rel="noreferrer"
                         onClick={() => trackLead("whatsapp", { placement: "contact_page_form" })}
-                        className="flex-1 inline-flex items-center justify-center gap-3 border border-primary/25 text-primary px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-colors duration-500 hover:border-primary hover:bg-primary hover:text-white"
+                        className="flex-1 inline-flex items-center justify-center gap-3 border border-primary/25 text-primary px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.13em] transition-colors duration-500 hover:border-primary hover:bg-primary hover:text-white"
                       >
                         שליחה בוואטסאפ
                         <ChatIcon size={17} />

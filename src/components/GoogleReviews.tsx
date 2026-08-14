@@ -58,7 +58,7 @@ function ReviewCard({ review }: { review: SiteReview }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-[#202124] text-[15px] truncate">{review.name}</p>
+          <p className="font-medium text-[#202124] text-base truncate">{review.name}</p>
           <p className="text-xs text-[#70757a]">ביקורת ב-Google</p>
         </div>
         <GoogleG className="w-5 h-5 flex-shrink-0" />
@@ -69,7 +69,7 @@ function ReviewCard({ review }: { review: SiteReview }) {
           <span className="text-xs text-[#70757a]">{review.relativeTime}</span>
         )}
       </div>
-      <p className="font-body text-sm text-[#3c4043] leading-relaxed line-clamp-6">{review.text}</p>
+      <p className="font-body text-base text-[#3c4043] leading-relaxed line-clamp-6">{review.text}</p>
     </div>
   );
 }

@@ -154,11 +154,11 @@ export default function About() {
             <div className="flex gap-14 pt-8 mt-10 border-t border-white/12">
               <div>
                 <span className="font-headline font-black text-5xl text-white block leading-none">25+</span>
-                <span className="font-label text-[10px] text-white/40 uppercase tracking-[0.22em] mt-3 block">שנות ניסיון</span>
+                <span className="font-label font-medium text-[13px] text-white/40 uppercase tracking-[0.15em] mt-3 block">שנות ניסיון</span>
               </div>
               <div>
                 <span className="font-headline font-black text-5xl text-white block leading-none">100+</span>
-                <span className="font-label text-[10px] text-white/40 uppercase tracking-[0.22em] mt-3 block">בתים פרטיים</span>
+                <span className="font-label font-medium text-[13px] text-white/40 uppercase tracking-[0.15em] mt-3 block">בתים פרטיים</span>
               </div>
             </div>
           </Reveal>
@@ -204,23 +204,23 @@ export default function About() {
           {/* Credentials, as a ruled register rather than a filled panel —
               this is a list of facts on file, and it should look like one. */}
           <Reveal delay={180} className="lg:col-span-5 lg:sticky lg:top-28">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-ink-mute block">
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.2em] text-ink-mute block">
               הכשרה ורישוי
             </span>
-            <p className="font-body text-secondary text-[15px] leading-relaxed mt-4">
+            <p className="font-body text-secondary text-base leading-relaxed mt-4">
               {credentialsIntro}
             </p>
             <ul className="mt-7 border-t border-hairline">
               {credentials.map((item, i) => (
                 <li key={i} className="flex items-start gap-4 py-5 border-b border-hairline">
                   <SealIcon size={20} className="text-clay mt-0.5" strokeWidth={1} />
-                  <p className="font-headline font-bold text-[15px] text-primary leading-relaxed">
+                  <p className="font-headline font-bold text-base text-primary leading-relaxed">
                     {item.text}
                   </p>
                 </li>
               ))}
             </ul>
-            <p className="font-body text-secondary text-[15px] leading-relaxed mt-6">
+            <p className="font-body text-secondary text-base leading-relaxed mt-6">
               {credentialsMeaning}
             </p>
           </Reveal>
@@ -242,11 +242,11 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-10 mt-10 border-t border-hairline pt-10">
           {officeBullets.map((b, i) => (
             <Reveal key={i} delay={i * 110}>
-              <span className="font-label text-[11px] tracking-[0.22em] text-clay block mb-3">
+              <span className="font-label font-medium text-[13px] tracking-[0.15em] text-clay block mb-3">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="font-headline font-bold text-lg text-primary">{b.title}</h3>
-              <p className="font-body text-secondary text-[15px] leading-relaxed mt-2.5">{b.text}</p>
+              <p className="font-body text-secondary text-base leading-relaxed mt-2.5">{b.text}</p>
             </Reveal>
           ))}
         </div>
@@ -272,7 +272,7 @@ export default function About() {
               className="object-cover img-settle"
             />
           </div>
-          <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-4 block">
+          <span className="font-label font-medium text-[13px] uppercase tracking-[0.15em] text-ink-mute mt-4 block">
             טל גורן וצוות המשרד
           </span>
         </Reveal>
@@ -292,10 +292,10 @@ export default function About() {
                 </div>
                 <div className="pt-5 mt-5 border-t border-hairline">
                   <h3 className="font-headline font-black text-xl text-primary">{member.name}</h3>
-                  <p className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute mt-2">
+                  <p className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute mt-2">
                     {member.role}
                   </p>
-                  <p className="font-body text-secondary text-[15px] leading-relaxed mt-4">
+                  <p className="font-body text-secondary text-base leading-relaxed mt-4">
                     {member.bio}
                   </p>
                 </div>
@@ -330,7 +330,7 @@ export default function About() {
           </blockquote>
           <div className="flex items-center gap-4 mt-9">
             <span className="rule-draw h-px w-12 bg-clay" />
-            <span className="font-label text-[11px] uppercase tracking-[0.22em] text-ink-mute">
+            <span className="font-label font-medium text-[13px] uppercase tracking-[0.15em] text-ink-mute">
               טל גורן, אדריכלית
             </span>
           </div>
