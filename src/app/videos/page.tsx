@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { siteData } from '@/data/siteData';
 import Breadcrumb from '@/components/Breadcrumb';
 import CtaSection from '@/components/CtaSection';
+import { ArrowIcon, PlayIcon, YoutubeIcon, InstagramIcon, FacebookIcon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
   title: "סרטונים ותוכן מקצועי | טל גורן אדריכלית",
@@ -85,7 +86,7 @@ export default async function Videos() {
               <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary">מערוץ היוטיוב</h2>
               <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 font-headline font-bold text-sm text-secondary hover:text-primary transition-colors group">
                 לערוץ המלא
-                <span className="material-symbols-outlined text-xl group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                <ArrowIcon size={18} className="group-hover:-translate-x-1 transition-transform duration-500" />
               </a>
             </div>
           </div>
@@ -109,7 +110,7 @@ export default async function Videos() {
                   />
                   <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/50 transition-colors duration-500 flex items-center justify-center z-10">
                     <div className="w-20 h-20 bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <span className="material-symbols-outlined text-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
+                      <PlayIcon size={34} className="text-primary" />
                     </div>
                   </div>
                 </div>
@@ -152,7 +153,7 @@ export default async function Videos() {
                   <p className="text-secondary text-sm mt-3 leading-relaxed">{article.description}</p>
                   <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
                     לכתבה המלאה
-                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                    <ArrowIcon size={16} className="group-hover:-translate-x-1 transition-transform duration-500" />
                   </div>
                 </a>
               ))}
@@ -175,7 +176,7 @@ export default async function Videos() {
               </div>
               <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 font-headline font-bold text-sm text-secondary hover:text-primary transition-colors group">
                 לפרופיל המלא
-                <span className="material-symbols-outlined text-xl group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                <ArrowIcon size={18} className="group-hover:-translate-x-1 transition-transform duration-500" />
               </a>
             </div>
           </div>
@@ -197,7 +198,7 @@ export default async function Videos() {
                   className="object-cover img-grayscale"
                 />
                 <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center z-10">
-                  <span className="material-symbols-outlined text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
+                  <PlayIcon size={40} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </a>
             ))}
@@ -229,7 +230,7 @@ export default async function Videos() {
                 </p>
                 <div className="inline-flex items-center justify-center md:justify-start gap-3 font-headline font-bold text-sm text-primary group-hover:text-secondary transition-colors">
                   לעמוד הפייסבוק
-                  <span className="material-symbols-outlined text-xl group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                  <ArrowIcon size={18} className="group-hover:-translate-x-1 transition-transform duration-500" />
                 </div>
               </div>
             </div>
@@ -255,15 +256,15 @@ export default async function Videos() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 mt-6">
             <a href="https://www.youtube.com/channel/UCme0hzUzQzMlsqO394pF3mg/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white text-primary px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors">
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
+              <YoutubeIcon size={20} />
               YouTube
             </a>
             <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-white/20 transition-colors">
-              <span className="material-symbols-outlined">photo_camera</span>
+              <InstagramIcon size={20} />
               Instagram
             </a>
             <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-white/10 text-white px-10 py-4 font-headline font-black text-sm uppercase tracking-widest hover:bg-white/20 transition-colors">
-              <span className="material-symbols-outlined">group</span>
+              <FacebookIcon size={20} />
               Facebook
             </a>
           </div>

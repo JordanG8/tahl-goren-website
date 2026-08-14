@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { CloseIcon, ChevronIcon, ExpandIcon } from "@/components/ui/Icon";
 
 export type GalleryImage = { src: string; alt: string; fullSrc?: string };
 
@@ -111,9 +112,10 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
             </div>
 
             <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-              <span className="material-symbols-outlined text-white text-4xl opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all duration-500 ease-out delay-100">
-                fullscreen
-              </span>
+              <ExpandIcon
+                size={34}
+                className="text-white opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 ease-out delay-100"
+              />
             </div>
           </div>
         ))}
@@ -133,7 +135,7 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
               setSelectedImageIndex(null);
             }}
           >
-            <span className="material-symbols-outlined text-4xl" aria-hidden="true">close</span>
+            <CloseIcon size={30} />
           </button>
 
           <button
@@ -144,7 +146,7 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
               showPrev();
             }}
           >
-            <span className="material-symbols-outlined text-5xl" aria-hidden="true">chevron_right</span>
+            <ChevronIcon size={38} direction="end" />
           </button>
 
           <button
@@ -155,7 +157,7 @@ export default function GalleryGrid({ images }: { images?: GalleryImage[] }) {
               showNext();
             }}
           >
-            <span className="material-symbols-outlined text-5xl" aria-hidden="true">chevron_left</span>
+            <ChevronIcon size={38} direction="start" />
           </button>
 
           <div

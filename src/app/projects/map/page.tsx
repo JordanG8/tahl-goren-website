@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
 import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
+import { ArrowIcon, PinIcon } from "@/components/ui/Icon";
 
 export default function ProjectsMap() {
   const locations = [...new Set(siteData.projects.map(p => p.location))];
@@ -35,7 +36,7 @@ export default function ProjectsMap() {
               const count = siteData.projects.filter(p => p.location === loc).length;
               return (
                 <div key={loc} className="flex items-center gap-2 bg-surface px-4 py-2">
-                  <span className="material-symbols-outlined text-primary text-sm">location_on</span>
+                  <PinIcon size={15} className="text-clay" />
                   <span className="font-label text-sm text-primary">{loc}</span>
                   <span className="font-label text-xs text-secondary">({count})</span>
                 </div>
@@ -52,7 +53,7 @@ export default function ProjectsMap() {
           <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הפרויקט שלכם ונוסיף אותו למפה.</p>
           <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">
             <span>בואו נדבר</span>
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
+            <ArrowIcon size={17} />
           </Link>
         </div>
       </section>

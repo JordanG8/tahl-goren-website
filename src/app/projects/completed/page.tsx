@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { siteData } from '@/data/siteData';
-import Breadcrumb from '@/components/Breadcrumb';
 import ProjectCard from '@/components/ProjectCard';
+import CtaSection from '@/components/CtaSection';
+import PageHeader from '@/components/ui/PageHeader';
+import Reveal from '@/components/motion/Reveal';
+import { Section } from '@/components/ui/Section';
 
 export const metadata: Metadata = {
   title: "בתים מאוכלסים ופרויקטים גמורים | טל גורן אדריכלית",
@@ -17,39 +19,32 @@ export default async function ProjectsCompleted() {
 
   return (
     <>
-      {/* Page Header */}
-      <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
-        <div>
-          <Breadcrumb items={[
-            { label: 'ראשי', to: '/' },
-            { label: 'פרויקטים', to: '/projects' },
-            { label: 'בתים מאוכלסים' },
-          ]} />
-          <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">בתים מאוכלסים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">מרגש אותי כל פעם מחדש לראות איך תכנון יעיל וגמיש הופך לבית אמיתי ומלא חיים. מוזמנים להתרשם בגלריה מבתים שכבר הפכו לקן חם ונעים, ולראות כיצד כל בית שונה לגמרי מהאחרים – כי הוא משקף את הסיפור, הטעם והאופי הייחודי של כל משפחה.</p>
-        </div>
-      </section>
+      <PageHeader
+        items={[
+          { label: 'ראשי', to: '/' },
+          { label: 'פרויקטים', to: '/projects' },
+          { label: 'בתים מאוכלסים' },
+        ]}
+        eyebrow="תיק עבודות"
+        title="בתים מאוכלסים"
+        lede="מרגש אותי כל פעם מחדש לראות איך תכנון יעיל וגמיש הופך לבית אמיתי ומלא חיים. כל בית כאן שונה לגמרי מהאחרים — כי הוא משקף את הסיפור, הטעם והאופי של משפחה אחרת."
+      />
 
-      {/* Projects Grid */}
-      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project: any) => (
-            <ProjectCard key={project.id} project={project} />
+      <Section tone="paper">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+          {projects.map((project: any, i: number) => (
+            <Reveal key={project.id} delay={(i % 3) * 90}>
+              <ProjectCard project={project} priority={i < 3} />
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Section>
 
-      {/* CTA Section */}
-      <section className="blueprint-grid bg-surface-container-low">
-        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
-          <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">יש לכם פרויקט?</h2>
-          <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הבית שאתם חולמים עליו. נשמח להכיר, להקשיב ולהתחיל לתכנן יחד.</p>
-          <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">
-            <span>בואו נדבר</span>
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+      <CtaSection
+        title="יש לכם פרויקט?"
+        subtitle="בואו נדבר על הבית שאתם חולמים עליו. נשמח להכיר, להקשיב ולהתחיל לתכנן יחד."
+        primaryLabel="בואו נדבר"
+      />
     </>
   );
 }

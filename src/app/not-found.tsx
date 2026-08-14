@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowIcon } from "@/components/ui/Icon";
 
 const quickLinks = [
   { href: "/", label: "דף הבית" },
@@ -37,7 +38,7 @@ export default function NotFound() {
           className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors mt-12"
         >
           חזרה לדף הבית
-          <span className="material-symbols-outlined text-lg">arrow_back</span>
+          <ArrowIcon size={17} />
         </Link>
       </div>
     </section>

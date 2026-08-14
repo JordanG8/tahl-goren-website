@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/map';
 import { siteData } from '@/data/siteData';
 import Link from 'next/link';
+import { ArrowIcon, ExpandIcon } from "@/components/ui/Icon";
 
 const LOCATION_COORDS: Record<string, { lng: number, lat: number }> = {
   "מושב מאור": { lng: 35.00639, lat: 32.42392 },
@@ -51,7 +52,7 @@ export default function InteractiveProjectsMap() {
         }}
         className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white text-primary px-4 py-2 rounded-lg shadow-lg border border-border/50 flex items-center gap-2 font-bold text-sm transition-all active:scale-95"
       >
-        <span className="material-symbols-outlined text-base">fullscreen</span>
+        <ExpandIcon size={16} />
         <span>מסך מלא</span>
       </button>
       
@@ -131,7 +132,7 @@ export default function InteractiveProjectsMap() {
                       className="mt-4 inline-flex items-center gap-2 text-primary font-bold text-xs hover:underline group"
                     >
                       <span>לכל הפרויקטים</span>
-                      <span className="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">arrow_back</span>
+                      <ArrowIcon size={14} className="group-hover:-translate-x-1 transition-transform duration-500" />
                     </Link>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ServiceAreasMap from "@/components/ServiceAreasMap";
 import { areas } from "@/data/areasContent";
+import { ArrowIcon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
   title: "אדריכלים בצפון: כל אזורי השירות | טל גורן אדריכלית",
@@ -82,9 +83,7 @@ export default function ServiceAreasIndexPage() {
                 <p className="text-secondary text-sm leading-relaxed line-clamp-3">{area.intro}</p>
                 <div className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors mt-6">
                   לעמוד האזור
-                  <span className="material-symbols-outlined text-base group-hover:-translate-x-1 transition-transform">
-                    arrow_back
-                  </span>
+                  <ArrowIcon size={16} className="group-hover:-translate-x-1 transition-transform duration-500" />
                 </div>
               </Link>
             ))}
@@ -107,7 +106,7 @@ export default function ServiceAreasIndexPage() {
             className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
           >
             לקביעת פגישת ייעוץ
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
+            <ArrowIcon size={17} />
           </Link>
         </div>
       </section>

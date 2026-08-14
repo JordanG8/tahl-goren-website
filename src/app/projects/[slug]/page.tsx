@@ -5,6 +5,8 @@ import Image from "next/image";
 import { projects, projectsBySlug, type ProjectDetail } from "@/data/projectsContent";
 import Breadcrumb from "@/components/Breadcrumb";
 import GalleryGrid from "@/components/GalleryGrid";
+import { ButtonLink } from "@/components/ui/Section";
+import { ArrowIcon, CheckIcon, PinIcon, RulerIcon, LayersIcon } from "@/components/ui/Icon";
 import projectGalleries from "@/data/projectGalleries.json";
 
 export async function generateStaticParams() {
@@ -158,21 +160,21 @@ export default async function ProjectPage(
             </h1>
             <div className="flex items-center gap-4 mt-4 font-label text-xs text-white/60 flex-row-reverse">
               <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm">location_on</span>
+                <PinIcon size={14} />
                 {project.location}
               </span>
               {project.area !== "לא צוין" && (
                 <>
                   <span>·</span>
                   <span className="flex items-center gap-1">
-                    <span className="material-symbols-outlined text-sm">straighten</span>
+                    <RulerIcon size={14} />
                     {project.area}
                   </span>
                 </>
               )}
               <span>·</span>
               <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm">layers</span>
+                <LayersIcon size={14} />
                 {project.floors}
               </span>
             </div>
@@ -200,29 +202,28 @@ export default async function ProjectPage(
       {/* Content */}
       <section className="py-16 md:py-24 px-8" dir="rtl">
         <div className="max-w-4xl mx-auto">
-          {/* Quick facts */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-            <div className="bg-surface-container p-6 text-center">
-              <span className="material-symbols-outlined text-2xl text-secondary mb-2 block">location_on</span>
-              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block mb-1">מיקום</span>
-              <span className="font-headline font-bold text-sm text-primary">{project.location}</span>
+          {/* The project's specification, set as a drawing's title block:
+              label above value, separated by hairlines. Four filled grey tiles
+              with a decorative icon each gave equal visual weight to the
+              chrome and to the numbers. */}
+          <dl className="grid grid-cols-2 md:grid-cols-4 border-t border-hairline mb-16">
+            <div className="py-6 pe-6 border-b border-hairline md:border-b-0">
+              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">מיקום</dt>
+              <dd className="font-headline font-bold text-base text-primary">{project.location}</dd>
             </div>
-            <div className="bg-surface-container p-6 text-center">
-              <span className="material-symbols-outlined text-2xl text-secondary mb-2 block">straighten</span>
-              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block mb-1">שטח</span>
-              <span className="font-headline font-bold text-sm text-primary">{project.area}</span>
+            <div className="py-6 px-6 border-b border-hairline md:border-b-0 border-s border-s-hairline">
+              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">שטח</dt>
+              <dd className="font-headline font-bold text-base text-primary">{project.area}</dd>
             </div>
-            <div className="bg-surface-container p-6 text-center">
-              <span className="material-symbols-outlined text-2xl text-secondary mb-2 block">layers</span>
-              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block mb-1">קומות</span>
-              <span className="font-headline font-bold text-sm text-primary">{project.floors}</span>
+            <div className="py-6 px-6 md:border-s md:border-s-hairline">
+              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">קומות</dt>
+              <dd className="font-headline font-bold text-base text-primary">{project.floors}</dd>
             </div>
-            <div className="bg-surface-container p-6 text-center">
-              <span className="material-symbols-outlined text-2xl text-secondary mb-2 block">palette</span>
-              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block mb-1">סגנון</span>
-              <span className="font-headline font-bold text-sm text-primary">{project.style}</span>
+            <div className="py-6 ps-6 border-s border-s-hairline">
+              <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute block mb-2">סגנון</dt>
+              <dd className="font-headline font-bold text-base text-primary">{project.style}</dd>
             </div>
-          </div>
+          </dl>
 
           {/* Description */}
           <div className="mb-16">
@@ -239,7 +240,7 @@ export default async function ProjectPage(
               <ul className="space-y-3">
                 {project.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-secondary text-base md:text-lg leading-relaxed font-body">
-                    <span className="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+                    <CheckIcon size={17} className="text-clay mt-1.5 flex-shrink-0" />
                     {feature}
                   </li>
                 ))}
@@ -255,13 +256,7 @@ export default async function ProjectPage(
             <p className="text-secondary text-base leading-relaxed mb-6 font-body">
               כל בית שאני מתכננת הוא ייחודי – כי הוא משקף את הסיפור, הטעם והאופי של המשפחה. פגישת ייעוץ ראשונה ללא עלות.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 font-headline font-bold text-sm hover:bg-secondary transition-colors"
-            >
-              לפגישת ייעוץ
-              <span className="material-symbols-outlined text-lg">arrow_back</span>
-            </Link>
+            <ButtonLink href="/contact">לפגישת ייעוץ</ButtonLink>
           </div>
 
           {/* Prev/Next navigation */}
@@ -269,9 +264,9 @@ export default async function ProjectPage(
             {nextProject ? (
               <Link
                 href={`/projects/${nextProject.slug}`}
-                className="group flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors"
+                className="group flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-clay transition-colors"
               >
-                <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                <ArrowIcon size={18} direction="back" className="group-hover:translate-x-1 transition-transform duration-500" />
                 <div className="text-right">
                   <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block">הפרויקט הבא</span>
                   <span className="line-clamp-1">{nextProject.title}</span>
@@ -287,7 +282,7 @@ export default async function ProjectPage(
                   <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary block">הפרויקט הקודם</span>
                   <span className="line-clamp-1">{prevProject.title}</span>
                 </div>
-                <span className="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                <ArrowIcon size={18} className="group-hover:-translate-x-1 transition-transform duration-500" />
               </Link>
             ) : <div />}
           </div>
@@ -306,14 +301,10 @@ export default async function ProjectPage(
               פרויקטים נוספים
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
             {relatedProjects.map((related) => (
-              <Link
-                key={related.slug}
-                href={`/projects/${related.slug}`}
-                className="group card-hover block relative overflow-hidden"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
+              <Link key={related.slug} href={`/projects/${related.slug}`} className="group block">
+                <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
                   <Image
                     src={related.image}
                     alt={related.title}
@@ -322,12 +313,16 @@ export default async function ProjectPage(
                     className="object-cover img-grayscale"
                   />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
-                  <div className="flex flex-col text-right">
-                    <h3 className="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">{related.title}</h3>
-                    <span className="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">{related.location}</span>
+                <div className="pt-4 mt-4 border-t border-hairline flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-headline font-bold text-base text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
+                      {related.title}
+                    </h3>
+                    <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-1.5 block">
+                      {related.location}
+                    </span>
                   </div>
-                  <span className="material-symbols-outlined text-white text-sm translate-x-0 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
+                  <ArrowIcon size={18} className="text-ink-mute mt-1 transition-all duration-500 group-hover:text-clay group-hover:-translate-x-1.5" />
                 </div>
               </Link>
             ))}

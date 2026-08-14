@@ -1,11 +1,12 @@
-import Image from 'next/image';
 import type { Metadata } from "next";
-import Link from 'next/link';
-import Breadcrumb from '@/components/Breadcrumb';
 import { siteData } from '@/data/siteData';
 import { articles as siteArticles } from '@/data/articlesContent';
 import ArticlesGrid from '@/components/ArticlesGrid';
 import CtaSection from '@/components/CtaSection';
+import PageHeader from '@/components/ui/PageHeader';
+import Reveal from '@/components/motion/Reveal';
+import { Section, SectionHeading, ArrowLink } from '@/components/ui/Section';
+import { ArrowIcon } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: "מאמרים וטיפים מקצועיים | טל גורן אדריכלית",
@@ -21,93 +22,70 @@ export default async function Articles() {
   return (
     <>
 
-      {/* Page Header */}
-      <section className="py-16 px-8 bg-surface">
-        <div className="max-w-6xl mx-auto text-right">
-          <Breadcrumb current="מאמרים וכתבות" />
-          <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
-            תוכן<br/>והשראה
-          </h1>
-          <p className="text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mt-8">
-            טיפים מקצועיים, כתבות בתקשורת ותהליכי תכנון מאחורי הקלעים.
-          </p>
-          <div className="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto"></div>
-        </div>
-      </section>
+      <PageHeader
+        current="מאמרים וכתבות"
+        eyebrow="Blog &amp; Press"
+        title={<>תוכן<br />והשראה</>}
+        lede="טיפים מקצועיים, כתבות בתקשורת ותהליכי תכנון מאחורי הקלעים."
+      />
 
-      {/* Site Articles Section */}
-      <section className="py-24 md:py-32 px-8 bg-surface-container-low">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-right">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Blog & Tips</span>
-            <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">מאמרים וטיפים מקצועיים</h2>
-          </div>
-          <ArticlesGrid articles={siteArticles} />
-        </div>
-      </section>
+      <Section tone="paper">
+        <SectionHeading
+          index="01"
+          eyebrow="מדריכים"
+          title="מאמרים וטיפים מקצועיים"
+          className="mb-12"
+        />
+        <ArticlesGrid articles={siteArticles} />
+      </Section>
 
-      {/* Media Mentions Section */}
       {mediaArticles && mediaArticles.length > 0 && (
-        <section className="py-24 md:py-32 px-8 bg-surface">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-16 text-right">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">Media & Press</span>
-              <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">בתקשורת ובכתבות</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {mediaArticles.map((article: any, index: number) => (
+        <Section tone="sand">
+          <SectionHeading
+            index="02"
+            eyebrow="Media &amp; Press"
+            title="בתקשורת ובכתבות"
+            className="mb-12"
+          />
+          {/* A press index: entries on hairlines, source first. Four bordered
+              cards gave the same visual weight to a press mention as to a full
+              guide above, which is not the hierarchy that is actually true. */}
+          <div className="border-t border-hairline">
+            {mediaArticles.map((article: any, index: number) => (
+              <Reveal key={index} delay={(index % 4) * 70}>
                 <a
-                  key={index}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group card-hover block bg-surface-container p-8 text-right"
+                  className="group grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 py-7 border-b border-hairline items-baseline"
                 >
-                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">{article.source}</span>
-                  <h3 className="font-headline font-bold text-lg text-primary mt-3 leading-tight group-hover:text-secondary transition-colors">{article.title}</h3>
-                  <p className="text-secondary text-sm mt-3 leading-relaxed">{article.description}</p>
-                  <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
-                    לכתבה המלאה
-                    <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                  </div>
+                  <span className="md:col-span-2 font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute">
+                    {article.source}
+                  </span>
+                  <h3 className="md:col-span-4 font-headline font-bold text-lg text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
+                    {article.title}
+                  </h3>
+                  <p className="md:col-span-5 font-body text-[15px] text-secondary leading-relaxed">
+                    {article.description}
+                  </p>
+                  <span className="md:col-span-1 flex md:justify-end">
+                    <ArrowIcon
+                      size={18}
+                      className="text-ink-mute transition-all duration-500 group-hover:text-clay group-hover:-translate-x-1.5"
+                    />
+                  </span>
                 </a>
-              ))}
-            </div>
+              </Reveal>
+            ))}
           </div>
-        </section>
-      )}
 
-      {/* Facebook CTA */}
-      <section className="py-20 px-8 bg-surface-container-highest">
-        <div className="max-w-5xl mx-auto">
-          <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noopener noreferrer" className="block bg-surface group card-hover overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-              <div className="md:col-span-5 aspect-video md:aspect-auto md:h-[250px] overflow-hidden relative">
-                <Image
-                  src="/images/blog/architecture-interior-design-costs.png"
-                  alt="כתבות פייסבוק"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover img-grayscale"
-                />
-              </div>
-              <div className="md:col-span-7 p-12 flex flex-col gap-6 text-right">
-                <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">Facebook Articles</span>
-                <h3 className="font-headline font-black text-3xl tracking-tight text-primary leading-tight">
-                  עוד כתבות ותכנים בפייסבוק
-                </h3>
-                <p className="text-secondary text-lg leading-relaxed">
-                  מוזמנים לעקוב אחרי דף הפייסבוק שלי לעדכונים יומיומיים, תמונות מפרויקטים בשטח ומאמרים קצרים.
-                </p>
-                <div className="inline-flex items-center justify-end gap-3 font-headline font-bold text-sm text-primary group-hover:text-secondary transition-colors">
-                  לעמודי המאמרים המלאים
-                  <span className="material-symbols-outlined text-xl group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </section>
+          <Reveal className="mt-12">
+            <ArrowLink href="https://www.facebook.com/tahlgoren" external>
+              עוד כתבות ותכנים בעמוד הפייסבוק
+            </ArrowLink>
+          </Reveal>
+        </Section>
+      )}
 
       <CtaSection
         title="קראתם, למדתם — עכשיו בואו נדבר"

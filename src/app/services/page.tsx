@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import type { Metadata } from "next";
 import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumb";
+import CtaSection from "@/components/CtaSection";
+import PageHeader from "@/components/ui/PageHeader";
+import Reveal from "@/components/motion/Reveal";
+import { Section, SectionHeading, ArrowLink, ButtonLink } from "@/components/ui/Section";
+import { ArrowIcon } from "@/components/ui/Icon";
 import { siteData } from "@/data/siteData";
 import { areas } from "@/data/areasContent";
 import { packages } from "@/data/packagesContent";
@@ -51,41 +55,28 @@ export default function ServicesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Page Header */}
-      <section className="py-16 px-8 bg-surface">
-        <div className="max-w-6xl mx-auto text-right">
-          <Breadcrumb current="שירותים" />
-          <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
-            שירותים
-          </h1>
-          <p className="text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mt-8">
-            ליווי אדריכלי מלא לתכנון, רישוי ובניית בית פרטי — מהרעיון הראשון ועד
-            המפתח. ריכזתי עבורכם את המדריכים המקצועיים החשובים ביותר שילוו אתכם
-            בקבלת ההחלטות הגדולות.
-          </p>
-          <div className="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto"></div>
-        </div>
-      </section>
 
-      {/* Promoted Articles */}
-      <section className="py-24 md:py-32 px-8 bg-surface-container-low">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-right">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-              Guides &amp; Services
-            </span>
-            <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4">
-              מדריכים מקצועיים
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {serviceArticles.map((article) => (
-              <Link
-                key={article.id}
-                href={article.href}
-                className="group card-hover block bg-surface overflow-hidden"
-              >
-                <div className="aspect-[4/3] overflow-hidden relative">
+      <PageHeader
+        current="שירותים"
+        eyebrow="ליווי אדריכלי מלא"
+        title="שירותים"
+        lede="ליווי אדריכלי מלא לתכנון, רישוי ובניית בית פרטי — מהרעיון הראשון ועד המפתח. ריכזתי כאן את המדריכים המקצועיים החשובים ביותר, ואת שלושת מסלולי הליווי עם התכולה והמחיר של כל אחד."
+      />
+
+      {/* ======== 01 · GUIDES ======== */}
+      <Section tone="paper">
+        <SectionHeading
+          index="01"
+          eyebrow="מדריכים"
+          title="מדריכים מקצועיים"
+          lede="שלושת המאמרים שהכי כדאי לקרוא לפני שמתחילים."
+          className="mb-14"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-14">
+          {serviceArticles.map((article, i) => (
+            <Reveal key={article.id} delay={i * 100}>
+              <Link href={article.href} className="group block">
+                <div className="aspect-[4/3] overflow-hidden relative bg-surface-container">
                   <Image
                     src={article.image}
                     alt={article.title}
@@ -94,166 +85,120 @@ export default function ServicesPage() {
                     className="object-cover img-grayscale"
                   />
                 </div>
-                <div className="p-8 text-right">
-                  <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">
+                <div className="pt-5 mt-5 border-t border-hairline">
+                  <h3 className="font-headline font-bold text-lg text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
                     {article.title}
                   </h3>
-                  <p className="text-secondary text-sm mt-3 leading-relaxed line-clamp-3">
+                  <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed line-clamp-3">
                     {article.description}
                   </p>
-                  <div className="inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors mt-6">
-                    למאמר המלא
-                    <span className="material-symbols-outlined text-base group-hover:-translate-x-1 transition-transform">
-                      arrow_back
-                    </span>
+                  <div className="inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors mt-5">
+                    <span className="link-quiet">למאמר המלא</span>
+                    <ArrowIcon size={16} className="transition-transform duration-500 group-hover:-translate-x-1" />
                   </div>
                 </div>
               </Link>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
-      </section>
+      </Section>
 
-      {/* Packages — moved in from the former top-level "מסלולים ומחירים" page.
-          Ordered cheapest-first, so the eye climbs the price ladder. */}
-      <section
-        id="packages"
-        className="py-24 md:py-32 px-8 bg-surface-container-low scroll-mt-24"
-      >
-        <div className="max-w-6xl mx-auto text-right">
-          <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-            מסלולים ומחירים
-          </span>
-          <h2 className="font-headline font-black text-4xl md:text-5xl tracking-tight leading-tight text-primary mt-4 max-w-3xl">
-            שלושה מסלולי ליווי, מחיר ותכולה שקופים
-          </h2>
-          <p className="text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mt-6">
-            המסלולים נבדלים זה מזה בעיקר ברמת הטיפול בעיצוב הפנים. בחרו את
-            זה שמתאים לתקציב, לאופי ולרמת המעורבות שנוחה לכם.
-          </p>
-          <div className="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto" />
+      {/* ======== 02 · PACKAGES ========
+          Moved in from the former top-level "מסלולים ומחירים" page. Cheapest
+          first, so the eye climbs the price ladder. The recommended plan used
+          to be marked by a terracotta header bar, a heavy shadow and a 16px
+          upward offset, which broke the row's alignment; it is now marked by a
+          rule and a label, and the three plans stay on one baseline. */}
+      <Section tone="sand" id="packages" className="scroll-mt-24">
+        <SectionHeading
+          index="02"
+          eyebrow="מסלולים ומחירים"
+          title="שלושה מסלולי ליווי, מחיר ותכולה שקופים"
+          lede="המסלולים נבדלים זה מזה בעיקר ברמת הטיפול בעיצוב הפנים. האדריכלות, הרישוי והליווי עד תעודת גמר כלולים בכולם."
+          className="mb-14"
+        />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 items-start">
-            {servicePackages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className={`flex flex-col h-full bg-surface text-right border ${
-                  pkg.recommended
-                    ? "border-brand-accent shadow-2xl md:-translate-y-4"
-                    : "border-outline/15"
-                }`}
-              >
-                <div
-                  className={`px-7 pt-7 pb-6 ${
-                    pkg.recommended ? "bg-brand-accent text-white" : "bg-primary text-white"
-                  }`}
-                >
-                  {pkg.recommended ? (
-                    <span className="inline-block bg-white/20 font-label text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline">
+          {servicePackages.map((pkg, i) => (
+            <Reveal key={pkg.id} delay={i * 100} className="bg-surface">
+              <div className="flex flex-col h-full p-8 lg:p-10">
+                <div className="min-h-[1.75rem]">
+                  {pkg.recommended && (
+                    <span className="font-label text-[9px] uppercase tracking-[0.2em] text-clay border border-clay/40 px-2.5 py-1">
                       הבחירה המומלצת שלי
                     </span>
-                  ) : null}
-                  <h3 className="font-headline font-black text-2xl leading-tight">
-                    {pkg.name}
-                  </h3>
-                  <p className="font-body text-sm text-white/70 mt-2 leading-relaxed">
-                    {pkg.subtitle}
-                  </p>
+                  )}
                 </div>
 
-                <div className="px-7 py-6 border-b border-outline/10">
-                  <span className="font-headline font-black text-4xl text-primary">
+                <h3 className="font-headline font-black text-2xl text-primary leading-tight mt-6">
+                  {pkg.name}
+                </h3>
+                <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed">
+                  {pkg.subtitle}
+                </p>
+
+                <div className="mt-7 pt-6 border-t border-hairline">
+                  <span className="font-headline font-black text-4xl text-primary block">
                     {pkg.price.toLocaleString("he-IL")} ₪
                   </span>
-                  <p className="font-label text-xs text-secondary mt-2">
+                  <p className="font-label text-xs text-ink-mute mt-2">
                     {pkg.priceWithVat.toLocaleString("he-IL")} ₪ כולל מע&quot;מ
                   </p>
                 </div>
 
-                <div className="px-7 py-6 flex-1">
-                  <h4 className="font-headline font-bold text-sm text-primary mb-2">
-                    למי זה מתאים?
+                <div className="mt-7 pt-6 border-t border-hairline flex-1">
+                  <h4 className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute">
+                    למי זה מתאים
                   </h4>
-                  <p className="font-body text-sm text-secondary leading-relaxed">
+                  <p className="font-body text-[15px] text-secondary leading-relaxed mt-3">
                     {pkg.forWhom}
                   </p>
                 </div>
 
-                <div className="px-7 pb-7">
-                  <Link
-                    href="/packages"
-                    className={`block text-center w-full px-6 py-4 font-headline font-bold text-xs uppercase tracking-widest transition-colors ${
-                      pkg.recommended
-                        ? "bg-brand-accent text-white hover:opacity-90"
-                        : "bg-primary text-white hover:bg-secondary"
-                    }`}
-                  >
+                <div className="mt-8">
+                  <ButtonLink href="/packages" variant={pkg.recommended ? "solid" : "outline"} className="w-full">
                     לפירוט המלא
-                  </Link>
+                  </ButtonLink>
                 </div>
               </div>
-            ))}
-          </div>
-
-          <Link
-            href="/packages"
-            className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors mt-12"
-          >
-            להשוואה המלאה בין שלושת המסלולים
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-          </Link>
+            </Reveal>
+          ))}
         </div>
-      </section>
 
-      {/* Service areas */}
-      <section className="py-20 px-8 bg-surface">
-        <div className="max-w-6xl mx-auto text-right">
-          <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-            Service Areas
-          </span>
-          <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4 mb-8">
-            אזורי שירות
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {areas.map((area) => (
-              <Link
-                key={area.slug}
-                href={`/areas/${area.slug}`}
-                className="border border-outline/20 px-5 py-3 font-headline font-bold text-sm text-primary hover:bg-surface-container-highest hover:text-secondary transition-colors"
-              >
-                {area.h1}
-              </Link>
-            ))}
-          </div>
-          <Link
-            href="/areas"
-            className="inline-flex items-center gap-2 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors mt-8"
-          >
-            למפת אזורי השירות
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+        <Reveal className="mt-12">
+          <ArrowLink href="/packages">להשוואה המלאה בין שלושת המסלולים</ArrowLink>
+        </Reveal>
+      </Section>
 
-      {/* CTA */}
-      <section className="py-20 px-8 bg-surface-container-low">
-        <div className="max-w-5xl mx-auto p-12 bg-surface-container text-right border border-outline/10">
-          <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight leading-tight text-primary mb-6">
-            רוצים להתחיל לתכנן את הבית שלכם?
-          </h2>
-          <p className="text-lg text-secondary mb-10 max-w-2xl leading-relaxed">
-            פגישת ייעוץ ראשונה ללא עלות וללא התחייבות. נכיר, נבין מה אתם צריכים,
-            ואלווה אתכם בבחירת המסלול הנכון לפרויקט שלכם.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
-          >
-            לקביעת פגישת ייעוץ
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+      {/* ======== 03 · SERVICE AREAS ======== */}
+      <Section tone="paper">
+        <SectionHeading
+          index="03"
+          eyebrow="Service Areas"
+          title="אזורי שירות"
+          lede="המשרד מתמחה באזור שבין נתניה לחיפה — היכרות קרובה עם ועדות התכנון והאתגרים הספציפיים של כל יישוב."
+          className="mb-12"
+        />
+        <Reveal className="flex flex-wrap gap-2.5">
+          {areas.map((area) => (
+            <Link
+              key={area.slug}
+              href={`/areas/${area.slug}`}
+              className="border border-hairline px-5 py-3 font-body text-[15px] text-secondary hover:border-clay hover:text-primary transition-colors duration-300"
+            >
+              {area.h1}
+            </Link>
+          ))}
+        </Reveal>
+        <Reveal className="mt-10">
+          <ArrowLink href="/areas">למפת אזורי השירות</ArrowLink>
+        </Reveal>
+      </Section>
+
+      <CtaSection
+        title="רוצים להתחיל לתכנן את הבית שלכם?"
+        subtitle="פגישת ייעוץ ראשונה ללא עלות וללא התחייבות. נכיר, נבין מה אתם צריכים, ואלווה אתכם בבחירת המסלול הנכון לפרויקט שלכם."
+      />
     </>
   );
 }

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumb";
+import CtaSection from "@/components/CtaSection";
+import PageHeader from "@/components/ui/PageHeader";
+import Reveal from "@/components/motion/Reveal";
+import { Section, SectionHeading, ButtonLink } from "@/components/ui/Section";
+import { CheckIcon, CloseIcon } from "@/components/ui/Icon";
 import { packages, packageSpecs, packagesFootnote, packagesBottomLine } from "@/data/packagesContent";
 
 export const metadata: Metadata = {
@@ -70,179 +73,172 @@ export default function PackagesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* Header */}
-      <section className="py-16 px-8 bg-surface">
-        <div className="max-w-6xl mx-auto text-right">
-          <Breadcrumb current="מסלולי ליווי" />
-          <h1 className="font-headline font-black text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-primary max-w-4xl">
-            איזה מסלול מתאים לכם?
-          </h1>
-          <p className="text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mt-8">
-            בניית בית היא פרויקט מורכב עם מאות החלטות לאורך הדרך. כדי להתאים
-            את השירות שלי לצרכים המשתנים של משפחות שונות, פיתחתי שלושה
-            מסלולי ליווי שנבדלים זה מזה בעיקר ברמת הטיפול בעיצוב הפנים — כך
-            שתוכלו לבחור את המסלול שמתאים לתקציב, לאופי ולרמת המעורבות
-            הרצויה לכם.
-          </p>
-          <div className="w-16 h-[2px] bg-secondary mt-10 mr-0 ml-auto"></div>
-        </div>
-      </section>
+      <PageHeader
+        current="מסלולי ליווי"
+        eyebrow="מסלולים ומחירים"
+        title="איזה מסלול מתאים לכם?"
+        lede="בניית בית היא פרויקט מורכב עם מאות החלטות לאורך הדרך. שלושת המסלולים נבדלים זה מזה בעיקר ברמת הטיפול בעיצוב הפנים — כך שתוכלו לבחור את זה שמתאים לתקציב, לאופי ולרמת המעורבות הרצויה לכם."
+      />
 
-      {/* Pricing cards */}
-      <section className="py-16 md:py-24 px-8 bg-surface-container-low">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            {displayPackages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className={`flex flex-col bg-surface border text-right h-full ${
-                  pkg.recommended
-                    ? "border-brand-accent shadow-2xl md:-translate-y-4"
-                    : "border-outline/10"
-                }`}
-              >
-                <div className={`px-8 pt-8 pb-6 ${pkg.recommended ? "bg-brand-accent text-white" : "bg-primary text-white"}`}>
+      {/* Pricing.
+          The recommended plan used to be pushed 16px up the page and wrapped in
+          a terracotta header and a heavy shadow, which broke the row off its
+          baseline and made the other two look like rejects. All three now sit
+          on one line, separated by hairlines; the recommendation is stated in
+          words, which is also how it would be said out loud. */}
+      <Section tone="sand">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline">
+          {displayPackages.map((pkg, i) => (
+            <Reveal key={pkg.id} delay={i * 100} className="bg-surface">
+              <div className="flex flex-col h-full p-8 lg:p-10">
+                <div className="min-h-[1.75rem]">
                   {pkg.recommended && (
-                    <span className="inline-block bg-white/20 font-label text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-3">
+                    <span className="font-label text-[9px] uppercase tracking-[0.2em] text-clay border border-clay/40 px-2.5 py-1">
                       הבחירה המומלצת שלי
                     </span>
                   )}
-                  <h2 className="font-headline font-black text-2xl leading-tight">{pkg.name}</h2>
-                  <p className="font-body text-sm text-white/70 mt-2">{pkg.subtitle}</p>
                 </div>
 
-                <div className="px-8 py-6 border-b border-outline/10">
-                  <span className="font-headline font-black text-4xl text-primary">{formatPrice(pkg.price)}</span>
-                  <p className="font-label text-xs text-secondary mt-1">
-                    ({formatPrice(pkg.priceWithVat)} כולל מע&quot;מ)
+                <h2 className="font-headline font-black text-2xl text-primary leading-tight mt-6">
+                  {pkg.name}
+                </h2>
+                <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed">
+                  {pkg.subtitle}
+                </p>
+
+                <div className="mt-7 pt-6 border-t border-hairline">
+                  <span className="font-headline font-black text-4xl text-primary block">
+                    {formatPrice(pkg.price)}
+                  </span>
+                  <p className="font-label text-xs text-ink-mute mt-2">
+                    {formatPrice(pkg.priceWithVat)} כולל מע&quot;מ
                   </p>
                 </div>
 
-                <div className="px-8 py-6 space-y-6 flex-1">
-                  <div>
-                    <h3 className="font-headline font-bold text-sm text-primary mb-2">למי זה מתאים?</h3>
-                    <p className="font-body text-sm text-secondary leading-relaxed">{pkg.forWhom}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-headline font-bold text-sm text-primary mb-2">מה אני עושה עבורכם?</h3>
-                    <p className="font-body text-sm text-secondary leading-relaxed">{pkg.weDo}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-headline font-bold text-sm text-primary mb-2">מה נשאר באחריותכם?</h3>
-                    <p className="font-body text-sm text-secondary leading-relaxed">{pkg.remainsWithYou}</p>
-                  </div>
-                </div>
+                <dl className="mt-7 pt-6 border-t border-hairline space-y-6 flex-1">
+                  {[
+                    { q: 'למי זה מתאים', a: pkg.forWhom },
+                    { q: 'מה אני עושה עבורכם', a: pkg.weDo },
+                    { q: 'מה נשאר באחריותכם', a: pkg.remainsWithYou },
+                  ].map((row) => (
+                    <div key={row.q}>
+                      <dt className="font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute">
+                        {row.q}
+                      </dt>
+                      <dd className="font-body text-[15px] text-secondary leading-relaxed mt-2.5">
+                        {row.a}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
 
-                <div className="px-8 pb-8">
-                  <Link
+                <div className="mt-8">
+                  <ButtonLink
                     href="/contact"
-                    className={`block text-center w-full px-6 py-4 font-headline font-bold text-sm uppercase tracking-widest transition-colors ${
-                      pkg.recommended
-                        ? "bg-brand-accent text-white hover:opacity-90"
-                        : "bg-primary text-white hover:bg-secondary"
-                    }`}
+                    variant={pkg.recommended ? 'solid' : 'outline'}
+                    className="w-full"
                   >
-                    לשיחת ייעוץ על המסלול
-                  </Link>
+                    לשיחת ייעוץ
+                  </ButtonLink>
                 </div>
               </div>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
-      </section>
+      </Section>
 
       {/* Comparison table */}
-      <section className="py-16 md:py-24 px-8 bg-surface">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-12 text-right">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-              השוואה מלאה
-            </span>
-            <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
-              ההבדלים בין המסלולים
-            </h2>
-          </div>
+      <Section tone="paper">
+        <SectionHeading
+          eyebrow="השוואה מלאה"
+          title="ההבדלים בין המסלולים"
+          className="mb-12"
+        />
 
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-right border-collapse">
-              <thead>
-                <tr className="border-b-2 border-primary/20">
-                  <th className="py-4 px-4 font-headline font-bold text-sm text-secondary"></th>
-                  {displayPackages.map((pkg) => (
-                    <th
-                      key={pkg.id}
-                      className={`py-4 px-4 font-headline font-black text-base ${pkg.recommended ? "text-brand-accent" : "text-primary"}`}
-                    >
-                      {pkg.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {packageSpecs.map((row) => (
-                  <tr key={row.label} className="border-b border-outline/10">
-                    <td className="py-4 px-4 font-body text-sm text-secondary">{row.label}</td>
-                    {displayPackages.map((pkg) => (
-                      <td key={pkg.id} className="py-4 px-4 font-headline font-bold text-lg text-primary">
-                        {row.values[sourceIndexOf(pkg.id)]}
-                      </td>
-                    ))}
-                  </tr>
+        <Reveal className="overflow-x-auto">
+          <table className="w-full min-w-[680px] text-start border-collapse">
+            <thead>
+              <tr className="border-b border-primary/25">
+                <th className="py-5 pe-4 w-[38%]" />
+                {displayPackages.map((pkg) => (
+                  <th
+                    key={pkg.id}
+                    className="py-5 px-4 text-start font-headline font-black text-base text-primary align-bottom"
+                  >
+                    {pkg.name}
+                    {pkg.recommended && (
+                      <span className="block font-label text-[9px] uppercase tracking-[0.2em] text-clay mt-2">
+                        מומלץ
+                      </span>
+                    )}
+                  </th>
                 ))}
-                <tr className="border-b border-outline/10">
-                  <td className="py-4 px-4 font-body text-sm text-secondary font-bold">עיצוב פנים כלול</td>
+              </tr>
+            </thead>
+            <tbody>
+              {packageSpecs.map((row) => (
+                <tr key={row.label} className="border-b border-hairline">
+                  <td className="py-4 pe-4 font-body text-[15px] text-secondary">{row.label}</td>
                   {displayPackages.map((pkg) => (
-                    <td key={pkg.id} className="py-4 px-4 align-top">
-                      {pkg.includesDesign.length ? (
-                        <ul className="space-y-1.5">
-                          {pkg.includesDesign.map((item) => (
-                            <li key={item} className="flex items-start gap-2 text-sm text-secondary">
-                              <span className="material-symbols-outlined text-tertiary text-base mt-0.5">check</span>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <span className="material-symbols-outlined text-outline text-lg">close</span>
-                      )}
+                    <td key={pkg.id} className="py-4 px-4 font-headline font-bold text-lg text-primary">
+                      {row.values[sourceIndexOf(pkg.id)]}
                     </td>
                   ))}
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="font-body text-xs text-secondary/70 mt-6 leading-relaxed">{packagesFootnote}</p>
+              ))}
+              <tr className="border-b border-hairline">
+                <td className="py-5 pe-4 font-body text-[15px] text-primary font-bold align-top">
+                  עיצוב פנים כלול
+                </td>
+                {displayPackages.map((pkg) => (
+                  <td key={pkg.id} className="py-5 px-4 align-top">
+                    {pkg.includesDesign.length ? (
+                      <ul className="space-y-2">
+                        {pkg.includesDesign.map((item) => (
+                          <li key={item} className="flex items-start gap-2.5 text-[15px] text-secondary leading-snug">
+                            <CheckIcon size={15} className="text-clay mt-1" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <CloseIcon size={16} className="text-ink-mute" title="לא כלול" />
+                    )}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </Reveal>
+
+        <Reveal>
+          <p className="font-body text-xs text-ink-mute mt-7 leading-relaxed">{packagesFootnote}</p>
+        </Reveal>
+      </Section>
+
+      {/* Bottom line — her own summary, given the weight of a statement */}
+      <section className="bg-primary relative overflow-hidden">
+        <div className="absolute inset-0 blueprint-grid opacity-[0.35] pointer-events-none" />
+        <div className="absolute top-0 inset-x-0 h-px bg-clay/70" />
+        <div className="relative z-10 max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 py-20 lg:py-24">
+          <Reveal className="max-w-3xl">
+            <div className="flex items-center gap-4 mb-7">
+              <span className="rule-draw h-px w-10 bg-white/30" />
+              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-white/50">
+                השורה התחתונה שלי
+              </span>
+            </div>
+            <p className="font-body text-lg md:text-xl text-white/85 leading-[1.8]">
+              {packagesBottomLine}
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Bottom line */}
-      <section className="py-16 md:py-24 px-8 bg-primary relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-right relative z-10">
-          <span className="font-label text-[10px] tracking-[0.3em] text-white/50 uppercase">השורה התחתונה שלי</span>
-          <p className="font-body text-lg md:text-xl text-white/90 leading-relaxed mt-6">{packagesBottomLine}</p>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-8 bg-surface-container-low">
-        <div className="max-w-5xl mx-auto p-12 bg-surface-container text-right border border-outline/10">
-          <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight leading-tight text-primary mb-6">
-            לא בטוחים איזה מסלול מתאים לכם?
-          </h2>
-          <p className="text-lg text-secondary mb-10 max-w-2xl leading-relaxed">
-            בפגישת הייעוץ הראשונה — ללא עלות וללא התחייבות — נבין יחד את
-            הצרכים, התקציב והאופי שלכם, ואמליץ לכם על המסלול הנכון ביותר
-            לפרויקט שלכם.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
-          >
-            לקביעת פגישת ייעוץ
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+      <CtaSection
+        title="לא בטוחים איזה מסלול מתאים לכם?"
+        subtitle="בפגישת הייעוץ הראשונה — ללא עלות וללא התחייבות — נבין יחד את הצרכים, התקציב והאופי שלכם, ואמליץ על המסלול הנכון לפרויקט."
+      />
     </>
   );
 }

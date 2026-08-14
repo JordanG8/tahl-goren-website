@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { siteData } from '@/data/siteData';
 import CtaSection from '@/components/CtaSection';
+import { PlayIcon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
   title: "רשתות חברתיות וקהילה | טל גורן אדריכלית",
@@ -59,7 +60,7 @@ export default function Social() {
                       className="object-cover img-grayscale"
                     />
                     <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/40 transition-colors duration-500 flex items-center justify-center z-10">
-                      <span className="material-symbols-outlined text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
+                      <PlayIcon size={44} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                   </a>
                 ))}

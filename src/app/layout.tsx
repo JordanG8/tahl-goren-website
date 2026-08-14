@@ -130,12 +130,16 @@ export default async function RootLayout({
   return (
     <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable, inter.variable)}>
       <head>
+        {/* The Google "Material Symbols" stylesheet used to be loaded here on
+            every page. It is gone: every icon on the site is now an inline SVG
+            (components/ui/Icon.tsx). That removes a render-blocking
+            third-party stylesheet plus a ~100KB variable icon font from every
+            page load — and with it the flash where the browser painted the raw
+            ligature text ("arrow_back", "verified") before the font arrived.
+            The remaining preconnects serve the Heebo/Assistant/Inter faces,
+            which next/font still fetches from the Google Fonts CDN. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}

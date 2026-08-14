@@ -4,187 +4,237 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------------------------------------------------------------------------
+   Design language: "paper & hairline".
+   The site is an architect's portfolio, so the surface it is printed on is warm
+   paper rather than screen-white, and structure is expressed with 1px rules
+   instead of shadows and boxes. Neutrals carry a little warmth (hue ~35°) so
+   they sit under the terracotta accent without going muddy; ink stays a cool
+   navy so text separates cleanly from the paper it sits on.
+--------------------------------------------------------------------------- */
 @theme {
-  --color-primary: #3B5566;
-  --color-secondary: #566B76;
-  --color-background: #ffffff;
+  --color-primary: #2E4250;
+  --color-secondary: #5A6B76;
+  --color-background: #FBFAF8;
   --color-surface: #ffffff;
-  --color-surface-container: #f2f5f6;
-  --color-surface-container-low: #e9eef0;
-  --color-surface-container-highest: #dce4e7;
-  --color-on-surface: #3B5566;
-  --color-outline: #c2cdd2;
+  --color-surface-container: #EDE8E1;
+  --color-surface-container-low: #F4F1EC;
+  --color-surface-container-highest: #E3DCD2;
+  --color-on-surface: #2E4250;
+  --color-outline: #DDD6CB;
   --color-tertiary: #318BA2;
   --color-accent: #A96F57;
   /* The shadcn token block below redefines --color-accent as var(--accent),
-     a near-white hover tint (#e9eef0). That silently won, so every brand
-     `bg-accent` surface rendered white-on-white. Brand highlights use this
-     token instead; `accent` stays the shadcn UI hover colour. */
+     a near-white hover tint. That silently won, so every brand `bg-accent`
+     surface rendered white-on-white. Brand highlights use this token instead;
+     `accent` stays the shadcn UI hover colour. */
   --color-brand-accent: #A96F57;
+
+  /* Semantic aliases for the new language. Prefer these in new markup. */
+  --color-ink: #2E4250;
+  /* One step below ink, reserved for the footer. The final CTA band is already
+     ink; without a darker base under it the page would end in ~1100px of one
+     flat navy and the colophon would read as part of the pitch. */
+  --color-ink-deep: #25323C;
+  --color-ink-soft: #5A6B76;
+  --color-ink-mute: #93A0A8;
+  --color-paper: #FBFAF8;
+  --color-sand: #F4F1EC;
+  --color-clay: #A96F57;
+  --color-hairline: #DDD6CB;
 
   --font-headline: var(--font-heebo), "Heebo", sans-serif;
   --font-body: var(--font-assistant), "Assistant", sans-serif;
   --font-label: var(--font-inter), "Inter", sans-serif;
+
+  /* One easing for the whole site. Everything decelerates the same way, which
+     is what makes unrelated animations feel like one hand made them. */
+  --ease-quiet: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-::selection { background: #3B5566; color: white; }
+::selection { background: #2E4250; color: #FBFAF8; }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 110px;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  display: inline-block;
-  vertical-align: middle;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
-@keyframes loadingBar {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-.animate-loadingBar {
-  animation: loadingBar 1.9s ease-out forwards;
-}
+/* Headings break on meaning rather than on width, so a two-line title never
+   leaves one orphaned word on its own line. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
+/* A drafting grid, not a graphic: two hairlines at 6% ink, so it reads as the
+   paper the content is drawn on rather than as decoration competing with it. */
 .blueprint-grid {
   background-image:
-    linear-gradient(to right, rgba(59, 85, 102, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 85, 102, 0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(46, 66, 80, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 66, 80, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-.card-hover:hover { box-shadow: 0 20px 60px rgba(59, 85, 102, 0.12); }
+/* ---------------------------------------------------------------------------
+   Reveal on scroll.
+   Content arrives instead of appearing: a short rise plus a fade, always on the
+   same easing, staggered by --reveal-delay. This is what makes a long page feel
+   paced rather than dumped — each screen composes itself as you reach it.
+   Motion is opt-in per user: with reduced motion requested, everything is
+   simply visible from the start (the base rule below lives inside the query).
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal="out"] {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 900ms var(--ease-quiet) var(--reveal-delay, 0ms),
+      transform 900ms var(--ease-quiet) var(--reveal-delay, 0ms);
+  }
 
-.img-grayscale:hover, .group:hover .img-grayscale { transform: scale(1.03); }
+  /* A rule that draws itself, right-to-left, the way a line is struck on a
+     drawing. Nested inside a reveal so it fires with its own section. */
+  .rule-draw {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+  [data-reveal="in"] .rule-draw {
+    transform: scaleX(1);
+    transition: transform 1200ms var(--ease-quiet) 120ms;
+  }
 
-.nav-active { color: #3B5566 !important; border-bottom: 2px solid #566B76; padding-bottom: 0.25rem; }
-
-.breadcrumb-sep::after { content: '/'; margin: 0 0.75rem; color: #c2cdd2; }
-
-/* FAQ Redesign */
-.faq-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
+  /* Images settle from a slight over-scale, so photography lands rather than
+     pops. Paired with the reveal above on the same element's wrapper. */
+  .img-settle {
+    transform: scale(1.06);
+    transition: transform 1600ms var(--ease-quiet);
+  }
+  [data-reveal="in"] .img-settle {
+    transform: scale(1);
+  }
 }
 
+/* The hero scroll cue: a short fill that travels down a hairline and fades,
+   rather than a bouncing chevron. Same drawn-line vocabulary as the rules. */
+@keyframes scrollCue {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  35%  { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+.scroll-cue-fill {
+  animation: scrollCue 2.6s var(--ease-quiet) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue-fill { animation: none; opacity: 0.6; }
+}
+
+/* --- Rules & hairlines --------------------------------------------------- */
+.hairline { background: var(--color-hairline); }
+.rule-h { height: 1px; background: var(--color-hairline); width: 100%; }
+
+/* --- Cards --------------------------------------------------------------- */
+/* Structure comes from a hairline that firms up on hover, plus a 2px lift.
+   No large drop shadows: they read as "web template", not "portfolio". */
+.card-hover {
+  transition:
+    transform 600ms var(--ease-quiet),
+    border-color 400ms ease,
+    box-shadow 600ms var(--ease-quiet);
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -24px rgba(46, 66, 80, 0.45);
+}
+
+/* Historically named for a grayscale filter it no longer applies; kept because
+   a dozen files reference it. It is the standard image hover: a slow push-in. */
+.img-grayscale {
+  transition: transform 1200ms var(--ease-quiet);
+}
+.img-grayscale:hover,
+.group:hover .img-grayscale { transform: scale(1.045); }
+
+.breadcrumb-sep::after { content: '/'; margin: 0 0.75rem; color: var(--color-hairline); }
+
+/* --- Type helpers -------------------------------------------------------- */
+/* The eyebrow is the site's smallest voice: wide-tracked, muted, never bold. */
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+}
+/* Body copy is capped at a readable measure. Long lines are the single fastest
+   way to break the reading flow this site is built around. */
+.measure { max-width: 58ch; }
+.measure-tight { max-width: 46ch; }
+
+/* Long-form article body.
+   Article text was set in the same muted `secondary` used for captions and
+   metadata — fine for a two-line teaser, tiring across two thousand words.
+   Prose gets its own darker ink and a taller line height; the size steps up
+   once on wider screens rather than at every breakpoint. */
+.prose-p {
+  font-family: var(--font-body);
+  color: #3F5260;
+  font-size: 1.0625rem;
+  line-height: 1.9;
+  margin-bottom: 1.35rem;
+}
 @media (min-width: 768px) {
-  .faq-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .prose-p { font-size: 1.125rem; }
 }
-
-@media (min-width: 1024px) {
-  .faq-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.prose-p:last-child { margin-bottom: 0; }
+/* Inline links inside prose stay in the reading colour and are marked by a
+   clay underline, so a paragraph with six links does not turn into confetti. */
+.prose-p a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-clay);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 300ms ease;
 }
+.prose-p a:hover { color: var(--color-clay); }
 
-.faq-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(59, 85, 102, 0.06);
-  padding: 2.5rem;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.faq-card:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 30px 60px rgba(59, 85, 102, 0.10);
-  border-color: rgba(59, 85, 102, 0.12);
-}
-
-.faq-card h3 {
+/* --- Links --------------------------------------------------------------- */
+/* One link affordance everywhere: an underline that draws in from the reading
+   edge (right, in Hebrew) on hover. */
+.link-quiet {
   position: relative;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
+  display: inline-block;
 }
-
-.faq-card h3::after {
+.link-quiet::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   right: 0;
-  width: 40px;
-  height: 2px;
-  background: var(--color-primary);
-  opacity: 0.1;
-  transition: width 0.4s ease;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 500ms var(--ease-quiet);
 }
+.link-quiet:hover::after,
+.group:hover .link-quiet::after { transform: scaleX(1); }
 
-.faq-card:hover h3::after {
-  width: 60px;
-  opacity: 0.3;
-}
-
-/* Background Effects */
-.bg-mesh-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.mesh-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
-  animation: float 20s infinite alternate ease-in-out;
-}
-
-.mesh-blob-1 {
-  width: 500px;
-  height: 500px;
-  background: #318BA2;
-  top: -100px;
-  right: -100px;
-}
-
-.mesh-blob-2 {
-  width: 600px;
-  height: 600px;
-  background: #3B5566;
-  bottom: -200px;
-  left: -200px;
-  animation-delay: -5s;
-}
-
-.mesh-blob-3 {
-  width: 400px;
-  height: 400px;
-  background: #A96F57;
-  top: 40%;
-  left: 20%;
-  animation-duration: 25s;
-  animation-delay: -10s;
-}
-
-.noise-overlay {
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(10%, 10%) scale(1.1); }
-  66% { transform: translate(-5%, 15%) scale(0.9); }
-  100% { transform: translate(0, 0) scale(1); }
+/* --- Focus --------------------------------------------------------------- */
+/* Keyboard focus is visible against both paper and ink backgrounds. */
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
 }
 
 @media print {
@@ -237,38 +287,38 @@ html {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #3B5566;
+  --background: #FBFAF8;
+  --foreground: #2E4250;
   --card: #ffffff;
-  --card-foreground: #3B5566;
+  --card-foreground: #2E4250;
   --popover: #ffffff;
-  --popover-foreground: #3B5566;
-  --primary: #3B5566;
+  --popover-foreground: #2E4250;
+  --primary: #2E4250;
   --primary-foreground: #ffffff;
-  --secondary: #566B76;
+  --secondary: #5A6B76;
   --secondary-foreground: #ffffff;
-  --muted: #e9eef0;
-  --muted-foreground: #566B76;
-  --accent: #e9eef0;
-  --accent-foreground: #3B5566;
+  --muted: #F4F1EC;
+  --muted-foreground: #5A6B76;
+  --accent: #F4F1EC;
+  --accent-foreground: #2E4250;
   --destructive: #ef4444;
-  --border: #c2cdd2;
-  --input: #c2cdd2;
-  --ring: #3B5566;
-  --chart-1: #3B5566;
+  --border: #DDD6CB;
+  --input: #DDD6CB;
+  --ring: #A96F57;
+  --chart-1: #2E4250;
   --chart-2: #318BA2;
   --chart-3: #A96F57;
-  --chart-4: #566B76;
-  --chart-5: #c2cdd2;
-  --radius: 0.625rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #3B5566;
-  --sidebar-primary: #3B5566;
+  --chart-4: #5A6B76;
+  --chart-5: #DDD6CB;
+  --radius: 0.125rem;
+  --sidebar: #FBFAF8;
+  --sidebar-foreground: #2E4250;
+  --sidebar-primary: #2E4250;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e9eef0;
-  --sidebar-accent-foreground: #3B5566;
-  --sidebar-border: #c2cdd2;
-  --sidebar-ring: #3B5566;
+  --sidebar-accent: #F4F1EC;
+  --sidebar-accent-foreground: #2E4250;
+  --sidebar-border: #DDD6CB;
+  --sidebar-ring: #A96F57;
 }
 
 .dark {
@@ -334,38 +384,23 @@ html {
   border-radius: 1rem !important;
 }
 
-/* Contact Button Glow Animations */
-@keyframes contactGlowWithScale {
-  0%, 100% {
-    box-shadow: 0 0 0 0 transparent;
-    transform: scale(1);
-  }
-  3.33% {
-    box-shadow: 0 0 14px 4px var(--glow-color, rgba(59, 85, 102, 0.6));
-    transform: scale(1.04);
-  }
-  6.67% {
-    box-shadow: 0 0 0 0 transparent;
-    transform: scale(1);
-  }
+/* Contact button attention cue.
+   Kept — it earns its place on a lead-generation site — but reduced to a slow,
+   shadow-only breath. The previous version also scaled the button, which made
+   the navbar twitch while you were reading and undercut the calm everywhere
+   else. Suppressed entirely under reduced-motion. */
+@keyframes contactGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(169, 111, 87, 0); }
+  4%       { box-shadow: 0 0 0 4px var(--glow-color, rgba(169, 111, 87, 0.22)); }
+  9%       { box-shadow: 0 0 0 0 rgba(169, 111, 87, 0); }
 }
 
-@keyframes contactGlowOnly {
-  0%, 100% {
-    box-shadow: 0 0 0 0 transparent;
-  }
-  3.33% {
-    box-shadow: 0 0 14px 4px var(--glow-color, rgba(59, 85, 102, 0.6));
-  }
-  6.67% {
-    box-shadow: 0 0 0 0 transparent;
-  }
-}
-
-.animate-contact-glow-scale {
-  animation: contactGlowWithScale 15s infinite ease-in-out;
-}
-
+.animate-contact-glow-scale,
 .animate-contact-glow-only {
-  animation: contactGlowOnly 15s infinite ease-in-out;
+  animation: contactGlow 18s infinite var(--ease-quiet);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-contact-glow-scale,
+  .animate-contact-glow-only { animation: none; }
 }

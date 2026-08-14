@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/map';
 import { areas } from '@/data/areasContent';
 import Link from 'next/link';
+import { ArrowIcon } from "@/components/ui/Icon";
 
 export default function ServiceAreasMap() {
   return (
@@ -57,9 +58,7 @@ export default function ServiceAreasMap() {
                     className="inline-flex items-center gap-2 text-primary font-bold text-xs hover:underline group"
                   >
                     <span>לעמוד האזור</span>
-                    <span className="material-symbols-outlined text-sm group-hover:translate-x-[-2px] transition-transform">
-                      arrow_back
-                    </span>
+                    <ArrowIcon size={14} className="group-hover:-translate-x-1 transition-transform duration-500" />
                   </Link>
                 </div>
               </MarkerPopup>

@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Breadcrumb from '@/components/Breadcrumb';
-// import InteractiveProjectsMap from '@/components/InteractiveProjectsMap';
 import { siteData } from '@/data/siteData';
+import CtaSection from '@/components/CtaSection';
+import PageHeader from '@/components/ui/PageHeader';
+import Reveal from '@/components/motion/Reveal';
+import { Section } from '@/components/ui/Section';
+import { ArrowIcon } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: "פרויקטים ותיק עבודות | טל גורן אדריכלית",
@@ -17,15 +20,13 @@ const categories = [
   {
     href: '/projects/completed',
     title: 'בתים מאוכלסים',
-    description: 'בתים גמורים שתוכננו ונבנו — צילומי הפרויקטים המאוכלסים שלנו.',
-    icon: 'home',
+    description: 'בתים גמורים שתוכננו ונבנו — צילומי הפרויקטים המאוכלסים.',
     image: siteData.projects[0]?.image,
   },
   {
     href: '/projects/in-design',
     title: 'בתים בתכנון',
-    description: 'הצצה לפרויקטים בשלבי תכנון — הדמיות אדריכליות של הבתים שייבנו בקרוב.',
-    icon: 'architecture',
+    description: 'הצצה לפרויקטים בשלבי תכנון — הדמיות אדריכליות של בתים שייבנו בקרוב.',
     image: siteData.projects[2]?.image,
   },
 ];
@@ -33,82 +34,59 @@ const categories = [
 export default function Projects() {
   return (
     <>
-      {/* Page Header */}
-      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
-        <div>
-          <Breadcrumb current="פרויקטים" />
-          <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">פרויקטים</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">
-            למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני.
-            {/* לחצו על אזור במפה לצפייה בפרויקטים. */}
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        current="פרויקטים"
+        eyebrow="תיק עבודות"
+        title="פרויקטים"
+        lede="למעלה מ-100 בתים פרטיים שתוכננו ונבנו באזור השרון הצפוני, מנשה וחוף הכרמל."
+      />
 
-      {/* Interactive Map - disabled for now
-      <section className="px-8 lg:px-12 py-8 md:py-16 max-w-[1920px] mx-auto">
-        <InteractiveProjectsMap />
-      </section>
-      */}
-
-      {/* Category Cards */}
-      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
-        <h2 className="font-headline font-bold text-2xl text-primary mb-8">קטגוריות</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {categories.map((page) => (
-            <Link
-              key={page.href}
-              href={page.href}
-              className="group block relative overflow-hidden card-hover"
-            >
-              {/* Image */}
-              <div className="aspect-[4/3] overflow-hidden relative">
-                {page.image ? (
-                  <Image
-                    src={page.image}
-                    alt={page.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105 img-grayscale"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-surface-container flex items-center justify-center">
-                    <span className="material-symbols-outlined text-6xl text-secondary/30">{page.icon}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/60 transition-colors duration-500 flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">arrow_back</span>
-              </div>
-
-              {/* Title bar */}
-              <div className="bg-primary px-6 py-5">
-                <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>{page.icon}</span>
-                  <div>
-                    <h3 className="font-headline font-bold text-base text-white">{page.title}</h3>
-                    <p className="font-label text-white/60 text-xs mt-1 leading-relaxed">{page.description}</p>
-                  </div>
+      {/* Two doors into the portfolio. The photograph carries the difference
+          between "built" and "in design" better than an icon can, so the card
+          is the image, with the label set beneath it on a hairline — the same
+          plate treatment used everywhere else the work appears. */}
+      <Section tone="paper">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
+          {categories.map((page, i) => (
+            <Reveal key={page.href} delay={i * 120}>
+              <Link href={page.href} className="group block">
+                <div className="aspect-[16/11] overflow-hidden relative bg-surface-container">
+                  {page.image && (
+                    <Image
+                      src={page.image}
+                      alt={page.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover img-grayscale"
+                      priority={i === 0}
+                    />
+                  )}
                 </div>
-              </div>
-            </Link>
+                <div className="pt-5 mt-5 border-t border-hairline flex items-start justify-between gap-6">
+                  <div>
+                    <h2 className="font-headline font-black text-2xl text-primary leading-snug transition-colors duration-300 group-hover:text-clay">
+                      {page.title}
+                    </h2>
+                    <p className="font-body text-[15px] text-secondary leading-relaxed mt-2.5 measure">
+                      {page.description}
+                    </p>
+                  </div>
+                  <ArrowIcon
+                    size={22}
+                    className="text-ink-mute mt-1.5 transition-all duration-500 group-hover:text-clay group-hover:-translate-x-1.5"
+                  />
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Section>
 
-      {/* CTA Section */}
-      <section className="blueprint-grid bg-surface-container-low">
-        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
-          <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">יש לכם פרויקט?</h2>
-          <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נדבר על הבית שאתם חולמים עליו. נשמח להכיר, להקשיב ולהתחיל לתכנן יחד.</p>
-          <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">
-            <span>בואו נדבר</span>
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+      <CtaSection
+        title="יש לכם פרויקט?"
+        subtitle="בואו נדבר על הבית שאתם חולמים עליו. נשמח להכיר, להקשיב ולהתחיל לתכנן יחד."
+        primaryLabel="בואו נדבר"
+      />
     </>
   );
 }

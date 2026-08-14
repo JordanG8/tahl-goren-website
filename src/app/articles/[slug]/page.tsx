@@ -5,6 +5,8 @@ import Image from "next/image";
 import { articles, articlesBySlug, type Article } from "@/data/articlesContent";
 import Breadcrumb from "@/components/Breadcrumb";
 import ArticleAuthorBox from "@/components/ArticleAuthorBox";
+import { Section, SectionHeading, ButtonLink } from "@/components/ui/Section";
+import { ArrowIcon, ChevronIcon } from "@/components/ui/Icon";
 
 export async function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -210,19 +212,19 @@ export default async function ArticlePage(
       </section>
 
       {/* Content */}
-      <article className="py-16 md:py-24 px-8" dir="rtl">
-        <div className="max-w-3xl mx-auto">
+      <article className="py-16 md:py-24 px-6 sm:px-8" dir="rtl">
+        <div className="max-w-[46rem] mx-auto">
           {/* Intro / quick answer — direct answer up top for readers and AI search */}
-          <div className="mb-12 p-6 md:p-8 bg-surface-container-low border-r-4 border-tertiary">
-            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-tertiary block mb-2">בקצרה</span>
-            <p className="text-primary text-lg md:text-xl leading-relaxed font-body font-medium">
+          <div className="mb-14 border-s-2 border-clay ps-6">
+            <span className="font-label text-[10px] uppercase tracking-[0.28em] text-clay block mb-3">בקצרה</span>
+            <p className="text-primary text-lg md:text-xl leading-[1.75] font-body">
               {article.excerpt}
             </p>
           </div>
 
           {/* Series Navigation Card */}
           {isSeries && (
-            <div className="mb-16 p-8 bg-surface-container-low border-r-4 border-primary text-right">
+            <div className="mb-16 border-y border-hairline py-8">
               <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary">
                 {article.category === "construction" ? "סדרת שיטות בנייה בישראל" : "סדרת חדר אחר חדר: הבית שעובד בשבילכם"}
               </span>
@@ -254,7 +256,7 @@ export default async function ArticlePage(
               {article.intro.map((p, i) => (
                 <p
                   key={i}
-                  className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
+                  className="prose-p"
                 >
                   {renderParagraphWithLinks(p)}
                 </p>
@@ -263,8 +265,8 @@ export default async function ArticlePage(
           ) : null}
 
           {/* Table of contents */}
-          <nav className="mb-16 p-6 bg-surface-container rounded">
-            <h2 className="font-headline font-bold text-sm text-primary mb-4">
+          <nav className="mb-16 border-y border-hairline py-7">
+            <h2 className="font-label text-[10px] uppercase tracking-[0.28em] text-ink-mute mb-5">
               תוכן עניינים
             </h2>
             <ol className="space-y-2 list-decimal list-inside">
@@ -272,7 +274,7 @@ export default async function ArticlePage(
                 <li key={i}>
                   <a
                     href={`#section-${i}`}
-                    className="font-body text-secondary hover:text-primary transition-colors text-sm"
+                    className="font-body text-secondary hover:text-clay transition-colors text-[15px]"
                   >
                     {section.heading}
                   </a>
@@ -282,7 +284,7 @@ export default async function ArticlePage(
                 <li>
                   <a
                     href="#faq"
-                    className="font-body text-secondary hover:text-primary transition-colors text-sm"
+                    className="font-body text-secondary hover:text-clay transition-colors text-[15px]"
                   >
                     שאלות נפוצות
                   </a>
@@ -293,26 +295,26 @@ export default async function ArticlePage(
 
           {/* Sections */}
           {article.sections.map((section, i) => (
-            <section key={i} id={`section-${i}`} className="mb-14">
-              <h2 className="font-headline font-black text-2xl md:text-3xl text-primary mb-6 leading-tight">
+            <section key={i} id={`section-${i}`} className="mb-16 scroll-mt-28">
+              <h2 className="font-headline font-black text-2xl md:text-[2rem] text-primary mb-6 leading-[1.15] tracking-tight">
                 {section.heading}
               </h2>
               {section.body.map((p, pi) => (
                 <p
                   key={pi}
-                  className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
+                  className="prose-p"
                 >
                   {renderParagraphWithLinks(p)}
                 </p>
               ))}
               {section.list && (
-                <ul className="mt-4 space-y-2 pr-4">
+                <ul className="mt-5 space-y-3 ps-1">
                   {section.list.map((item, li) => (
                     <li
                       key={li}
-                      className="flex items-start gap-3 text-secondary text-base leading-relaxed font-body"
+                      className="flex items-start gap-3.5 prose-p !mb-0"
                     >
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
+                      <span className="mt-3 w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0" />
                       {renderParagraphWithLinks(item)}
                     </li>
                   ))}
@@ -326,7 +328,7 @@ export default async function ArticlePage(
                   {sub.body.map((p, pi) => (
                     <p
                       key={pi}
-                      className="text-secondary text-base md:text-lg leading-relaxed mb-4 font-body"
+                      className="prose-p"
                     >
                       {renderParagraphWithLinks(p)}
                     </p>
@@ -342,17 +344,25 @@ export default async function ArticlePage(
               <h2 className="font-headline font-black text-2xl md:text-3xl text-primary mb-8 leading-tight">
                 שאלות נפוצות
               </h2>
-              <div className="border border-outline/20 rounded overflow-hidden">
+              {/* `.faq-item` / `.faq-chevron` / `.faq-answer` were referenced
+                  here but never defined in any stylesheet, so these rendered as
+                  bare <details> elements: no padding, no separators, a default
+                  browser triangle, and a chevron that never turned. Rebuilt on
+                  the same ruled-list pattern as the site's other FAQ. */}
+              <div className="border-t border-hairline">
                 {article.faq.map((item, i) => (
-                  <details key={i} className="faq-item">
-                    <summary className="font-headline font-bold text-primary text-base">
-                      {item.question}
-                      <span className="material-symbols-outlined faq-chevron">
-                        expand_more
+                  <details key={i} className="group border-b border-hairline">
+                    <summary className="flex items-start justify-between gap-6 py-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                      <span className="font-headline font-bold text-primary text-lg leading-snug transition-colors group-hover:text-clay">
+                        {item.question}
                       </span>
+                      <ChevronIcon
+                        size={20}
+                        className="flex-shrink-0 mt-1 text-ink-mute transition-transform duration-500 group-open:rotate-180 group-open:text-clay"
+                      />
                     </summary>
-                    <div className="faq-answer">
-                      <p className="text-secondary text-base leading-relaxed font-body">
+                    <div className="pb-7 ps-6 border-s-2 border-clay/50">
+                      <p className="prose-p !mb-0">
                         {renderParagraphWithLinks(item.answer)}
                       </p>
                     </div>
@@ -368,13 +378,13 @@ export default async function ArticlePage(
               {prevArticle ? (
                 <Link
                   href={`/articles/${prevArticle.slug}`}
-                  className="flex-1 group p-6 bg-surface border border-outline/10 hover:border-secondary transition-all flex flex-col justify-between text-right"
+                  className="flex-1 group border border-hairline p-6 hover:border-clay transition-colors duration-500 flex flex-col justify-between"
                 >
-                  <span className="font-label text-[10px] text-secondary mb-2 flex items-center gap-1 justify-end">
-                    <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute mb-3 flex items-center gap-2">
+                    <ArrowIcon size={14} direction="back" />
                     המאמר הקודם בסדרה
                   </span>
-                  <span className="font-headline font-bold text-base text-primary group-hover:text-secondary transition-colors line-clamp-2">
+                  <span className="font-headline font-bold text-base text-primary group-hover:text-clay transition-colors line-clamp-2">
                     {prevArticle.title}
                   </span>
                 </Link>
@@ -385,13 +395,13 @@ export default async function ArticlePage(
               {nextArticle ? (
                 <Link
                   href={`/articles/${nextArticle.slug}`}
-                  className="flex-1 group p-6 bg-surface border border-outline/10 hover:border-secondary transition-all flex flex-col justify-between text-right"
+                  className="flex-1 group border border-hairline p-6 hover:border-clay transition-colors duration-500 flex flex-col justify-between"
                 >
-                  <span className="font-label text-[10px] text-secondary mb-2 flex items-center gap-1 justify-end">
+                  <span className="font-label text-[10px] uppercase tracking-[0.2em] text-ink-mute mb-3 flex items-center gap-2">
                     המאמר הבא בסדרה
-                    <span className="material-symbols-outlined text-xs">arrow_back</span>
+                    <ArrowIcon size={14} />
                   </span>
-                  <span className="font-headline font-bold text-base text-primary group-hover:text-secondary transition-colors line-clamp-2">
+                  <span className="font-headline font-bold text-base text-primary group-hover:text-clay transition-colors line-clamp-2">
                     {nextArticle.title}
                   </span>
                 </Link>
@@ -402,23 +412,18 @@ export default async function ArticlePage(
           )}
 
           {/* CTA */}
-          <div className="mt-16 p-8 md:p-12 bg-surface-container-low rounded text-right">
-            <h3 className="font-headline font-black text-xl md:text-2xl text-primary mb-4">
+          <div className="mt-16 border-y border-hairline py-10">
+            <span className="rule-draw block h-px w-12 bg-clay mb-6" />
+            <h3 className="font-headline font-black text-2xl text-primary">
               רוצים לשוחח על הפרויקט שלכם?
             </h3>
-            <p className="text-secondary text-base leading-relaxed mb-6 font-body">
-              פגישת ייעוץ ראשונה — ללא עלות וללא התחייבות. נשמח להכיר
-              ולהתחיל לחשוב יחד.
+            <p className="prose-p mt-4">
+              פגישת ייעוץ ראשונה — ללא עלות וללא התחייבות. נשמח להכיר ולהתחיל
+              לחשוב יחד.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 font-headline font-bold text-sm hover:bg-secondary transition-colors"
-            >
-              לפגישת ייעוץ
-              <span className="material-symbols-outlined text-lg">
-                arrow_back
-              </span>
-            </Link>
+            <div className="mt-7">
+              <ButtonLink href="/contact">לפגישת ייעוץ</ButtonLink>
+            </div>
           </div>
 
           <ArticleAuthorBox updatedAt={article.updatedAt} />
@@ -427,24 +432,17 @@ export default async function ArticlePage(
 
       {/* Related articles */}
       {relatedArticles.length > 0 && (
-        <section className="py-16 md:py-24 px-8 bg-surface-container-low">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-12 text-right">
-              <span className="font-label text-xs uppercase tracking-[0.3em] text-secondary">
-                Related Articles
-              </span>
-              <h2 className="font-headline font-black text-3xl md:text-4xl tracking-tight text-primary mt-4">
-                מאמרים נוספים
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Section tone="sand">
+          <div>
+            <SectionHeading eyebrow="Related Articles" title="מאמרים נוספים" className="mb-12" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
               {relatedArticles.map((related) => (
                 <Link
                   key={related.slug}
                   href={`/articles/${related.slug}`}
-                  className="group card-hover block bg-surface overflow-hidden"
+                  className="group block"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
                     <Image
                       src={related.heroImage}
                       alt={related.heroAlt}
@@ -453,25 +451,23 @@ export default async function ArticlePage(
                       className="object-cover img-grayscale"
                     />
                   </div>
-                  <div className="p-8 text-right">
-                    <h3 className="font-headline font-bold text-xl text-primary leading-tight group-hover:text-secondary transition-colors">
+                  <div className="pt-5 mt-5 border-t border-hairline">
+                    <h3 className="font-headline font-bold text-lg text-primary leading-snug group-hover:text-clay transition-colors">
                       {related.title}
                     </h3>
-                    <p className="text-secondary text-sm mt-3 leading-relaxed line-clamp-2">
+                    <p className="font-body text-[15px] text-secondary mt-3 leading-relaxed line-clamp-2">
                       {related.excerpt}
                     </p>
-                    <div className="mt-6 inline-flex items-center gap-2 font-headline font-bold text-xs text-primary group-hover:text-secondary transition-colors">
-                      לקריאה
-                      <span className="material-symbols-outlined text-base group-hover:translate-x-[-4px] transition-transform">
-                        arrow_back
-                      </span>
+                    <div className="mt-5 inline-flex items-center gap-2 font-headline font-bold text-[13px] text-primary group-hover:text-clay transition-colors">
+                      <span className="link-quiet">לקריאה</span>
+                      <ArrowIcon size={16} className="transition-transform duration-500 group-hover:-translate-x-1" />
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
-        </section>
+        </Section>
       )}
     </>
   );

@@ -35,7 +35,10 @@ function GoogleG({ className }: { className?: string }) {
 
 function ReviewCard({ review }: { review: SiteReview }) {
   return (
-    <div className="rounded-lg bg-white border border-[#e8eaed] shadow-[0_1px_2px_rgba(60,64,67,0.15)] p-5 flex flex-col gap-2.5 h-full">
+    // Kept recognisably Google-shaped — the monogram avatar and the G mark are
+    // the authenticity signal — but re-set in the site's materials: hairline
+    // border, near-square corners, no drop shadow.
+    <div className="rounded-sm bg-surface border border-hairline p-6 flex flex-col gap-3 h-full">
       <div className="flex items-center gap-3">
         {review.photoUrl ? (
           <Image
@@ -139,9 +142,19 @@ export default function GoogleReviews({ reviews }: { reviews: SiteReview[] }) {
             flex-shrink: 0;
             height: 250px;
           }
+          /* The rows used to end in a hard vertical cut at the section edge,
+             which announced the loop. Fading them out at both ends makes the
+             marquee read as a continuous run passing behind the page. */
+          .gr-row-mask {
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .gr-row-left, .gr-row-right { animation: none; }
+          }
         `}</style>
 
-        <div className="overflow-hidden w-full flex">
+        <div className="overflow-hidden w-full flex gr-row-mask">
           <div className={canLoopRows ? "gr-row-left" : "flex"} dir="rtl">
             {(canLoopRows ? [...row1, ...row1] : row1).map((review, i) => (
               <div key={i} className="gr-card-slot">
@@ -152,7 +165,7 @@ export default function GoogleReviews({ reviews }: { reviews: SiteReview[] }) {
         </div>
 
         {row2.length > 0 && (
-          <div className="overflow-hidden w-full flex">
+          <div className="overflow-hidden w-full flex gr-row-mask">
             <div className={canLoopRows ? "gr-row-right" : "flex"} dir="rtl">
               {(canLoopRows ? [...row2, ...row2] : row2).map((review, i) => (
                 <div key={i} className="gr-card-slot">

@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
-import HomeCtaForm from "@/components/HomeCtaForm";
+import Reveal from "@/components/motion/Reveal";
 import { trackLead } from "@/lib/trackLead";
+import { ArrowIcon, ChatIcon, PhoneIcon, MailIcon, PinIcon, CheckIcon } from "@/components/ui/Icon";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+/**
+ * Contact page.
+ *
+ * The page used to open with the compact homepage lead band (carrying the h1)
+ * and then present the full contact form a screen below — two forms asking for
+ * overlapping information, with the small one first. There is now one form,
+ * and the page opens by saying who it is for.
+ */
 export default function ContactClient() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -63,62 +72,73 @@ export default function ContactClient() {
     return `https://wa.me/972528345799?text=${encodeURIComponent(text)}`;
   })();
 
+  // Underlined fields rather than filled boxes: on a page that is mostly form,
+  // four grey rectangles dominate everything. The rule turns clay on focus, so
+  // the active field is unmistakable without a heavy ring.
+  const field =
+    "w-full bg-transparent border-0 border-b border-hairline py-3.5 px-0 focus:outline-none focus:border-clay transition-colors duration-300 font-body text-[17px] text-primary placeholder:text-ink-mute/70";
+  const labelCls = "font-label text-[10px] uppercase tracking-[0.24em] text-ink-mute";
+
+  const contactRows = [
+    { Icon: PhoneIcon, label: "טלפון", value: "052-8345799", href: "tel:0528345799", track: true },
+    { Icon: MailIcon, label: "אימייל", value: "tahl.goren.arch@gmail.com", href: "mailto:tahl.goren.arch@gmail.com" },
+    { Icon: PinIcon, label: "המשרד", value: "רחוב האלה 22, גבעת עדה" },
+  ];
+
   return (
     <>
-      <HomeCtaForm
-        eyebrow="צור קשר"
-        heading="מתכננים לבנות או לשפץ?"
-        placement="contact_page_top"
-        headingTag="h1"
-      />
-
-      <section className="py-8 md:py-12 px-8 bg-surface">
-        <div className="max-w-6xl mx-auto">
-          <Breadcrumb current="צור קשר" />
-          <p className="font-body text-base md:text-lg text-secondary max-w-2xl leading-relaxed mt-4">
-            מתכננים בניית בית פרטי חדש, תוספת בניה או שיפוץ מקיף? הגעתם למקום הנכון! אני מתמחה באדריכלות בתי מגורים באזור השרון הצפוני (בין נתניה לחיפה, ומזרחה עד עפולה). אשמח לעמוד לשרותכם - השאירו פרטים, ואחזור אליכם בהקדם.
-          </p>
+      <section className="bg-background border-b border-hairline">
+        <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-16 sm:pt-20 sm:pb-20">
+          <Reveal>
+            <Breadcrumb current="צור קשר" />
+            <div className="flex items-center gap-4 mb-6">
+              <span className="rule-draw h-px w-10 bg-hairline" />
+              <span className="font-label text-[10px] uppercase tracking-[0.3em] text-ink-mute">
+                צור קשר
+              </span>
+            </div>
+            <h1 className="font-headline font-black text-4xl sm:text-6xl lg:text-7xl text-primary tracking-tight leading-[0.98] max-w-3xl">
+              מתכננים לבנות<br />או לשפץ?
+            </h1>
+            <p className="font-body text-lg sm:text-xl text-secondary leading-relaxed mt-8 measure">
+              אני מתמחה באדריכלות בתי מגורים באזור השרון הצפוני — בין נתניה לחיפה,
+              ומזרחה עד עפולה. השאירו פרטים ואחזור אליכם בהקדם, לשיחת היכרות ללא
+              עלות וללא התחייבות.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      <section className="py-12 md:py-20 px-8 bg-surface">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+      <section className="py-20 lg:py-24 bg-background">
+        <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
+            {/* Details + map */}
+            <Reveal className="lg:col-span-5">
+              <ul className="border-t border-hairline">
+                {contactRows.map(({ Icon, label, value, href, track }) => (
+                  <li key={label} className="border-b border-hairline py-7 flex items-start gap-5">
+                    <Icon size={22} className="text-clay mt-1.5" />
+                    <div className="min-w-0">
+                      <span className={`${labelCls} block`}>{label}</span>
+                      {href ? (
+                        <a
+                          href={href}
+                          onClick={track ? () => trackLead("phone", { placement: "contact_page_info" }) : undefined}
+                          className="font-headline font-bold text-xl sm:text-2xl text-primary hover:text-clay transition-colors duration-300 mt-2 block break-all"
+                        >
+                          {value}
+                        </a>
+                      ) : (
+                        <p className="font-headline font-bold text-xl sm:text-2xl text-primary mt-2">
+                          {value}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="space-y-8 md:space-y-16">
-              <div className="space-y-12">
-                <div className="flex gap-8 group">
-                  <div className="w-16 h-16 bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
-                    <span className="material-symbols-outlined text-3xl">call</span>
-                  </div>
-                  <div>
-                    <h3 className="font-headline font-bold text-xs uppercase tracking-[0.2em] text-secondary mb-2">טלפון</h3>
-                    <a href="tel:0528345799" onClick={() => trackLead("phone", { placement: "contact_page_info" })} className="font-headline font-black text-2xl text-primary hover:text-secondary transition-colors">052-8345799</a>
-                  </div>
-                </div>
-
-                <div className="flex gap-8 group">
-                  <div className="w-16 h-16 bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
-                    <span className="material-symbols-outlined text-3xl">mail</span>
-                  </div>
-                  <div>
-                    <h3 className="font-headline font-bold text-xs uppercase tracking-[0.2em] text-secondary mb-2">אימייל</h3>
-                    <a href="mailto:tahl.goren.arch@gmail.com" className="font-headline font-black text-2xl text-primary hover:text-secondary transition-colors break-all">tahl.goren.arch@gmail.com</a>
-                  </div>
-                </div>
-
-                <div className="flex gap-8 group">
-                  <div className="w-16 h-16 bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
-                    <span className="material-symbols-outlined text-3xl">location_on</span>
-                  </div>
-                  <div>
-                    <h3 className="font-headline font-bold text-xs uppercase tracking-[0.2em] text-secondary mb-2">המשרד</h3>
-                    <p className="font-headline font-black text-2xl text-primary">רחוב האלה 22, גבעת עדה</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="h-[200px] md:aspect-video bg-surface-container-low overflow-hidden relative">
+              <div className="mt-10 aspect-[4/3] bg-surface-container-low overflow-hidden relative border border-hairline">
                 <iframe
                   title="מיקום המשרד - רחוב האלה 22, גבעת עדה"
                   src="https://maps.google.com/maps?q=%D7%94%D7%90%D7%9C%D7%94+22+%D7%92%D7%91%D7%A2%D7%AA+%D7%A2%D7%93%D7%94&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -128,124 +148,136 @@ export default function ContactClient() {
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
-            </div>
+            </Reveal>
 
-            <div className="bg-surface-container p-8 md:p-20">
-              <h2 className="font-headline font-black text-4xl text-primary mb-12">שלחו הודעה</h2>
+            {/* Form */}
+            <Reveal delay={140} className="lg:col-span-7">
+              <div className="border-t border-hairline pt-10">
+                <h2 className="font-headline font-black text-3xl sm:text-4xl text-primary tracking-tight">
+                  שלחו הודעה
+                </h2>
 
-              {status === "success" ? (
-                <div className="space-y-6">
-                  <div className="border border-primary/20 bg-primary/5 p-8 text-right">
-                    <h3 className="font-headline font-bold text-xl text-primary mb-2">תודה רבה!</h3>
-                    <p className="font-body text-secondary leading-relaxed">
-                      ההודעה התקבלה. אחזור אליכם בהקדם האפשרי. בינתיים, אתם מוזמנים לעיין בפרויקטים שלי.
+                {status === "success" ? (
+                  <div className="mt-10">
+                    <CheckIcon size={32} className="text-clay" />
+                    <h3 className="font-headline font-black text-2xl text-primary mt-5">תודה רבה!</h3>
+                    <p className="font-body text-secondary leading-relaxed mt-3 measure">
+                      ההודעה התקבלה ואחזור אליכם בהקדם האפשרי. בינתיים, אתם מוזמנים
+                      לעיין בפרויקטים שלי.
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => setStatus("idle")}
+                      className="group inline-flex items-center gap-2.5 font-headline font-bold text-sm text-primary hover:text-clay transition-colors mt-8"
+                    >
+                      <span className="link-quiet">שליחת הודעה נוספת</span>
+                      <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setStatus("idle")}
-                    className="font-label text-xs uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors"
-                  >
-                    שליחת הודעה נוספת ←
-                  </button>
-                </div>
-              ) : (
-                <form className="space-y-8" onSubmit={handleSubmit} noValidate>
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    className="hidden"
-                    aria-hidden
-                  />
-
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">שם מלא</label>
+                ) : (
+                  <form className="mt-10 space-y-9" onSubmit={handleSubmit} noValidate>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b-2 border-primary/10 py-4 px-0 focus:ring-0 focus:border-primary transition-colors font-body text-primary placeholder:text-primary/20"
-                      placeholder="איך לקרוא לכם?"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      className="hidden"
+                      aria-hidden
                     />
-                  </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">טלפון</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b-2 border-primary/10 py-4 px-0 focus:ring-0 focus:border-primary transition-colors font-body text-primary placeholder:text-primary/20"
-                      placeholder="איפה אפשר להשיג אתכם?"
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-9">
+                      <div className="space-y-2">
+                        <label htmlFor="name" className={labelCls}>שם מלא</label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
+                          autoComplete="name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className={field}
+                          placeholder="איך לקרוא לכם?"
+                        />
+                      </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">אימייל</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b-2 border-primary/10 py-4 px-0 focus:ring-0 focus:border-primary transition-colors font-body text-primary placeholder:text-primary/20"
-                      placeholder="כתובת האימייל שלכם"
-                    />
-                  </div>
+                      <div className="space-y-2">
+                        <label htmlFor="phone" className={labelCls}>טלפון</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          required
+                          autoComplete="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          className={field}
+                          placeholder="איפה אפשר להשיג אתכם?"
+                        />
+                      </div>
+                    </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">הודעה</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      required
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b-2 border-primary/10 py-4 px-0 focus:ring-0 focus:border-primary transition-colors font-body text-primary placeholder:text-primary/20 resize-none"
-                      placeholder="ספרו לי קצת על הפרויקט..."
-                    />
-                  </div>
+                    <div className="space-y-2">
+                      <label htmlFor="email" className={labelCls}>אימייל</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={field}
+                        placeholder="כתובת האימייל שלכם"
+                      />
+                    </div>
 
-                  {status === "error" && (
-                    <p className="font-body text-sm text-red-600">{errorMsg}</p>
-                  )}
+                    <div className="space-y-2">
+                      <label htmlFor="message" className={labelCls}>הודעה</label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={4}
+                        required
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className={`${field} resize-none`}
+                        placeholder="ספרו לי קצת על הפרויקט..."
+                      />
+                    </div>
 
-                  <div className="pt-8 space-y-4">
-                    <button
-                      type="submit"
-                      disabled={status === "submitting"}
-                      className="w-full bg-primary text-white py-6 font-headline font-black text-sm uppercase tracking-[0.3em] hover:opacity-90 transition-all flex items-center justify-center gap-4 group disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {status === "submitting" ? "שולח..." : "שלחו הודעה"}
-                      <span className="material-symbols-outlined group-hover:translate-x-[-8px] transition-transform">arrow_back</span>
-                    </button>
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => trackLead("whatsapp", { placement: "contact_page_form" })}
-                      className="w-full border-2 border-primary text-primary py-5 font-headline font-black text-sm uppercase tracking-[0.3em] hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-4"
-                    >
-                      שליחה בוואטסאפ
-                      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                    </a>
-                  </div>
-                </form>
-              )}
-            </div>
+                    {status === "error" && (
+                      <p className="font-body text-sm text-red-600" role="alert">{errorMsg}</p>
+                    )}
 
+                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                      <button
+                        type="submit"
+                        disabled={status === "submitting"}
+                        className="group flex-1 inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-colors duration-500 hover:bg-clay disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {status === "submitting" ? "שולח..." : "שלחו הודעה"}
+                        {status !== "submitting" && (
+                          <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
+                        )}
+                      </button>
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => trackLead("whatsapp", { placement: "contact_page_form" })}
+                        className="flex-1 inline-flex items-center justify-center gap-3 border border-primary/25 text-primary px-8 py-4 font-headline font-bold text-[13px] uppercase tracking-[0.18em] transition-colors duration-500 hover:border-primary hover:bg-primary hover:text-white"
+                      >
+                        שליחה בוואטסאפ
+                        <ChatIcon size={17} />
+                      </a>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

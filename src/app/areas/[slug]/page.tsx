@@ -5,6 +5,7 @@ import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumb";
 import { areas, areasBySlug } from "@/data/areasContent";
 import { projects } from "@/data/projectsContent";
+import { ArrowIcon, CheckIcon } from "@/components/ui/Icon";
 
 export function generateStaticParams() {
   return areas.map((a) => ({ slug: a.slug }));
@@ -160,7 +161,7 @@ export default async function AreaPage({
             <ul className="space-y-3">
               {selectionCriteria(area.cityWithPrep).map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-secondary text-lg leading-relaxed">
-                  <span className="material-symbols-outlined text-secondary text-xl mt-1 shrink-0">check_circle</span>
+                  <CheckIcon size={18} className="text-clay mt-1.5 shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -224,7 +225,7 @@ export default async function AreaPage({
             className="inline-flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 font-headline font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors"
           >
             לקביעת פגישת ייעוץ
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
+            <ArrowIcon size={17} />
           </Link>
         </div>
       </section>

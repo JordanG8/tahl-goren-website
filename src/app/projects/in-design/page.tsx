@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import Breadcrumb from '@/components/Breadcrumb';
+import CtaSection from '@/components/CtaSection';
+import PageHeader from '@/components/ui/PageHeader';
+import Reveal from '@/components/motion/Reveal';
+import { Section, ArrowLink } from '@/components/ui/Section';
+import { CompassIcon } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: "בתים בתכנון והדמיות אדריכליות | טל גורן אדריכלית",
@@ -16,69 +19,68 @@ const designProjects: any[] = [];
 export default function ProjectsInDesign() {
   return (
     <>
-      {/* Page Header */}
-      <section className="pt-32 pb-12 px-8 lg:px-12 max-w-[1920px] mx-auto">
-        <div>
-          <Breadcrumb items={[
-            { label: 'ראשי', to: '/' },
-            { label: 'פרויקטים', to: '/projects' },
-            { label: 'בתים בתכנון' },
-          ]} />
-          <h1 className="font-headline font-black text-4xl md:text-6xl lg:text-7xl text-primary leading-tight mb-4">בתים בתכנון</h1>
-          <p className="font-body text-secondary text-lg md:text-xl max-w-2xl leading-relaxed">כל בית היה פעם חלום של משפחה, והמשימה שלי היא לתרגם אותו לשרטוטים והדמיות. גלריה המציגה בתים שעדיין נמצאים על שולחן העבודה בשלבי תכנון וגיבוש. ההדמיות חושפות את התהליך שמאחורי הקלעים, וממחישות את החזון והפוטנציאל של כל פרויקט – רגע לפני שהוא הופך לאמיתי.</p>
-        </div>
-      </section>
+      <PageHeader
+        items={[
+          { label: 'ראשי', to: '/' },
+          { label: 'פרויקטים', to: '/projects' },
+          { label: 'בתים בתכנון' },
+        ]}
+        eyebrow="על שולחן העבודה"
+        title="בתים בתכנון"
+        lede="כל בית היה פעם חלום של משפחה, והמשימה שלי היא לתרגם אותו לשרטוטים והדמיות. כאן מוצגים בתים שעדיין נמצאים על שולחן העבודה — רגע לפני שהם הופכים לאמיתיים."
+      />
 
-      {/* Projects Grid */}
-      <section className="px-8 lg:px-12 pb-24 max-w-[1920px] mx-auto">
+      <Section tone="paper">
         {designProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {designProjects.map((project: any) => (
-              <div key={project.id} className="group block relative overflow-hidden card-hover">
-                <div className="aspect-[4/3] overflow-hidden relative">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-primary px-4 py-3 flex justify-between items-center">
-                  <div className="flex flex-col text-right">
-                    <h3 className="font-headline font-light text-[10px] sm:text-[11px] text-white uppercase tracking-[0.15em] leading-tight">{project.title}</h3>
-                    <span className="font-label text-white/50 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mt-0.5">{project.location}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {designProjects.map((project: any, i: number) => (
+              <Reveal key={project.id} delay={(i % 3) * 90}>
+                <div className="group block">
+                  <div className="aspect-[4/3] overflow-hidden relative bg-surface-container">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover img-grayscale"
+                    />
+                  </div>
+                  <div className="pt-4 mt-4 border-t border-hairline">
+                    <h2 className="font-headline font-bold text-base text-primary leading-snug">
+                      {project.title}
+                    </h2>
+                    <span className="font-label text-[10px] uppercase tracking-[0.22em] text-ink-mute mt-1.5 block">
+                      {project.location}
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-surface-container-low">
-            <span className="material-symbols-outlined text-6xl text-secondary/30 mb-6 block">architecture</span>
-            <h3 className="font-headline font-bold text-2xl text-primary mb-4">פרויקטים בתכנון</h3>
-            <p className="text-secondary text-lg max-w-md mx-auto leading-relaxed">
-              הדמיות של פרויקטים חדשים יעלו כאן בקרוב. בינתיים, מוזמנים לצפות בבתים המאוכלסים שלנו.
+          /* Empty state, set as a plain note rather than a grey panel with a
+             giant icon — nothing is broken here, there is simply nothing to
+             publish yet, and the page should say so quietly. */
+          <Reveal className="border-y border-hairline py-16 max-w-2xl">
+            <CompassIcon size={34} className="text-clay" strokeWidth={1} />
+            <h2 className="font-headline font-black text-2xl text-primary mt-6">
+              הדמיות חדשות יעלו כאן בקרוב
+            </h2>
+            <p className="font-body text-secondary leading-relaxed mt-3 measure">
+              בינתיים מוזמנים לראות את הבתים שכבר תוכננו, נבנו ומאוכלסים.
             </p>
-            <Link href="/projects/completed" className="inline-flex items-center gap-2 mt-8 font-headline font-bold text-sm text-primary hover:text-secondary transition-colors group">
-              <span>לבתים מאוכלסים</span>
-              <span className="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
-            </Link>
-          </div>
+            <div className="mt-7">
+              <ArrowLink href="/projects/completed">לבתים מאוכלסים</ArrowLink>
+            </div>
+          </Reveal>
         )}
-      </section>
+      </Section>
 
-      {/* CTA Section */}
-      <section className="blueprint-grid bg-surface-container-low">
-        <div className="px-8 lg:px-12 py-24 md:py-32 max-w-[1920px] mx-auto text-center">
-          <h2 className="font-headline font-black text-3xl md:text-5xl text-primary mb-6">רוצים לראות את הבית שלכם כאן?</h2>
-          <p className="font-body text-secondary text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">בואו נתחיל לתכנן יחד את הבית שאתם חולמים עליו.</p>
-          <Link href="/contact" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 font-headline font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">
-            <span>בואו נדבר</span>
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-          </Link>
-        </div>
-      </section>
+      <CtaSection
+        title="רוצים לראות את הבית שלכם כאן?"
+        subtitle="בואו נתחיל לתכנן יחד את הבית שאתם חולמים עליו."
+        primaryLabel="בואו נדבר"
+      />
     </>
   );
 }

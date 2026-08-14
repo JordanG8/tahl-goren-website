@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import LeadMagnetForm from "@/components/LeadMagnetForm";
+import { ArrowIcon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
   title: "צ'ק-ליסט: מה בודקים במגרש לפני שבונים בית פרטי | טל גורן אדריכלית",
@@ -112,7 +113,7 @@ export default function PlotChecklistPage() {
                 className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 font-headline font-bold text-sm hover:bg-secondary transition-colors"
               >
                 לשיחת ייעוץ
-                <span className="material-symbols-outlined text-lg">arrow_back</span>
+                <ArrowIcon size={17} />
               </Link>
             </div>
           </div>

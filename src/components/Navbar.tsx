@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import MobileMenu from './MobileMenu';
+import { PhoneIcon, MenuIcon, InstagramIcon, FacebookIcon } from '@/components/ui/Icon';
 
 const desktopLinks = [
   { to: '/projects', label: 'פרויקטים' },
@@ -28,28 +29,32 @@ export default function Navbar() {
       setIsScrolled(window.scrollY > 20);
     };
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
       <nav
-        className={`sticky top-0 w-full z-50 transition-colors duration-500 ${
-          transparent ? 'bg-transparent' : isScrolled ? 'bg-background/95 backdrop-blur-md shadow-md' : 'bg-background shadow-sm'
+        className={`sticky top-0 w-full z-50 transition-[background-color,border-color,box-shadow] duration-700 ${
+          transparent
+            ? 'bg-transparent border-b border-transparent'
+            : isScrolled
+              ? 'bg-background/92 backdrop-blur-md border-b border-hairline'
+              : 'bg-background border-b border-hairline'
         }`}
       >
-        <div className={`flex justify-between items-center px-6 sm:px-8 max-w-[1920px] mx-auto ${isHome ? '' : 'transition-all duration-300'} ${isScrolled ? 'py-2' : 'py-4'}`}>
-          {/* Right side: logo + desktop links */}
+        <div className={`flex justify-between items-center px-6 sm:px-8 lg:px-12 max-w-[1920px] mx-auto ${isHome ? '' : 'transition-all duration-500'} ${isScrolled ? 'py-2.5' : 'py-4'}`}>
+          {/* Right side (reading edge): logo + primary navigation */}
           <div className="flex items-center gap-8 flex-shrink-0">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center" aria-label="טל גורן אדריכלית — לדף הבית">
               <Image
                 id="site-logo-navbar"
                 src="/images/logo-v2.png"
                 alt="TAL GOREN"
                 width={280}
                 height={94}
-                className={`w-auto object-contain ${isHome ? '' : 'transition-all duration-300'} ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
+                className={`w-auto object-contain ${isHome ? '' : 'transition-all duration-500'} ${isScrolled ? 'h-9 sm:h-10' : 'h-12 sm:h-16'} ${
                   transparent ? 'brightness-0 invert drop-shadow-md' : ''
                 } ${
                   // On the homepage the animated hero logo clone always stands in
@@ -63,33 +68,32 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className={`hidden lg:block w-px mx-2 transition-all duration-300 ${isScrolled ? 'h-8' : 'h-12'} ${transparent ? 'bg-white/25' : 'bg-primary/10'}`} />
+            <div className={`hidden lg:block w-px transition-all duration-500 ${isScrolled ? 'h-7' : 'h-10'} ${transparent ? 'bg-white/25' : 'bg-hairline'}`} />
 
-            <div className="hidden lg:flex gap-10 items-center font-headline font-bold uppercase tracking-wide text-base">
+            {/* Nav labels are set in the label face at a small size with wide
+                tracking, not in bold uppercase headline type. The previous
+                version also re-tracked each label on hover, which nudged every
+                item in the bar; the underline alone carries the state now. */}
+            <div className="hidden lg:flex gap-9 items-center font-label text-[13px] tracking-[0.06em]">
               {desktopLinks.map((link) => {
                 const isActive = pathname === link.to;
                 return (
                   <Link
                     key={link.to}
                     href={link.to}
-                    className={`relative group flex items-center justify-center transition-colors duration-300 ${
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`relative group py-1.5 transition-colors duration-500 ${
                       transparent
-                        ? isActive ? 'text-white' : 'text-white/80 hover:text-white'
+                        ? isActive ? 'text-white' : 'text-white/75 hover:text-white'
                         : isActive ? 'text-primary' : 'text-secondary hover:text-primary'
                     }`}
                   >
-                    <span className={`absolute whitespace-nowrap transition-all duration-500 ${
-                      isActive ? 'tracking-[0.1em]' : 'group-hover:tracking-[0.2em]'
-                    }`}>
-                      {link.label}
-                    </span>
-                    {/* Invisible spacer preserves max width so neighboring items don't shift */}
-                    <span className="invisible whitespace-nowrap tracking-[0.2em] px-1 py-1">
-                      {link.label}
-                    </span>
-                    <span className={`absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2 transition-all duration-500 ${
-                      transparent ? 'bg-white' : 'bg-primary'
-                    } ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+                    {link.label}
+                    <span
+                      className={`absolute bottom-0 right-0 h-px transition-all duration-500 ${
+                        transparent ? 'bg-white' : 'bg-clay'
+                      } ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                    />
                   </Link>
                 );
               })}
@@ -97,39 +101,49 @@ export default function Navbar() {
           </div>
 
           {/* Left side: socials + CTA + hamburger */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className={`hidden lg:flex items-center gap-4 border-e pe-4 me-1 transition-colors duration-300 ${transparent ? 'border-white/25' : 'border-outline/20'}`}>
-              <a href="https://www.facebook.com/tahlgoren" target="_blank" rel="noreferrer" className={`transition-colors ${transparent ? 'text-white/80 hover:text-white' : 'text-primary hover:text-secondary'}`} title="Facebook">
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V7.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <div className={`hidden lg:flex items-center gap-4 border-e pe-5 transition-colors duration-500 ${transparent ? 'border-white/25' : 'border-hairline'}`}>
+              <a
+                href="https://www.facebook.com/tahlgoren"
+                target="_blank"
+                rel="noreferrer"
+                className={`transition-colors duration-300 ${transparent ? 'text-white/70 hover:text-white' : 'text-ink-mute hover:text-primary'}`}
+              >
+                <FacebookIcon size={17} title="Facebook" />
               </a>
-              <a href="https://www.instagram.com/tahlgoren/" target="_blank" rel="noreferrer" className={`transition-colors ${transparent ? 'text-white/80 hover:text-white' : 'text-primary hover:text-secondary'}`} title="Instagram">
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <a
+                href="https://www.instagram.com/tahlgoren/"
+                target="_blank"
+                rel="noreferrer"
+                className={`transition-colors duration-300 ${transparent ? 'text-white/70 hover:text-white' : 'text-ink-mute hover:text-primary'}`}
+              >
+                <InstagramIcon size={17} title="Instagram" />
               </a>
             </div>
 
             <Link
               href="/contact"
-              className={`flex items-center gap-1.5 sm:gap-2 font-headline font-bold text-xs uppercase tracking-widest transition-all duration-300 px-4 sm:px-8 py-2 sm:py-2.5 ${
+              className={`flex items-center gap-2 font-headline font-bold text-[11px] sm:text-xs uppercase tracking-[0.18em] transition-colors duration-500 px-5 sm:px-8 py-2.5 sm:py-3 ${
                 transparent
-                  ? 'border border-white/70 text-white hover:bg-white hover:text-primary backdrop-blur-sm'
-                  : 'bg-primary text-white hover:opacity-80 animate-contact-glow-scale'
+                  ? 'border border-white/60 text-white hover:bg-white hover:text-primary backdrop-blur-[2px]'
+                  : 'bg-primary text-white hover:bg-clay animate-contact-glow-scale'
               }`}
-              style={!transparent ? ({ '--glow-color': 'rgba(169, 111, 87, 0.7)' } as React.CSSProperties) : undefined}
+              style={!transparent ? ({ '--glow-color': 'rgba(169, 111, 87, 0.28)' } as React.CSSProperties) : undefined}
             >
-              <span className="material-symbols-outlined text-base leading-none">call</span>
+              <PhoneIcon size={15} />
               <span>צור קשר</span>
             </Link>
 
             <button
               onClick={() => setMenuOpen(true)}
               aria-label="פתיחת תפריט"
-              className={`lg:hidden flex items-center justify-center w-11 h-11 rounded-full border transition-all duration-300 active:scale-90 ${
+              className={`lg:hidden flex items-center justify-center w-11 h-11 border transition-colors duration-300 active:scale-95 ${
                 transparent
-                  ? 'border-white/50 text-white bg-white/5 backdrop-blur-sm hover:bg-white/15'
-                  : 'border-primary/15 text-primary bg-primary/5 hover:bg-primary/10'
+                  ? 'border-white/45 text-white hover:bg-white/10'
+                  : 'border-hairline text-primary hover:bg-surface-container-low'
               }`}
             >
-              <span className="material-symbols-outlined text-2xl">menu</span>
+              <MenuIcon size={20} />
             </button>
           </div>
         </div>
