@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
-import { Assistant, Heebo, Inter } from "next/font/google";
+import { Assistant, Heebo } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { PostHogProvider } from "./providers";
@@ -10,7 +10,6 @@ import { PostHogProvider } from "./providers";
 
 const assistant = Assistant({ subsets: ['hebrew'], variable: '--font-assistant' });
 const heebo = Heebo({ subsets: ['hebrew'], variable: '--font-heebo' });
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const SITE_URL = "https://talgoren.co.il";
 const SITE_TITLE = "טל גורן אדריכלית מומלצת | תכנון ועיצוב בתים פרטיים";
@@ -128,7 +127,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable, inter.variable)}>
+    <html lang="he" dir="rtl" className={cn("font-sans", assistant.variable, heebo.variable)}>
       <head>
         {/* The Google "Material Symbols" stylesheet used to be loaded here on
             every page. It is gone: every icon on the site is now an inline SVG
@@ -136,7 +135,7 @@ export default async function RootLayout({
             third-party stylesheet plus a ~100KB variable icon font from every
             page load — and with it the flash where the browser painted the raw
             ligature text ("arrow_back", "verified") before the font arrived.
-            The remaining preconnects serve the Heebo/Assistant/Inter faces,
+            The remaining preconnects serve the Heebo and Assistant faces,
             which next/font still fetches from the Google Fonts CDN. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

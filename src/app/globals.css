@@ -45,7 +45,12 @@
 
   --font-headline: var(--font-heebo), "Heebo", sans-serif;
   --font-body: var(--font-assistant), "Assistant", sans-serif;
-  --font-label: var(--font-inter), "Inter", sans-serif;
+  /* Labels are set in Heebo, not Inter. Inter has no Hebrew coverage at all, so
+     every eyebrow, caption and chapter number on this site — nearly all of them
+     Hebrew — was silently falling back to Arial, next to headings in Heebo and
+     body in Assistant. Heebo is already loaded for headlines, carries both
+     scripts, and holds up at the small wide-tracked sizes labels use. */
+  --font-label: var(--font-heebo), "Heebo", sans-serif;
 
   /* One easing for the whole site. Everything decelerates the same way, which
      is what makes unrelated animations feel like one hand made them. */
@@ -423,4 +428,4 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   .animate-contact-glow-scale,
   .animate-contact-glow-only { animation: none; }
-}
+}
