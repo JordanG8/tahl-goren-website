@@ -28,6 +28,7 @@ const staticRoutes = [
   { url: `${BASE_URL}/packages`, lastModified: '2026-07-13T09:56:19+00:00', changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/gallery`, lastModified: '2026-07-12T00:22:07+00:00', changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE_URL}/resources/plot-checklist`, lastModified: '2026-07-13T09:56:19+00:00', changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE_URL}/resources/house-cost-calculator`, lastModified: '2026-08-27T00:00:00+00:00', changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE_URL}/testimonials`, lastModified: '2026-06-28T02:51:01+03:00', changeFrequency: 'weekly', priority: 0.7 },
   { url: `${BASE_URL}/videos`, lastModified: '2026-07-12T00:22:07+00:00', changeFrequency: 'weekly', priority: 0.6 },
   { url: `${BASE_URL}/contact`, lastModified: '2026-06-28T02:51:01+03:00', changeFrequency: 'monthly', priority: 0.8 },
