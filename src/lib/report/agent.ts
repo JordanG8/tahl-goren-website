@@ -1,6 +1,5 @@
 import { generateObject, generateText, stepCountIs, tool } from "ai";
 import { z } from "zod";
-import { describeAnswers } from "@/data/quizContent";
 import { articleSlugs, searchCorpus } from "./knowledge";
 import { sanitise } from "./sanitise";
 import { narrativeSchema, type Narrative, type QuizAnswers, type Report } from "./schema";
@@ -92,19 +91,24 @@ type AgentInput = {
   leadName: string;
 };
 
-function researchBrief({ answers, baseline, leadName }: AgentInput) {
+function researchBrief({ baseline, leadName }: AgentInput) {
+  const money = (low: number, high: number) =>
+    low === high
+      ? `${low.toLocaleString("he-IL")} ₪`
+      : `${low.toLocaleString("he-IL")}–${high.toLocaleString("he-IL")} ₪`;
+
   const costLines = baseline.costs.lines
-    .map((l) => `- ${l.label}: ${l.low.toLocaleString("he-IL")}–${l.high.toLocaleString("he-IL")} ₪`)
+    .map((l) => `- ${l.label}: ${money(l.low, l.high)}`)
     .join("\n");
 
   return `שם הפונה: ${leadName || "לא נמסר"}
 
 התשובות שנתנו בשאלון:
-${describeAnswers(answers).map((l) => `- ${l}`).join("\n")}
+${baseline.profile.map((l) => `- ${l}`).join("\n")}
 
 הנתונים שכבר חושבו (אל תשנה/י אותם, אל תצטט/י מהם ספרות חדשות):
 ${costLines}
-- סה"כ הערכה: ${baseline.costs.total.low.toLocaleString("he-IL")}–${baseline.costs.total.high.toLocaleString("he-IL")} ₪
+- סה"כ הערכה: ${money(baseline.costs.total.low, baseline.costs.total.high)}
 - משך כולל מוערך: ${baseline.timeline.totalLabel}
 - מסלול הליווי שנבחר: ${baseline.track.name} — ${baseline.track.subtitle}
 ${baseline.costs.budgetVerdict ? `- השוואה לתקציב שציינו: ${baseline.costs.budgetVerdict}` : ""}`;

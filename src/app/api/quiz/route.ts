@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
-import { quizQuestions } from "@/data/quizContent";
-import { buildBaseline, fallbackNarrative } from "@/lib/report/baseline";
+import { fallbackNarrative } from "@/lib/report/baseline";
+import { buildCalculatorBaseline } from "@/lib/report/calculatorBaseline";
+import {
+  BUILD_METHODS,
+  FLOORS,
+  REGIONS,
+  ROOF_TYPES,
+  ROOM_SIZES,
+  ROOM_TYPES,
+  MAX_ROOMS,
+  STANDARDS,
+  type RoomRow,
+  type Selections,
+} from "@/lib/houseCostCalculator";
 import { generateNarrative } from "@/lib/report/agent";
 import { renderReportPdf } from "@/lib/report/pdf";
 import { deliverReport } from "@/lib/report/email";
@@ -22,10 +34,9 @@ import type { QuizAnswers, Report } from "@/lib/report/schema";
 export const maxDuration = 60;
 export const runtime = "nodejs";
 
-const VALID = new Map(quizQuestions.map((q) => [q.id, q]));
-
 type Payload = {
   answers?: QuizAnswers;
+  rooms?: RoomRow[];
   name?: string;
   email?: string;
   phone?: string;
@@ -33,22 +44,48 @@ type Payload = {
   website?: string;
 };
 
-/** Drops anything that is not a known question with known option values. */
-function sanitiseAnswers(raw: QuizAnswers): QuizAnswers {
-  const clean: QuizAnswers = {};
-  for (const [key, value] of Object.entries(raw ?? {})) {
-    const q = VALID.get(key);
-    if (!q) continue;
-    const allowed = new Set(q.options.map((o) => o.value));
-    if (q.kind === "multi") {
-      const list = (Array.isArray(value) ? value : [value]).filter((v) => allowed.has(v));
-      if (list.length) clean[key] = list;
-    } else {
-      const single = Array.isArray(value) ? value[0] : value;
-      if (typeof single === "string" && allowed.has(single)) clean[key] = single;
-    }
-  }
-  return clean;
+/** Labels the client may send, taken from the workbook's own tables. */
+const ALLOWED = {
+  region: new Set(REGIONS.map((o) => o.label)),
+  standard: new Set(STANDARDS.map((o) => o.label)),
+  roof: new Set(ROOF_TYPES.map((o) => o.label)),
+  method: new Set(BUILD_METHODS.map((o) => o.label)),
+};
+const ALLOWED_ROOM = new Set(ROOM_TYPES.map((r) => r.label));
+const ALLOWED_SIZE = new Set(ROOM_SIZES.map((s) => s.label));
+const ALLOWED_FLOOR = new Set(FLOORS.map((f) => f.id));
+
+/**
+ * The request is untrusted, and every value it carries is a key into a pricing
+ * table. Anything not in the workbook is dropped rather than defaulted, so a
+ * tampered payload cannot conjure a factor that does not exist.
+ */
+function readSelections(raw: QuizAnswers): Selections | null {
+  const pick = (key: keyof typeof ALLOWED) => {
+    const v = raw?.[key];
+    const s = Array.isArray(v) ? v[0] : v;
+    return typeof s === "string" && ALLOWED[key].has(s) ? s : null;
+  };
+  const region = pick("region");
+  const standard = pick("standard");
+  const roofType = pick("roof");
+  const buildMethod = pick("method");
+  if (!region || !standard || !roofType || !buildMethod) return null;
+  return { region, standard, roofType, buildMethod };
+}
+
+function readRooms(raw: unknown): RoomRow[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(
+      (r): r is RoomRow =>
+        !!r &&
+        typeof r === "object" &&
+        ALLOWED_ROOM.has((r as RoomRow).type) &&
+        ALLOWED_SIZE.has((r as RoomRow).size) &&
+        ALLOWED_FLOOR.has((r as RoomRow).floor),
+    )
+    .slice(0, MAX_ROOMS);
 }
 
 async function storeLead(
@@ -104,13 +141,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_email" }, { status: 400 });
   }
 
-  const answers = sanitiseAnswers(body.answers ?? {});
-  if (Object.keys(answers).length < 3) {
+  const selections = readSelections(body.answers ?? {});
+  if (!selections) {
     return NextResponse.json({ error: "not_enough_answers" }, { status: 400 });
   }
 
-  // 1. Numbers. Deterministic, never model-authored.
-  const baseline = buildBaseline(answers);
+  const rooms = readRooms(body.rooms);
+  if (rooms.length === 0) {
+    return NextResponse.json({ error: "no_rooms" }, { status: 400 });
+  }
+
+  // Stored and shown as the visitor's answers.
+  const answers: QuizAnswers = { ...selections };
+
+  // 1. Numbers. Straight from the workbook, never model-authored.
+  const baseline = buildCalculatorBaseline(selections, rooms);
 
   // 2. Prose. Best effort — the fallback is a complete report, not an apology.
   let report: Report;
@@ -144,7 +189,7 @@ export async function POST(request: Request) {
   const lead = { name, email, phone };
 
   // 3. Persist before doing anything else that can fail.
-  await storeLead(lead, answers, report);
+  await storeLead(lead, { ...answers, rooms: rooms.map((r) => `${r.type}|${r.size}|${r.floor}`) }, report);
 
   // 4. PDF, then delivery. A failure in either still returns the report, so the
   //    results screen renders and the visitor sees their answers were not lost.
