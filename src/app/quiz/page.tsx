@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
-import QuizWizard from "./QuizWizard";
+import CalculatorWizard from "./CalculatorWizard";
 
 export const metadata: Metadata = {
   title: "כמה יעלה לבנות את הבית שלכם? | טל גורן אדריכלית",
   description:
-    "שאלון קצר של שתי דקות שמסתיים בדוח אישי: הערכת עלויות לבניית בית פרטי, לוח זמנים ריאלי לכל שלב ומסלול הליווי שמתאים לכם. ללא עלות וללא התחייבות.",
+    "מחשבון עלויות בנייה חינמי מאת אדריכלית: בונים את הבית שאלה אחר שאלה — מיקום, סטנדרט גימור, גג ושיטת בנייה — ומקבלים הערכת עלות לפי מקדמי התכנון של המשרד.",
   alternates: { canonical: "/quiz" },
   openGraph: {
-    title: "בדיקת היתכנות לבניית בית פרטי | טל גורן אדריכלית",
+    title: "כמה יעלה לבנות את הבית שלכם?",
     description:
-      "תשע שאלות קצרות, ובסוף דוח אישי עם הערכת תקציב, לוח זמנים והמלצות — ישירות למייל.",
+      "שאלון קצר עם הדמיה לכל בחירה, ובסופו הערכת עלות בנייה ומחשבון שאפשר לשחק בו.",
   },
 };
 
 export default function QuizPage() {
-  return (
-    <main className="bg-background min-h-screen">
-      <QuizWizard />
-    </main>
-  );
+  return <CalculatorWizard />;
 }

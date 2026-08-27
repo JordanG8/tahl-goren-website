@@ -429,3 +429,57 @@ p { text-wrap: pretty; }
   .animate-contact-glow-scale,
   .animate-contact-glow-only { animation: none; }
 }
+
+/* --- Calculator wizard stages -------------------------------------------
+   Each question's visual gets its own entrance, so moving between steps feels
+   like arriving somewhere new rather than swapping a panel. The motions are
+   chosen to suit what is being shown: the map settles, the finish images
+   breathe in, the roof drops onto the house, the wall section builds up in
+   layers. All of it is disabled for a visitor who has asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .stage-enter { animation: stage-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* The map settles down onto the page, the way a plan sheet is laid on a desk. */
+  .stage-region { animation: stage-settle 620ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  /* The room breathes in — a slow push, matching the cross-fade inside. */
+  .stage-standard { animation: stage-breathe 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  /* The roof arrives from above and lands. */
+  .stage-roof { animation: stage-drop 620ms cubic-bezier(0.34, 1.3, 0.5, 1) both; }
+  /* The section assembles from the middle outwards. */
+  .stage-method { animation: stage-spread 560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Individual wall layers grow up out of the base line, in order. */
+  .layer-grow {
+    transform-origin: center bottom;
+    animation: layer-grow 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* The explanation slides up under the visual once a choice is made. */
+  .stage-blurb { animation: blurb-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+
+@keyframes stage-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes stage-settle {
+  from { opacity: 0; transform: scale(1.04) translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes stage-breathe {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes stage-drop {
+  from { opacity: 0; transform: translateY(-32px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes stage-spread {
+  from { opacity: 0; transform: scaleX(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes layer-grow {
+  from { transform: scaleY(0.1); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+@keyframes blurb-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
