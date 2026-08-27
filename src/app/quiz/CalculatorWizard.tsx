@@ -8,6 +8,8 @@ import RegionStage from "./stages/RegionStage";
 import StandardStage from "./stages/StandardStage";
 import RoofStage from "./stages/RoofStage";
 import MethodStage from "./stages/MethodStage";
+import RoomsStage from "./stages/RoomsStage";
+import type { RoomRow } from "@/lib/houseCostCalculator";
 
 /**
  * The house-profile wizard.
@@ -25,6 +27,9 @@ const STORAGE_KEY = "tg-calculator-v1";
 
 type Answers = Partial<Record<StepId, string>>;
 
+/** The rooms step sits after the four house-profile questions. */
+const TOTAL = steps.length + 1;
+
 const STAGES = {
   region: RegionStage,
   standard: StandardStage,
@@ -35,13 +40,14 @@ const STAGES = {
 export default function CalculatorWizard() {
   // Progress is one value so that restoring it is a single write rather than a
   // chain of them.
-  const [progress, setProgress] = useState<{ index: number; answers: Answers }>({
-    index: 0,
-    answers: {},
-  });
+  const [progress, setProgress] = useState<{
+    index: number;
+    answers: Answers;
+    rooms: RoomRow[];
+  }>({ index: 0, answers: {}, rooms: [] });
   const [restored, setRestored] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const { index, answers } = progress;
+  const { index, answers, rooms } = progress;
 
   // The page is server-rendered, so saved progress cannot be read until the
   // client is running — this has to happen in an effect. The lint rule guards
@@ -51,11 +57,16 @@ export default function CalculatorWizard() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const saved = JSON.parse(raw) as { answers?: Answers; index?: number };
+        const saved = JSON.parse(raw) as {
+          answers?: Answers;
+          index?: number;
+          rooms?: RoomRow[];
+        };
         // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot restore on mount
         setProgress({
-          index: Math.min(Math.max(saved.index ?? 0, 0), steps.length - 1),
+          index: Math.min(Math.max(saved.index ?? 0, 0), TOTAL - 1),
           answers: saved.answers ?? {},
+          rooms: Array.isArray(saved.rooms) ? saved.rooms : [],
         });
       }
     } catch {
@@ -79,19 +90,26 @@ export default function CalculatorWizard() {
     headingRef.current?.focus();
   }, [index]);
 
-  const step = steps[index];
-  const value = answers[step.id] ?? null;
-  const answered = Boolean(value);
-  const isLast = index === steps.length - 1;
-  const Stage = STAGES[step.id];
+  // The last screen is the room builder rather than a house-profile question.
+  const onRooms = index === steps.length;
+  const step = onRooms ? null : steps[index];
+  const value = step ? answers[step.id] ?? null : null;
+  const answered = onRooms ? rooms.length > 0 : Boolean(value);
+  const isLast = index === TOTAL - 1;
+  const Stage = step ? STAGES[step.id] : null;
 
   const choose = (label: string) =>
-    setProgress((p) => ({ ...p, answers: { ...p.answers, [step.id]: label } }));
+    setProgress((p) =>
+      step ? { ...p, answers: { ...p.answers, [step.id]: label } } : p,
+    );
+
+  const setRooms = (next: RoomRow[]) =>
+    setProgress((p) => ({ ...p, rooms: next }));
 
   const go = (delta: number) =>
     setProgress((p) => ({
       ...p,
-      index: Math.min(Math.max(p.index + delta, 0), steps.length - 1),
+      index: Math.min(Math.max(p.index + delta, 0), TOTAL - 1),
     }));
 
   return (
@@ -100,21 +118,21 @@ export default function CalculatorWizard() {
       <header className="shrink-0 border-b border-hairline bg-background">
         <div
           className="h-[3px] bg-clay transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-          style={{ width: `${((index + 1) / steps.length) * 100}%` }}
+          style={{ width: `${((index + 1) / TOTAL) * 100}%` }}
           role="progressbar"
           aria-valuenow={index + 1}
           aria-valuemin={1}
-          aria-valuemax={steps.length}
+          aria-valuemax={TOTAL}
           aria-label="התקדמות בשאלון"
         />
         <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 py-5 sm:py-6">
           <div className="flex items-center gap-4 mb-3">
             <span dir="ltr" className="font-label font-semibold text-[13px] tracking-[0.14em] text-clay">
-              {String(index + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
+              {String(index + 1).padStart(2, "0")} / {String(TOTAL).padStart(2, "0")}
             </span>
             <span className="h-px w-8 bg-hairline" />
             <span className="font-label font-medium text-[13px] uppercase tracking-[0.14em] text-ink-mute">
-              {step.eyebrow}
+              {step ? step.eyebrow : "תוכנית החדרים"}
             </span>
           </div>
           <h1
@@ -122,20 +140,27 @@ export default function CalculatorWizard() {
             tabIndex={-1}
             className="font-headline font-black text-2xl sm:text-4xl lg:text-5xl text-primary tracking-tight leading-[1.05] outline-none"
           >
-            {step.title}
+            {step ? step.title : "אילו חדרים יהיו בבית?"}
           </h1>
-          {step.hint && (
-            <p className="font-body text-[15px] sm:text-base text-secondary mt-2.5 measure">
-              {step.hint}
-            </p>
-          )}
+          <p className="font-body text-[15px] sm:text-base text-secondary mt-2.5 measure">
+            {step
+              ? step.hint
+              : "כל גודל מצויר בקנה מידה אמיתי, עם ריהוט — כדי שתראו מה נכנס לחדר לפני שתבחרו."}
+          </p>
         </div>
       </header>
 
       {/* ---------- The visualisation ---------- */}
       <main className="flex-1 min-h-0 max-w-[1500px] w-full mx-auto px-6 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div key={step.id} className={`stage-enter stage-${step.id}`}>
-          <Stage options={step.options} value={value} onChange={choose} />
+        <div
+          key={step?.id ?? "rooms"}
+          className={`stage-enter stage-${step?.id ?? "rooms"}`}
+        >
+          {step && Stage ? (
+            <Stage options={step.options} value={value} onChange={choose} />
+          ) : (
+            <RoomsStage rooms={rooms} onChange={setRooms} />
+          )}
         </div>
       </main>
 
@@ -160,13 +185,13 @@ export default function CalculatorWizard() {
             disabled={!answered || isLast}
             className="group inline-flex items-center gap-3 px-10 sm:px-14 py-3.5 sm:py-4 bg-primary text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-clay disabled:opacity-30 disabled:pointer-events-none"
           >
-            {isLast ? "לתוכנית החדרים" : "הבא"}
+            {index === steps.length - 1 ? "לתוכנית החדרים" : isLast ? "לסיכום" : "הבא"}
             <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
           </button>
         </div>
         {!answered && (
           <p className="pb-4 text-center font-body text-[13px] text-ink-mute">
-            בחרו אפשרות כדי להמשיך
+            {onRooms ? "הוסיפו לפחות חדר אחד כדי להמשיך" : "בחרו אפשרות כדי להמשיך"}
           </p>
         )}
       </footer>
