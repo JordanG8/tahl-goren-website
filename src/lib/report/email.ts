@@ -18,7 +18,14 @@ const escapeHtml = (input: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-const FROM = process.env.CONTACT_FROM_EMAIL ?? "טל גורן אדריכלית <onboarding@resend.dev>";
+/**
+ * Same env var, and the same default shape, as `sendNotificationEmail` — the
+ * two senders should never disagree about who the site sends mail as. The old
+ * default here was `onboarding@resend.dev`, which is Resend's sandbox address
+ * and is not a valid Brevo sender at all.
+ */
+const FROM =
+  process.env.CONTACT_FROM_EMAIL ?? "טל גורן אדריכלית <tahl.goren.arch@gmail.com>";
 
 type SendArgs = {
   to: string[];
@@ -32,29 +39,13 @@ async function send(args: SendArgs): Promise<{ ok: boolean; error?: string }> {
   const brevoKey = process.env.BREVO_API_KEY;
   const resendKey = process.env.RESEND_API_KEY;
 
+  // Brevo is tried first, for the reason given in sendNotificationEmail: its
+  // senders are verified by emailed code rather than by DNS, so it can mail
+  // anyone. Resend on an unverified domain will only deliver to the account
+  // owner's own address — which is invisible on the contact form, because that
+  // form only ever mails the owner, but fatal here, where the whole point is to
+  // send a report to whoever filled the thing in.
   try {
-    if (resendKey) {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${resendKey}`,
-        },
-        body: JSON.stringify({
-          from: FROM,
-          to: args.to,
-          reply_to: args.replyTo,
-          subject: args.subject,
-          html: args.html,
-          attachments: args.attachment
-            ? [{ filename: args.attachment.filename, content: args.attachment.content }]
-            : undefined,
-        }),
-      });
-      if (!res.ok) return { ok: false, error: `resend ${res.status} ${await res.text()}` };
-      return { ok: true };
-    }
-
     if (brevoKey) {
       const match = FROM.match(/^\s*(.*?)\s*<\s*([^>]+)\s*>\s*$/);
       const sender = match
@@ -79,6 +70,28 @@ async function send(args: SendArgs): Promise<{ ok: boolean; error?: string }> {
         }),
       });
       if (!res.ok) return { ok: false, error: `brevo ${res.status} ${await res.text()}` };
+      return { ok: true };
+    }
+
+    if (resendKey) {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${resendKey}`,
+        },
+        body: JSON.stringify({
+          from: FROM,
+          to: args.to,
+          reply_to: args.replyTo,
+          subject: args.subject,
+          html: args.html,
+          attachments: args.attachment
+            ? [{ filename: args.attachment.filename, content: args.attachment.content }]
+            : undefined,
+        }),
+      });
+      if (!res.ok) return { ok: false, error: `resend ${res.status} ${await res.text()}` };
       return { ok: true };
     }
 

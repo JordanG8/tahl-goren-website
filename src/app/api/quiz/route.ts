@@ -197,6 +197,15 @@ export async function POST(request: Request) {
   };
   try {
     delivery = await deliverReport(report, lead, pdf);
+    // A silent delivery failure is the worst kind: the visitor is told the
+    // report is on its way, the owner never sees the lead, and nothing in the
+    // logs says why. The provider's own error text is the only thing that
+    // distinguishes "no key configured" from "sender not verified".
+    if (!delivery.leadEmailed || !delivery.ownerNotified) {
+      console.error(
+        `[quiz] delivery incomplete — lead:${delivery.leadEmailed} owner:${delivery.ownerNotified} ${delivery.error ?? ""}`,
+      );
+    }
   } catch (err) {
     console.error("[quiz] delivery failed", err);
   }
