@@ -119,8 +119,6 @@ export type Report = {
   recommendations: { title: string; body: string }[];
   watchouts: string[];
   readingList: { title: string; slug: string; why: string }[];
-  /** True when the prose came from the model rather than the fallback. */
-  aiAuthored: boolean;
 };
 
 export type QuizAnswers = Record<string, string | string[]>;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
-import { fallbackNarrative } from "@/lib/report/baseline";
+import { buildNarrative } from "@/lib/report/baseline";
 import { buildCalculatorBaseline } from "@/lib/report/calculatorBaseline";
 import {
   BUILD_METHODS,
@@ -14,7 +14,6 @@ import {
   type RoomRow,
   type Selections,
 } from "@/lib/houseCostCalculator";
-import { generateNarrative } from "@/lib/report/agent";
 import { renderReportPdf } from "@/lib/report/pdf";
 import { deliverReport } from "@/lib/report/email";
 import type { QuizAnswers, Report } from "@/lib/report/schema";
@@ -29,9 +28,10 @@ import type { QuizAnswers, Report } from "@/lib/report/schema";
  * gateway is down, out of credits, or slow.
  */
 
-// The agent does a tool loop plus a structured-output call, then renders a PDF.
-// The platform default (10s) is not enough; 60s is the Hobby-plan ceiling.
-export const maxDuration = 60;
+// Renders a PDF, stores the lead and sends two emails. All fast and all
+// deterministic — the platform default of 10s is the only thing that is not
+// enough.
+export const maxDuration = 30;
 export const runtime = "nodejs";
 
 type Payload = {
@@ -110,7 +110,7 @@ async function storeLead(
       INSERT INTO quiz_leads (name, email, phone, answers, report, ai_authored)
       VALUES (
         ${lead.name}, ${lead.email}, ${lead.phone},
-        ${JSON.stringify(answers)}, ${JSON.stringify(report)}, ${report.aiAuthored}
+        ${JSON.stringify(answers)}, ${JSON.stringify(report)}, false
       )
     `;
     return true;
@@ -157,34 +157,24 @@ export async function POST(request: Request) {
   // 1. Numbers. Straight from the workbook, never model-authored.
   const baseline = buildCalculatorBaseline(selections, rooms);
 
-  // 2. Prose. Best effort — the fallback is a complete report, not an apology.
-  let report: Report;
-  try {
-    const narrative = await generateNarrative({ answers, baseline, leadName: name });
-    report = {
-      ...baseline,
-      headline: narrative.headline,
-      summary: narrative.summary,
-      recommendations: narrative.recommendations,
-      watchouts: narrative.watchouts,
-      readingList: narrative.readingList,
-      track: { ...baseline.track, reason: narrative.trackReason },
-      aiAuthored: true,
-    };
-  } catch (err) {
-    console.error("[quiz] narrative generation failed, using fallback", err);
-    const fb = fallbackNarrative(answers, baseline);
-    report = {
-      ...baseline,
-      headline: fb.headline,
-      summary: fb.summary,
-      recommendations: fb.recommendations,
-      watchouts: fb.watchouts,
-      readingList: fb.readingList,
-      track: { ...baseline.track, reason: fb.trackReason },
-      aiAuthored: false,
-    };
-  }
+  // 2. Prose. Written from the same answers, by rule.
+  //
+  //    This used to call a language model. It does not any more: the whole
+  //    point of this tool is that it is the office's calculator, and a
+  //    calculator that phones a model is slower, costs money per submission,
+  //    can fail, and can be argued with. Everything the report says is now
+  //    derived from the visitor's own selections, so it is instant, free, and
+  //    identical for identical input.
+  const words = buildNarrative(selections, rooms, baseline);
+  const report: Report = {
+    ...baseline,
+    headline: words.headline,
+    summary: words.summary,
+    recommendations: words.recommendations,
+    watchouts: words.watchouts,
+    readingList: words.readingList,
+    track: { ...baseline.track, reason: words.trackReason },
+  };
 
   const lead = { name, email, phone };
 

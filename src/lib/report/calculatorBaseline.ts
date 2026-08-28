@@ -102,7 +102,7 @@ const TIMELINE = {
 export function buildCalculatorBaseline(
   selections: Selections,
   rooms: RoomRow[],
-): Omit<Report, "aiAuthored"> {
+): Report {
   const result = calculate(rooms, selections);
   const pkg = trackForStandard(selections.standard);
 

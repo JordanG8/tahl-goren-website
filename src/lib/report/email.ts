@@ -162,7 +162,6 @@ function ownerHtml(report: Report, lead: QuizLead) {
   return `<div style="font-family:Arial,sans-serif;direction:rtl;text-align:right;color:#2E4250;">
     <h2 style="margin:0 0 6px;">ליד חדש מהשאלון באתר</h2>
     <p style="color:#666;margin:0 0 20px;font-size:14px;">
-      ${report.aiAuthored ? "הדוח נכתב על ידי המודל." : "הדוח נוצר במסלול הגיבוי (ללא AI)."}
     </p>
 
     <p style="font-size:16px;">
