@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import RoomPlan, { roomDimensions } from "@/components/RoomPlan";
+import RoomPlan from "@/components/RoomPlan";
 import { roomPlans } from "@/data/roomPlans";
 import {
   FLOORS,
@@ -126,23 +126,17 @@ export default function RoomsStage({
                     type={openRoom.label}
                     area={area}
                     frame={frame}
+                    showDims={false}
                     decorative
                     className="w-full h-[22vh] min-h-[150px]"
                   />
                   <span className="mt-2 font-headline font-bold text-[15px] text-primary">
                     {size.label}
                   </span>
-                  <span className="font-body text-[13px] text-secondary tabular-nums">
-                    {area.toLocaleString("he-IL", { maximumFractionDigits: 1 })} מ&quot;ר
-                  </span>
-                  {/* The drawing carries the dimensions visually and is marked
-                      decorative, so they are stated here for anyone not seeing it. */}
-                  <span className="sr-only">
-                    {(() => {
-                      const d = roomDimensions(openRoom.label, area);
-                      return d ? `${d.w.toFixed(1)} על ${d.d.toFixed(1)} מטר` : "";
-                    })()}
-                  </span>
+                  {/* Deliberately no area or dimensions: the drawings show the
+                      difference in size, and the underlying figures are the
+                      office's own pricing model rather than something to
+                      publish. The visitor's decision is small or large. */}
                   <span className="mt-2 font-label text-[12px] font-medium uppercase tracking-[0.12em] text-clay opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     הוסיפו +
                   </span>

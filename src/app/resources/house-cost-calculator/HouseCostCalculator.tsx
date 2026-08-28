@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   BUILD_METHODS,
-  COST_PER_SQM,
   DISCLAIMERS,
   FLOORS,
   MAX_ROOMS,
@@ -19,6 +18,7 @@ import {
   type RoomRow,
 } from "@/lib/houseCostCalculator";
 import { ArrowIcon } from "@/components/ui/Icon";
+import ReportRequest from "./ReportRequest";
 
 /**
  * The build-cost calculator.
@@ -28,13 +28,18 @@ import { ArrowIcon } from "@/components/ui/Icon";
  * a floor — and the estimate updates as they go, using exactly the factors the
  * office uses internally.
  *
- * The working is deliberately on show. A single number with no derivation
- * invites the reader either to over-trust it or to dismiss it; the areas per
- * floor and each factor in the product are listed so they can see what is
- * driving the price and what would move it.
+ * The working is deliberately NOT on show. The factor stack — the rate per m²,
+ * the regional and standard multipliers, the per-room base areas, the marginal
+ * band by house size — is the practice's own pricing model, built over years,
+ * and publishing it would hand a competitor the whole method. It runs in the
+ * background and the visitor sees what they came for: a number, and what to do
+ * next.
+ *
+ * It is also what the visitor actually wants. Nobody choosing between a small
+ * and a large bedroom wants to audit a coefficient; they want to know roughly
+ * what the house costs and whether it is worth a conversation.
  */
 
-const area = (n: number) => `${n.toLocaleString("he-IL", { maximumFractionDigits: 1 })} מ"ר`;
 const shekels = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
 
 /** A starting house, so the page opens with something to read rather than an empty table. */
@@ -101,7 +106,6 @@ export default function HouseCostCalculator() {
   const [roofType, setRoofType] = useState(ROOF_TYPES[0].label);
   const [buildMethod, setBuildMethod] = useState(BUILD_METHODS[0].label);
   const [rooms, setRooms] = useState<RoomRow[]>(INITIAL_ROOMS);
-  const [newRoom, setNewRoom] = useState(ROOM_TYPES[0].label);
 
   const result = useMemo(
     () => calculate(rooms, { region, standard, roofType, buildMethod }),
@@ -116,7 +120,7 @@ export default function HouseCostCalculator() {
 
   const addRoom = () => {
     if (rooms.length >= MAX_ROOMS) return;
-    setRooms((rs) => [...rs, { type: newRoom, size: "סטנדרטי", floor: "ground" }]);
+    setRooms((rs) => [...rs, { type: ROOM_TYPES[0].label, size: "סטנדרטי", floor: "ground" }]);
   };
 
   const full = rooms.length >= MAX_ROOMS;
@@ -155,45 +159,12 @@ export default function HouseCostCalculator() {
             </div>
 
             <p className="font-body text-secondary leading-relaxed measure mb-8">
-              לכל חדר יש שטח בסיס מקובל. בחרו את גודלו ואת הקומה שבה הוא נמצא — קומת המרתף
-              יקרה יותר לבנייה, וקומה עליונה מעט זולה יותר.
+              הוסיפו את החדרים שאתם רוצים בבית, ולכל אחד בחרו גודל וקומה. ההערכה מתעדכנת מיד.
             </p>
-
-            {/* Add-a-room control. */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8 p-5 bg-surface-container-low border border-hairline">
-              <div className="flex-1 min-w-0">
-                <label htmlFor="new-room" className={labelClass}>
-                  הוספת חדר
-                </label>
-                <select
-                  id="new-room"
-                  value={newRoom}
-                  onChange={(e) => setNewRoom(e.target.value)}
-                  className={selectClass}
-                  disabled={full}
-                >
-                  {ROOM_TYPES.map((r) => (
-                    <option key={r.label} value={r.label}>
-                      {r.label} — {r.baseArea} מ&quot;ר
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="sm:self-end">
-                <button
-                  type="button"
-                  onClick={addRoom}
-                  disabled={full}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-[0.7rem] bg-primary text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-clay disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-primary"
-                >
-                  הוסיפו
-                </button>
-              </div>
-            </div>
 
             {full && (
               <p className="font-body text-[14px] text-clay mb-6">
-                הגעתם ל-{MAX_ROOMS} חדרים — המספר המרבי בתחשיב.
+                הגעתם ל-{MAX_ROOMS} חדרים — המספר המרבי.
               </p>
             )}
 
@@ -203,25 +174,14 @@ export default function HouseCostCalculator() {
               </p>
             ) : (
               <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
-                <table className="w-full min-w-[540px] border-collapse">
+                <table className="w-full min-w-[420px] border-collapse">
                   <thead>
                     <tr className="border-b border-hairline">
-                      {/* The base area is dropped on narrow screens. It is the one
-                          column the reader can do without — it is already shown in
-                          the add-a-room list — and cutting it keeps the calculated
-                          area on screen instead of behind a horizontal scroll. */}
-                      {[
-                        ["החדר", ""],
-                        ["שטח בסיס", "hidden sm:table-cell"],
-                        ["גודל", ""],
-                        ["קומה", ""],
-                        ["שטח לתחשיב", ""],
-                        ["", ""],
-                      ].map(([h, cls], i) => (
+                      {["החדר", "גודל", "קומה", ""].map((h, i) => (
                         <th
                           key={i}
                           scope="col"
-                          className={`text-start font-label font-medium text-[12px] uppercase tracking-[0.14em] text-ink-mute pb-3 px-2 ${cls}`}
+                          className="text-start font-label font-medium text-[12px] uppercase tracking-[0.14em] text-ink-mute pb-3 px-2"
                         >
                           {h}
                         </th>
@@ -229,75 +189,80 @@ export default function HouseCostCalculator() {
                     </tr>
                   </thead>
                   <tbody>
-                    {rooms.map((room, i) => {
-                      const row = result.rooms[i];
-                      return (
-                        <tr key={i} className="border-b border-hairline/60 align-middle">
-                          <td className="py-3 px-2 w-[30%]">
-                            <select
-                              aria-label={`סוג החדר בשורה ${i + 1}`}
-                              value={room.type}
-                              onChange={(e) => updateRoom(i, { type: e.target.value })}
-                              className={selectClass}
-                            >
-                              {ROOM_TYPES.map((r) => (
-                                <option key={r.label} value={r.label}>
-                                  {r.label}
-                                </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td className="hidden sm:table-cell py-3 px-2 font-body text-[15px] text-secondary tabular-nums whitespace-nowrap">
-                            {area(row.baseArea)}
-                          </td>
-                          <td className="py-3 px-2 w-[19%]">
-                            <select
-                              aria-label={`גודל החדר בשורה ${i + 1}`}
-                              value={room.size}
-                              onChange={(e) => updateRoom(i, { size: e.target.value })}
-                              className={selectClass}
-                            >
-                              {ROOM_SIZES.map((s) => (
-                                <option key={s.label} value={s.label}>
-                                  {s.label}
-                                </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td className="py-3 px-2 w-[21%]">
-                            <select
-                              aria-label={`הקומה של החדר בשורה ${i + 1}`}
-                              value={room.floor}
-                              onChange={(e) => updateRoom(i, { floor: e.target.value as FloorId })}
-                              className={selectClass}
-                            >
-                              {FLOORS.map((f) => (
-                                <option key={f.id} value={f.id}>
-                                  {f.label}
-                                </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td className="py-3 px-2 font-body font-semibold text-[15px] text-primary tabular-nums whitespace-nowrap">
-                            {area(row.weightedArea)}
-                          </td>
-                          <td className="py-3 px-2 text-end">
-                            <button
-                              type="button"
-                              onClick={() => removeRoom(i)}
-                              aria-label={`הסירו את ${room.type} משורה ${i + 1}`}
-                              className="text-ink-mute hover:text-clay transition-colors duration-300 text-2xl leading-none px-2 py-1"
-                            >
-                              ×
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {rooms.map((room, i) => (
+                      <tr key={i} className="border-b border-hairline/60 align-middle">
+                        <td className="py-2.5 px-2 w-[44%]">
+                          <select
+                            aria-label={`סוג החדר בשורה ${i + 1}`}
+                            value={room.type}
+                            onChange={(e) => updateRoom(i, { type: e.target.value })}
+                            className={selectClass}
+                          >
+                            {ROOM_TYPES.map((r) => (
+                              <option key={r.label} value={r.label}>
+                                {r.label}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="py-2.5 px-2 w-[24%]">
+                          <select
+                            aria-label={`גודל החדר בשורה ${i + 1}`}
+                            value={room.size}
+                            onChange={(e) => updateRoom(i, { size: e.target.value })}
+                            className={selectClass}
+                          >
+                            {ROOM_SIZES.map((s) => (
+                              <option key={s.label} value={s.label}>
+                                {s.label}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="py-2.5 px-2 w-[26%]">
+                          <select
+                            aria-label={`הקומה של החדר בשורה ${i + 1}`}
+                            value={room.floor}
+                            onChange={(e) => updateRoom(i, { floor: e.target.value as FloorId })}
+                            className={selectClass}
+                          >
+                            {FLOORS.map((f) => (
+                              <option key={f.id} value={f.id}>
+                                {f.label}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="py-2.5 px-2 text-end">
+                          <button
+                            type="button"
+                            onClick={() => removeRoom(i)}
+                            aria-label={`הסירו את ${room.type} משורה ${i + 1}`}
+                            className="text-ink-mute hover:text-clay transition-colors duration-300 text-2xl leading-none px-2 py-1"
+                          >
+                            ×
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             )}
+
+            {/* Adding a room is one press. The old version made the visitor
+                pick a type from a separate list before they could add
+                anything, which is a decision they can just as easily make on
+                the row itself. */}
+            <button
+              type="button"
+              onClick={addRoom}
+              disabled={full}
+              className="mt-4 group inline-flex items-center gap-2.5 px-6 py-3 border border-dashed border-hairline text-primary font-headline font-bold text-[15px] transition-colors duration-300 hover:border-clay hover:text-clay disabled:opacity-40 disabled:pointer-events-none"
+            >
+              <span className="text-xl leading-none">+</span>
+              הוסיפו חדר
+            </button>
           </section>
         </div>
 
@@ -312,7 +277,7 @@ export default function HouseCostCalculator() {
               <p className="font-body text-white/80 leading-relaxed mt-5">
                 {rooms.length === 0
                   ? "הוסיפו חדרים כדי לראות הערכת עלות."
-                  : `הבית שתכננתם גדול מ-${SIZE_BANDS[SIZE_BANDS.length - 1].upTo} מ"ר, ומעבר לכך טבלת המקדמים אינה מגדירה עלות שולית. נשמח לתת הערכה אישית.`}
+                  : `הבית שתכננתם גדול מ-${SIZE_BANDS[SIZE_BANDS.length - 1].upTo} מ"ר. בהיקף כזה נעדיף לתת הערכה אישית — נשמח שתשאירו פרטים.`}
               </p>
             ) : (
               <>
@@ -320,61 +285,19 @@ export default function HouseCostCalculator() {
                   {shekels(result.total)}
                 </div>
                 <p className="font-body text-[14px] text-white/60 mt-3 leading-relaxed">
-                  כולל מע&quot;מ · מעוגל ל-20,000 ₪ הקרובים
+                  לבית של כ-{Math.round(result.totalArea).toLocaleString("he-IL")} מ&quot;ר · כולל מע&quot;מ
                 </p>
               </>
             )}
-
-            <div className="h-px bg-white/15 my-7" />
-
-            {/* Areas per floor — the workbook's D16:D20. */}
-            <dl className="space-y-2.5 font-body text-[15px]">
-              {FLOORS.map((f) =>
-                result.floorAreas[f.id] > 0 ? (
-                  <div key={f.id} className="flex justify-between gap-4">
-                    <dt className="text-white/65">{f.label}</dt>
-                    <dd className="tabular-nums">{area(result.floorAreas[f.id])}</dd>
-                  </div>
-                ) : null,
-              )}
-              <div className="flex justify-between gap-4 pt-2.5 border-t border-white/15 font-semibold">
-                <dt>סה&quot;כ שטח הבית</dt>
-                <dd className="tabular-nums">{area(result.totalArea)}</dd>
-              </div>
-              <div className="flex justify-between gap-4">
-                <dt className="text-white/65">שטח לתחשיב (כולל מעברים וקירות)</dt>
-                <dd className="tabular-nums">{area(result.chargeableArea)}</dd>
-              </div>
-            </dl>
           </div>
 
-          {/* The factors, so the number above is inspectable rather than magic. */}
-          <div className="bg-surface border border-hairline border-t-0 p-8">
-            <span className="font-label font-medium text-[12px] uppercase tracking-[0.14em] text-ink-mute">
-              המקדמים בתחשיב
-            </span>
-            <dl className="space-y-2.5 font-body text-[15px] mt-5">
-              {[
-                ['עלות בניה למ"ר', shekels(COST_PER_SQM)],
-                ["מיקום גאוגרפי", `×${result.regionFactor}`],
-                ["סטנדרט הבניה", `×${result.standardFactor}`],
-                ["סוג הגג", `×${result.roofFactor}`],
-                ["שיטת הבניה", `×${result.methodFactor}`],
-                [
-                  "עלות שולית לפי גודל",
-                  result.sizeBand ? `×${result.sizeBand.factor}` : "—",
-                ],
-              ].map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-4">
-                  <dt className="text-secondary">{k}</dt>
-                  {/* The factors are LTR expressions ("×1.03"); without the
-                      isolate, RTL reordering renders them as "1.03×". */}
-                  <dd className="text-primary font-medium tabular-nums" dir="ltr">
-                    {v}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+          {/* This is what the page is for. */}
+          <div className="mt-4">
+            <ReportRequest
+              selections={{ region, standard, roofType, buildMethod }}
+              rooms={rooms}
+              disabled={result.total === null}
+            />
           </div>
 
           <div className="mt-8">

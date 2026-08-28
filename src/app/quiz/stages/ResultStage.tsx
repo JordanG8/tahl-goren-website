@@ -36,7 +36,7 @@ export default function ResultStage({
         </div>
         {report.costs.assumedSqm && (
           <p className="font-body text-[15px] text-white/65 mt-3">
-            לבית של {report.costs.assumedSqm.toLocaleString("he-IL")} מ&quot;ר לתחשיב, כולל מע&quot;מ
+            לבית של כ-{report.costs.assumedSqm.toLocaleString("he-IL")} מ&quot;ר, כולל מע&quot;מ
           </p>
         )}
 

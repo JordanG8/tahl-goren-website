@@ -14,20 +14,6 @@ import { roomPlans, type Anchor, type Item } from "@/data/roomPlans";
 
 const WALL = 0.12; // wall thickness in metres, drawn for weight rather than accuracy
 
-/**
- * The room's width and depth, in metres, for a given area.
- *
- * Exported so callers can state the dimensions in text as well as in the
- * drawing — the drawing is marked decorative inside controls, and the size of
- * the room is too important to exist only as pixels.
- */
-export function roomDimensions(type: string, area: number) {
-  const plan = roomPlans[type];
-  if (!plan) return null;
-  const d = Math.sqrt(area / plan.aspect);
-  return { w: area / d, d };
-}
-
 /** Places one piece against its anchor, inset from the wall. */
 function place(item: Item, W: number, D: number) {
   const m = 0.08; // clearance from the wall face

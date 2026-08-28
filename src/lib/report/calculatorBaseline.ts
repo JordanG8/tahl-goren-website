@@ -1,6 +1,5 @@
 import { packages } from "@/data/packagesContent";
 import {
-  COST_PER_SQM,
   FLOORS,
   ROOM_SIZES,
   calculate,
@@ -119,7 +118,7 @@ export function buildCalculatorBaseline(
       label: "בנייה וגמר",
       low: build,
       high: build,
-      note: `${result.chargeableArea.toLocaleString("he-IL", { maximumFractionDigits: 0 })} מ"ר לתחשיב, לפי ${COST_PER_SQM.toLocaleString("he-IL")} ₪ למ"ר כולל מע"מ`,
+      note: `כ-${result.chargeableArea.toLocaleString("he-IL", { maximumFractionDigits: 0 })} מ"ר בנוי, כולל מע"מ`,
     });
 
     const consultants = round(build * CONSULTANTS_RATE);

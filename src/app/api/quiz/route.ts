@@ -216,5 +216,9 @@ export async function POST(request: Request) {
     report,
     emailed: delivery.leadEmailed,
     hasPdf: pdf !== null,
+    // The document travels back with the response as well as by email. A
+    // missing mail provider, a bounced address or an over-eager spam filter
+    // should not be able to swallow the one thing the visitor asked for.
+    pdf: pdf ? Buffer.from(pdf).toString("base64") : null,
   });
 }
