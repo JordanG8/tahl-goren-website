@@ -16,7 +16,7 @@ import {
 
 const navLinks = [
   { to: '/', label: 'עמוד הבית' },
-  { to: '/quiz', label: 'בדיקת היתכנות' },
+  { to: '/resources/house-cost-calculator', label: 'מחשבון עלויות' },
   { to: '/projects', label: 'פרויקטים' },
   { to: '/about', label: 'אודות' },
   // "מסלולים ומחירים" now lives inside the Services page rather than the top nav.

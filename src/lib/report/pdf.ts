@@ -3,7 +3,7 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { drawBidiText, drawBidiTextLeft, measureBidiText } from "./rtl";
-import type { Report, QuizLead } from "./schema";
+import type { Report, ReportLead } from "./schema";
 
 /**
  * The PDF report.
@@ -146,7 +146,7 @@ class Layout {
 
 const shekels = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
 
-function drawCover(L: Layout, report: Report, lead: QuizLead) {
+function drawCover(L: Layout, report: Report, lead: ReportLead) {
   const { page, fonts } = L;
 
   // Ink band across the top, with the report title reversed out of it.
@@ -303,7 +303,7 @@ function drawFooters(doc: PDFDocument, fonts: Fonts) {
   });
 }
 
-export async function renderReportPdf(report: Report, lead: QuizLead): Promise<Uint8Array> {
+export async function renderReportPdf(report: Report, lead: ReportLead): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
 

@@ -121,9 +121,9 @@ export type Report = {
   readingList: { title: string; slug: string; why: string }[];
 };
 
-export type QuizAnswers = Record<string, string | string[]>;
+export type CalculatorAnswers = Record<string, string | string[]>;
 
-export type QuizLead = {
+export type ReportLead = {
   name: string;
   email: string;
   phone?: string;

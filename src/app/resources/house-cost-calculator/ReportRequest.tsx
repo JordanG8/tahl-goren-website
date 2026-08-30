@@ -44,7 +44,7 @@ export default function ReportRequest({
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/quiz", {
+      const res = await fetch("/api/cost-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

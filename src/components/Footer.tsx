@@ -6,7 +6,7 @@ import { trackLead } from '@/lib/trackLead';
 import { InstagramIcon, FacebookIcon, YoutubeIcon } from '@/components/ui/Icon';
 
 const NAV = [
-  { href: '/quiz', label: 'בדיקת היתכנות' },
+  { href: '/resources/house-cost-calculator', label: 'מחשבון עלויות' },
   { href: '/projects', label: 'פרויקטים' },
   { href: '/about', label: 'אודות' },
   { href: '/services', label: 'שירותים' },

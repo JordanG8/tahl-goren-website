@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // tracer cannot see a path built with path.join at runtime, so the files
   // would be missing from the deployed function bundle without this.
   outputFileTracingIncludes: {
-    "/api/quiz": ["./src/lib/report/fonts/**"],
+    "/api/cost-report": ["./src/lib/report/fonts/**"],
   },
 
   async redirects() {
@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
         destination: "https://talgoren.co.il/:path*",
         permanent: true,
       },
+      // The feasibility quiz has been replaced by the build-cost calculator,
+      // which answers the same question without the questionnaire. The old URL
+      // was linked from the nav and the packages page, so it is redirected
+      // rather than left to 404.
+      { source: "/quiz", destination: "/resources/house-cost-calculator", permanent: true },
       // Articles (old Hebrew slugs → new)
       { source: "/%D7%A2%D7%9C%D7%95%D7%99%D7%95%D7%AA-%D7%91%D7%A0%D7%99%D7%94-%D7%95%D7%9E%D7%97%D7%99%D7%A8-%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA", destination: "/articles/building-cost-total", permanent: true },
       { source: "/%D7%AA%D7%9B%D7%A0%D7%95%D7%9F-%D7%91%D7%99%D7%AA-%D7%A4%D7%A8%D7%98%D7%99", destination: "/articles/building-stages", permanent: true },

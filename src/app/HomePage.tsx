@@ -396,7 +396,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
         placement="home_cta_mid"
       />
 
-      {/* ================= 05 · THE QUIZ =================
+      {/* ================= 05 · THE COST CALCULATOR =================
           This slot used to be the price list: three cards, three numbers, on
           the homepage of an architect people have not met yet. A price with no
           context is the fastest way to lose someone who would have been a good
@@ -405,19 +405,20 @@ export default function HomePage({ projects, reviewsData }: Props) {
 
           The prices have not been hidden: /packages and /services still publish
           all three tracks in full. What sits here now is the question the
-          visitor actually arrived with, and a way to get a real answer to it. */}
+          visitor actually arrived with, and the tool that answers it on the
+          spot — no questionnaire, no waiting on an email. */}
       <Section tone="paper">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-7">
             <SectionHeading
               index="05"
-              eyebrow="בדיקת היתכנות · ללא עלות"
+              eyebrow="מחשבון עלויות · ללא עלות"
               size="lg"
               title={<>כמה יעלה הבית<br />שאתם מדמיינים?</>}
-              lede="תשע שאלות קצרות, בערך שתי דקות. בסוף תקבלו למייל דוח אישי — הערכת עלויות לפי מה שתיארתם, לוח זמנים ריאלי לכל שלב, ומסלול הליווי שמתאים לכם."
+              lede="בנו את הבית חדר אחר חדר, בחרו סטנדרט, מיקום, סוג גג ושיטת בנייה — והמחשבון יראה לכם הערכת עלות בנייה מיידית, לפי אותם מקדמי תכנון שהמשרד עובד איתם מול לקוחות."
             />
             <Reveal delay={140} className="mt-9">
-              <ButtonLink href="/quiz">להתחלת השאלון</ButtonLink>
+              <ButtonLink href="/resources/house-cost-calculator">למחשבון העלויות</ButtonLink>
             </Reveal>
           </div>
 
@@ -426,10 +427,10 @@ export default function HomePage({ projects, reviewsData }: Props) {
           <Reveal delay={200} className="lg:col-span-5">
             <ol className="border-t border-hairline">
               {[
-                { n: '01', t: 'הערכת תקציב', d: 'טווח עלות לפי הגודל, הסוג והאזור שתבחרו — כולל יועצים, אגרות ורזרבה.' },
-                { n: '02', t: 'לוח זמנים', d: 'כמה זמן לוקח כל שלב, מהבירורים המקדימים ועד תעודת גמר.' },
-                { n: '03', t: 'מסלול מתאים', d: 'איזה מסלול ליווי הגיוני עבורכם, ולמה דווקא הוא.' },
-                { n: '04', t: 'המלצות אישיות', d: 'מה כדאי לעשות עכשיו, לפי מה שסימנתם שהכי מדאיג אתכם.' },
+                { n: '01', t: 'תוכנית חדרים', d: 'הוסיפו, הסירו ושנו גודל של כל חדר — והשטח הכולל מתעדכן מיד.' },
+                { n: '02', t: 'הערכת עלות', d: 'עלות בנייה משוערת כולל מע"מ, לפי הסטנדרט, המיקום, הגג ושיטת הבנייה.' },
+                { n: '03', t: 'תשובה מיידית', d: 'המספר מתעדכן תוך כדי — בלי שאלון, בלי להמתין למייל.' },
+                { n: '04', t: 'דוח אישי, אם תרצו', d: 'בסוף אפשר לבקש דוח PDF מפורט למייל — רק אם בא לכם.' },
               ].map((item) => (
                 <li key={item.n} className="py-6 border-b border-hairline">
                   <span className="font-label font-semibold text-sm tracking-[0.14em] text-clay">

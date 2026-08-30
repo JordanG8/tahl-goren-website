@@ -37,7 +37,8 @@ const round = (n: number) => Math.round(n / 1000) * 1000;
 /**
  * Which support track suits this house.
  *
- * The old quiz asked outright how much interior design the family wanted. This
+ * An explicit question about how much interior design the family wants is one
+ * the calculator does not ask, so this
  * flow does not ask, so the finish standard stands in for it: someone choosing
  * bespoke joinery and stone has far more decisions to make than someone
  * choosing laminate, and those decisions are what the upper tracks cover.

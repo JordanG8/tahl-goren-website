@@ -1,4 +1,4 @@
-import type { Report, QuizLead } from "./schema";
+import type { Report, ReportLead } from "./schema";
 
 /**
  * Delivery for the feasibility report.
@@ -103,7 +103,7 @@ async function send(args: SendArgs): Promise<{ ok: boolean; error?: string }> {
 
 const shekels = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
 
-function leadHtml(report: Report, lead: QuizLead) {
+function leadHtml(report: Report, lead: ReportLead) {
   const greeting = lead.name ? `${escapeHtml(lead.name)},` : "שלום,";
   const hasCosts = report.costs.lines.length > 0;
 
@@ -117,7 +117,7 @@ function leadHtml(report: Report, lead: QuizLead) {
     <p style="font-size:18px;line-height:1.7;margin:0 0 18px;color:#2E4250;font-weight:700;">${greeting}</p>
 
     <p style="font-size:16px;line-height:1.85;margin:0 0 18px;">
-      תודה שמילאתם את השאלון. מצורף כאן דוח ההיתכנות האישי שלכם —
+      תודה שהשתמשתם במחשבון. מצורף כאן דוח ההיתכנות האישי שלכם —
       הערכה ראשונית של עלויות, לוח זמנים ריאלי לכל שלב, ומסלול הליווי שנראה מתאים לכם.
     </p>
 
@@ -164,7 +164,7 @@ function leadHtml(report: Report, lead: QuizLead) {
 </body></html>`;
 }
 
-function ownerHtml(report: Report, lead: QuizLead) {
+function ownerHtml(report: Report, lead: ReportLead) {
   const rows = report.profile
     .map(
       (p) =>
@@ -173,7 +173,7 @@ function ownerHtml(report: Report, lead: QuizLead) {
     .join("");
 
   return `<div style="font-family:Arial,sans-serif;direction:rtl;text-align:right;color:#2E4250;">
-    <h2 style="margin:0 0 6px;">ליד חדש מהשאלון באתר</h2>
+    <h2 style="margin:0 0 6px;">ליד חדש ממחשבון העלויות</h2>
     <p style="color:#666;margin:0 0 20px;font-size:14px;">
     </p>
 
@@ -201,7 +201,7 @@ function ownerHtml(report: Report, lead: QuizLead) {
 
 export async function deliverReport(
   report: Report,
-  lead: QuizLead,
+  lead: ReportLead,
   pdf: Uint8Array | null,
 ): Promise<{ leadEmailed: boolean; ownerNotified: boolean; error?: string }> {
   const attachment = pdf
@@ -226,7 +226,7 @@ export async function deliverReport(
 
   const toOwner = await send({
     to: owners,
-    subject: `ליד חדש מהשאלון: ${lead.name || lead.email}`,
+    subject: `ליד חדש ממחשבון העלויות: ${lead.name || lead.email}`,
     html: ownerHtml(report, lead),
     replyTo: lead.email,
     attachment,

@@ -16,16 +16,16 @@ import {
 } from "@/lib/houseCostCalculator";
 import { renderReportPdf } from "@/lib/report/pdf";
 import { deliverReport } from "@/lib/report/email";
-import type { QuizAnswers, Report } from "@/lib/report/schema";
+import type { CalculatorAnswers, Report } from "@/lib/report/schema";
 
 /**
- * Turns a completed quiz into a report, a PDF and two emails.
+ * Turns a completed calculator run into a report, a PDF and two emails.
  *
  * The ordering matters: the numbers are computed first and never depend on the
  * model, the model's prose is layered on top and is allowed to fail, and the
- * lead is stored before anything that can throw. A family that filled in nine
- * questions and handed over their email gets a real document even when the AI
- * gateway is down, out of credits, or slow.
+ * lead is stored before anything that can throw. A family that built their
+ * house in the calculator and handed over their email gets a real document
+ * even if delivery or rendering goes wrong.
  */
 
 // Renders a PDF, stores the lead and sends two emails. All fast and all
@@ -35,7 +35,7 @@ export const maxDuration = 30;
 export const runtime = "nodejs";
 
 type Payload = {
-  answers?: QuizAnswers;
+  answers?: CalculatorAnswers;
   rooms?: RoomRow[];
   name?: string;
   email?: string;
@@ -60,7 +60,7 @@ const ALLOWED_FLOOR = new Set(FLOORS.map((f) => f.id));
  * table. Anything not in the workbook is dropped rather than defaulted, so a
  * tampered payload cannot conjure a factor that does not exist.
  */
-function readSelections(raw: QuizAnswers): Selections | null {
+function readSelections(raw: CalculatorAnswers): Selections | null {
   const pick = (key: keyof typeof ALLOWED) => {
     const v = raw?.[key];
     const s = Array.isArray(v) ? v[0] : v;
@@ -90,10 +90,12 @@ function readRooms(raw: unknown): RoomRow[] {
 
 async function storeLead(
   lead: { name: string; email: string; phone: string },
-  answers: QuizAnswers,
+  answers: CalculatorAnswers,
   report: Report,
 ) {
   try {
+    // The table keeps its original name so the leads already captured under it
+    // stay in one place; every row now comes from the cost calculator.
     await sql`
       CREATE TABLE IF NOT EXISTS quiz_leads (
         id SERIAL PRIMARY KEY,
@@ -115,7 +117,7 @@ async function storeLead(
     `;
     return true;
   } catch (err) {
-    console.error("[quiz] failed to store lead", err);
+    console.error("[cost-report] failed to store lead", err);
     return false;
   }
 }
@@ -152,7 +154,7 @@ export async function POST(request: Request) {
   }
 
   // Stored and shown as the visitor's answers.
-  const answers: QuizAnswers = { ...selections };
+  const answers: CalculatorAnswers = { ...selections };
 
   // 1. Numbers. Straight from the workbook, never model-authored.
   const baseline = buildCalculatorBaseline(selections, rooms);
@@ -187,7 +189,7 @@ export async function POST(request: Request) {
   try {
     pdf = await renderReportPdf(report, lead);
   } catch (err) {
-    console.error("[quiz] pdf render failed", err);
+    console.error("[cost-report] pdf render failed", err);
   }
 
   let delivery: { leadEmailed: boolean; ownerNotified: boolean; error?: string } = {
@@ -203,11 +205,11 @@ export async function POST(request: Request) {
     // distinguishes "no key configured" from "sender not verified".
     if (!delivery.leadEmailed || !delivery.ownerNotified) {
       console.error(
-        `[quiz] delivery incomplete — lead:${delivery.leadEmailed} owner:${delivery.ownerNotified} ${delivery.error ?? ""}`,
+        `[cost-report] delivery incomplete — lead:${delivery.leadEmailed} owner:${delivery.ownerNotified} ${delivery.error ?? ""}`,
       );
     }
   } catch (err) {
-    console.error("[quiz] delivery failed", err);
+    console.error("[cost-report] delivery failed", err);
   }
 
   return NextResponse.json({

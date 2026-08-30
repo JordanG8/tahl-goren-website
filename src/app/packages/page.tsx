@@ -237,9 +237,9 @@ export default function PackagesPage() {
 
       <CtaSection
         title="לא בטוחים איזה מסלול מתאים לכם?"
-        subtitle="ענו על תשע שאלות קצרות ותקבלו למייל דוח אישי עם הערכת עלויות, לוח זמנים והמסלול שמתאים לכם — ללא עלות וללא התחייבות."
-        primaryLabel="לבדיקת ההיתכנות"
-        primaryHref="/quiz"
+        subtitle="בנו את הבית שלכם חדר אחר חדר במחשבון וקבלו הערכת עלות בנייה מיידית — ואם תרצו, גם דוח אישי למייל. ללא עלות וללא התחייבות."
+        primaryLabel="למחשבון העלויות"
+        primaryHref="/resources/house-cost-calculator"
       />
     </>
   );
