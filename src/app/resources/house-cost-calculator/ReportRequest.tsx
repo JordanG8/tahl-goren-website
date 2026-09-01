@@ -147,7 +147,7 @@ export default function ReportRequest({
           disabled={disabled}
           className="group mt-6 w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-clay text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-white hover:text-primary disabled:opacity-40 disabled:pointer-events-none"
         >
-          שלחו לי את הדוח המפורט
+          שלחו לי את החישוב למייל
           <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
         </button>
       ) : (
