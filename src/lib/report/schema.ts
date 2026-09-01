@@ -127,4 +127,6 @@ export type ReportLead = {
   name: string;
   email: string;
   phone?: string;
+  /** The town they plan to build in, as typed at the calculator's gate. */
+  city?: string;
 };
