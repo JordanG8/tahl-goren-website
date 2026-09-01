@@ -205,7 +205,7 @@ export default function HomePage({ projects, reviewsData }: Props) {
             index="01"
             eyebrow="פרויקטים נבחרים"
             size="lg"
-            title={<>בתים שכבר<br />עומדים</>}
+            title="בתים מאוכלסים"
           />
           <Reveal delay={140} className="lg:col-span-5 lg:pb-3">
             <p className="font-body text-lg text-secondary leading-relaxed measure">
