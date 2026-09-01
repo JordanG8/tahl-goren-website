@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { ArrowIcon, CheckIcon } from "@/components/ui/Icon";
 import type { RoomRow, Selections } from "@/lib/houseCostCalculator";
+import type { CalculatorLead } from "./lead";
 
 /**
  * The reason this page exists.
  *
- * The calculator answers the visitor's question for free, which is what earns
- * the right to ask for anything at all. This block is where that exchange is
- * made: a real document, described honestly, for a name and an email.
+ * The details were already given at the door, so this block does not ask for
+ * them again: it says where the report is going and sends it on one press. The
+ * only thing still worth offering is a phone number, and that stays optional.
  *
  * The report is also offered as a direct download once it is ready, so a
  * misconfigured mail provider or an over-eager spam filter cannot swallow the
@@ -17,30 +18,26 @@ import type { RoomRow, Selections } from "@/lib/houseCostCalculator";
  */
 
 export default function ReportRequest({
+  lead,
   selections,
   rooms,
   disabled,
 }: {
+  lead: CalculatorLead;
   selections: Selections;
   rooms: RoomRow[];
   disabled: boolean;
 }) {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot
+  const [askPhone, setAskPhone] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [emailed, setEmailed] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!emailOk || busy) return;
+  const send = async () => {
+    if (busy) return;
     setBusy(true);
     setError(null);
     try {
@@ -55,10 +52,11 @@ export default function ReportRequest({
             method: selections.buildMethod,
           },
           rooms,
-          name,
-          email,
+          name: lead.name,
+          email: lead.email,
+          city: lead.city,
+          consent: lead.consent,
           phone,
-          website,
         }),
       });
       const data = await res.json();
@@ -68,7 +66,9 @@ export default function ReportRequest({
             ? "כתובת האימייל לא נראית תקינה."
             : data.error === "no_rooms"
               ? "הוסיפו חדרים לבית לפני שליחת הדוח."
-              : "משהו השתבש. נסו שוב בעוד רגע.",
+              : data.error === "consent_required"
+                ? "צריך את האישור שלכם כדי לשלוח את הדוח למייל."
+                : "משהו השתבש. נסו שוב בעוד רגע.",
         );
         return;
       }
@@ -140,64 +140,52 @@ export default function ReportRequest({
         ))}
       </ul>
 
-      {!open ? (
+      <p className="font-body text-[14px] text-white/70 leading-relaxed mt-5">
+        נשלח אל <span dir="ltr" className="text-white">{lead.email}</span>, כפי שאישרתם בכניסה.
+      </p>
+
+      {askPhone ? (
+        <input
+          aria-label="טלפון (לא חובה)"
+          placeholder="טלפון (לא חובה)"
+          type="tel"
+          dir="ltr"
+          className={`${field} text-start mt-4`}
+          value={phone}
+          autoComplete="tel"
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      ) : (
         <button
           type="button"
-          onClick={() => setOpen(true)}
-          disabled={disabled}
-          className="group mt-6 w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-clay text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-white hover:text-primary disabled:opacity-40 disabled:pointer-events-none"
+          onClick={() => setAskPhone(true)}
+          className="mt-4 font-body text-[14px] text-white/60 underline underline-offset-4 hover:text-white transition-colors duration-300"
         >
-          שלחו לי את החישוב למייל
-          <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
+          להוסיף טלפון, אם נוח לכם שנחזור אליכם
         </button>
-      ) : (
-        <form onSubmit={submit} className="mt-6 space-y-3" noValidate>
-          <input
-            aria-label="שם"
-            placeholder="שם"
-            className={field}
-            value={name}
-            autoComplete="name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            aria-label="אימייל"
-            placeholder="אימייל"
-            type="email"
-            dir="ltr"
-            className={`${field} text-start`}
-            value={email}
-            autoComplete="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            aria-label="טלפון (לא חובה)"
-            placeholder="טלפון (לא חובה)"
-            type="tel"
-            dir="ltr"
-            className={`${field} text-start`}
-            value={phone}
-            autoComplete="tel"
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <div className="absolute w-px h-px overflow-hidden -m-px" aria-hidden>
-            <input tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
-          </div>
-
-          {error && <p role="alert" className="font-body text-[14px] text-white bg-clay/80 px-3 py-2">{error}</p>}
-
-          <button
-            type="submit"
-            disabled={busy || !emailOk}
-            className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-clay text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-white hover:text-primary disabled:opacity-40"
-          >
-            {busy ? "מכינים את הדוח…" : "שלחו לי את הדוח"}
-          </button>
-          <p className="font-body text-[13px] text-white/55 leading-relaxed">
-            הפרטים משמשים לשליחת הדוח ולחזרה אליכם בלבד.
-          </p>
-        </form>
       )}
+
+      {error && (
+        <p role="alert" className="font-body text-[14px] text-white bg-clay/80 px-3 py-2 mt-4">
+          {error}
+        </p>
+      )}
+
+      <button
+        type="button"
+        onClick={send}
+        disabled={disabled || busy}
+        className="group mt-5 w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-clay text-white font-headline font-bold text-[15px] uppercase tracking-[0.1em] transition-colors duration-500 hover:bg-white hover:text-primary disabled:opacity-40 disabled:pointer-events-none"
+      >
+        {busy ? "מכינים את הדוח…" : "שלחו לי את החישוב למייל"}
+        {!busy && (
+          <ArrowIcon size={17} className="transition-transform duration-500 group-hover:-translate-x-1" />
+        )}
+      </button>
+
+      <p className="font-body text-[13px] text-white/55 leading-relaxed mt-3">
+        הפרטים משמשים לשליחת הדוח ולחזרה אליכם בלבד.
+      </p>
     </div>
   );
 }

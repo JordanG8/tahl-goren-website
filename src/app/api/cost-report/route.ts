@@ -40,6 +40,10 @@ type Payload = {
   name?: string;
   email?: string;
   phone?: string;
+  /** The town the family plans to build in — free text, asked for at the gate. */
+  city?: string;
+  /** Permission to email the calculation. The gate does not open without it. */
+  consent?: boolean;
   /** Honeypot. */
   website?: string;
 };
@@ -89,7 +93,7 @@ function readRooms(raw: unknown): RoomRow[] {
 }
 
 async function storeLead(
-  lead: { name: string; email: string; phone: string },
+  lead: { name: string; email: string; phone: string; city: string },
   answers: CalculatorAnswers,
   report: Report,
 ) {
@@ -138,9 +142,17 @@ export async function POST(request: Request) {
   const name = (body.name ?? "").trim().slice(0, 120);
   const email = (body.email ?? "").trim().slice(0, 200);
   const phone = (body.phone ?? "").trim().slice(0, 40);
+  const city = (body.city ?? "").trim().slice(0, 120);
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "invalid_email" }, { status: 400 });
+  }
+
+  // The visitor ticked a box to open the calculator; this is the same consent,
+  // checked again on the side that actually sends the mail. Nothing goes to an
+  // address that did not ask for it, whatever the client claims to be.
+  if (body.consent !== true) {
+    return NextResponse.json({ error: "consent_required" }, { status: 400 });
   }
 
   const selections = readSelections(body.answers ?? {});
@@ -153,8 +165,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "no_rooms" }, { status: 400 });
   }
 
-  // Stored and shown as the visitor's answers.
-  const answers: CalculatorAnswers = { ...selections };
+  // Stored and shown as the visitor's answers. The town is one of them: it is
+  // the first thing the office wants to know about a new enquiry.
+  const answers: CalculatorAnswers = { ...selections, ...(city ? { city } : {}) };
 
   // 1. Numbers. Straight from the workbook, never model-authored.
   const baseline = buildCalculatorBaseline(selections, rooms);
@@ -178,7 +191,7 @@ export async function POST(request: Request) {
     track: { ...baseline.track, reason: words.trackReason },
   };
 
-  const lead = { name, email, phone };
+  const lead = { name, email, phone, city };
 
   // 3. Persist before doing anything else that can fail.
   await storeLead(lead, { ...answers, rooms: rooms.map((r) => `${r.type}|${r.size}|${r.floor}`) }, report);

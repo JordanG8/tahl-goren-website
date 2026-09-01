@@ -180,7 +180,8 @@ function ownerHtml(report: Report, lead: ReportLead) {
     <p style="font-size:16px;">
       <strong>שם:</strong> ${escapeHtml(lead.name || "—")}<br>
       <strong>אימייל:</strong> ${escapeHtml(lead.email)}<br>
-      <strong>טלפון:</strong> ${escapeHtml(lead.phone || "—")}
+      <strong>טלפון:</strong> ${escapeHtml(lead.phone || "—")}<br>
+      <strong>ישוב:</strong> ${escapeHtml(lead.city || "—")}
     </p>
 
     <h3 style="margin:24px 0 8px;">התשובות</h3>
@@ -226,7 +227,7 @@ export async function deliverReport(
 
   const toOwner = await send({
     to: owners,
-    subject: `ליד חדש ממחשבון העלויות: ${lead.name || lead.email}`,
+    subject: `ליד חדש ממחשבון העלויות: ${lead.name || lead.email}${lead.city ? ` · ${lead.city}` : ""}`,
     html: ownerHtml(report, lead),
     replyTo: lead.email,
     attachment,

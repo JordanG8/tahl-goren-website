@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   BUILD_METHODS,
@@ -18,7 +18,15 @@ import {
   type RoomRow,
 } from "@/lib/houseCostCalculator";
 import { ArrowIcon } from "@/components/ui/Icon";
+import CalculatorGate from "./CalculatorGate";
 import ReportRequest from "./ReportRequest";
+import {
+  getLeadSnapshot,
+  getServerLeadSnapshot,
+  saveLead,
+  subscribeLead,
+  type CalculatorLead,
+} from "./lead";
 
 /**
  * The build-cost calculator.
@@ -38,6 +46,11 @@ import ReportRequest from "./ReportRequest";
  * It is also what the visitor actually wants. Nobody choosing between a small
  * and a large bedroom wants to audit a coefficient; they want to know roughly
  * what the house costs and whether it is worth a conversation.
+ *
+ * The tool itself opens only after `CalculatorGate` has the four details the
+ * office asks for in return — name, email, the town they plan to build in, and
+ * permission to mail the result there. Once given, they are remembered on the
+ * visitor's own device, so a second visit goes straight to the rooms.
  */
 
 const shekels = (n: number) => `${n.toLocaleString("he-IL")} ₪`;
@@ -101,6 +114,16 @@ function Field({
 }
 
 export default function HouseCostCalculator() {
+  // The saved details live outside React, in the browser's own storage, so they
+  // are read as an external store rather than synced into state by an effect.
+  const { ready, lead } = useSyncExternalStore(
+    subscribeLead,
+    getLeadSnapshot,
+    getServerLeadSnapshot,
+  );
+
+  const unlock = (next: CalculatorLead) => saveLead(next);
+
   const [region, setRegion] = useState(REGIONS[1].label);
   const [standard, setStandard] = useState(STANDARDS[2].label);
   const [roofType, setRoofType] = useState(ROOF_TYPES[0].label);
@@ -124,6 +147,12 @@ export default function HouseCostCalculator() {
   };
 
   const full = rooms.length >= MAX_ROOMS;
+
+  // Reserves roughly the height of the gate so the page does not jump while the
+  // saved details are read — and so a returning visitor never sees the door.
+  if (!ready) return <div className="min-h-[70vh]" aria-hidden />;
+
+  if (!lead) return <CalculatorGate onUnlock={unlock} />;
 
   return (
     <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
@@ -294,6 +323,7 @@ export default function HouseCostCalculator() {
           {/* This is what the page is for. */}
           <div className="mt-4">
             <ReportRequest
+              lead={lead}
               selections={{ region, standard, roofType, buildMethod }}
               rooms={rooms}
               disabled={result.total === null}
